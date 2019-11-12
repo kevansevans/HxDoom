@@ -171,7 +171,7 @@ class WadData
 	function readThingData(_dir:Directory):Array<Thing>
 	{
 		var thing_array:Array<Thing> = new Array();
-		var num_things = Std.int(_dir.lumpSize / 10);
+		var num_things = Std.int(_dir.lumpSize / THING_LUMP_SIZE);
 		for (a in 0...num_things) {
 			var thing:Thing = {
 				xpos : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE, true),
@@ -194,7 +194,7 @@ class WadData
 	//nodes
 	function readNodeData(_dir:Directory):Array<Node> {
 		var node_array:Array<Node> = new Array();
-		var num_nodes = Std.int(_dir.lumpSize / 28);
+		var num_nodes = Std.int(_dir.lumpSize / NODE_LUMP_SIZE);
 		for (a in 0...num_nodes) {
 			var node:Node = {
 				xPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE, true),
