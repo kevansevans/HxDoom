@@ -5,10 +5,15 @@ import packages.WadData.Directory;
 import packages.WadData.Thing;
 import packages.actors.Player;
 
+import packages.actors.TypeID;
+
 
 /**
  * ...
  * @author Kaelan
+ * 
+ * Reserve this class for parsing ORIGINAL map data, features desired in the future will require a UDMF approach.
+ * 
  */
 class WadData
 {
@@ -18,6 +23,8 @@ class WadData
 	public static inline var NODE_LUMP_SIZE:Int = 28;
 	
 	public static inline var SUBSECTORIDENTIFIER:Int = 0x8000;
+	
+	public static var COMMERCIAL:Bool = false;
 	
 	public var deconstructed:Bool = false;
 	
@@ -98,7 +105,7 @@ class WadData
 		for (a in map.things) {
 		switch (a.type)
 		{
-			case 1 | 2 | 3 | 4:
+			case TypeID.PLAYERONE | TypeID.PLAYERTWO | TypeID.PLAYERTHREE | TypeID.PLAYERFOUR:
 				var player = new Player(a.type);
 				player.xpos = a.xpos;
 				player.ypos = a.ypos;
@@ -173,7 +180,14 @@ class WadData
 				type : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 6),
 				flags : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 8)
 			}
-			thing_array.push(thing);
+			switch (thing.type) {
+				case TypeID.ARCHVILE | TypeID.FORMERCOMMANDO | TypeID.REVENANT | TypeID.MANCUBUS | TypeID.ARACHNOTRON | TypeID.HELLKNIGHT | TypeID.PAINELEMENTAL | TypeID.WOLFSS | TypeID.BOSSBRAIN | TypeID.BOSSSHOOTER :
+					if (!COMMERCIAL) {} //do nothing, these are the shareware excluded monsters
+					else thing_array.push(thing);
+				default :
+					thing_array.push(thing);
+			}
+			
 		}
 		return(thing_array);
 	}
