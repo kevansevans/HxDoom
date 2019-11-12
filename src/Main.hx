@@ -16,6 +16,7 @@ import sys.io.File;
 import haxe.io.Bytes;
 
 import packages.WadData;
+import packages.actors.TypeID;
 
 /**
  * ...
@@ -109,7 +110,7 @@ class Main extends Sprite
 		
 		for (a in _map.things) {
 			switch (a.type) {
-				case 1 | 2 | 3 | 4 :
+				case TypeID.PLAYERONE | TypeID.PLAYERTWO | TypeID.PLAYERTHREE | TypeID.PLAYERFOUR:
 					mapsprite.graphics.lineStyle(1, 0x00FF00);
 				default :
 					mapsprite.graphics.lineStyle(1, 0xFF0000);
