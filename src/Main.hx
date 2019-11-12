@@ -20,6 +20,10 @@ import packages.WadData;
 /**
  * ...
  * @author Kaelan
+ * 
+ * Realistic Goals: 
+ * 		Maintain target deployment support. If it has a renderer, it must be deployable to that target.
+ * 		- JS target needs to be able to tell the difference between shareware and commericial if hosted.
  */
 class Main extends Sprite 
 {
@@ -30,6 +34,7 @@ class Main extends Sprite
 	static var map_to_draw:Int = 0;
 	
 	var draw:Sprite;
+	var mapsprite:Sprite;
 	
 	public function new() 
 	{
@@ -38,7 +43,10 @@ class Main extends Sprite
 		wads = new Array<WadData>();	
 		
 		draw = new Sprite();
+		mapsprite = new Sprite();
 		addChild(draw);
+		draw.addChild(mapsprite);
+		mapsprite.scaleY = -1;
 		
 		var wad:Bytes;
 		
@@ -83,21 +91,33 @@ class Main extends Sprite
 		map_to_draw = Std.int(wads[0].mapindex.length * Math.random());
 		wads[0].loadMap(map_to_draw);
 		
-		var map = wads[0].activemap;
+		var _map = wads[0].activemap;
 		
 		draw.x = draw.y = 0;
 		draw.scaleX = draw.scaleY = 1;
 		
-		draw.graphics.clear();
-		draw.graphics.lineStyle(1, 0xFFFFFF);
+		mapsprite.graphics.clear();
+		mapsprite.graphics.lineStyle(1, 0xFFFFFF);
 		
-		var xoff = map.offset_x;
-		var yoff = map.offset_y;
+		var xoff = _map.offset_x;
+		var yoff = _map.offset_y;
 		
-		for (a in map.linedefs) {
-			draw.graphics.moveTo((map.vertexes[a.start].x + xoff) / map_scale_inv, (map.vertexes[a.start].y + yoff) / map_scale_inv);
-			draw.graphics.lineTo((map.vertexes[a.end].x + xoff) / map_scale_inv, (map.vertexes[a.end].y + yoff) / map_scale_inv);
+		for (a in _map.linedefs) {
+			mapsprite.graphics.moveTo((_map.vertexes[a.start].x + xoff) / map_scale_inv, (_map.vertexes[a.start].y + yoff) / map_scale_inv);
+			mapsprite.graphics.lineTo((_map.vertexes[a.end].x + xoff) / map_scale_inv, (_map.vertexes[a.end].y + yoff) / map_scale_inv);
 		}
+		
+		for (a in _map.things) {
+			switch (a.type) {
+				case 1 | 2 | 3 | 4 :
+					mapsprite.graphics.lineStyle(1, 0x00FF00);
+				default :
+					mapsprite.graphics.lineStyle(1, 0xFF0000);
+			}
+			mapsprite.graphics.drawCircle((a.xpos + xoff) / map_scale_inv, (a.ypos + yoff) / map_scale_inv, 2);
+		}
+		
+		mapsprite.y = mapsprite.height;
 	}
 
 }
