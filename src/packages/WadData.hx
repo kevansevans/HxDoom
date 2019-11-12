@@ -12,6 +12,11 @@ import packages.actors.Player;
  */
 class WadData
 {
+	public static inline var VERTEX_LUMP_SIZE:Int = 4;
+	public static inline var LINEDEF_LUMP_SIZE:Int = 14;
+	public static inline var THING_LUMP_SIZE:Int = 10;
+	public static inline var NODE_LUMP_SIZE:Int = 28;
+	
 	public static inline var SUBSECTORIDENTIFIER:Int = 0x8000;
 	
 	public var deconstructed:Bool = false;
@@ -126,12 +131,12 @@ class WadData
 	//vertexes
 	function readVertextData(_dir:Directory):Array<Vertex> {
 		var ver_array:Array<Vertex> = new Array();
-		var num_verts:Int = Std.int(_dir.lumpSize / 4); //vertexes are 4 bytes long
+		var num_verts:Int = Std.int(_dir.lumpSize / VERTEX_LUMP_SIZE);
 		for (a in 0...num_verts) 
 		{
 			var ver:Vertex = {
-				x : bytesToShort(_dir.lumpOffset + a * 4, true),
-				y : bytesToShort((_dir.lumpOffset + a * 4) + 2, true),
+				x : bytesToShort(_dir.lumpOffset + a * VERTEX_LUMP_SIZE, true),
+				y : bytesToShort((_dir.lumpOffset + a * VERTEX_LUMP_SIZE) + 2, true),
 			};
 			ver_array.push(ver);
 		}
@@ -140,16 +145,16 @@ class WadData
 	//linedefs
 	function readLineDefData(_dir:Directory):Array<LineDef> {
 		var line_array:Array<LineDef> = new Array();
-		var num_lines = Std.int(_dir.lumpSize / 14); //linedefs are 14 bytes long
+		var num_lines = Std.int(_dir.lumpSize / LINEDEF_LUMP_SIZE);
 		for (a in 0...num_lines) {
 			var line:LineDef = {
-				start : bytesToShort(_dir.lumpOffset + a * 14),
-				end : bytesToShort(_dir.lumpOffset + a * 14 + 2),
-				flags : bytesToShort(_dir.lumpOffset + a * 14 + 4),
-				linetype : bytesToShort(_dir.lumpOffset + a * 14 + 6),
-				sectortag : bytesToShort(_dir.lumpOffset + a * 14 + 8),
-				frontsidedef : bytesToShort(_dir.lumpOffset + a * 14 + 10),
-				backsidedef : bytesToShort(_dir.lumpOffset + a * 14 + 12),
+				start : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE),
+				end : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 2),
+				flags : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 4),
+				linetype : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 6),
+				sectortag : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 8),
+				frontsidedef : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 10),
+				backsidedef : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 12),
 			}
 			line_array.push(line);
 		}
@@ -159,14 +164,14 @@ class WadData
 	function readThingData(_dir:Directory):Array<Thing>
 	{
 		var thing_array:Array<Thing> = new Array();
-		var num_things = Std.int(_dir.lumpSize / 10); //things are 10 bytes long
+		var num_things = Std.int(_dir.lumpSize / 10);
 		for (a in 0...num_things) {
 			var thing:Thing = {
-				xpos : bytesToShort(_dir.lumpOffset + a * 10, true),
-				ypos : bytesToShort(_dir.lumpOffset + a * 10 + 2, true),
-				angle : bytesToShort(_dir.lumpOffset + a * 10 + 4),
-				type : bytesToShort(_dir.lumpOffset + a * 10 + 6),
-				flags : bytesToShort(_dir.lumpOffset + a * 10 + 8)
+				xpos : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE, true),
+				ypos : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 2, true),
+				angle : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 4),
+				type : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 6),
+				flags : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 8)
 			}
 			thing_array.push(thing);
 		}
@@ -175,26 +180,26 @@ class WadData
 	//nodes
 	function readNodeData(_dir:Directory):Array<Node> {
 		var node_array:Array<Node> = new Array();
-		var num_nodes = Std.int(_dir.lumpSize / 28); //Nodes are 28 bytes long
+		var num_nodes = Std.int(_dir.lumpSize / 28);
 		for (a in 0...num_nodes) {
 			var node:Node = {
-				xPartition : bytesToShort(_dir.lumpOffset + a * 28, true),
-				yPartition : bytesToShort(_dir.lumpOffset + a * 28 + 2, true),
-				changeXPartition : bytesToShort(_dir.lumpOffset + a * 28 + 4, true),
-				changeYPartition : bytesToShort(_dir.lumpOffset + a * 28 + 6, true),
+				xPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE, true),
+				yPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 2, true),
+				changeXPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 4, true),
+				changeYPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 6, true),
 				
-				frontBoxTop : bytesToShort(_dir.lumpOffset + a * 28 + 8, true),
-				frontBoxBottom : bytesToShort(_dir.lumpOffset + a * 28 + 10, true),
-				frontBoxLeft : bytesToShort(_dir.lumpOffset + a * 28 + 12, true),
-				frontBoxRight : bytesToShort(_dir.lumpOffset + a * 28 + 14, true),
+				frontBoxTop : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 8, true),
+				frontBoxBottom : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 10, true),
+				frontBoxLeft : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 12, true),
+				frontBoxRight : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 14, true),
 				
-				backBoxTop : bytesToShort(_dir.lumpOffset + a * 28 + 16, true),
-				backBoxBottom : bytesToShort(_dir.lumpOffset + a * 28 + 18, true),
-				backBoxLeft : bytesToShort(_dir.lumpOffset + a * 28 + 20, true),
-				backBoxRight : bytesToShort(_dir.lumpOffset + a * 28 + 22, true),
+				backBoxTop : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 16, true),
+				backBoxBottom : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 18, true),
+				backBoxLeft : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 20, true),
+				backBoxRight : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 22, true),
 				
-				frontChildID : bytesToShort(_dir.lumpOffset + a * 28 + 24),
-				backChildID : bytesToShort(_dir.lumpOffset + a * 28 + 26),
+				frontChildID : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 24),
+				backChildID : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 26),
 			}
 			node_array.push(node);
 		}
