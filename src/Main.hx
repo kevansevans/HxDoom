@@ -56,7 +56,7 @@ class Main extends Sprite
 		#if sys
 			for (a in FileSystem.readDirectory("./wads")) {
 				wad = File.getBytes("./wads/" + a);
-		#elseif js
+		#elseif (js || flash)
 			for (a in Assets.list()) {
 				if (a.lastIndexOf("wads/") == 0) wad = Assets.getBytes(a);
 				else continue;
