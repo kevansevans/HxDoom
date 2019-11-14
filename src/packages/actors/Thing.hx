@@ -12,12 +12,18 @@ class Thing
 	public var xpos(default, set):Int;
 	public var ypos(default, set):Int;
 	public var angle(default, set):Int;
+	public var type:TypeID;
+	public var group:TypeGroup;
+	
+	public var isPlayer(get, never):Bool;
 	
 	public function new(_id:Int) 
 	{
 		id = _id;
+		group = TypeGroup.UNDEFINED;
 	}
 	
+	//Setters
 	function set_xpos(value:Int):Int 
 	{
 		return xpos = value;
@@ -31,4 +37,14 @@ class Thing
 		return angle = value;
 	}
 	
+	//getters
+	function get_isPlayer():Bool 
+	{
+		switch (type) {
+			case TypeID.PLAYERONE | TypeID.PLAYERTWO | TypeID.PLAYERTHREE | TypeID.PLAYERFOUR :
+				return true;
+			default :
+				return false;
+		}
+	}
 }
