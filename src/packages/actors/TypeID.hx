@@ -11,10 +11,14 @@ package packages.actors;
  * M_: Monster
  * D_: Decoration
  * 
+ * Doom doesn't explicitly categorize these items, they all sort of just exist. For the sake of source clarity and approaching
+ * a ZDoom like experience, these will have to be categorized by hand. Inheritance should only be used for default flag control.
+ * Emphasis on "ZDoom like", this ain't going to be zdoom or a ZDoom competitor. Just SOURCE friendly. Hopefully.
+ * 
  */
 enum abstract TypeID(Int) from Int
 {
-	public var P_PLAYERONE:Int = 1; //= 1 initializes the enums correctly, each var further on incriments by one
+	public var P_PLAYERONE:Int = 1; //= 1 initializes the enums correctly, each var further on incriments by one. If there's a jump in value, that needs to be explicitly set. See W_SHOTGUN below.
 	public var P_PLAYERTWO:Int; //= 2
 	public var P_PLAYERTHREE:Int; //= 3
 	public var P_PLAYERFOUR:Int; //= 4, etcetera
