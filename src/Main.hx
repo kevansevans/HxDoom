@@ -114,8 +114,18 @@ class Main extends Sprite
 			switch (a.type) {
 				case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR:
 					mapsprite.graphics.lineStyle(1, 0x00FF00);
+				case 	TypeID.M_SPIDERMASTERMIND | M_FORMERSERGEANT | TypeID.M_CYBERDEMON |
+						TypeID.M_DEADFORMERHUMAN | TypeID.M_DEADFORMERSERGEANT | TypeID.M_DEADIMP | TypeID.M_DEADDEMON |
+						TypeID.M_DEADCACODEMON | TypeID.M_DEADLOSTSOUL | TypeID.M_SPECTRE | TypeID.M_ARCHVILE |
+						TypeID.M_FORMERCOMMANDO | TypeID.M_REVENANT | TypeID.M_MANCUBUS | TypeID.M_ARACHNOTRON |
+						TypeID.M_HELLKNIGHT | TypeID.M_PAINELEMENTAL | TypeID.M_COMMANDERKEEN | TypeID.M_WOLFSS |
+						TypeID.M_SPAWNSPOT | TypeID.M_BOSSBRAIN | TypeID.M_BOSSSHOOTER | TypeID.M_IMP |
+						TypeID.M_DEMON | TypeID.M_BARONOFHELL | TypeID.M_FORMERTROOPER | TypeID.M_CACODEMON |
+						TypeID.M_LOSTSOUL
+						:
+							mapsprite.graphics.lineStyle(1, 0xFF0000);
 				default :
-					mapsprite.graphics.lineStyle(1, 0xFF0000);
+					mapsprite.graphics.lineStyle(1, 0xFFFFFF);
 			}
 			mapsprite.graphics.drawCircle((a.xpos + xoff) / map_scale_inv, (a.ypos + yoff) / map_scale_inv, 2);
 		}
