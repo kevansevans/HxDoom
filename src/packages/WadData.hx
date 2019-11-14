@@ -105,7 +105,7 @@ class WadData
 		for (a in map.things) {
 		switch (a.type)
 		{
-			case TypeID.PLAYERONE | TypeID.PLAYERTWO | TypeID.PLAYERTHREE | TypeID.PLAYERFOUR:
+			case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR:
 				var player = new Player(a.type);
 				player.xpos = a.xpos;
 				player.ypos = a.ypos;
@@ -181,9 +181,12 @@ class WadData
 				flags : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 8)
 			}
 			switch (thing.type) {
-				case TypeID.ARCHVILE | TypeID.FORMERCOMMANDO | TypeID.REVENANT | TypeID.MANCUBUS | TypeID.ARACHNOTRON | TypeID.HELLKNIGHT | TypeID.PAINELEMENTAL | TypeID.WOLFSS | TypeID.BOSSBRAIN | TypeID.BOSSSHOOTER :
-					if (!COMMERCIAL) {} //do nothing, these are the shareware excluded monsters
-					else thing_array.push(thing);
+				case 	TypeID.M_ARCHVILE | TypeID.M_FORMERCOMMANDO | TypeID.M_REVENANT | TypeID.M_MANCUBUS |
+						TypeID.M_ARACHNOTRON | TypeID.M_HELLKNIGHT | TypeID.M_PAINELEMENTAL | TypeID.M_WOLFSS | 
+						TypeID.M_BOSSBRAIN | TypeID.M_BOSSSHOOTER 
+						:
+							if (!COMMERCIAL) {} //do nothing, these are the shareware excluded monsters
+							else thing_array.push(thing);
 				default :
 					thing_array.push(thing);
 			}

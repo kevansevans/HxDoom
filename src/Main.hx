@@ -112,7 +112,7 @@ class Main extends Sprite
 		
 		for (a in _map.things) {
 			switch (a.type) {
-				case TypeID.PLAYERONE | TypeID.PLAYERTWO | TypeID.PLAYERTHREE | TypeID.PLAYERFOUR:
+				case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR:
 					mapsprite.graphics.lineStyle(1, 0x00FF00);
 				default :
 					mapsprite.graphics.lineStyle(1, 0xFF0000);
