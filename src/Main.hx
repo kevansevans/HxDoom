@@ -17,6 +17,7 @@ import haxe.io.Bytes;
 
 import packages.WadData;
 import packages.actors.TypeID;
+import packages.actors.TypeGroup;
 
 /**
  * ...
@@ -87,6 +88,7 @@ class Main extends Sprite
 		}
 	}
 	
+	//This function is likely to be deprecated in favor of a proper automap, it's just for debug purposes. Dunno when that will happen.
 	function redraw()
 	{
 		map_to_draw = Std.int(wads[0].mapindex.length * Math.random());
