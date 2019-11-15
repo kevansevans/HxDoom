@@ -17,6 +17,7 @@ class Thing
 	
 	public var isPlayer(get, never):Bool;
 	public var isMonster(get, never):Bool;
+	public var isPickup(get, never):Bool;
 	
 	public function new(_id:Int) 
 	{
@@ -42,7 +43,7 @@ class Thing
 	function get_isMonster():Bool 
 	{
 		switch (type) {
-			case	TypeID.M_SPIDERMASTERMIND | M_FORMERSERGEANT | TypeID.M_CYBERDEMON |
+			case	TypeID.M_SPIDERMASTERMIND | TypeID.M_FORMERSERGEANT | TypeID.M_CYBERDEMON |
 					TypeID.M_DEADFORMERHUMAN | TypeID.M_DEADFORMERSERGEANT | TypeID.M_DEADIMP | TypeID.M_DEADDEMON |
 					TypeID.M_DEADCACODEMON | TypeID.M_DEADLOSTSOUL | TypeID.M_SPECTRE | TypeID.M_ARCHVILE |
 					TypeID.M_FORMERCOMMANDO | TypeID.M_REVENANT | TypeID.M_MANCUBUS | TypeID.M_ARACHNOTRON |
@@ -56,6 +57,25 @@ class Thing
 						return false;
 		}
 	}
+	
+	function get_isPickup():Bool 
+	{
+		switch (type) {
+			case 	TypeID.I_AMMOCLIP | TypeID.I_BACKPACK | TypeID.I_BERSERK | TypeID.I_BLUEARMOR |
+					TypeID.I_BLUEKEYCARD | TypeID.I_BLUESKULLKEY | TypeID.I_BOXOFAMMO | TypeID.I_BOXOFROCKETS |
+					TypeID.I_BOXOFSHELLS | TypeID.I_CELLCHARGE | TypeID.I_CELLCHARGEPACK | TypeID.I_COMPUTERMAP |
+					TypeID.I_GREENARMOR | TypeID.I_HEALTHPOTION | TypeID.I_INVISIBILITY | TypeID.I_INVULNERABILITY |
+					TypeID.I_LIGHTAMPLIFICATIONVISOR | TypeID.I_MEDIKIT | TypeID.I_MEGASPHERE | TypeID.I_RADIATIONSUIT |
+					TypeID.I_REDKEYCARD | TypeID.I_REDSKULLKEY | TypeID.I_ROCKET | TypeID.I_SHOTGUNSHELLS |
+					TypeID.I_SOULSPHERE | TypeID.I_SPIRITARMOR | TypeID.I_STIMPACK | TypeID.I_YELLOWKEYCARD |
+					TypeID.I_YELLOWSKULLKEY
+					:
+						return true;
+			default :
+				return false;
+		}
+	}
+	
 	function get_isPlayer():Bool 
 	{
 		switch (type) {
