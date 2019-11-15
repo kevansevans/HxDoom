@@ -53,14 +53,8 @@ class Main extends Sprite
 		var wad:Bytes;
 		
 		//could turn this into a single loop (no conditionals), but I want to make sure each target uses the shortest loop available.
-		#if sys
-			for (a in FileSystem.readDirectory("./wads")) {
-				wad = File.getBytes("./wads/" + a);
-		#elseif (js || flash)
-			for (a in Assets.list()) {
-				if (a.lastIndexOf("wads/") == 0) wad = Assets.getBytes(a);
-				else continue;
-		#end
+		for (a in FileSystem.readDirectory("./wads")) {
+			wad = File.getBytes("./wads/" + a);
 			var isIwad:Bool = wad.getString(0, 4) == "IWAD";
 			wads.push(new WadData(wad, a, isIwad));
 		}
