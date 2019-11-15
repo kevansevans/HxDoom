@@ -56,8 +56,8 @@ class WadData
 	}
 	function baseIndexWadItems() {
 		
-		dir_count = bytesToInteger(0x04);
-		dir_offset = bytesToInteger(0x08);
+		dir_count = bytesTo32Bit(0x04);
+		dir_offset = bytesTo32Bit(0x08);
 		
 		for (a in 0...dir_count) {
 			directories[a] = readDirectoryData(dir_offset + a * 16);
@@ -127,8 +127,8 @@ class WadData
 	function readDirectoryData(_offset:Int):Directory {
 		
 		var dir:Directory = {
-			lumpOffset : bytesToInteger(_offset + 0x00),
-			lumpSize : bytesToInteger(_offset + 0x04),
+			lumpOffset : bytesTo32Bit(_offset + 0x00),
+			lumpSize : bytesTo32Bit(_offset + 0x04),
 			lumpName : stringFromBytesRange(_offset + 0x08, _offset + 0x10)
 		};
 		return dir;
@@ -142,8 +142,8 @@ class WadData
 		for (a in 0...num_verts) 
 		{
 			var ver:Vertex = {
-				x : bytesToShort(_dir.lumpOffset + a * VERTEX_LUMP_SIZE, true),
-				y : bytesToShort((_dir.lumpOffset + a * VERTEX_LUMP_SIZE) + 2, true),
+				x : bytesTo16Bit(_dir.lumpOffset + a * VERTEX_LUMP_SIZE, true),
+				y : bytesTo16Bit((_dir.lumpOffset + a * VERTEX_LUMP_SIZE) + 2, true),
 			};
 			ver_array.push(ver);
 		}
@@ -155,13 +155,13 @@ class WadData
 		var num_lines = Std.int(_dir.lumpSize / LINEDEF_LUMP_SIZE);
 		for (a in 0...num_lines) {
 			var line:LineDef = {
-				start : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE),
-				end : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 2),
-				flags : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 4),
-				linetype : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 6),
-				sectortag : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 8),
-				frontsidedef : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 10),
-				backsidedef : bytesToShort(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 12),
+				start : bytesTo16Bit(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE),
+				end : bytesTo16Bit(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 2),
+				flags : bytesTo16Bit(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 4),
+				linetype : bytesTo16Bit(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 6),
+				sectortag : bytesTo16Bit(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 8),
+				frontsidedef : bytesTo16Bit(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 10),
+				backsidedef : bytesTo16Bit(_dir.lumpOffset + a * LINEDEF_LUMP_SIZE + 12),
 			}
 			line_array.push(line);
 		}
@@ -174,11 +174,11 @@ class WadData
 		var num_things = Std.int(_dir.lumpSize / THING_LUMP_SIZE);
 		for (a in 0...num_things) {
 			var thing:Thing = {
-				xpos : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE, true),
-				ypos : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 2, true),
-				angle : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 4),
-				type : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 6),
-				flags : bytesToShort(_dir.lumpOffset + a * THING_LUMP_SIZE + 8)
+				xpos : bytesTo16Bit(_dir.lumpOffset + a * THING_LUMP_SIZE, true),
+				ypos : bytesTo16Bit(_dir.lumpOffset + a * THING_LUMP_SIZE + 2, true),
+				angle : bytesTo16Bit(_dir.lumpOffset + a * THING_LUMP_SIZE + 4),
+				type : bytesTo16Bit(_dir.lumpOffset + a * THING_LUMP_SIZE + 6),
+				flags : bytesTo16Bit(_dir.lumpOffset + a * THING_LUMP_SIZE + 8)
 			}
 			switch (thing.type) {
 				case 	TypeID.M_ARCHVILE | TypeID.M_FORMERCOMMANDO | TypeID.M_REVENANT | TypeID.M_MANCUBUS |
@@ -200,35 +200,35 @@ class WadData
 		var num_nodes = Std.int(_dir.lumpSize / NODE_LUMP_SIZE);
 		for (a in 0...num_nodes) {
 			var node:Node = {
-				xPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE, true),
-				yPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 2, true),
-				changeXPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 4, true),
-				changeYPartition : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 6, true),
+				xPartition : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE, true),
+				yPartition : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 2, true),
+				changeXPartition : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 4, true),
+				changeYPartition : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 6, true),
 				
-				frontBoxTop : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 8, true),
-				frontBoxBottom : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 10, true),
-				frontBoxLeft : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 12, true),
-				frontBoxRight : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 14, true),
+				frontBoxTop : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 8, true),
+				frontBoxBottom : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 10, true),
+				frontBoxLeft : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 12, true),
+				frontBoxRight : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 14, true),
 				
-				backBoxTop : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 16, true),
-				backBoxBottom : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 18, true),
-				backBoxLeft : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 20, true),
-				backBoxRight : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 22, true),
+				backBoxTop : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 16, true),
+				backBoxBottom : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 18, true),
+				backBoxLeft : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 20, true),
+				backBoxRight : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 22, true),
 				
-				frontChildID : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 24),
-				backChildID : bytesToShort(_dir.lumpOffset + a * NODE_LUMP_SIZE + 26),
+				frontChildID : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 24),
+				backChildID : bytesTo16Bit(_dir.lumpOffset + a * NODE_LUMP_SIZE + 26),
 			}
 			node_array.push(node);
 		}
 		return(node_array);
 	}
 	//data conversions
-	function bytesToShort(_offset:Int, _signed:Bool = false):Int //16 bits
+	function bytesTo16Bit(_offset:Int, _signed:Bool = false):Int //16 bits
 	{
 		var val = (b_dataArray[_offset + 1] << 8) | b_dataArray[_offset];
 		return(_signed == true && val > 32768 ? val - 65536 : val);
 	}
-	function bytesToInteger(_offset:Int):Int {
+	function bytesTo32Bit(_offset:Int):Int {
 		return((b_dataArray[_offset + 3] << 24) | (b_dataArray[_offset + 2] << 16) | (b_dataArray[_offset + 1] << 8) | b_dataArray[_offset]);
 	}
 	function stringFromBytesRange(_start:Int, _end:Int):String {
