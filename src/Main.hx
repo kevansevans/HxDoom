@@ -53,11 +53,22 @@ class Main extends Sprite
 		var wad:Bytes;
 		
 		//could turn this into a single loop (no conditionals), but I want to make sure each target uses the shortest loop available.
+		#if sys
+		//if Sys, then app can simply scan the wads directory and load those
 		for (a in FileSystem.readDirectory("./wads")) {
 			wad = File.getBytes("./wads/" + a);
 			var isIwad:Bool = wad.getString(0, 4) == "IWAD";
 			wads.push(new WadData(wad, a, isIwad));
 		}
+		#else
+		//If not sys, then target either does not allow it or has a different method of loading files.
+		for (a in Assets.list()) {
+			if (a.lastIndexOf("wads/") == 0) wad = Assets.getBytes(a);
+			else continue;
+			var isIwad:Bool = wad.getString(0, 4) == "IWAD";
+			wads.push(new WadData(wad, a, isIwad));
+		}
+		#end
 		
 		stage.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent) {
 			if (e.keyCode == Keyboard.R) redraw();
