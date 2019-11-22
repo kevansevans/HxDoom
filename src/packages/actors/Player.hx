@@ -10,7 +10,5 @@ class Player extends Thing
 	{
 		//id, ego, superego, and the
 		super(_id);
-		
-		group = TypeGroup.PLAYER;
 	}
 }

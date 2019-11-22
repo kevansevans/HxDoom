@@ -13,7 +13,6 @@ class Thing
 	public var ypos(default, set):Int;
 	public var angle(default, set):Int;
 	public var type:TypeID;
-	public var group:TypeGroup;
 	
 	public var isPlayer(get, never):Bool;
 	public var isMonster(get, never):Bool;
@@ -22,7 +21,6 @@ class Thing
 	public function new(_id:Int) 
 	{
 		id = _id;
-		group = TypeGroup.UNDEFINED;
 	}
 	
 	//Setters
