@@ -238,28 +238,27 @@ class WadData
 		}
 		return str;
 	}
-	//parsing
-	public function nodeRecursiveSearch(_node:Null<Node>, _leaf:Int) 
+	public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool
 	{
-		if (_node == null) return;
-		if (activemap.nodes[_node.frontChildID] == null && activemap.nodes[_node.backChildID] == null) {
-			//something here
-			return;
-		}
-		if (_node.frontChildID < _leaf) {
-			nodeRecursiveSearch(activemap.nodes[_node.backChildID], _leaf);
-			nodeRecursiveSearch(activemap.nodes[_node.frontChildID], _leaf);
-		} else {
-			nodeRecursiveSearch(activemap.nodes[_node.frontChildID], _leaf);
-			nodeRecursiveSearch(activemap.nodes[_node.backChildID], _leaf);
-		}
-	}
-	function isPointOnBackSide(_x:Int, _y:Int, _map:Int, _nodeID:Int):Bool
-	{
-		var dx = _x - maps[_map].nodes[_nodeID].xPartition;
-		var dy = _y - maps[_map].nodes[_nodeID].yPartition;
+		var dx = _x - activemap.nodes[node].xPartition;
+		var dy = _y - activemap.nodes[node].yPartition;
 		
-		return (((dx *  maps[_map].nodes[_nodeID].changeYPartition) - (dy *  maps[_map].nodes[_nodeID].changeXPartition)) <= 0);
+		return (((dx *  activemap.nodes[node].changeYPartition) - (dy * activemap.nodes[node].changeXPartition)) <= 0);
+	}
+	
+	public function getPlayerNode():Node {
+		var node:Int = activemap.nodes.length - 1;
+		while (true) {
+			if (activemap.nodes[node].backChildID & SUBSECTORIDENTIFIER > 0 || activemap.nodes[node].frontChildID & SUBSECTORIDENTIFIER > 0 ) {
+				return activemap.nodes[node];
+			}
+			var isOnBack:Bool = isPointOnBackSide(activemap.things[0].xpos, activemap.things[0].ypos, node);
+			if (isOnBack) {
+				node = activemap.nodes[node].backChildID;
+			} else {
+				node = activemap.nodes[node].frontChildID;
+			}
+		}
 	}
 }
 typedef Directory = {

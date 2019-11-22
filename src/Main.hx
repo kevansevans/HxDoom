@@ -1,5 +1,6 @@
 package;
 
+import lime.math.Rectangle;
 import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.Lib;
@@ -17,7 +18,6 @@ import haxe.io.Bytes;
 
 import packages.WadData;
 import packages.actors.TypeID;
-import packages.actors.TypeGroup;
 
 /**
  * ...
@@ -32,11 +32,12 @@ class Main extends Sprite
 	var wads:Array<WadData>;
 	
 	static var iwad_chosen:Int = 0;
-	static var map_scale_inv:Int = 5;
+	static var map_scale_inv:Int = 2;
 	static var map_to_draw:Int = 0;
 	
 	var draw:Sprite;
 	var mapsprite:Sprite;
+	var mapnode:Sprite;
 	
 	public function new() 
 	{
@@ -46,9 +47,13 @@ class Main extends Sprite
 		
 		draw = new Sprite();
 		mapsprite = new Sprite();
+		mapnode = new Sprite();
 		addChild(draw);
 		draw.addChild(mapsprite);
-		mapsprite.scaleY = -1;
+		addChild(mapnode);
+		
+		mapsprite.scaleX /= map_scale_inv;
+		mapsprite.scaleY /= map_scale_inv * -1;
 		
 		var wad:Bytes;
 		
@@ -78,6 +83,8 @@ class Main extends Sprite
 			draw.scaleY += e.delta / 10;
 			if (draw.scaleX <= 0.1) draw.scaleX = draw.scaleY = 0.1;
 			if (draw.scaleX >= 20) draw.scaleX = draw.scaleY = 20;
+			mapnode.scaleX = draw.scaleX;
+			mapnode.scaleY = draw.scaleY;
 		});
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent) {
 			draw.startDrag();
@@ -100,19 +107,20 @@ class Main extends Sprite
 		wads[0].loadMap(map_to_draw);
 		
 		var _map = wads[0].activemap;
+		var _node = wads[0].getPlayerNode();
 		
 		draw.x = draw.y = 0;
 		draw.scaleX = draw.scaleY = 1;
 		
 		mapsprite.graphics.clear();
-		mapsprite.graphics.lineStyle(1, 0xFFFFFF);
+		mapsprite.graphics.lineStyle(2, 0xFFFFFF);
 		
 		var xoff = _map.offset_x;
 		var yoff = _map.offset_y;
 		
 		for (a in _map.linedefs) {
-			mapsprite.graphics.moveTo((_map.vertexes[a.start].x + xoff) / map_scale_inv, (_map.vertexes[a.start].y + yoff) / map_scale_inv);
-			mapsprite.graphics.lineTo((_map.vertexes[a.end].x + xoff) / map_scale_inv, (_map.vertexes[a.end].y + yoff) / map_scale_inv);
+			mapsprite.graphics.moveTo((_map.vertexes[a.start].x + xoff), (_map.vertexes[a.start].y + yoff));
+			mapsprite.graphics.lineTo((_map.vertexes[a.end].x + xoff), (_map.vertexes[a.end].y + yoff));
 		}
 		
 		for (a in _map.things) {
@@ -142,10 +150,27 @@ class Main extends Sprite
 				default :
 					mapsprite.graphics.lineStyle(1, 0xFFFFFF);
 			}
-			mapsprite.graphics.drawCircle((a.xpos + xoff) / map_scale_inv, (a.ypos + yoff) / map_scale_inv, 2);
+			mapsprite.graphics.drawCircle((a.xpos + xoff), (a.ypos + yoff), 5);
 		}
+		
+		mapsprite.graphics.lineStyle(5, 0xFF00, 0.4);
+		mapsprite.graphics.moveTo((_node.frontBoxLeft + xoff), (_node.frontBoxTop + yoff));
+		mapsprite.graphics.lineTo((_node.frontBoxRight + xoff), (_node.frontBoxTop + yoff));
+		mapsprite.graphics.lineTo((_node.frontBoxRight + xoff), (_node.frontBoxBottom + yoff));
+		mapsprite.graphics.lineTo((_node.frontBoxLeft + xoff), (_node.frontBoxBottom + yoff));
+		mapsprite.graphics.lineTo((_node.frontBoxLeft + xoff), (_node.frontBoxTop + yoff));
+		
+		mapsprite.graphics.lineStyle(5, 0xFF0000, 0.4);
+		mapsprite.graphics.moveTo((_node.backBoxLeft + xoff), (_node.backBoxTop + yoff));
+		mapsprite.graphics.lineTo((_node.backBoxRight + xoff), (_node.backBoxTop + yoff));
+		mapsprite.graphics.lineTo((_node.backBoxRight + xoff), (_node.backBoxBottom + yoff));
+		mapsprite.graphics.lineTo((_node.backBoxLeft + xoff), (_node.backBoxBottom + yoff));
+		mapsprite.graphics.lineTo((_node.backBoxLeft + xoff), (_node.backBoxTop + yoff));
+		
+		mapsprite.graphics.lineStyle(5, 0xFF);
+		mapsprite.graphics.moveTo((_node.xPartition + xoff), (_node.yPartition + yoff));
+		mapsprite.graphics.lineTo((_node.xPartition + _node.changeXPartition + xoff), (_node.yPartition + _node.changeYPartition + yoff));
 		
 		mapsprite.y = mapsprite.height;
 	}
-
 }
