@@ -9,7 +9,7 @@ Haxe port of Doom
 ```
 
 * Vanilla Like Behavior
-* Deploable to several targets, properly taking advantage of what Haxe does
+* Deployable to several targets, properly taking advantage of what Haxe does
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //Haxe port by kevansevans
