@@ -21,6 +21,8 @@ class WadData
 	public static inline var LINEDEF_LUMP_SIZE:Int = 14;
 	public static inline var THING_LUMP_SIZE:Int = 10;
 	public static inline var NODE_LUMP_SIZE:Int = 28;
+	public static inline var SSECTOR_LUMP_SIZE:Int = 4;
+	public static inline var SEG_LUMP_SIZE:Int = 12;
 	
 	public static inline var SUBSECTORIDENTIFIER:Int = 0x8000;
 	
@@ -92,6 +94,8 @@ class WadData
 			name 		: name + ":" + directories[dirIndex - 10].lumpName,
 			player		: new Array<Player>(),
 			nodes 		: readNodeData(directories[dirIndex - 3]),
+			subsectors	: readSubsectorData(directories[dirIndex - 4]),
+			seg			: readSegData(directories[dirIndex - 5]),
 			vertexes 	: readVertextData(directories[dirIndex - 6]),
 			linedefs 	: readLineDefData(directories[dirIndex - 8]),
 			things 		: readThingData(directories[dirIndex - 9]),
@@ -148,6 +152,38 @@ class WadData
 			ver_array.push(ver);
 		}
 		return ver_array;
+	}
+	//subsectors
+	function readSubsectorData(_dir:Directory) 
+	{
+		var ssec_array:Array<Subsector> = new Array();
+		var num_ssec:Int = Std.int(_dir.lumpSize / SSECTOR_LUMP_SIZE);
+		for (a in 0...num_ssec) {
+			var ssect:Subsector = {
+				segCount : readTwoBytes(_dir.lumpOffset + a * SSECTOR_LUMP_SIZE),
+				firstSegID : readTwoBytes(_dir.lumpOffset + a * SSECTOR_LUMP_SIZE + 2)
+			}
+			ssec_array.push(ssect);
+		}
+		return(ssec_array);
+	}
+	//segments
+	function readSegData(_dir:Directory) 
+	{
+		var seg_array:Array<Seg> = new Array();
+		var num_seg:Int = Std.int(_dir.lumpSize / SEG_LUMP_SIZE);
+		for (a in 0...num_seg) {
+			var seg:Seg = {
+				startVertexID : readTwoBytes(_dir.lumpOffset + a * SEG_LUMP_SIZE),
+				endVertexID : readTwoBytes(_dir.lumpOffset + a * SEG_LUMP_SIZE + 2),
+				angle : readTwoBytes(_dir.lumpOffset + a * SEG_LUMP_SIZE + 4, true),
+				lineDefID : readTwoBytes(_dir.lumpOffset + a * SEG_LUMP_SIZE + 6),
+				direction : readTwoBytes(_dir.lumpOffset + a * SEG_LUMP_SIZE + 8),
+				offset : readTwoBytes(_dir.lumpOffset + a * SEG_LUMP_SIZE + 10)
+			}
+			seg_array.push(seg);
+		}
+		return (seg_array);
 	}
 	//linedefs
 	function readLineDefData(_dir:Directory):Array<LineDef> {
@@ -271,10 +307,24 @@ typedef Map = {
 	var player:Array<Player>;
 	var vertexes:Array<Vertex>;
 	var linedefs:Array<LineDef>;
-	var nodes:Array<Null<Node>>; //needs to be null as null array access is needed.
+	var nodes:Array<Node>;
+	var subsectors:Array<Subsector>;
+	var seg:Array<Seg>;
 	var things:Array<Thing>;
 	var offset_x:Float;
 	var offset_y:Float;
+}
+typedef Subsector = {
+	var segCount:Int;
+	var firstSegID:Int;
+}
+typedef Seg = {
+	var startVertexID:Int;
+	var endVertexID:Int;
+	var angle:Int;
+	var lineDefID:Int;
+	var direction:Int;
+	var offset:Int;
 }
 typedef Vertex = {
 	var x:Int;
