@@ -1,6 +1,5 @@
 package;
 
-import lime.math.Rectangle;
 import openfl.Assets;
 import openfl.display.Sprite;
 import openfl.Lib;
@@ -16,8 +15,8 @@ import sys.io.File;
 #end
 import haxe.io.Bytes;
 
-import packages.WadData;
 import packages.actors.TypeID;
+import packages.wad.Pack;
 
 /**
  * ...
@@ -29,7 +28,7 @@ import packages.actors.TypeID;
  */
 class Main extends Sprite 
 {
-	var wads:Array<WadData>;
+	var wads:Array<Pack>;
 	
 	static var iwad_chosen:Int = 0;
 	static var map_scale_inv:Int = 2;
@@ -43,7 +42,7 @@ class Main extends Sprite
 	{
 		super();
 		
-		wads = new Array<WadData>();	
+		wads = new Array<Pack>();	
 		
 		draw = new Sprite();
 		mapsprite = new Sprite();
@@ -63,7 +62,7 @@ class Main extends Sprite
 		for (a in FileSystem.readDirectory("./wads")) {
 			wad = File.getBytes("./wads/" + a);
 			var isIwad:Bool = wad.getString(0, 4) == "IWAD";
-			wads.push(new WadData(wad, a, isIwad));
+			wads.push(new Pack(wad, a, isIwad));
 		}
 		#else
 		//If not sys, then target either does not allow it or has a different method of loading files.
@@ -71,12 +70,15 @@ class Main extends Sprite
 			if (a.lastIndexOf("wads/") == 0) wad = Assets.getBytes(a);
 			else continue;
 			var isIwad:Bool = wad.getString(0, 4) == "IWAD";
-			wads.push(new WadData(wad, a, isIwad));
+			wads.push(new Pack(wad, a, isIwad));
 		}
 		#end
 		
+		wads[0].loadMap(0);
+		
+		
 		stage.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent) {
-			if (e.keyCode == Keyboard.R) redraw();
+			if (e.keyCode == Keyboard.R) debug_draw();
 		});
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, function(e:MouseEvent) {
 			draw.scaleX += e.delta / 10;
@@ -94,14 +96,13 @@ class Main extends Sprite
 		});
 		
 		if (wads.length > 0) {
-			redraw();
+			debug_draw();
 		} else {
 			trace("No wad data collected");
 		}
 	}
 	
-	//This function is likely to be deprecated in favor of a proper automap, it's just for debug purposes. Dunno when that will happen.
-	function redraw()
+	function debug_draw()
 	{
 		map_to_draw = Std.int(wads[0].mapindex.length * Math.random());
 		wads[0].loadMap(map_to_draw);
@@ -111,49 +112,18 @@ class Main extends Sprite
 		draw.x = draw.y = 0;
 		draw.scaleX = draw.scaleY = 1;
 		
-		mapsprite.graphics.clear();
-		
 		var xoff = _map.offset_x;
 		var yoff = _map.offset_y;
 		
-		for (ssect in _map.subsectors) {
-			mapsprite.graphics.lineStyle(2, Std.int(Math.random() * 0xFFFFFF));
-			for (index in 0...ssect.segCount) {
-				var seg = _map.seg[ssect.firstSegID + index];
-				mapsprite.graphics.moveTo(_map.vertexes[seg.startVertexID].x + xoff, _map.vertexes[seg.startVertexID].y + yoff);
-				mapsprite.graphics.lineTo(_map.vertexes[seg.endVertexID].x + xoff, _map.vertexes[seg.endVertexID].y + yoff);
-			}
-		}
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Drawing code start
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		for (a in _map.things) {
-			switch (a.type) {
-				case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR:
-					mapsprite.graphics.lineStyle(1, 0x00FF00);
-				case 	TypeID.M_SPIDERMASTERMIND | TypeID.M_FORMERSERGEANT | TypeID.M_CYBERDEMON |
-						TypeID.M_DEADFORMERHUMAN | TypeID.M_DEADFORMERSERGEANT | TypeID.M_DEADIMP | TypeID.M_DEADDEMON |
-						TypeID.M_DEADCACODEMON | TypeID.M_DEADLOSTSOUL | TypeID.M_SPECTRE | TypeID.M_ARCHVILE |
-						TypeID.M_FORMERCOMMANDO | TypeID.M_REVENANT | TypeID.M_MANCUBUS | TypeID.M_ARACHNOTRON |
-						TypeID.M_HELLKNIGHT | TypeID.M_PAINELEMENTAL | TypeID.M_COMMANDERKEEN | TypeID.M_WOLFSS |
-						TypeID.M_SPAWNSPOT | TypeID.M_BOSSBRAIN | TypeID.M_BOSSSHOOTER | TypeID.M_IMP |
-						TypeID.M_DEMON | TypeID.M_BARONOFHELL | TypeID.M_FORMERTROOPER | TypeID.M_CACODEMON |
-						TypeID.M_LOSTSOUL
-						:
-							mapsprite.graphics.lineStyle(1, 0xFF0000);
-				case 	TypeID.I_AMMOCLIP | TypeID.I_BACKPACK | TypeID.I_BERSERK | TypeID.I_BLUEARMOR |
-						TypeID.I_BLUEKEYCARD | TypeID.I_BLUESKULLKEY | TypeID.I_BOXOFAMMO | TypeID.I_BOXOFROCKETS |
-						TypeID.I_BOXOFSHELLS | TypeID.I_CELLCHARGE | TypeID.I_CELLCHARGEPACK | TypeID.I_COMPUTERMAP |
-						TypeID.I_GREENARMOR | TypeID.I_HEALTHPOTION | TypeID.I_INVISIBILITY | TypeID.I_INVULNERABILITY |
-						TypeID.I_LIGHTAMPLIFICATIONVISOR | TypeID.I_MEDIKIT | TypeID.I_MEGASPHERE | TypeID.I_RADIATIONSUIT |
-						TypeID.I_REDKEYCARD | TypeID.I_REDSKULLKEY | TypeID.I_ROCKET | TypeID.I_SHOTGUNSHELLS |
-						TypeID.I_SOULSPHERE | TypeID.I_SPIRITARMOR | TypeID.I_STIMPACK | TypeID.I_YELLOWKEYCARD |
-						TypeID.I_YELLOWSKULLKEY
-						:
-							mapsprite.graphics.lineStyle(1, 0x00CCFF);
-				default :
-					mapsprite.graphics.lineStyle(1, 0xFFFFFF);
-			}
-			mapsprite.graphics.drawCircle((a.xpos + xoff), (a.ypos + yoff), 5);
-		}
+		mapsprite.graphics.clear();
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Drawing code end
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		mapsprite.y = mapsprite.height;
 	}
