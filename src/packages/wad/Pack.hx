@@ -8,6 +8,8 @@ import packages.wad.Map;
 /**
  * ...
  * @author Kaelan
+ * 
+ * To reduce typing redundancy, I named this class "pack" to represent the wad data as a whole.
  */
 class Pack 
 {
@@ -80,18 +82,27 @@ class Pack
 		var _map = maps[_index];
 		var _offset = _map.dirOffset;
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load Subsectors
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 4].size / Reader.SSECTOR_LUMP_SIZE);
 		place = directories[_offset - 4].offset;
 		for (a in 0...numitems) {
 			_map.subsectors[a] = reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE);
 		}
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load segments
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 5].size / Reader.SEG_LUMP_SIZE);
 		place = directories[_offset - 5].offset;
 		for (a in 0...numitems) {
 			_map.segments[a] = reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE);
 		}
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load vertexes
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 6].size / Reader.VERTEX_LUMP_SIZE);
 		place = directories[_offset - 6].offset;
 		for (a in 0...numitems) {
@@ -99,18 +110,25 @@ class Pack
 		}
 		_map.setOffset();
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load linedefs
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 8].size / Reader.LINEDEF_LUMP_SIZE);
 		place = directories[_offset - 8].offset;
 		for (a in 0...numitems) {
 			_map.linedefs[a] = reader.readLinedef(data, place + a * Reader.LINEDEF_LUMP_SIZE);
 		}
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load things
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 9].size / Reader.THING_LUMP_SIZE);
 		place = directories[_offset - 9].offset;
 		for (a in 0...numitems) {
 			_map.things[a] = reader.readThing(data, place + a * Reader.THING_LUMP_SIZE);
 		}
 		
+		//Map name as stated in IWAD, IE E#M#/MAP##
 		_map.name = directories[_offset - 10].name;
 		
 		activeMap = _map;
@@ -138,5 +156,5 @@ class Pack
 			}
 		}
 	}
-	 * /
+	 */
 }
