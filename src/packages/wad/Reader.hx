@@ -55,8 +55,8 @@ class Reader
 	
 	public function readVertex(_data:Array<Int>, _offset:Int):Vertex {
 		return new Vertex(
-			getTwoBytes(_data, _offset),
-			getTwoBytes(_data, _offset + 2)
+			getTwoBytes(_data, _offset, true),
+			getTwoBytes(_data, _offset + 2, true)
 		);
 	}
 	
