@@ -34,7 +34,7 @@ class WadData
 	var b_dataArray:Array<Int>;				//JS Friendly way of storing byte data
 	var directories:Array<Directory>;		//Stores location info of each lump
 	public var maps:Array<Map>;				//Stores deconstructed map data
-	public var activemap:Map;	//Active map
+	public var activemap:Map;				//Active map
 	public var mapindex:Array<Int>;			//Tracks location of each map found
 	var iwad:Bool;							//Is an Iwad
 	var name:String;						//name of said wad
