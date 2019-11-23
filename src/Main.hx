@@ -14,6 +14,7 @@ import sys.io.File;
 
 #end
 import haxe.io.Bytes;
+import packages.wad.maplumps.Segment;
 
 import packages.actors.TypeID;
 import packages.wad.Pack;
@@ -42,21 +43,13 @@ class Main extends Sprite
 	{
 		super();
 		
-		wads = new Array<Pack>();	
-		
-		draw = new Sprite();
-		mapsprite = new Sprite();
-		mapnode = new Sprite();
-		addChild(draw);
-		draw.addChild(mapsprite);
-		addChild(mapnode);
-		
-		mapsprite.scaleX /= map_scale_inv;
-		mapsprite.scaleY /= map_scale_inv * -1;
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load wad data here
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		var wad:Bytes;
+		wads = new Array<Pack>();	
 		
-		//could turn this into a single loop (no conditionals), but I want to make sure each target uses the shortest loop available.
 		#if sys
 		//if Sys, then app can simply scan the wads directory and load those
 		for (a in FileSystem.readDirectory("./wads")) {
@@ -76,9 +69,48 @@ class Main extends Sprite
 		
 		wads[0].loadMap(0);
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//OpenFL junk here
+		//
+		//Could be beneficial to replaced this with a different Haxe rendering API.
+		//Likely candidate is Kha for it's wider range of deployment capabilities than OpenFL and default
+		//hardware rendering.
+		//
+		//Using OpenFL because I'm most comfortable with that.
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		draw = new Sprite();
+		mapsprite = new Sprite();
+		mapnode = new Sprite();
+		addChild(draw);
+		draw.addChild(mapsprite);
+		addChild(mapnode);
+		
+		mapsprite.scaleX /= map_scale_inv;
+		mapsprite.scaleY /= map_scale_inv * -1;
 		
 		stage.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent) {
-			if (e.keyCode == Keyboard.R) debug_draw();
+			switch (e.keyCode) {
+				case Keyboard.NUMBER_1 :
+					wads[0].loadMap(0);
+				case Keyboard.NUMBER_2 :
+					wads[0].loadMap(1);
+				case Keyboard.NUMBER_3 :
+					wads[0].loadMap(2);
+				case Keyboard.NUMBER_4 :
+					wads[0].loadMap(3);
+				case Keyboard.NUMBER_5 :
+					wads[0].loadMap(4);
+				case Keyboard.NUMBER_6 :
+					wads[0].loadMap(5);
+				case Keyboard.NUMBER_7 :
+					wads[0].loadMap(6);
+				case Keyboard.NUMBER_8 :
+					wads[0].loadMap(7);
+				case Keyboard.NUMBER_9 :
+					wads[0].loadMap(8);
+			}
+			debug_draw();
 		});
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, function(e:MouseEvent) {
 			draw.scaleX += e.delta / 10;
@@ -97,17 +129,12 @@ class Main extends Sprite
 		
 		if (wads.length > 0) {
 			debug_draw();
-		} else {
-			trace("No wad data collected");
 		}
 	}
 	
 	function debug_draw()
 	{
-		map_to_draw = Std.int(wads[0].mapindex.length * Math.random());
-		wads[0].loadMap(map_to_draw);
-		
-		var _map = wads[0].activemap;
+		var _map = wads[0].activeMap;
 		
 		draw.x = draw.y = 0;
 		draw.scaleX = draw.scaleY = 1;
@@ -121,10 +148,19 @@ class Main extends Sprite
 		
 		mapsprite.graphics.clear();
 		
+		for (ssec in _map.subsectors) {
+			var color = Std.int(Math.random() * 0xFFFFFF);
+			mapsprite.graphics.lineStyle(2, color);
+			for (seg in 0...ssec.segmentCount) {
+				mapsprite.graphics.moveTo(_map.vertexes[_map.segments[seg + ssec.firstSegmentID].startVertexID].xpos + xoff, _map.vertexes[_map.segments[seg + ssec.firstSegmentID].startVertexID].ypos + yoff);
+				mapsprite.graphics.lineTo(_map.vertexes[_map.segments[seg + ssec.firstSegmentID].endVertexID].xpos + xoff, _map.vertexes[_map.segments[seg + ssec.firstSegmentID].endVertexID].ypos + yoff);
+			}
+		}
+		
+		mapsprite.y = mapsprite.height;
+		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Drawing code end
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		mapsprite.y = mapsprite.height;
 	}
 }
