@@ -276,10 +276,10 @@ class WadData
 	}
 	public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool
 	{
-		var dx = _x - activemap.nodes[node].xPartition;
-		var dy = _y - activemap.nodes[node].yPartition;
+		var dx = _x - activemap.nodes[_nodeID].xPartition;
+		var dy = _y - activemap.nodes[_nodeID].yPartition;
 		
-		return (((dx *  activemap.nodes[node].changeYPartition) - (dy * activemap.nodes[node].changeXPartition)) <= 0);
+		return (((dx *  activemap.nodes[_nodeID].changeYPartition) - (dy * activemap.nodes[_nodeID].changeXPartition)) <= 0);
 	}
 	
 	public function getPlayerNode():Node {
