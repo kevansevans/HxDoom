@@ -91,7 +91,7 @@ class WadData
 		var dirIndex = mapindex[_mapIndex];
 		var map:Map = {
 			
-			name 		: name + ":" + directories[dirIndex - 10].lumpName,
+			name 		: name + "_" + directories[dirIndex - 10].lumpName,
 			player		: new Array<Player>(),
 			nodes 		: readNodeData(directories[dirIndex - 3]),
 			subsectors	: readSubsectorData(directories[dirIndex - 4]),
