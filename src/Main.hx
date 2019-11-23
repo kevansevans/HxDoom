@@ -107,20 +107,22 @@ class Main extends Sprite
 		wads[0].loadMap(map_to_draw);
 		
 		var _map = wads[0].activemap;
-		var _node = wads[0].getPlayerNode();
 		
 		draw.x = draw.y = 0;
 		draw.scaleX = draw.scaleY = 1;
 		
 		mapsprite.graphics.clear();
-		mapsprite.graphics.lineStyle(2, 0xFFFFFF);
 		
 		var xoff = _map.offset_x;
 		var yoff = _map.offset_y;
 		
-		for (a in _map.linedefs) {
-			mapsprite.graphics.moveTo((_map.vertexes[a.start].x + xoff), (_map.vertexes[a.start].y + yoff));
-			mapsprite.graphics.lineTo((_map.vertexes[a.end].x + xoff), (_map.vertexes[a.end].y + yoff));
+		for (ssect in _map.subsectors) {
+			mapsprite.graphics.lineStyle(2, Std.int(Math.random() * 0xFFFFFF));
+			for (index in 0...ssect.segCount) {
+				var seg = _map.seg[ssect.firstSegID + index];
+				mapsprite.graphics.moveTo(_map.vertexes[seg.startVertexID].x + xoff, _map.vertexes[seg.startVertexID].y + yoff);
+				mapsprite.graphics.lineTo(_map.vertexes[seg.endVertexID].x + xoff, _map.vertexes[seg.endVertexID].y + yoff);
+			}
 		}
 		
 		for (a in _map.things) {
@@ -152,24 +154,6 @@ class Main extends Sprite
 			}
 			mapsprite.graphics.drawCircle((a.xpos + xoff), (a.ypos + yoff), 5);
 		}
-		
-		mapsprite.graphics.lineStyle(5, 0xFF00, 0.4);
-		mapsprite.graphics.moveTo((_node.frontBoxLeft + xoff), (_node.frontBoxTop + yoff));
-		mapsprite.graphics.lineTo((_node.frontBoxRight + xoff), (_node.frontBoxTop + yoff));
-		mapsprite.graphics.lineTo((_node.frontBoxRight + xoff), (_node.frontBoxBottom + yoff));
-		mapsprite.graphics.lineTo((_node.frontBoxLeft + xoff), (_node.frontBoxBottom + yoff));
-		mapsprite.graphics.lineTo((_node.frontBoxLeft + xoff), (_node.frontBoxTop + yoff));
-		
-		mapsprite.graphics.lineStyle(5, 0xFF0000, 0.4);
-		mapsprite.graphics.moveTo((_node.backBoxLeft + xoff), (_node.backBoxTop + yoff));
-		mapsprite.graphics.lineTo((_node.backBoxRight + xoff), (_node.backBoxTop + yoff));
-		mapsprite.graphics.lineTo((_node.backBoxRight + xoff), (_node.backBoxBottom + yoff));
-		mapsprite.graphics.lineTo((_node.backBoxLeft + xoff), (_node.backBoxBottom + yoff));
-		mapsprite.graphics.lineTo((_node.backBoxLeft + xoff), (_node.backBoxTop + yoff));
-		
-		mapsprite.graphics.lineStyle(5, 0xFF);
-		mapsprite.graphics.moveTo((_node.xPartition + xoff), (_node.yPartition + yoff));
-		mapsprite.graphics.lineTo((_node.xPartition + _node.changeXPartition + xoff), (_node.yPartition + _node.changeYPartition + yoff));
 		
 		mapsprite.y = mapsprite.height;
 	}
