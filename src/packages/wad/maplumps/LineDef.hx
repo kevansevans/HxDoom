@@ -15,7 +15,13 @@ class LineDef
 	public var backSideDef:Int;
 	public function new(_start:Int, _end:Int, _flags:Int, _lineType:Int, _sectorTag:Int, _fronSideDef:Int, _backSideDef:Int) 
 	{
-		
+		start = _start;
+		end = _end;
+		flags = _flags;
+		lineType = _lineType;
+		sectorTag = _sectorTag;
+		frontSideDef = _fronSideDef;
+		backSideDef = _backSideDef;
 	}
 	
 }
