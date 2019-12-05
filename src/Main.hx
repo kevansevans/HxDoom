@@ -18,6 +18,7 @@ import packages.wad.maplumps.Segment;
 
 import packages.actors.TypeID;
 import packages.wad.Pack;
+import packages.wad.LevelID;
 
 /**
  * ...
@@ -37,7 +38,7 @@ class Main extends Sprite
 	
 	var draw:Sprite;
 	var mapsprite:Sprite;
-	var mapnode:Sprite;
+	var subSectorsprite:Sprite;
 	
 	public function new() 
 	{
@@ -72,43 +73,50 @@ class Main extends Sprite
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//OpenFL junk here
 		//
-		//Could be beneficial to replaced this with a different Haxe rendering API.
+		//Could be beneficial to replaced this with a different Haxe API.
 		//Likely candidate is Kha for it's wider range of deployment capabilities than OpenFL and default
-		//hardware rendering.
+		//hardware rendering. Issue currently stands that I don't know how to arbitrarily load files
+		//into the program. Kind of defeats the purpose of a Doom engine if I can't arbitrarily tack on
+		//more assets outside of the code.
 		//
 		//Using OpenFL because I'm most comfortable with that.
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		draw = new Sprite();
 		mapsprite = new Sprite();
-		mapnode = new Sprite();
+		subSectorsprite = new Sprite();
 		addChild(draw);
 		draw.addChild(mapsprite);
-		addChild(mapnode);
+		draw.addChild(subSectorsprite);
 		
 		mapsprite.scaleX /= map_scale_inv;
 		mapsprite.scaleY /= map_scale_inv * -1;
 		
+		subSectorsprite.scaleX /= map_scale_inv;
+		subSectorsprite.scaleY /= map_scale_inv * -1;
+		
 		stage.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent) {
 			switch (e.keyCode) {
+				case Keyboard.NUMBER_0 :
+					wads[0].loadMap(10); //this causes crash
 				case Keyboard.NUMBER_1 :
-					wads[0].loadMap(0);
+					wads[0].loadMap(LevelID.E1M1);
 				case Keyboard.NUMBER_2 :
-					wads[0].loadMap(1);
+					wads[0].loadMap(LevelID.E1M2);
 				case Keyboard.NUMBER_3 :
-					wads[0].loadMap(2);
+					wads[0].loadMap(LevelID.E1M3);
 				case Keyboard.NUMBER_4 :
-					wads[0].loadMap(3);
+					wads[0].loadMap(LevelID.E1M4);
 				case Keyboard.NUMBER_5 :
-					wads[0].loadMap(4);
+					wads[0].loadMap(LevelID.E1M5);
 				case Keyboard.NUMBER_6 :
-					wads[0].loadMap(5);
+					wads[0].loadMap(LevelID.E1M6);
 				case Keyboard.NUMBER_7 :
-					wads[0].loadMap(6);
+					wads[0].loadMap(LevelID.E1M7);
 				case Keyboard.NUMBER_8 :
-					wads[0].loadMap(7);
+					wads[0].loadMap(LevelID.E1M8);
 				case Keyboard.NUMBER_9 :
-					wads[0].loadMap(8);
+					wads[0].loadMap(LevelID.E1M9);
 			}
 			debug_draw();
 		});
@@ -117,8 +125,6 @@ class Main extends Sprite
 			draw.scaleY += e.delta / 10;
 			if (draw.scaleX <= 0.1) draw.scaleX = draw.scaleY = 0.1;
 			if (draw.scaleX >= 20) draw.scaleX = draw.scaleY = 20;
-			mapnode.scaleX = draw.scaleX;
-			mapnode.scaleY = draw.scaleY;
 		});
 		stage.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent) {
 			draw.startDrag();
@@ -147,14 +153,10 @@ class Main extends Sprite
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		mapsprite.graphics.clear();
-		
-		for (ssec in _map.subsectors) {
-			var color = Std.int(Math.random() * 0xFFFFFF);
-			mapsprite.graphics.lineStyle(2, color);
-			for (seg in 0...ssec.segmentCount) {
-				mapsprite.graphics.moveTo(_map.vertexes[_map.segments[seg + ssec.firstSegmentID].startVertexID].xpos + xoff, _map.vertexes[_map.segments[seg + ssec.firstSegmentID].startVertexID].ypos + yoff);
-				mapsprite.graphics.lineTo(_map.vertexes[_map.segments[seg + ssec.firstSegmentID].endVertexID].xpos + xoff, _map.vertexes[_map.segments[seg + ssec.firstSegmentID].endVertexID].ypos + yoff);
-			}
+		mapsprite.graphics.lineStyle(2, 0xFFFFFF);
+		for (line in wads[0].linedefs) {
+			mapsprite.graphics.moveTo(line.start.xpos + xoff, line.start.ypos + yoff);
+			mapsprite.graphics.lineTo(line.end.xpos + xoff, line.end.ypos + yoff);
 		}
 		
 		mapsprite.y = mapsprite.height;
@@ -164,3 +166,14 @@ class Main extends Sprite
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 }
+
+/*
+ *	struct Vertex
+	{
+		vec2 position;
+		int frontsector;
+		int backsector;
+		int wallpart;
+		int vertexnum;
+	} 
+ */
