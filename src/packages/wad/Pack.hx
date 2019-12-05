@@ -1,8 +1,10 @@
 package packages.wad;
 
+import display.ActorSprite;
 import haxe.io.Bytes;
 import packages.wad.maplumps.LineDef;
 import packages.wad.maplumps.Vertex;
+import packages.wad.maplumps.Thing;
 
 import packages.wad.maplumps.Directory;
 import packages.wad.Map;
@@ -37,6 +39,10 @@ class Pack
 	 * Getter to retrive active map's linedefs
 	 */
 	public var linedefs(get, null):Array<LineDef>;
+	/**
+	 * Getter to retrive active map's things
+	 */
+	public var things(get, null):Array<Thing>;
 	
 	public function new(_data:Bytes, _name:String, _iwad:Bool = false) 
 	{
@@ -144,6 +150,7 @@ class Pack
 		place = directories[_offset - 9].offset;
 		for (a in 0...numitems) {
 			_map.things[a] = reader.readThing(data, place + a * Reader.THING_LUMP_SIZE);
+			_map.actorsprites[a] = new ActorSprite(32, _map.things[a].type, _map.things[a].angle);
 		}
 		
 		//Map name as stated in IWAD, IE E#M#/MAP##
@@ -160,6 +167,11 @@ class Pack
 	function get_linedefs():Array<LineDef> 
 	{
 		return activeMap.linedefs;
+	}
+	
+	function get_things():Array<Thing> 
+	{
+		return activeMap.things;
 	}
 	/*
 	 * public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool

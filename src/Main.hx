@@ -39,6 +39,7 @@ class Main extends Sprite
 	var draw:Sprite;
 	var mapsprite:Sprite;
 	var subSectorsprite:Sprite;
+	var thingprite:Sprite;
 	
 	public function new() 
 	{
@@ -85,9 +86,11 @@ class Main extends Sprite
 		draw = new Sprite();
 		mapsprite = new Sprite();
 		subSectorsprite = new Sprite();
+		thingprite = new Sprite();
 		addChild(draw);
 		draw.addChild(mapsprite);
 		draw.addChild(subSectorsprite);
+		draw.addChild(thingprite);
 		
 		mapsprite.scaleX /= map_scale_inv;
 		mapsprite.scaleY /= map_scale_inv * -1;
@@ -95,30 +98,46 @@ class Main extends Sprite
 		subSectorsprite.scaleX /= map_scale_inv;
 		subSectorsprite.scaleY /= map_scale_inv * -1;
 		
+		thingprite.scaleX /= map_scale_inv;
+		thingprite.scaleY /= map_scale_inv * -1;
+		
 		stage.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent) {
 			switch (e.keyCode) {
 				case Keyboard.NUMBER_0 :
-					wads[0].loadMap(10); //this causes crash
+					wads[0].loadMap( -1); //this causes crash
+					debug_draw();
 				case Keyboard.NUMBER_1 :
 					wads[0].loadMap(LevelID.E1M1);
+					debug_draw();
 				case Keyboard.NUMBER_2 :
 					wads[0].loadMap(LevelID.E1M2);
+					debug_draw();
 				case Keyboard.NUMBER_3 :
 					wads[0].loadMap(LevelID.E1M3);
+					debug_draw();
 				case Keyboard.NUMBER_4 :
 					wads[0].loadMap(LevelID.E1M4);
+					debug_draw();
 				case Keyboard.NUMBER_5 :
 					wads[0].loadMap(LevelID.E1M5);
+					debug_draw();
 				case Keyboard.NUMBER_6 :
 					wads[0].loadMap(LevelID.E1M6);
+					debug_draw();
 				case Keyboard.NUMBER_7 :
 					wads[0].loadMap(LevelID.E1M7);
+					debug_draw();
 				case Keyboard.NUMBER_8 :
 					wads[0].loadMap(LevelID.E1M8);
+					debug_draw();
 				case Keyboard.NUMBER_9 :
 					wads[0].loadMap(LevelID.E1M9);
+					debug_draw();
+				case Keyboard.T :
+					thingprite.visible = !thingprite.visible;
+				default :
+					debug_draw();
 			}
-			debug_draw();
 		});
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, function(e:MouseEvent) {
 			draw.scaleX += e.delta / 10;
@@ -159,7 +178,19 @@ class Main extends Sprite
 			mapsprite.graphics.lineTo(line.end.xpos + xoff, line.end.ypos + yoff);
 		}
 		
+		for (child in 0...thingprite.numChildren) {
+			if (thingprite.contains(thingprite.getChildAt(child))) thingprite.removeChild(thingprite.getChildAt(child));
+		}
+		var index = 0;
+		for (actor in wads[0].activeMap.actorsprites) {
+			thingprite.addChild(actor);
+			actor.x = wads[0].things[index].xpos + xoff;
+			actor.y = wads[0].things[index].ypos + yoff;
+			++index;
+		}
+		
 		mapsprite.y = mapsprite.height;
+		thingprite.y = mapsprite.y;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Drawing code end

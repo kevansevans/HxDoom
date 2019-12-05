@@ -1,5 +1,6 @@
 package packages.wad;
 
+import display.ActorSprite;
 import packages.wad.maplumps.LineDef;
 import packages.wad.maplumps.Node;
 import packages.wad.maplumps.Segment;
@@ -15,6 +16,7 @@ class Map
 {
 	public var name:String;
 	public var things:Array<Thing>;
+	public var actorsprites:Array<ActorSprite>;
 	public var vertexes:Array<Vertex>;
 	public var linedefs:Array<LineDef>;
 	public var nodes:Array<Node>;
@@ -37,6 +39,7 @@ class Map
 		nodes = new Array();
 		subsectors = new Array();
 		segments = new Array();
+		actorsprites = new Array();
 	}
 	
 	public function setOffset() {
