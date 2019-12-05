@@ -10,6 +10,32 @@ Haxe port of Doom
 
 * Vanilla Like Behavior
 * Deployable to several targets, properly taking advantage of what Haxe does
+
+```
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//How to build
+////////////////////////////////////////////////////////////////////////////////////////////////////
+```
+
+HxDoom will by default use the latest libraries and tools when possible.
+
+As of 05DEC2019, HxDoom utilizes the following:
+* HaxeDevelop
+* Haxe 4.0.3
+* Lime 7.6.3
+* OpenFL 8.9.5
+
+Other libraries will be dependant on the target you are focusing on, such as HXCPP, HXJAVA, HXCS. 
+The Haxe compiler will inform you if these libraries are needed.
+
+Instructions:
+* Download Haxe from https://haxe.org/
+	
+* use the commands ``haxelib install lime`` and ``haxelib install openfl``
+* run the command ``haxelib run openfl setup`` and agree to installing the openfl command
+* if compiling from the terminal, switch directories to the folder containing ``project.xml`` and run the command ``openfl build windows`` or ``openfl build html5``
+* if using HaxeDevlop, navigate to the folder containing ``HxDoom.hxproj`` and open that file, press F5 or click the play button on top.
+
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //Haxe port by kevansevans
