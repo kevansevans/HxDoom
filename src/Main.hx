@@ -220,9 +220,12 @@ class Main extends Sprite
 			mapsprite.graphics.lineTo(line.end.xpos + xoff, line.end.ypos + yoff);
 		}
 		
-		for (child in 0...thingprite.numChildren) {
-			if (thingprite.contains(thingprite.getChildAt(child))) thingprite.removeChild(thingprite.getChildAt(child));
-		}
+		draw.removeChild(thingprite);
+		thingprite = new Sprite();
+		draw.addChild(thingprite);
+		thingprite.scaleX /= map_scale_inv;
+		thingprite.scaleY /= map_scale_inv * -1;
+		
 		var index = 0;
 		for (actor in wads[0].activeMap.actorsprites) {
 			thingprite.addChild(actor);
