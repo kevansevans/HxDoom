@@ -27,6 +27,8 @@ import packages.wad.LevelID;
  * Realistic Goals: 
  * 		Maintain target deployment support. If it has a renderer, it must be deployable to that target.
  * 		- JS target needs to be able to tell the difference between shareware and commericial if hosted.
+ * Idealistic goals
+ * 		Some form of modding support
  */
 class Main extends Sprite 
 {
@@ -72,15 +74,36 @@ class Main extends Sprite
 		wads[0].loadMap(0);
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//OpenFL junk here
-		//
-		//Could be beneficial to replaced this with a different Haxe API.
-		//Likely candidate is Kha for it's wider range of deployment capabilities than OpenFL and default
-		//hardware rendering. Issue currently stands that I don't know how to arbitrarily load files
-		//into the program. Kind of defeats the purpose of a Doom engine if I can't arbitrarily tack on
-		//more assets outside of the code.
-		//
-		//Using OpenFL because I'm most comfortable with that.
+		/*
+		 * OpenFL junk here. Using OpenFL because I'm most comfortable with that.
+		 *
+		 * Could be beneficial to replaced this with a different Haxe framework.
+		 * Likely candidate is Kha for it's wider range of deployment capabilities than OpenFL and default
+		 * hardware rendering. Issue currently stands that Kha feels like a complete mess to me and has
+		 * been incredibly frustrating for me to use. I might set this source up to allow several different
+	 	 * frameworks as a last resprt and build around each of their capabilities, thought this will 
+		 * definitely pile onto the confusion of which build to download.
+		 *
+		 * So to summarize, my options are
+		 * - Switch to Kha
+		 *		- Wider range of targets
+	 	 * 		- Utilizes GPU acceleration by default across all targets
+		 * 		- Difficult for me to personally use
+		 * - Stick to openFL
+		 * 		- Narrower range of targets but covers most bases
+		 *		- Familiar API
+		 *		- No clue how to utilize GPU acceleration
+		 * - Heaps
+		 * 		- Extremely narrow deployment range, Hashlink (desktop) and HTML5 only
+		 *		- Android is possible but not officially supported
+		 * 		- GPU acclerated from the getgo
+		 * 		- Unfamiliar with it's api
+		 * - Conditional backends
+		 * 		- God are you insane?
+		 * - Raw Haxe
+		 * 		- ??????????????????????????????????????????????
+		 * 		- i have no idea help
+		*/
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		draw = new Sprite();
@@ -101,6 +124,12 @@ class Main extends Sprite
 		thingprite.scaleX /= map_scale_inv;
 		thingprite.scaleY /= map_scale_inv * -1;
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Event listeners - openFL only
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Keyboard - openFL only
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		stage.addEventListener(KeyboardEvent.KEY_UP, function(e:KeyboardEvent) {
 			switch (e.keyCode) {
 				case Keyboard.NUMBER_0 :
@@ -139,6 +168,10 @@ class Main extends Sprite
 					debug_draw();
 			}
 		});
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Mouse Listeners - openFL only
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		stage.addEventListener(MouseEvent.MOUSE_WHEEL, function(e:MouseEvent) {
 			draw.scaleX += e.delta / 10;
 			draw.scaleY += e.delta / 10;
@@ -168,7 +201,7 @@ class Main extends Sprite
 		var yoff = _map.offset_y;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Drawing code start
+		//openFL Drawing code start
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		mapsprite.graphics.clear();
@@ -193,7 +226,7 @@ class Main extends Sprite
 		thingprite.y = mapsprite.y;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Drawing code end
+		//openFL Drawing code end
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
 }

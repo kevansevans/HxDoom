@@ -16,8 +16,3 @@ class Vertex
 	}
 	
 }
-
-/*typedef Vertex = {
-	var x:Int;
-	var y:Int;
-}*/

@@ -25,14 +25,3 @@ class LineDef
 	}
 	
 }
-/*
-typedef LineDef = {
-	var start:Int;
-	var end:Int;
-	var flags:Int;
-	var linetype:Int;
-	var sectortag:Int;
-	var frontsidedef:Int;
-	var backsidedef:Int;
-}
-*/

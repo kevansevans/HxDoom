@@ -55,18 +55,3 @@ class Map
 	}
 	
 }
-
-/*
-typedef Map = {
-	var name:String;
-	var player:Array<Player>;
-	var vertexes:Array<Vertex>;
-	var linedefs:Array<LineDef>;
-	var nodes:Array<Node>;
-	var subsectors:Array<Subsector>;
-	var seg:Array<Seg>;
-	var things:Array<Thing>;
-	var offset_x:Float;
-	var offset_y:Float;
-}
-*/

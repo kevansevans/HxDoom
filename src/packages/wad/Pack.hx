@@ -163,6 +163,9 @@ class Pack
 		activeMap = _map;
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Getters
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	function get_vertexes():Array<Vertex> 
 	{
 		return activeMap.vertexes;
@@ -177,7 +180,9 @@ class Pack
 	{
 		return activeMap.things;
 	}
+	
 	/*
+	 * Some node traversal functions
 	 * public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool
 	{
 		var dx = _x - activemap.nodes[_nodeID].xPartition;

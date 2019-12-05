@@ -2,6 +2,7 @@ package packages.wad;
 
 /**
  * Enum of Vanilla map ID's
+ * This enum exists purely for convenience factors until better level system is added.
  * @author Kaelan
  */
 enum abstract LevelID(Int) from Int 
