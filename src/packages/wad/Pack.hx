@@ -1,6 +1,8 @@
 package packages.wad;
 
 import haxe.io.Bytes;
+import packages.wad.maplumps.LineDef;
+import packages.wad.maplumps.Vertex;
 
 import packages.wad.maplumps.Directory;
 import packages.wad.Map;
@@ -23,7 +25,18 @@ class Pack
 	var directory_offset:Int;
 	
 	var maps:Array<Map>;
+	/**
+	 * Currently loaded map
+	 */
 	public var activeMap:Map;
+	/**
+	 * Getter to retrieve active map's vertexes
+	 */
+	public var vertexes(get, null):Array<Vertex>;
+	/**
+	 * Getter to retrive active map's linedefs
+	 */
+	public var linedefs(get, null):Array<LineDef>;
 	
 	public function new(_data:Bytes, _name:String, _iwad:Bool = false) 
 	{
@@ -133,6 +146,16 @@ class Pack
 		_map.name = directories[_offset - 10].name;
 		
 		activeMap = _map;
+	}
+	
+	function get_vertexes():Array<Vertex> 
+	{
+		return activeMap.vertexes;
+	}
+	
+	function get_linedefs():Array<LineDef> 
+	{
+		return activeMap.linedefs;
 	}
 	/*
 	 * public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool
