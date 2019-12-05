@@ -1,6 +1,7 @@
 package packages.wad.maplumps;
 
 /**
+ * XY position of a linedef
  * ...
  * @author Kaelan
  */

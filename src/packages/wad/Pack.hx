@@ -84,6 +84,10 @@ class Pack
 				}
 		}
 	}
+	/**
+	 * Loads in and sets 'activeMap' the specified map
+	 * @param	_index map index
+	 */
 	public function loadMap(_index:Int) {
 		if (maps[_index] == null) throw "This map does not exist!";
 		//Should be impossible for a case where a null item is supposed to contain a map
