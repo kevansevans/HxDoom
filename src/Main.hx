@@ -6,6 +6,7 @@ import openfl.Lib;
 import openfl.events.Event;
 import openfl.events.MouseEvent;
 import openfl.events.KeyboardEvent;
+import openfl.text.TextField;
 import openfl.ui.Keyboard;
 #if sys
 import sys.FileSystem;
@@ -43,6 +44,8 @@ class Main extends Sprite
 	var subSectorsprite:Sprite;
 	var thingprite:Sprite;
 	
+	var infotext:TextField;
+	
 	public function new() 
 	{
 		super();
@@ -75,7 +78,7 @@ class Main extends Sprite
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		/*
-		 * OpenFL junk here. Using OpenFL because I'm most comfortable with that.
+		 * OpenFL junk starts here. Using OpenFL because I'm most comfortable with that.
 		 *
 		 * Could be beneficial to replaced this with a different Haxe framework.
 		 * Likely candidate is Kha for it's wider range of deployment capabilities than OpenFL and default
@@ -123,6 +126,12 @@ class Main extends Sprite
 		
 		thingprite.scaleX /= map_scale_inv;
 		thingprite.scaleY /= map_scale_inv * -1;
+		
+		infotext = new TextField();
+		addChild(infotext);
+		infotext.textColor = 0xFFFFFF;
+		infotext.text = "HxDoom extremely early build, using DOOM1.wad (Shareware)\nPress 1 - 9 to change map\nPress 0 to cause deliberate crash\nClick and drag to move map\nScroll to change scale\nAny other key to reset.";
+		infotext.width = infotext.textWidth;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Event listeners - openFL only
