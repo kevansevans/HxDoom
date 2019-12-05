@@ -41,8 +41,9 @@ class Reader
 		);
 	}
 	
-	public function readLinedef(_data:Array<Int>, _offset:Int):LineDef {
+	public function readLinedef(_data:Array<Int>, _offset:Int, _vertexes:Array<Vertex>):LineDef {
 		return new LineDef(
+			_vertexes,
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
 			getTwoBytes(_data, _offset + 4),
