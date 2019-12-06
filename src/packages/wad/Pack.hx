@@ -129,21 +129,21 @@ class Pack
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load Subsectors
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		numitems = Std.int(directories[_offset - 4].size / Reader.SSECTOR_LUMP_SIZE);
-		place = directories[_offset - 4].offset;
-		for (a in 0...numitems) {
-			_map.subsectors[a] = reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load segments
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 5].size / Reader.SEG_LUMP_SIZE);
 		place = directories[_offset - 5].offset;
 		for (a in 0...numitems) {
-			_map.segments[a] = reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE);
+			_map.segments[a] = reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.vertexes);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load Subsectors
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		numitems = Std.int(directories[_offset - 4].size / Reader.SSECTOR_LUMP_SIZE);
+		place = directories[_offset - 4].offset;
+		for (a in 0...numitems) {
+			_map.subsectors[a] = reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE, _map.segments);
 		}
 		
 		

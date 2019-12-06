@@ -61,8 +61,9 @@ class Reader
 		);
 	}
 	
-	public function readSegment(_data:Array<Int>, _offset:Int):Segment {
+	public function readSegment(_data:Array<Int>, _offset:Int, _vertexes:Array<Vertex>):Segment {
 		return new Segment(
+			_vertexes,
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
 			getTwoBytes(_data, _offset + 4, true),
@@ -72,8 +73,9 @@ class Reader
 		);
 	}
 	
-	public function readSubSector(_data:Array<Int>, _offset:Int):SubSector {
+	public function readSubSector(_data:Array<Int>, _offset:Int, _segments:Array<Segment>):SubSector {
 		return new SubSector(
+			_segments,
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2)
 		);
