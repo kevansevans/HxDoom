@@ -99,15 +99,34 @@ class Reader
 			getTwoBytes(_data, _offset + 26)
 		);
 	}
-	
+	/**
+	 * Get a 16bit value from provided address by "reading" a byte of information.
+	 * @param	_data Data of current wad loaded
+	 * @param	_offset Position of data needed
+	 * @param	_signed Is value an signed value?
+	 * @return Returns an integer from specified position
+	 */
 	public function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
 	{
 		var val = (_data[_offset + 1] << 8) | _data[_offset];
 		return(_signed == true && val > 32768 ? val - 65536 : val);
 	}
+	/**
+	 * Get a 32bit value from provided address by "reading" two bytes of information.
+	 * @param	_data Data of current wad loaded
+	 * @param	_offset Position of data needed
+	 * @return Returns an integer from specified position
+	 */
 	public function getFourBytes(_data:Array<Int>, _offset:Int):Int {
 		return((_data[_offset + 3] << 24) | (_data[_offset + 2] << 16) | (_data[_offset + 1] << 8) | _data[_offset]);
 	}
+	/**
+	 * Get a string value from specified range 
+	 * @param	_data Data of current wad loaded
+	 * @param	_start Start position of string
+	 * @param	_end End position of string
+	 * @return	Returns a UTF8 compatible string. Automatically removes null and empty characters.
+	 */
 	public function stringFromBytesRange(_data:Array<Int>, _start:Int, _end:Int):String {
 		var str:String = "";
 		for (a in _start..._end) {
