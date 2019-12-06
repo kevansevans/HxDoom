@@ -52,6 +52,13 @@ class Pack
 	 */
 	public var segments(get, null):Array<Segment>;
 	
+	/**
+	 * Constructor for new WAD
+	 * 
+	 * @param	_data Haxe.io.bytes, gets converted into int Array for JS friendliness
+	 * @param	_name String denoting file name to prevent overlapping
+	 * @param	_iwad Is this wad an IWAD?
+	 */
 	public function new(_data:Bytes, _name:String, _iwad:Bool = false) 
 	{
 		data = new Array();
@@ -162,7 +169,7 @@ class Pack
 			_map.actorsprites[a] = new ActorSprite(32, _map.things[a].type, _map.things[a].angle);
 		}
 		
-		//Map name as stated in IWAD, IE E#M#/MAP##
+		//Map name as stated in WAD, IE E#M#/MAP##
 		_map.name = directories[_offset - 10].name;
 		
 		activeMap = _map;
