@@ -4,6 +4,7 @@ import display.ActorSprite;
 import haxe.PosInfos;
 import haxe.io.Bytes;
 import packages.wad.maplumps.LineDef;
+import packages.wad.maplumps.Segment;
 import packages.wad.maplumps.Vertex;
 import packages.wad.maplumps.Thing;
 
@@ -39,13 +40,17 @@ class Pack
 	 */
 	public var vertexes(get, null):Array<Vertex>;
 	/**
-	 * Getter to retrive active map's linedefs
+	 * Getter to retrieve active map's linedefs
 	 */
 	public var linedefs(get, null):Array<LineDef>;
 	/**
-	 * Getter to retrive active map's things
+	 * Getter to retrieve active map's things
 	 */
 	public var things(get, null):Array<Thing>;
+	/**
+	 * Getter to retrieve segments
+	 */
+	public var segments(get, null):Array<Segment>;
 	
 	public function new(_data:Bytes, _name:String, _iwad:Bool = false) 
 	{
@@ -179,6 +184,11 @@ class Pack
 	function get_things():Array<Thing> 
 	{
 		return activeMap.things;
+	}
+	
+	function get_segments():Array<Segment> 
+	{
+		return activeMap.segments;
 	}
 	
 	/*
