@@ -6,20 +6,27 @@ package packages.wad.maplumps;
  */
 class Segment 
 {
-	public var start:Vertex;
-	public var end:Vertex;
+	public var start(get, null):Vertex;
+	public var end(get, null):Vertex;
 	public var angle:Int;
-	public var lineDefID:Int;
+	public var lineDef:LineDef;
 	public var direction:Int;
 	public var offset:Int;
-	public function new(_vertexes:Array<Vertex>, _startID:Int, _endID:Int, _angle:Int, _lineID:Int, _direction:Int, _offset:Int) 
+	public function new(_lineDefs:Array<LineDef>, _angle:Int, _lineID:Int, _direction:Int, _offset:Int) 
 	{
-		start = _vertexes[_startID];
-		end = _vertexes[_endID];
 		angle = _angle;
-		lineDefID = _lineID;
+		lineDef = _lineDefs[_lineID];
 		direction = _direction;
 		offset = _offset;
+	}
+	function get_start():Vertex 
+	{
+		return lineDef.start;
+	}
+	
+	function get_end():Vertex 
+	{
+		return lineDef.end;
 	}
 	
 }

@@ -61,11 +61,9 @@ class Reader
 		);
 	}
 	
-	public function readSegment(_data:Array<Int>, _offset:Int, _vertexes:Array<Vertex>):Segment {
+	public function readSegment(_data:Array<Int>, _offset:Int, _linedefs:Array<LineDef>):Segment {
 		return new Segment(
-			_vertexes,
-			getTwoBytes(_data, _offset),
-			getTwoBytes(_data, _offset + 2),
+			_linedefs,
 			getTwoBytes(_data, _offset + 4, true),
 			getTwoBytes(_data, _offset + 6),
 			getTwoBytes(_data, _offset + 8),

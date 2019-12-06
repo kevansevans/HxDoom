@@ -146,7 +146,7 @@ class Pack
 		numitems = Std.int(directories[_offset - 5].size / Reader.SEG_LUMP_SIZE);
 		place = directories[_offset - 5].offset;
 		for (a in 0...numitems) {
-			_map.segments[a] = reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.vertexes);
+			_map.segments[a] = reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.linedefs);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
