@@ -27,11 +27,9 @@ class Map
 	public var offset_y:Float;
 	
 	public var dirOffset:Int;
-	public var hasBeenBuilt:Bool;
 	public function new(_dirOffset:Int) 
 	{
 		dirOffset = _dirOffset;
-		hasBeenBuilt = false;
 		
 		things = new Array();
 		vertexes = new Array();
