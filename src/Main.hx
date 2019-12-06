@@ -96,6 +96,10 @@ class Main extends Sprite
 		 * 		- Narrower range of targets but covers most bases
 		 *		- Familiar API
 		 *		- No clue how to utilize GPU acceleration
+		 * - Use lime
+		 * 		- OpenFL rests on Lime
+		 * 		- Lime has direct OpenGL access
+		 * 		- I don't know how to use OpenGL
 		 * - Heaps
 		 * 		- Extremely narrow deployment range, Hashlink (desktop) and HTML5 only
 		 *		- Android is possible but not officially supported
