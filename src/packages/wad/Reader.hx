@@ -103,8 +103,8 @@ class Reader
 		return new SideDef(
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
-			stringFromBytesRange(_data, _offset + 4, _offset + 8),
-			stringFromBytesRange(_data, _offset + 10, _offset + 18),
+			stringFromBytesRange(_data, _offset + 4, _offset + 12),
+			stringFromBytesRange(_data, _offset + 12, _offset + 20),
 			stringFromBytesRange(_data, _offset + 20, _offset + 28),
 			getTwoBytes(_data, _offset + 28)
 		);
