@@ -22,10 +22,11 @@ class Reader
 	public static inline var SSECTOR_LUMP_SIZE:Int = 4;
 	public static inline var SEG_LUMP_SIZE:Int = 12;
 	public static inline var SIDEDEF_LUMP_SIZE:Int = 30;
+	public static inline var SECTOR_LUMP_SIZE:Int = 26;
 	
 	public function new() { }
 	
-	public function readDirectory(_data:Array<Int>, _offset:Int):Directory {
+	public static inline function readDirectory(_data:Array<Int>, _offset:Int):Directory {
 		return new Directory(
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
@@ -33,7 +34,7 @@ class Reader
 		);
 	}
 	
-	public function readThing(_data:Array<Int>, _offset:Int):Thing {
+	public static inline function readThing(_data:Array<Int>, _offset:Int):Thing {
 		return new Thing(
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -43,7 +44,7 @@ class Reader
 		);
 	}
 	
-	public function readLinedef(_data:Array<Int>, _offset:Int, _vertexes:Array<Vertex>):LineDef {
+	public static inline function readLinedef(_data:Array<Int>, _offset:Int, _vertexes:Array<Vertex>):LineDef {
 		return new LineDef(
 			_vertexes,
 			getTwoBytes(_data, _offset),
@@ -56,14 +57,14 @@ class Reader
 		);
 	}
 	
-	public function readVertex(_data:Array<Int>, _offset:Int):Vertex {
+	public static inline function readVertex(_data:Array<Int>, _offset:Int):Vertex {
 		return new Vertex(
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true)
 		);
 	}
 	
-	public function readSegment(_data:Array<Int>, _offset:Int, _linedefs:Array<LineDef>):Segment {
+	public static inline function readSegment(_data:Array<Int>, _offset:Int, _linedefs:Array<LineDef>):Segment {
 		return new Segment(
 			_linedefs,
 			getTwoBytes(_data, _offset + 4, true),
@@ -73,7 +74,7 @@ class Reader
 		);
 	}
 	
-	public function readSubSector(_data:Array<Int>, _offset:Int, _segments:Array<Segment>):SubSector {
+	public static inline function readSubSector(_data:Array<Int>, _offset:Int, _segments:Array<Segment>):SubSector {
 		return new SubSector(
 			_segments,
 			getTwoBytes(_data, _offset),
@@ -81,7 +82,7 @@ class Reader
 		);
 	}
 	
-	public function readNode(_data:Array<Int>, _offset:Int):Node {
+	public static inline function readNode(_data:Array<Int>, _offset:Int):Node {
 		return new Node(
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -99,7 +100,7 @@ class Reader
 			getTwoBytes(_data, _offset + 26)
 		);
 	}
-	public function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
+	public static inline function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
 		return new SideDef(
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -116,7 +117,7 @@ class Reader
 	 * @param	_signed Is value an signed value?
 	 * @return Returns an integer from specified position
 	 */
-	public function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
+	public static function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
 	{
 		var val = (_data[_offset + 1] << 8) | _data[_offset];
 		return(_signed == true && val > 32768 ? val - 65536 : val);
@@ -127,7 +128,7 @@ class Reader
 	 * @param	_offset Position of data needed
 	 * @return Returns an integer from specified position
 	 */
-	public function getFourBytes(_data:Array<Int>, _offset:Int):Int {
+	public static function getFourBytes(_data:Array<Int>, _offset:Int):Int {
 		return((_data[_offset + 3] << 24) | (_data[_offset + 2] << 16) | (_data[_offset + 1] << 8) | _data[_offset]);
 	}
 	/**
@@ -137,7 +138,7 @@ class Reader
 	 * @param	_end End position of string
 	 * @return	Returns a UTF8 compatible string. Automatically removes null and empty characters.
 	 */
-	public function stringFromBytesRange(_data:Array<Int>, _start:Int, _end:Int):String {
+	public static function stringFromBytesRange(_data:Array<Int>, _start:Int, _end:Int):String {
 		var str:String = "";
 		for (a in _start..._end) {
 			if (_data[a] != 0 && Math.isNaN(_data[a]) == false) str += String.fromCharCode(_data[a]);

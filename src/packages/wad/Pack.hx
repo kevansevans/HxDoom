@@ -21,7 +21,6 @@ import packages.wad.Map;
  */
 class Pack 
 {
-	var reader:Reader;
 	var data:Array<Int>;
 	var wadname:String;
 	var isIwad:Bool;
@@ -70,18 +69,16 @@ class Pack
 		
 		isIwad = _iwad;
 		
-		reader = new Reader();
-		
 		getDirectoryListing();
 		indexMaps();
 	}
 	function getDirectoryListing() {
-		directory_count = reader.getFourBytes(data, 0x04);
-		directory_offset = reader.getFourBytes(data, 0x08);
+		directory_count = Reader.getFourBytes(data, 0x04);
+		directory_offset = Reader.getFourBytes(data, 0x08);
 		
 		directories = new Array();
 		for (a in 0...directory_count) {
-			directories[a] = reader.readDirectory(data, directory_offset + a * 16);
+			directories[a] = Reader.readDirectory(data, directory_offset + a * 16);
 			//trace(directories[a], a);
 		}
 	}
@@ -127,7 +124,7 @@ class Pack
 		numitems = Std.int(directories[_offset - 6].size / Reader.VERTEX_LUMP_SIZE);
 		place = directories[_offset - 6].offset;
 		for (a in 0...numitems) {
-			_map.vertexes[a] = reader.readVertex(data, place + a * Reader.VERTEX_LUMP_SIZE);
+			_map.vertexes[a] = Reader.readVertex(data, place + a * Reader.VERTEX_LUMP_SIZE);
 		}
 		_map.setOffset();
 		
@@ -137,7 +134,7 @@ class Pack
 		numitems = Std.int(directories[_offset - 8].size / Reader.LINEDEF_LUMP_SIZE);
 		place = directories[_offset - 8].offset;
 		for (a in 0...numitems) {
-			_map.linedefs[a] = reader.readLinedef(data, place + a * Reader.LINEDEF_LUMP_SIZE, _map.vertexes);
+			_map.linedefs[a] = Reader.readLinedef(data, place + a * Reader.LINEDEF_LUMP_SIZE, _map.vertexes);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +143,7 @@ class Pack
 		numitems = Std.int(directories[_offset - 7].size / Reader.SIDEDEF_LUMP_SIZE);
 		place = directories[_offset - 7].offset;
 		for (a in 0...numitems) {
-			_map.sidedefs[a] = reader.readSideDef(data, place + a * Reader.SIDEDEF_LUMP_SIZE);
+			_map.sidedefs[a] = Reader.readSideDef(data, place + a * Reader.SIDEDEF_LUMP_SIZE);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,7 +152,7 @@ class Pack
 		numitems = Std.int(directories[_offset - 5].size / Reader.SEG_LUMP_SIZE);
 		place = directories[_offset - 5].offset;
 		for (a in 0...numitems) {
-			_map.segments[a] = reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.linedefs);
+			_map.segments[a] = Reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.linedefs);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -164,9 +161,8 @@ class Pack
 		numitems = Std.int(directories[_offset - 4].size / Reader.SSECTOR_LUMP_SIZE);
 		place = directories[_offset - 4].offset;
 		for (a in 0...numitems) {
-			_map.subsectors[a] = reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE, _map.segments);
+			_map.subsectors[a] = Reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE, _map.segments);
 		}
-		
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load things
@@ -174,7 +170,7 @@ class Pack
 		numitems = Std.int(directories[_offset - 9].size / Reader.THING_LUMP_SIZE);
 		place = directories[_offset - 9].offset;
 		for (a in 0...numitems) {
-			_map.things[a] = reader.readThing(data, place + a * Reader.THING_LUMP_SIZE);
+			_map.things[a] = Reader.readThing(data, place + a * Reader.THING_LUMP_SIZE);
 			_map.actorsprites[a] = new ActorSprite(32, _map.things[a].type, _map.things[a].angle);
 		}
 		
