@@ -1,4 +1,4 @@
-package packages.wad.maplumps;
+package packages.wad;
 
 /**
  * ...

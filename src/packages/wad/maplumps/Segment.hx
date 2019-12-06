@@ -23,10 +23,8 @@ class Segment
 	{
 		return lineDef.start;
 	}
-	
 	function get_end():Vertex 
 	{
 		return lineDef.end;
 	}
-	
 }

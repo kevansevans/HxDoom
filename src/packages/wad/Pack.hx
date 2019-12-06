@@ -10,7 +10,7 @@ import packages.wad.maplumps.Thing;
 
 import global.Common;
 
-import packages.wad.maplumps.Directory;
+import packages.wad.Directory;
 import packages.wad.Map;
 
 /**

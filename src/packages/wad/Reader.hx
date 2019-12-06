@@ -1,6 +1,6 @@
 package packages.wad;
 
-import packages.wad.maplumps.Directory;
+import packages.wad.Directory;
 import packages.wad.maplumps.LineDef;
 import packages.wad.maplumps.Node;
 import packages.wad.maplumps.Segment;
