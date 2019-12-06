@@ -141,6 +141,16 @@ class Pack
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load sidedefs
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		numitems = Std.int(directories[_offset - 7].size / Reader.SIDEDEF_LUMP_SIZE);
+		place = directories[_offset - 7].offset;
+		for (a in 0...numitems) {
+			_map.sidedefs[a] = reader.readSideDef(data, place + a * Reader.SIDEDEF_LUMP_SIZE);
+			trace(a, _map.sidedefs[a].xoffset, _map.sidedefs[a].yoffset, _map.sidedefs[a].lower_texture, _map.sidedefs[a].upper_texture, _map.sidedefs[a].middle_texture, _map.sidedefs[a].sector);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load segments
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 5].size / Reader.SEG_LUMP_SIZE);

@@ -4,6 +4,7 @@ import display.ActorSprite;
 import packages.wad.maplumps.LineDef;
 import packages.wad.maplumps.Node;
 import packages.wad.maplumps.Segment;
+import packages.wad.maplumps.SideDef;
 import packages.wad.maplumps.SubSector;
 import packages.wad.maplumps.Thing;
 import packages.wad.maplumps.Vertex;
@@ -22,6 +23,7 @@ class Map
 	public var nodes:Array<Node>;
 	public var subsectors:Array<SubSector>;
 	public var segments:Array<Segment>;
+	public var sidedefs:Array<SideDef>;
 	
 	public var offset_x:Float;
 	public var offset_y:Float;
@@ -38,6 +40,7 @@ class Map
 		subsectors = new Array();
 		segments = new Array();
 		actorsprites = new Array();
+		sidedefs = new Array();
 	}
 	
 	public function setOffset() {

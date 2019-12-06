@@ -4,6 +4,7 @@ import packages.wad.Directory;
 import packages.wad.maplumps.LineDef;
 import packages.wad.maplumps.Node;
 import packages.wad.maplumps.Segment;
+import packages.wad.maplumps.SideDef;
 import packages.wad.maplumps.SubSector;
 import packages.wad.maplumps.Thing;
 import packages.wad.maplumps.Vertex;
@@ -20,6 +21,7 @@ class Reader
 	public static inline var NODE_LUMP_SIZE:Int = 28;
 	public static inline var SSECTOR_LUMP_SIZE:Int = 4;
 	public static inline var SEG_LUMP_SIZE:Int = 12;
+	public static inline var SIDEDEF_LUMP_SIZE:Int = 30;
 	
 	public function new() { }
 	
@@ -95,6 +97,16 @@ class Reader
 			getTwoBytes(_data, _offset + 22, true),
 			getTwoBytes(_data, _offset + 24),
 			getTwoBytes(_data, _offset + 26)
+		);
+	}
+	public function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
+		return new SideDef(
+			getTwoBytes(_data, _offset, true),
+			getTwoBytes(_data, _offset + 2, true),
+			stringFromBytesRange(_data, _offset + 4, _offset + 8),
+			stringFromBytesRange(_data, _offset + 10, _offset + 18),
+			stringFromBytesRange(_data, _offset + 20, _offset + 28),
+			getTwoBytes(_data, _offset + 28)
 		);
 	}
 	/**
