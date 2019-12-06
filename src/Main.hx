@@ -16,6 +16,7 @@ import sys.io.File;
 #end
 import haxe.io.Bytes;
 import packages.wad.maplumps.Segment;
+import packages.wad.maplumps.Vertex;
 
 import packages.actors.TypeID;
 import packages.wad.Pack;
@@ -238,8 +239,18 @@ class Main extends Sprite
 			++index;
 		}
 		
+		subSectorsprite.graphics.clear();
+		var tempSubVer:Array<Vertex> = new Array();
+		for (segs in _map.segments) {
+			subSectorsprite.graphics.lineStyle(2, Std.int(Math.random() * 0xFFFFFF));
+			subSectorsprite.graphics.beginFill(Std.int(Math.random() * 0xFFFFFF));
+			subSectorsprite.graphics.moveTo(segs.start.xpos + xoff, segs.start.ypos + yoff);
+			subSectorsprite.graphics.lineTo(segs.end.xpos + xoff, segs.end.ypos + yoff);
+		}
+		
 		mapsprite.y = mapsprite.height;
 		thingprite.y = mapsprite.y;
+		subSectorsprite.y = mapsprite.y;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//openFL Drawing code end
