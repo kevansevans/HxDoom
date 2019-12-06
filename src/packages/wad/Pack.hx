@@ -147,7 +147,6 @@ class Pack
 		place = directories[_offset - 7].offset;
 		for (a in 0...numitems) {
 			_map.sidedefs[a] = reader.readSideDef(data, place + a * Reader.SIDEDEF_LUMP_SIZE);
-			trace(a, _map.sidedefs[a].xoffset, _map.sidedefs[a].yoffset, _map.sidedefs[a].lower_texture, _map.sidedefs[a].upper_texture, _map.sidedefs[a].middle_texture, _map.sidedefs[a].sector);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
