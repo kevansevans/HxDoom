@@ -1,26 +1,33 @@
 package packages.actors;
 
+import packages.wad.maplumps.Thing;
+import packages.wad.maplumps.Vertex;
+
 /**
  * ...
  * @author Kaelan
  * 
  * Taking the GZDoom approach here and having each class type behave on inheritance rather than each possesing their own properties.
  */
-class Thing 
+class Actor 
 {
-	public var id:Int;
 	public var xpos(default, set):Int;
 	public var ypos(default, set):Int;
-	public var angle(default, set):Int;
+	public var angle(default, set):Float;
 	public var type:TypeID;
+	public var flags:Int;
 	
 	public var isPlayer(get, never):Bool;
 	public var isMonster(get, never):Bool;
 	public var isPickup(get, never):Bool;
 	
-	public function new(_id:Int) 
+	public function new(_thing:Thing) 
 	{
-		id = _id;
+		xpos = _thing.xpos;
+		ypos = _thing.ypos;
+		angle = _thing.angle;
+		flags = _thing.flags;
+		type = _thing.type;
 	}
 	
 	//Setters
@@ -32,9 +39,19 @@ class Thing
 	{
 		return ypos = value;
 	}
-	function set_angle(value:Int):Int 
+	function set_angle(value:Float):Float
 	{
-		return angle = value;
+		angle = value;
+		if (angle >= 360) angle -= 360;
+		if (angle < 0) angle += 360;
+		return angle;
+	}
+	
+	public function angleToVertex(_vertex:Vertex):Float {
+		var vdx:Float = _vertex.xpos - this.xpos;
+		var vdy:Float = _vertex.ypos - this.ypos;
+		var angle:Float = (Math.atan2(vdy, vdx) * 180 / Math.PI);
+		return angle;
 	}
 	
 	//getters
