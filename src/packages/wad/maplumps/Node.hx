@@ -23,6 +23,7 @@ class Node
 	
 	public var frontChildID:Int;
 	public var backChildID:Int;
+	
 	public function new(_x:Int, _y:Int, _cx:Int, _cy:Int, _ft:Int, _fb:Int, _fl:Int, _fr:Int, _bt:Int, _bb:Int, _bl:Int, _br:Int, _fci:Int, _bci:Int) 
 	{
 		xPartition = _x;

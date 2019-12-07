@@ -183,6 +183,15 @@ class Pack
 			_map.sectors[a] = Reader.readSector(data, place + a * Reader.SECTOR_LUMP_SIZE);
 		}
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load nodes
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		numitems = Std.int(directories[_offset - 3].size / Reader.NODE_LUMP_SIZE);
+		palce = directories[_offset - 3].offset;
+		for (a in 0...numitems) {
+			_map.nodes[a] = Reader.readNode(data, place + a * Reader.NODE_LUMP_SIZE);
+		}
+		
 		//Map name as stated in WAD, IE E#M#/MAP##
 		_map.name = directories[_offset - 10].name;
 		
