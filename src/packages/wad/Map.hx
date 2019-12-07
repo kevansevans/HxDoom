@@ -1,7 +1,7 @@
 package packages.wad;
 
 import display.ActorSprite;
-import packages.wad.maplumps.LineDef;
+import packages.actors.*;
 import packages.wad.maplumps.*;
 /**
  * ...
@@ -27,6 +27,8 @@ class Map
 	
 	public var actorsprites:Array<ActorSprite>;
 	
+	public var actors_players:Array<Player>;
+	
 	public function new(_dirOffset:Int) 
 	{
 		dirOffset = _dirOffset;
@@ -40,6 +42,16 @@ class Map
 		actorsprites = new Array();
 		sidedefs = new Array();
 		sectors = new Array();
+	}
+	
+	public function parseThings() {
+		actors_players = new Array();
+		for (thing in things) {
+			switch (thing.type) {
+				case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR:
+					actors_players.push(new Player(thing));
+			}
+		}
 	}
 	
 	public function setOffset() {
