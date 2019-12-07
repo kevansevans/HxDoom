@@ -2,14 +2,7 @@ package packages.wad;
 
 import display.ActorSprite;
 import packages.wad.maplumps.LineDef;
-import packages.wad.maplumps.Node;
-import packages.wad.maplumps.Sector;
-import packages.wad.maplumps.Segment;
-import packages.wad.maplumps.SideDef;
-import packages.wad.maplumps.SubSector;
-import packages.wad.maplumps.Thing;
-import packages.wad.maplumps.Vertex;
-
+import packages.wad.maplumps.*;
 /**
  * ...
  * @author Kaelan
