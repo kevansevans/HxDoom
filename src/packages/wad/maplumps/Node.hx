@@ -37,7 +37,7 @@ class Node
 		
 		backBoxTop = _bt; 		//Sam, be careful with your order. You'll be travelling through the heart of BT territory
 		backBoxBottom = _bb;	//Sam, your BB is nothing more than a tool. Don't get attached to it.
-		backBoxLeft = _bl;
+		backBoxLeft = _bl;		//I was so naive when I made this comment, go play Death Stranding
 		backBoxRight = _br;
 		
 		frontChildID = _fci;
