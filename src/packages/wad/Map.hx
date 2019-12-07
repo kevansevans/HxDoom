@@ -17,8 +17,8 @@ import packages.wad.maplumps.Vertex;
 class Map 
 {
 	public var name:String;
+	
 	public var things:Array<Thing>;
-	public var actorsprites:Array<ActorSprite>;
 	public var vertexes:Array<Vertex>;
 	public var linedefs:Array<LineDef>;
 	public var nodes:Array<Node>;
@@ -31,6 +31,9 @@ class Map
 	public var offset_y:Float;
 	
 	public var dirOffset:Int;
+	
+	public var actorsprites:Array<ActorSprite>;
+	
 	public function new(_dirOffset:Int) 
 	{
 		dirOffset = _dirOffset;
