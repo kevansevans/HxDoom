@@ -30,7 +30,7 @@ class Reader
 		return new Directory(
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
-			stringFromBytesRange(_data, _offset + 0x08, _offset + 0x10)
+			getStringFromRange(_data, _offset + 0x08, _offset + 0x10)
 		);
 	}
 	
@@ -100,13 +100,14 @@ class Reader
 			getTwoBytes(_data, _offset + 26)
 		);
 	}
+	
 	public static inline function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
 		return new SideDef(
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
-			stringFromBytesRange(_data, _offset + 4, _offset + 12),
-			stringFromBytesRange(_data, _offset + 12, _offset + 20),
-			stringFromBytesRange(_data, _offset + 20, _offset + 28),
+			getStringFromRange(_data, _offset + 4, _offset + 12),
+			getStringFromRange(_data, _offset + 12, _offset + 20),
+			getStringFromRange(_data, _offset + 20, _offset + 28),
 			getTwoBytes(_data, _offset + 28)
 		);
 	}
@@ -117,7 +118,7 @@ class Reader
 	 * @param	_signed Is value an signed value?
 	 * @return Returns an integer from specified position
 	 */
-	public static function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
+	public static inline function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
 	{
 		var val = (_data[_offset + 1] << 8) | _data[_offset];
 		return(_signed == true && val > 32768 ? val - 65536 : val);
@@ -128,7 +129,7 @@ class Reader
 	 * @param	_offset Position of data needed
 	 * @return Returns an integer from specified position
 	 */
-	public static function getFourBytes(_data:Array<Int>, _offset:Int):Int {
+	public static inline function getFourBytes(_data:Array<Int>, _offset:Int):Int {
 		return((_data[_offset + 3] << 24) | (_data[_offset + 2] << 16) | (_data[_offset + 1] << 8) | _data[_offset]);
 	}
 	/**
@@ -138,7 +139,7 @@ class Reader
 	 * @param	_end End position of string
 	 * @return	Returns a UTF8 compatible string. Automatically removes null and empty characters.
 	 */
-	public static function stringFromBytesRange(_data:Array<Int>, _start:Int, _end:Int):String {
+	public static inline function getStringFromRange(_data:Array<Int>, _start:Int, _end:Int):String {
 		var str:String = "";
 		for (a in _start..._end) {
 			if (_data[a] != 0 && Math.isNaN(_data[a]) == false) str += String.fromCharCode(_data[a]);
