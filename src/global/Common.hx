@@ -28,7 +28,7 @@ class Common
 		return Sys.systemName();
 		#elseif js
 		return Browser.navigator.userAgent;
-		#elseif (Flash || Air)
+		#elseif (flash || air)
 		return "Flash Player";
 		#end
 	}
