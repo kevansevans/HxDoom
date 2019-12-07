@@ -3,6 +3,7 @@ package packages.wad;
 import display.ActorSprite;
 import packages.wad.maplumps.LineDef;
 import packages.wad.maplumps.Node;
+import packages.wad.maplumps.Sector;
 import packages.wad.maplumps.Segment;
 import packages.wad.maplumps.SideDef;
 import packages.wad.maplumps.SubSector;
@@ -24,6 +25,7 @@ class Map
 	public var subsectors:Array<SubSector>;
 	public var segments:Array<Segment>;
 	public var sidedefs:Array<SideDef>;
+	public var sectors:Array<Sector>;
 	
 	public var offset_x:Float;
 	public var offset_y:Float;
@@ -41,6 +43,7 @@ class Map
 		segments = new Array();
 		actorsprites = new Array();
 		sidedefs = new Array();
+		sectors = new Array();
 	}
 	
 	public function setOffset() {

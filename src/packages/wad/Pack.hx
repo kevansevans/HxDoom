@@ -174,6 +174,15 @@ class Pack
 			_map.actorsprites[a] = new ActorSprite(32, _map.things[a].type, _map.things[a].angle);
 		}
 		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load sectors
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		numitems = Std.int(directories[_offset - 2].size / Reader.SECTOR_LUMP_SIZE);
+		place = directories[_offset - 2].offset;
+		for (a in 0...numitems) {
+			_map.sectors[a] = Reader.readSector(data, place + a * Reader.SECTOR_LUMP_SIZE);
+		}
+		
 		//Map name as stated in WAD, IE E#M#/MAP##
 		_map.name = directories[_offset - 10].name;
 		

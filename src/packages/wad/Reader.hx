@@ -3,6 +3,7 @@ package packages.wad;
 import packages.wad.Directory;
 import packages.wad.maplumps.LineDef;
 import packages.wad.maplumps.Node;
+import packages.wad.maplumps.Sector;
 import packages.wad.maplumps.Segment;
 import packages.wad.maplumps.SideDef;
 import packages.wad.maplumps.SubSector;
@@ -109,6 +110,18 @@ class Reader
 			getStringFromRange(_data, _offset + 12, _offset + 20),
 			getStringFromRange(_data, _offset + 20, _offset + 28),
 			getTwoBytes(_data, _offset + 28)
+		);
+	}
+	
+	public static inline function readSector(_data:Array<Int>, _offset:Int):Sector {
+		return new Sector(
+			getTwoBytes(_data, _offset, true),
+			getTwoBytes(_data, _offset + 2, true),
+			getStringFromRange(_data, _offset + 4, _offset + 12),
+			getStringFromRange(_data, _offset + 12, _offset + 20),
+			getTwoBytes(_data, _offset + 20, true),
+			getTwoBytes(_data, _offset + 22),
+			getTwoBytes(_data, _offset + 24)
 		);
 	}
 	/**
