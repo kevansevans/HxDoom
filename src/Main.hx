@@ -135,7 +135,7 @@ class Main extends Sprite
 		infotext = new TextField();
 		addChild(infotext);
 		infotext.textColor = 0xFFFFFF;
-		infotext.text = "HxDoom extremely early build, using DOOM1.wad (Shareware)\nPress 1 - 9 to change map\nPress 0 to cause deliberate crash\nClick and drag to move map\nScroll to change scale\nAny other key to reset.";
+		infotext.text = "HxDoom extremely early build, using DOOM1.wad (Shareware)\nPress 1 - 9 to change map\nPress 0 to cause deliberate crash\nPress Left/Right arrows to change player angle\nClick and drag to move map\nScroll to change scale\nPress R to reset.";
 		infotext.width = infotext.textWidth;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -146,7 +146,7 @@ class Main extends Sprite
 		//EnterFrame - openFL only
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		//no enter frame events as of this commit
+		//no EnterFrame events this commit
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Keyboard - openFL only
@@ -185,8 +185,21 @@ class Main extends Sprite
 					debug_draw();
 				case Keyboard.T :
 					thingprite.visible = !thingprite.visible;
-				default :
+				case Keyboard.R :
 					debug_draw();
+			}
+		});
+		
+		stage.addEventListener(KeyboardEvent.KEY_DOWN, function(e:KeyboardEvent) {
+			switch (e.keyCode) {
+				case Keyboard.LEFT :
+					wads[0].activeMap.actors_players[0].angle += 3;
+					drawVisibleSegments();
+				case Keyboard.RIGHT :
+					wads[0].activeMap.actors_players[0].angle -= 3;
+					drawVisibleSegments();
+				default :
+					//blep
 			}
 		});
 		
@@ -211,6 +224,10 @@ class Main extends Sprite
 		}
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//openFL Drawing code start
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	function debug_draw()
 	{
 		var _map = wads[0].activeMap;
@@ -220,10 +237,6 @@ class Main extends Sprite
 		
 		var xoff = _map.offset_x;
 		var yoff = _map.offset_y;
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//openFL Drawing code start
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		mapsprite.graphics.clear();
 		mapsprite.graphics.lineStyle(2, 0xFFFFFF);
@@ -248,12 +261,31 @@ class Main extends Sprite
 		
 		mapsprite.y = mapsprite.height;
 		thingprite.y = mapsprite.y;
+	}
+	
+	function drawVisibleSegments()
+	{
+		var _map = wads[0].activeMap;
+		
+		var xoff = _map.offset_x;
+		var yoff = _map.offset_y;
+		
+		var facingSegs:Array<Segment> = wads[0].activeMap.getVisibleSegments();
+		
+		subSectorsprite.graphics.clear();
+		subSectorsprite.graphics.lineStyle(2, 0xFF0000);
+		for (seg in facingSegs) {
+			subSectorsprite.graphics.moveTo(seg.start.xpos + xoff, seg.start.ypos + yoff);
+			subSectorsprite.graphics.lineTo(seg.end.xpos + xoff, seg.end.ypos + yoff);
+		}
+		
 		subSectorsprite.y = mapsprite.y;
 		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//openFL Drawing code end
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 	}
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//openFL Drawing code end
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 }
 
 /*
