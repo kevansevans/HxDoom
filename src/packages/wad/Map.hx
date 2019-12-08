@@ -4,6 +4,7 @@ import display.ActorSprite;
 import packages.actors.*;
 import packages.wad.maplumps.*;
 import global.Common;
+import global.Angle;
 /**
  * ...
  * @author Kaelan
@@ -60,30 +61,16 @@ class Map
 		var player = actors_players[0];
 		
 		for (segment in segments) {
-			var startAngle:Float = player.angleToVertex(segment.start) - player.angle;
-			var endAngle:Float = player.angleToVertex(segment.end) - player.angle;
+			var startAngle:Angle = player.angleToVertex(segment.start) - player.angle;
+			var endAngle:Angle = player.angleToVertex(segment.end) - player.angle;
 			
-			if (startAngle < 0) startAngle += 360;
-			if (startAngle > 360) startAngle -= 360;
-			
-			if (endAngle < 0) endAngle += 360;
-			if (endAngle > 360) endAngle -= 360;
-			
-			var span = startAngle - endAngle;
-			if (span < 0) span += 360;
-			if (span > 360) span -= 360;
-			
+			var span:Angle = startAngle - endAngle;
 			if (span >= 180) continue;
 			
-			var startAngleLeftFov = startAngle + (Common.PLAYER_FOV / 2);
-			if (startAngleLeftFov < 0) startAngleLeftFov += 360;
-			if (startAngleLeftFov > 360) startAngleLeftFov -= 360;
+			var startAngleLeftFov:Angle = startAngle + (Common.PLAYER_FOV / 2);
 			
 			if (startAngleLeftFov > Common.PLAYER_FOV) {
-				var startAngleMoved = startAngleLeftFov - Common.PLAYER_FOV;
-				
-				if (startAngleMoved < 0) startAngleMoved += 360;
-				if (startAngleMoved > 360) startAngleMoved -= 360;
+				var startAngleMoved:Angle = startAngleLeftFov - Common.PLAYER_FOV;
 				
 				if (startAngleMoved > span) continue;
 				startAngle = (Common.PLAYER_FOV / 2);

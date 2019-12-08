@@ -1,5 +1,6 @@
 package packages.actors;
 
+import global.Angle;
 import packages.wad.maplumps.Thing;
 import packages.wad.maplumps.Vertex;
 
@@ -13,7 +14,7 @@ class Actor
 {
 	public var xpos(default, set):Int;
 	public var ypos(default, set):Int;
-	public var angle(default, set):Float;
+	public var angle:Angle;
 	public var type:TypeID;
 	public var flags:Int;
 	
@@ -39,18 +40,11 @@ class Actor
 	{
 		return ypos = value;
 	}
-	function set_angle(value:Float):Float
-	{
-		angle = value;
-		if (angle >= 360) angle -= 360;
-		if (angle < 0) angle += 360;
-		return angle;
-	}
 	
-	public function angleToVertex(_vertex:Vertex):Float {
+	public function angleToVertex(_vertex:Vertex):Angle {
 		var vdx:Float = _vertex.xpos - this.xpos;
 		var vdy:Float = _vertex.ypos - this.ypos;
-		var angle:Float = (Math.atan2(vdy, vdx) * 180 / Math.PI);
+		var angle:Angle = (Math.atan2(vdy, vdx) * 180 / Math.PI);
 		return angle;
 	}
 	
