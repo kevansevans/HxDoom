@@ -138,15 +138,6 @@ class Pack
 		_map.setOffset();
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load segments
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		numitems = Std.int(directories[_offset - 5].size / Reader.SEG_LUMP_SIZE);
-		place = directories[_offset - 5].offset;
-		for (a in 0...numitems) {
-			_map.segments[a] = Reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.linedefs);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load Subsectors
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 4].size / Reader.SSECTOR_LUMP_SIZE);
@@ -190,6 +181,15 @@ class Pack
 		place = directories[_offset - 8].offset;
 		for (a in 0...numitems) {
 			_map.linedefs[a] = Reader.readLinedef(data, place + a * Reader.LINEDEF_LUMP_SIZE, _map.vertexes, _map.sidedefs);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load segments
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		numitems = Std.int(directories[_offset - 5].size / Reader.SEG_LUMP_SIZE);
+		place = directories[_offset - 5].offset;
+		for (a in 0...numitems) {
+			_map.segments[a] = Reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.linedefs);
 		}
 		
 		//Map name as stated in WAD, IE E#M#/MAP##
