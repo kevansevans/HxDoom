@@ -13,7 +13,7 @@ class Common
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Variables
 	////////////////////////////////////////////////////////////////////////////////////////////////////
-	public static inline var PLAYER_FOV:Int = 90; //Experiment with this not being inline
+	public static var PLAYER_FOV(default, set):Int = 90; //Experiment with this not being inline
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Functions
@@ -34,5 +34,13 @@ class Common
 		#elseif (flash || air)
 		return "Flash Player";
 		#end
+	}
+	
+	static function set_PLAYER_FOV(value:Int):Int 
+	{
+		PLAYER_FOV = value;
+		if (PLAYER_FOV > 360) PLAYER_FOV = 360; 
+		if (PLAYER_FOV < 0) PLAYER_FOV = 0; 
+		return PLAYER_FOV;
 	}
 }

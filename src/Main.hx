@@ -22,6 +22,8 @@ import packages.actors.TypeID;
 import packages.wad.Pack;
 import packages.wad.LevelID;
 
+import global.Common;
+
 /**
  * ...
  * @author Kaelan
@@ -135,7 +137,7 @@ class Main extends Sprite
 		infotext = new TextField();
 		addChild(infotext);
 		infotext.textColor = 0xFFFFFF;
-		infotext.text = "HxDoom extremely early build, using DOOM1.wad (Shareware)\nPress 1 - 9 to change map\nPress 0 to cause deliberate crash\nPress Left/Right arrows to change player angle\nClick and drag to move map\nScroll to change scale\nPress R to reset.";
+		infotext.text = "HxDoom extremely early build, using DOOM1.wad (Shareware)\nPress 1 - 9 to change map\nPress 0 to cause deliberate crash\nPress Left/Right arrows to change player angle\nPress +/- to change FOV\nClick and drag to move map\nScroll to change scale\nPress R to reset.";
 		infotext.width = infotext.textWidth;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,6 +199,12 @@ class Main extends Sprite
 					drawVisibleSegments();
 				case Keyboard.RIGHT :
 					wads[0].activeMap.actors_players[0].angle -= 3;
+					drawVisibleSegments();
+				case Keyboard.EQUAL :
+					Common.PLAYER_FOV += 1;
+					drawVisibleSegments();
+				case Keyboard.MINUS :
+					Common.PLAYER_FOV -= 1;
 					drawVisibleSegments();
 				default :
 					//blep
