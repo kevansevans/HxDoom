@@ -261,6 +261,8 @@ class Main extends Sprite
 		
 		mapsprite.y = mapsprite.height;
 		thingprite.y = mapsprite.y;
+		
+		drawVisibleSegments();
 	}
 	
 	function drawVisibleSegments()
