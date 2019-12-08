@@ -73,20 +73,21 @@ class Map
 			if (span < 0) span += 360;
 			if (span > 360) span -= 360;
 			
+			if (span >= 180) continue;
+			
 			var startAngleLeftFov = startAngle + (Common.PLAYER_FOV / 2);
+			if (startAngleLeftFov < 0) startAngleLeftFov += 360;
+			if (startAngleLeftFov > 360) startAngleLeftFov -= 360;
+			
 			if (startAngleLeftFov > Common.PLAYER_FOV) {
 				var startAngleMoved = startAngleLeftFov - Common.PLAYER_FOV;
+				
+				if (startAngleMoved < 0) startAngleMoved += 360;
+				if (startAngleMoved > 360) startAngleMoved -= 360;
+				
 				if (startAngleMoved > span) continue;
 				startAngle = (Common.PLAYER_FOV / 2);
 			}
-			
-			var endAngleRightFov = endAngle - (Common.PLAYER_FOV / 2);
-			if (endAngleRightFov > Common.PLAYER_FOV) {
-				
-				endAngle = -(Common.PLAYER_FOV / 2);
-			}
-			
-			if (span >= 180) continue;
 			
 			visible.push(segment);
 		}
