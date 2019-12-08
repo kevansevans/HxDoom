@@ -3,6 +3,7 @@ package packages.wad;
 import display.ActorSprite;
 import packages.actors.*;
 import packages.wad.maplumps.*;
+import global.Common;
 /**
  * ...
  * @author Kaelan
@@ -52,6 +53,45 @@ class Map
 					actors_players.push(new Player(thing));
 			}
 		}
+	}
+	
+	public function getVisibleSegments():Array<Segment> {
+		var visible:Array<Segment> = new Array();
+		var player = actors_players[0];
+		
+		for (segment in segments) {
+			var startAngle:Float = player.angleToVertex(segment.start) - player.angle;
+			var endAngle:Float = player.angleToVertex(segment.end) - player.angle;
+			
+			if (startAngle < 0) startAngle += 360;
+			if (startAngle > 360) startAngle -= 360;
+			
+			if (endAngle < 0) endAngle += 360;
+			if (endAngle > 360) endAngle -= 360;
+			
+			var span = startAngle - endAngle;
+			if (span < 0) span += 360;
+			if (span > 360) span -= 360;
+			
+			var startAngleLeftFov = startAngle + (Common.PLAYER_FOV / 2);
+			if (startAngleLeftFov > Common.PLAYER_FOV) {
+				var startAngleMoved = startAngleLeftFov - Common.PLAYER_FOV;
+				if (startAngleMoved > span) continue;
+				startAngle = (Common.PLAYER_FOV / 2);
+			}
+			
+			var endAngleRightFov = endAngle - (Common.PLAYER_FOV / 2);
+			if (endAngleRightFov > Common.PLAYER_FOV) {
+				
+				endAngle = -(Common.PLAYER_FOV / 2);
+			}
+			
+			if (span >= 180) continue;
+			
+			visible.push(segment);
+		}
+		
+		return visible;
 	}
 	
 	public function setOffset() {
