@@ -73,6 +73,9 @@ abstract Angle(Float) to Float from Float from Int
 	public inline function lessThan(_b:Float) {
 		return (this < _b);
 	}
+	public inline function asValue():Float {
+		return cast(this, Float);
+	}
 	static inline function adjust(_v:Float):Float {
 		if (_v > 360) _v -= 360;
 		if (_v < 0) _v += 360;
