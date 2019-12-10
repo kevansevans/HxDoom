@@ -1,4 +1,4 @@
-package packages.wad.maplumps;
+package hxdoom.wad.maplumps;
 
 /**
  * XY position of a linedef

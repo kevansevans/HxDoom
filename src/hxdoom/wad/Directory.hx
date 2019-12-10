@@ -1,4 +1,4 @@
-package packages.wad;
+package hxdoom.wad;
 
 /**
  * ...

@@ -1,14 +1,14 @@
-package packages.wad;
+package hxdoom.wad;
 
-import packages.wad.Directory;
-import packages.wad.maplumps.LineDef;
-import packages.wad.maplumps.Node;
-import packages.wad.maplumps.Sector;
-import packages.wad.maplumps.Segment;
-import packages.wad.maplumps.SideDef;
-import packages.wad.maplumps.SubSector;
-import packages.wad.maplumps.Thing;
-import packages.wad.maplumps.Vertex;
+import hxdoom.wad.Directory;
+import hxdoom.wad.maplumps.LineDef;
+import hxdoom.wad.maplumps.Node;
+import hxdoom.wad.maplumps.Sector;
+import hxdoom.wad.maplumps.Segment;
+import hxdoom.wad.maplumps.SideDef;
+import hxdoom.wad.maplumps.SubSector;
+import hxdoom.wad.maplumps.Thing;
+import hxdoom.wad.maplumps.Vertex;
 
 /**
  * ...

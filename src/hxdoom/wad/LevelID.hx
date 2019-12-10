@@ -1,4 +1,4 @@
-package packages.wad;
+package hxdoom.wad;
 
 /**
  * Enum of Vanilla map ID's

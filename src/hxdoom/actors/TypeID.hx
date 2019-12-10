@@ -1,4 +1,4 @@
-package packages.actors;
+package hxdoom.actors;
 
 /**
  * @author Kaelan

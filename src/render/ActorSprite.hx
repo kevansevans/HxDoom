@@ -1,9 +1,9 @@
-package display;
+package render;
 
 import openfl.display.Shape;
 import openfl.display.Sprite;
 
-import packages.actors.TypeID;
+import hxdoom.actors.TypeID;
 
 /**
  * ...

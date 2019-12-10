@@ -15,14 +15,14 @@ import sys.io.File;
 
 #end
 import haxe.io.Bytes;
-import packages.wad.maplumps.Segment;
-import packages.wad.maplumps.Vertex;
+import hxdoom.wad.maplumps.Segment;
+import hxdoom.wad.maplumps.Vertex;
 
-import packages.actors.TypeID;
-import packages.wad.Pack;
-import packages.wad.LevelID;
+import hxdoom.actors.TypeID;
+import hxdoom.wad.Pack;
+import hxdoom.wad.LevelID;
 
-import global.Common;
+import hxdoom.com.global.Environment;
 
 /**
  * ...
@@ -134,6 +134,8 @@ class Main extends Sprite
 		thingprite.scaleX /= map_scale_inv;
 		thingprite.scaleY /= map_scale_inv * -1;
 		
+		
+		
 		infotext = new TextField();
 		addChild(infotext);
 		infotext.textColor = 0xFFFFFF;
@@ -201,10 +203,10 @@ class Main extends Sprite
 					wads[0].activeMap.actors_players[0].angle -= 3;
 					drawVisibleSegments();
 				case Keyboard.EQUAL :
-					Common.PLAYER_FOV += 1;
+					Environment.PLAYER_FOV += 1;
 					drawVisibleSegments();
 				case Keyboard.MINUS :
-					Common.PLAYER_FOV -= 1;
+					Environment.PLAYER_FOV -= 1;
 					drawVisibleSegments();
 				default :
 					//blep

@@ -1,10 +1,20 @@
-package packages.wad;
+package hxdoom.wad;
 
-import display.ActorSprite;
+import render.ActorSprite;
+import hxdoom.actors.Player;
+import hxdoom.actors.TypeID;
+import hxdoom.wad.maplumps.LineDef;
+import hxdoom.wad.maplumps.Node;
+import hxdoom.wad.maplumps.Sector;
+import hxdoom.wad.maplumps.Segment;
+import hxdoom.wad.maplumps.SideDef;
+import hxdoom.wad.maplumps.SubSector;
+import hxdoom.wad.maplumps.Thing;
+import hxdoom.wad.maplumps.Vertex;
 import packages.actors.*;
 import packages.wad.maplumps.*;
-import global.Common;
-import global.Angle;
+import hxdoom.com.global.Environment;
+import hxdoom.abstracts.Angle;
 /**
  * ...
  * @author Kaelan
@@ -67,13 +77,13 @@ class Map
 			var span:Angle = startAngle - endAngle;
 			if (span >= 180) continue;
 			
-			var startAngleLeftFov:Angle = startAngle + (Common.PLAYER_FOV / 2);
+			var startAngleLeftFov:Angle = startAngle + (Environment.PLAYER_FOV / 2);
 			
-			if (startAngleLeftFov > Common.PLAYER_FOV) {
-				var startAngleMoved:Angle = startAngleLeftFov - Common.PLAYER_FOV;
+			if (startAngleLeftFov > Environment.PLAYER_FOV) {
+				var startAngleMoved:Angle = startAngleLeftFov - Environment.PLAYER_FOV;
 				
 				if (startAngleMoved > span) continue;
-				startAngle = (Common.PLAYER_FOV / 2);
+				startAngle = (Environment.PLAYER_FOV / 2);
 			}
 			
 			visible.push(segment);

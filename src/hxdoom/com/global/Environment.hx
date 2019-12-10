@@ -1,4 +1,4 @@
-package global;
+package hxdoom.com.global;
 
 #if js
 import js.Browser;
@@ -8,7 +8,7 @@ import js.Browser;
  * ...
  * @author Kaelan
  */
-class Common 
+class Environment 
 {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Variables

@@ -1,17 +1,17 @@
-package packages.wad;
+package hxdoom.wad;
 
-import display.ActorSprite;
+import render.ActorSprite;
 import haxe.PosInfos;
 import haxe.io.Bytes;
-import packages.wad.maplumps.LineDef;
-import packages.wad.maplumps.Segment;
-import packages.wad.maplumps.Vertex;
-import packages.wad.maplumps.Thing;
+import hxdoom.wad.maplumps.LineDef;
+import hxdoom.wad.maplumps.Segment;
+import hxdoom.wad.maplumps.Vertex;
+import hxdoom.wad.maplumps.Thing;
 
-import global.Common;
+import hxdoom.com.global.Environment;
 
-import packages.wad.Directory;
-import packages.wad.Map;
+import hxdoom.wad.Directory;
+import hxdoom.wad.Map;
 
 /**
  * ...
@@ -107,7 +107,7 @@ class Pack
 	 * @param	_index map index
 	 */
 	public function loadMap(_index:Int, ?_pos:PosInfos) {
-		if (maps[_index] == null) Common.GlobalThrowError("This map does not exist! This is supposed to be a debug throw and never to be seen under normal conditions, please report a new issue and include this information!\n\n" + _pos);
+		if (maps[_index] == null) Environment.GlobalThrowError("This map does not exist! This is supposed to be a debug throw and never to be seen under normal conditions, please report a new issue and include this information!\n\n" + _pos);
 		//Should be impossible for a case where a null item is supposed to contain a map
 		//extensive testing is necesary. Leaving in just in case while this function is
 		//unknown to be stable or not
