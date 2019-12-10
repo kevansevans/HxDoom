@@ -8,7 +8,7 @@ import hxdoom.wad.maplumps.Segment;
 import hxdoom.wad.maplumps.Vertex;
 import hxdoom.wad.maplumps.Thing;
 
-import hxdoom.com.global.Environment;
+import hxdoom.com.Environment;
 
 import hxdoom.wad.Directory;
 import hxdoom.wad.Map;

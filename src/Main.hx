@@ -22,7 +22,7 @@ import hxdoom.actors.TypeID;
 import hxdoom.wad.Pack;
 import hxdoom.wad.LevelID;
 
-import hxdoom.com.global.Environment;
+import hxdoom.com.Environment;
 
 /**
  * ...
