@@ -1,7 +1,6 @@
 package hxdoom.wad;
 
 import haxe.ds.Map;
-import render.ActorSprite;
 import haxe.PosInfos;
 import haxe.io.Bytes;
 import hxdoom.wad.maplumps.LineDef;
@@ -155,7 +154,6 @@ class Pack
 		place = directories[_offset - 9].offset;
 		for (a in 0...numitems) {
 			_map.things[a] = Reader.readThing(data, place + a * Reader.THING_LUMP_SIZE);
-			_map.actorsprites[a] = new ActorSprite(32, _map.things[a].type, _map.things[a].angle);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
