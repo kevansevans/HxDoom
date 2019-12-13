@@ -1,6 +1,5 @@
 package hxdoom.wad;
 
-import render.ActorSprite;
 import hxdoom.actors.Player;
 import hxdoom.actors.TypeID;
 import hxdoom.wad.maplumps.LineDef;
@@ -37,8 +36,6 @@ class BSPMap
 	
 	public var dirOffset:Int;
 	
-	public var actorsprites:Array<ActorSprite>;
-	
 	public var actors_players:Array<Player>;
 	
 	public function new(_dirOffset:Int) 
@@ -51,7 +48,6 @@ class BSPMap
 		nodes = new Array();
 		subsectors = new Array();
 		segments = new Array();
-		actorsprites = new Array();
 		sidedefs = new Array();
 		sectors = new Array();
 	}
