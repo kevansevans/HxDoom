@@ -1,8 +1,11 @@
 package;
 
+#if sys
 import sys.FileSystem;
 import sys.io.File;
+#end
 
+import lime.utils.Assets;
 import lime.app.Application;
 import lime.graphics.RenderContext;
 
@@ -29,7 +32,7 @@ class Main extends Application
 		#if sys
 		hxdoom.setBaseIwad(File.getBytes("./IWADS/DOOM1.WAD"), "DOOM1.WAD");
 		#elseif js
-		//todo
+		hxdoom.setBaseIwad(Assets.getBytes("IWADS/DOOM1.WAD"), "DOOM1.WAD");
 		#end
 		
 		hxdoom.loadMap(0);
