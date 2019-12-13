@@ -1,28 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
-	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
-	<meta title="HxDoom" package="com.kev.hxdoom" version="1.0.0" company="Kaelan" />
-	
-	<!-- output -->
+	<meta title="HxDoom" package="HxDoom" version="1.0.0" company="Kaelan" />
 	<app main="Main" file="HxDoom" path="bin" />
 	
-	<window background="#000000" fps="60" />
-	<window width="1920" height="1080" if="html5" />
-	<window width="800" height="480" unless="html5" />
-	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
-	
-	<!-- classpath, haxe libs -->
 	<source path="src" />
-	<haxelib name="openfl" />
 	
-	<!-- assets -->
-	<icon path="assets/openfl.svg" />
-	<assets path="assets/img" rename="img" />
-	<assets path="assets/shareware" rename="IWADS" />
+	<haxelib name="lime" />
 	
-	<!-- optimize output
-	<haxeflag name="-dce full" /> -->
+	<assets path="assets" exclude="*.svg" />
+	<icon path="assets/lime.svg" />
 	
 </project>

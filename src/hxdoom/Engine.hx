@@ -31,6 +31,7 @@ class Engine
 	}
 	public function setBaseIwad(_data:Bytes, _name:String) {
 		IWADS[_name] = new Pack(_data, _name, true);
+		BASEIWAD = _name;
 		
 		for (bsp in IWADS[_name].maps) {
 			MAPLIST[bsp.name] = bsp;
