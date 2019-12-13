@@ -37,9 +37,11 @@ Instructions:
 * if compiling from the terminal, switch directories to the folder containing ``project.xml`` and run the command ``lime build windows`` or ``lime build html5``
 * if using HaxeDevlop, navigate to the folder containing ``HxDoom.hxproj`` and open that file, press F5 or click the play button on top.
 
+```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //How to contribute
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+```
 
 Contributions to HxDoom are not currently accepted, but will be in the future when I feel the engine is up to snuff. If and when this
 happens, it is encouraged, but not mandatory, that you have knowledge of the following:
