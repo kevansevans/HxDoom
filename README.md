@@ -47,7 +47,6 @@ happens, it is encouraged, but not mandatory, that you have knowledge of the fol
 * Understanding of Doom modding
 * Understanding of Haxe and it's tools
 * Understanding of WebGL
-* Understanding of WebGL
 
 
 ```
