@@ -19,7 +19,7 @@ import hxdoom.abstracts.Angle;
  * ...
  * @author Kaelan
  */
-class Map 
+class BSPMap 
 {
 	public var name:String;
 	

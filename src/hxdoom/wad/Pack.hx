@@ -1,5 +1,6 @@
 package hxdoom.wad;
 
+import haxe.ds.Map;
 import render.ActorSprite;
 import haxe.PosInfos;
 import haxe.io.Bytes;
@@ -11,7 +12,7 @@ import hxdoom.wad.maplumps.Thing;
 import hxdoom.com.Environment;
 
 import hxdoom.wad.Directory;
-import hxdoom.wad.Map;
+import hxdoom.wad.BSPMap;
 
 /**
  * ...
@@ -21,6 +22,7 @@ import hxdoom.wad.Map;
  */
 class Pack 
 {
+	//public static var SPRITELIST:Map<String, some class here> = new Map(); 
 	var data:Array<Int>;
 	var wadname:String;
 	var isIwad:Bool;
@@ -29,11 +31,11 @@ class Pack
 	var directory_count:Int;
 	var directory_offset:Int;
 	
-	var maps:Array<Map>;
+	public var maps:Array<BSPMap>;
 	/**
 	 * Currently loaded map
 	 */
-	public var activeMap:Map;
+	public var activeMap:BSPMap;
 	/**
 	 * Getter to retrieve active map's vertexes
 	 */
@@ -98,7 +100,7 @@ class Pack
 					&& directories[dir - 1].name == 	"REJECT"	//
 					&& directories[dir].name == 		"BLOCKMAP"	//
 				) {
-					maps.push(new Map(dir));
+					maps.push(new BSPMap(dir));
 				}
 		}
 	}
