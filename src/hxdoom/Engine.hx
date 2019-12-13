@@ -1,4 +1,5 @@
 package hxdoom;
+import haxe.display.Protocol.InitializeParams;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 
@@ -12,6 +13,7 @@ import hxdoom.wad.Pack;
 class Engine 
 {
 	public static var IWADS:Map<String, Pack>;
+	public static var BASEIWAD:String;
 	
 	/*
 	 * these vars are the accumulated data that's supplies to the engine. Using a Map<String, [type]> format,
@@ -21,13 +23,16 @@ class Engine
 	public static var WADLIST:Map<String, Pack>;
 	public static var MAPLIST:Map<String, BSPMap>;
 	
-	public static var BASEIWAD:String;
+	public static var ACTIVEMAP:BSPMap;
 	
 	public function new() 
 	{
 		IWADS = new Map();
 		WADLIST = new Map();
 		MAPLIST = new Map();
+	}
+	public function loadMap(_index:Int) {
+		IWADS[BASEIWAD].loadMap(_index);
 	}
 	public function setBaseIwad(_data:Bytes, _name:String) {
 		IWADS[_name] = new Pack(_data, _name, true);
@@ -36,14 +41,11 @@ class Engine
 		for (bsp in IWADS[_name].maps) {
 			MAPLIST[bsp.name] = bsp;
 		}
-		
 	}
+	//we'll figure this out later.
 	public function makeFrakenWad() {
-		for (pack in WADLIST) {
-			for (bsp in pack.maps) {
-				MAPLIST[bsp.name] = bsp;
-			}
-		}
+		/*
+		 * function to combine all mapdata into singular pack.
+		 */
 	}
-	
 }

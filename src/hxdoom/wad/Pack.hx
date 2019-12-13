@@ -195,8 +195,8 @@ class Pack
 		//Map name as stated in WAD, IE E#M#/MAP##
 		_map.name = directories[_offset - 10].name;
 		
-		activeMap = _map;
-		activeMap.parseThings();
+		Engine.ACTIVEMAP = _map;
+		Engine.ACTIVEMAP.parseThings();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
