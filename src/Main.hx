@@ -3,8 +3,9 @@ package;
 #if sys
 import sys.FileSystem;
 import sys.io.File;
+import haxe.io.Bytes;
 #end
-
+import lime.utils.Bytes;
 import lime.utils.Assets;
 import lime.app.Application;
 import lime.graphics.RenderContext;
@@ -32,12 +33,20 @@ class Main extends Application
 		#if sys
 		hxdoom.setBaseIwad(File.getBytes("./IWADS/DOOM1.WAD"), "DOOM1.WAD");
 		#elseif js
-		hxdoom.setBaseIwad(Assets.getBytes("IWADS/DOOM1.WAD"), "DOOM1.WAD");
+		var waddata = Assets.loadBytes("IWADS/DOOM1.WAD");
+		waddata.onComplete(function(data:Bytes):Bytes {
+			hxdoom.setBaseIwad(data, "DOOM1.WAD");
+			hxdoom.loadMap(0);
+			wadsLoaded = true;
+			return data;
+		});
 		#end
 		
+		#if !js
 		hxdoom.loadMap(0);
 		
 		wadsLoaded = true;
+		#end
 	}
 	public static function main () {
 		
