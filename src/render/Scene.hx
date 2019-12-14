@@ -67,33 +67,46 @@ class Scene
 		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
 		map_lineverts = new Array();
-		var visible_segs = Engine.ACTIVEMAP.getVisibleSegments();
+		var loadedsegs = Engine.ACTIVEMAP.segments;
 		
 		var xoff = Engine.ACTIVEMAP.offset_x;
 		var yoff = Engine.ACTIVEMAP.offset_y;
 		
-		for (segs in visible_segs) {
-			var r:Float = 1 * Math.random();
-			var g:Float = 1 * Math.random();
-			var b:Float = 1 * Math.random();
+		for (segs in loadedsegs) {
 			
-			map_lineverts.push(segs.start.xpos + xoff);
-			map_lineverts.push(segs.start.ypos + yoff);
+			map_lineverts.push((segs.start.xpos + xoff) / 1000);
+			map_lineverts.push((segs.start.ypos + yoff - 300) / 1000);
 			
-			map_lineverts.push(r);
-			map_lineverts.push(g);
-			map_lineverts.push(b);
+			map_lineverts.push(1);
+			map_lineverts.push(1);
+			map_lineverts.push(1);
 			
-			map_lineverts.push(segs.end.xpos + xoff);
-			map_lineverts.push(segs.end.ypos + yoff);
+			map_lineverts.push((segs.end.xpos + xoff) / 1000);
+			map_lineverts.push((segs.end.ypos + yoff - 300) / 1000);
 			
-			map_lineverts.push(r);
-			map_lineverts.push(g);
-			map_lineverts.push(b);
+			map_lineverts.push(1);
+			map_lineverts.push(1);
+			map_lineverts.push(1);
 		}
 		
-		var triVertBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, triVertBuffer);
+		for (vissegs in Engine.ACTIVEMAP.getVisibleSegments()) {
+			map_lineverts.push((vissegs.start.xpos + xoff) / 1000);
+			map_lineverts.push((vissegs.start.ypos + yoff - 300) / 1000);
+			
+			map_lineverts.push(1);
+			map_lineverts.push(0);
+			map_lineverts.push(0);
+			
+			map_lineverts.push((vissegs.end.xpos + xoff) / 1000);
+			map_lineverts.push((vissegs.end.ypos + yoff - 300) / 1000);
+			
+			map_lineverts.push(1);
+			map_lineverts.push(0);
+			map_lineverts.push(0);
+		}
+		
+		var loadedLineBuffer = gl.createBuffer();
+		gl.bindBuffer(gl.ARRAY_BUFFER, loadedLineBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(map_lineverts), gl.STATIC_DRAW);
 		
 		var posAttributeLocation = gl.getAttribLocation(program, 'vertPosition');
@@ -115,9 +128,9 @@ class Scene
 		gl.enableVertexAttribArray(posAttributeLocation);
 		gl.enableVertexAttribArray(colorAttributeLocation);
 		
-		var numlines:Int = visible_segs.length * 2; //active maps number of segments
+		var numsegs:Int = Std.int((map_lineverts.length / 5) * 2); //active maps number of segments
 				
 		gl.useProgram(program);
-		gl.drawArrays(gl.LINES, 0, numlines);
+		gl.drawArrays(gl.LINES, 0, numsegs);
 	}
 }

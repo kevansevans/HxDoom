@@ -136,7 +136,6 @@ class Pack
 		for (a in 0...numitems) {
 			_map.vertexes[a] = Reader.readVertex(data, place + a * Reader.VERTEX_LUMP_SIZE);
 		}
-		_map.setOffset();
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load Subsectors
@@ -197,6 +196,7 @@ class Pack
 		
 		Engine.ACTIVEMAP = _map;
 		Engine.ACTIVEMAP.parseThings();
+		Engine.ACTIVEMAP.setOffset();
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////

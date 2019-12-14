@@ -96,8 +96,8 @@ class BSPMap
 			if (a.ypos < mapy) mapy = a.ypos;
 		}
 			
-		offset_x = mapx * -1;
-		offset_y = mapy * -1;
+		offset_x = mapx - (actors_players[0].xpos + mapx);
+		offset_y = mapy - (actors_players[0].ypos + mapy);
 	}
 	
 }
