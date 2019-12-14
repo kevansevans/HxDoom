@@ -128,7 +128,7 @@ class Scene
 		gl.enableVertexAttribArray(posAttributeLocation);
 		gl.enableVertexAttribArray(colorAttributeLocation);
 		
-		var numsegs:Int = Std.int((map_lineverts.length / 5) * 2); //active maps number of segments
+		var numsegs:Int = Std.int(map_lineverts.length / 5); //active maps number of segments
 				
 		gl.useProgram(program);
 		gl.drawArrays(gl.LINES, 0, numsegs);
