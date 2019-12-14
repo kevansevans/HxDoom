@@ -1,5 +1,4 @@
 package hxdoom;
-import haxe.display.Protocol.InitializeParams;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 
