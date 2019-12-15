@@ -15,9 +15,9 @@ class Shaders
 {
 	public static var automapVertext:String = [
 	'precision mediump float;',
-	'attribute vec2' + Automap.V3_POSITION + ';',
-	'attribute vec3' + Automap.V3_COLOR + ';',
-	'varying vec3' + Automap.F_COLOR + ';',
+	'attribute vec2 ' + Automap.V3_POSITION + ';',
+	'attribute vec3 ' + Automap.V3_COLOR + ';',
+	'varying vec3 ' + Automap.F_COLOR + ';',
 	'',
 	'void main()',
 	'{',
@@ -28,7 +28,7 @@ class Shaders
 	
 	public static var automapFragment:String = [
 	'precision mediump float;',
-	'varying vec3' + Automap.F_COLOR + ';',
+	'varying vec3 ' + Automap.F_COLOR + ';',
 	'',
 	'void main()',
 	'{',
