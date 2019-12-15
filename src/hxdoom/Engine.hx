@@ -21,17 +21,21 @@ class Engine
 	 */
 	public static var WADLIST:Map<String, Pack>;
 	public static var MAPLIST:Map<String, BSPMap>;
+	public static var MAPALIAS:Array<String>;
 	
 	public static var ACTIVEMAP:BSPMap;
+	
+	var mapindex:Int = 0;
 	
 	public function new() 
 	{
 		IWADS = new Map();
 		WADLIST = new Map();
 		MAPLIST = new Map();
+		MAPALIAS = new Array();
 	}
 	public function loadMap(_index:Int) {
-		IWADS[BASEIWAD].loadMap(_index);
+		ACTIVEMAP = MAPLIST[MAPALIAS[_index]];
 	}
 	public function setBaseIwad(_data:Bytes, _name:String) {
 		IWADS[_name] = new Pack(_data, _name, true);
@@ -39,12 +43,21 @@ class Engine
 		
 		for (bsp in IWADS[_name].maps) {
 			MAPLIST[bsp.name] = bsp;
+			MAPALIAS[mapindex] = bsp.name;
+			++mapindex;
 		}
 	}
-	//we'll figure this out later.
+	//we'll call this function when pwad support works
 	public function makeFrakenWad() {
-		/*
-		 * function to combine all mapdata into singular pack.
-		 */
+		for (wad in WADLIST) {
+			for (map in wad.maps) {
+				if (MAPLIST[map.name] == null) {
+					MAPALIAS[mapindex] = map.name;
+					++mapindex;
+				}
+				MAPLIST[map.name] = map;
+			}
+		}
+		
 	}
 }

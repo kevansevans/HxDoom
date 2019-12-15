@@ -5,6 +5,11 @@ import sys.FileSystem;
 import sys.io.File;
 import haxe.io.Bytes;
 #end
+
+#if js
+import js.Browser;
+#end
+
 import lime.utils.Bytes;
 import lime.utils.Assets;
 import lime.app.Application;
@@ -60,15 +65,25 @@ class Main extends Application
 		
 		switch (context.type) {
 			
+			//Desktop and HTML5 with WebGL support
 			case OPENGL, OPENGLES, WEBGL:
 				
 				if (renderScene == null) {
 					renderScene = new Scene(context);
 				}
 				
-			default:
+			//HTML5 without WebGL support
+			case CANVAS :
+				#if js
+					Browser.alert("Canvas renderer not yet supported, many apologies");
+				#end
 				
-				throw "Render context not supported by choice";
+			case DOM :
+				throw "I have no idea what DOM is or how you're running it, but it's not supported here unfortunately. Many apologies";
+			case FLASH :
+				throw "This throw is only noticeable in Adobe Air. Flash rendering is not yet supported. Many Apologies";
+			default:
+				throw "Render context not supported";
 		}
 	}
 	
