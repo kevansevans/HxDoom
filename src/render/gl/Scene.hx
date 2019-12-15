@@ -1,4 +1,4 @@
-package render;
+package render.gl;
 
 import lime.graphics.RenderContext;
 import lime.graphics.WebGLRenderContext;
@@ -6,10 +6,11 @@ import lime.graphics.opengl.GLProgram;
 import lime.utils.Float32Array;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLShader;
+import render.gl.Shaders;
 
 import hxdoom.Engine;
 import hxdoom.com.Environment;
-import render.Shaders.Automap;
+import render.gl.Shaders.Automap;
 
 /**
  * ...

@@ -16,7 +16,7 @@ import lime.app.Application;
 import lime.graphics.RenderContext;
 
 import hxdoom.Engine;
-import render.Scene;
+import render.gl.Scene;
 
 
 class Main extends Application 
