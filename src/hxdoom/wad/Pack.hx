@@ -100,6 +100,7 @@ class Pack
 					&& directories[dir].name == 		"BLOCKMAP"	//
 				) {
 					maps.push(new BSPMap(dir));
+					loadMap(maps.length - 1);
 				}
 		}
 	}
