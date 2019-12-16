@@ -10,7 +10,7 @@ import render.gl.Shaders;
 
 import hxdoom.Engine;
 import hxdoom.com.Environment;
-import render.gl.Shaders.Automap;
+import render.gl.enums.Automap;
 
 /**
  * ...
