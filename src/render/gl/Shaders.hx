@@ -1,5 +1,7 @@
 package render.gl;
 
+import render.gl.enums.Automap;
+
 /**
  * ...
  * @author Kaelan
