@@ -26,10 +26,10 @@ class Scene
 	 * way. So it is madatory that all hardware rendering code must use WebGL.
 	 * 
 	 * Following targets are supported with this class:
-	 * HTML5 w/WebGL, C++/Desktop, Hashlink
+	 * HTML5 w/WebGL, Android, C++/Desktop, Hashlink
 	 * 
 	 * Need to test with:
-	 * Android
+	 * OSX
 	 */
 	var gl:WebGLRenderContext;
 	var program:GLProgram;
