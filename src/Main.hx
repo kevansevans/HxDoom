@@ -81,15 +81,15 @@ class Main extends Application
 			//HTML5 without WebGL support
 			case CANVAS :
 				#if js
-					//Browser.alert("Canvas renderer not yet supported, many apologies");
+					Browser.alert("Canvas renderer not yet supported, many apologies");
 				#end
 				
 			case DOM :
-				//throw "I have no idea what DOM is or how you're running it, but it's not supported here unfortunately. Many apologies";
+				throw "I have no idea what DOM is or how you're running it, but it's not supported here unfortunately. Many apologies";
 			case FLASH :
-				//throw "This throw is only noticeable in Adobe Air. Flash rendering is not yet supported. Many Apologies";
+				throw "This throw is only noticeable in Adobe Air. Flash rendering is not yet supported. Many Apologies";
 			default:
-				//throw "Render context not supported";
+				throw "Render context not supported";
 		}
 	}
 	
