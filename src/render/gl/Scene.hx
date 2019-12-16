@@ -163,7 +163,7 @@ class Scene
 		automapMatrix4.identity();
 		
 		automapMatrix4.appendTranslation(-Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
-		automapMatrix4.appendScale(Environment.AUTOMAP_ZOOM, Environment.AUTOMAP_ZOOM, 1);
+		automapMatrix4.appendScale(Environment.AUTOMAP_ZOOM, (Environment.AUTOMAP_ZOOM * (context.window.width / context.window.height)), 1);
 		
 		gl.uniformMatrix4fv(automapPositionMatrixAttribute, false, automapFloat32);
 		
