@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="HxDoom" package="HxDoom" version="1.0.0" company="Kaelan" />
+	<meta title="HxDoom" package="com.Kevans.HxDoom" version="1.0.0" company="Kaelan" />
 	<app main="Main" file="HxDoom" path="bin" />
 	
 	<source path="src" />
