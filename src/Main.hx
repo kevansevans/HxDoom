@@ -1,9 +1,14 @@
 package;
+import lime.ui.KeyModifier;
+import lime.ui.MouseWheelMode;
 
-#if sys
+import haxe.io.Bytes;
+import lime.ui.KeyCode;
+
+
+#if (windows || linux || macos || osx)
 import sys.FileSystem;
 import sys.io.File;
-import haxe.io.Bytes;
 #end
 
 #if js
@@ -14,8 +19,10 @@ import lime.utils.Bytes;
 import lime.utils.Assets;
 import lime.app.Application;
 import lime.graphics.RenderContext;
+import lime.ui.KeyCode;
 
 import hxdoom.Engine;
+import hxdoom.com.Environment;
 import render.gl.Scene;
 
 
@@ -27,7 +34,6 @@ class Main extends Application
 	var hxdoom:Engine;
 	
 	public function new () {
-		
 		super ();
 		
 		hxdoom = new Engine();
@@ -35,9 +41,15 @@ class Main extends Application
 		/*
 		 * We're going to assume an iwad picker of some sorts has been made already
 		 */ 
-		#if sys
+		#if android
+		throw "android deployment not yet understood XoX";
+		#elseif (windows || linux || macos || osx)
 		hxdoom.setBaseIwad(File.getBytes("./IWADS/DOOM1.WAD"), "DOOM1.WAD");
-		#elseif js
+		
+		hxdoom.loadMap(0);
+		
+		wadsLoaded = true;
+		#elseif (js)
 		var waddata = Assets.loadBytes("IWADS/DOOM1.WAD");
 		waddata.onComplete(function(data:Bytes):Bytes {
 			hxdoom.setBaseIwad(data, "DOOM1.WAD");
@@ -45,12 +57,6 @@ class Main extends Application
 			wadsLoaded = true;
 			return data;
 		});
-		#end
-		
-		#if !js
-		hxdoom.loadMap(0);
-		
-		wadsLoaded = true;
 		#end
 	}
 	public static function main () {
@@ -65,26 +71,86 @@ class Main extends Application
 		
 		switch (context.type) {
 			
-			//Desktop and HTML5 with WebGL support
+			//Desktop, Android, and HTML5 with WebGL support
 			case OPENGL, OPENGLES, WEBGL:
 				
 				if (renderScene == null) {
-					renderScene = new Scene(context);
+					renderScene = new Scene(context, window);
 				}
 				
 			//HTML5 without WebGL support
 			case CANVAS :
 				#if js
-					Browser.alert("Canvas renderer not yet supported, many apologies");
+					//Browser.alert("Canvas renderer not yet supported, many apologies");
 				#end
 				
 			case DOM :
-				throw "I have no idea what DOM is or how you're running it, but it's not supported here unfortunately. Many apologies";
+				//throw "I have no idea what DOM is or how you're running it, but it's not supported here unfortunately. Many apologies";
 			case FLASH :
-				throw "This throw is only noticeable in Adobe Air. Flash rendering is not yet supported. Many Apologies";
+				//throw "This throw is only noticeable in Adobe Air. Flash rendering is not yet supported. Many Apologies";
 			default:
-				throw "Render context not supported";
+				//throw "Render context not supported";
 		}
+	}
+	
+	override public function onWindowResize(width:Int, height:Int):Void 
+	{
+		super.onWindowResize(width, height);
+		
+		
+	}
+	
+	override public function onKeyUp(keyCode:KeyCode, modifier:KeyModifier):Void 
+	{
+		super.onKeyUp(keyCode, modifier);
+		
+		switch(keyCode) {
+			
+			case KeyCode.TAB :
+				Environment.IS_IN_AUTOMAP = !Environment.IS_IN_AUTOMAP;
+				
+			case KeyCode.NUMBER_1 :
+				hxdoom.loadMap(0);
+			case KeyCode.NUMBER_2 :
+				hxdoom.loadMap(1);
+			case KeyCode.NUMBER_3 :
+				hxdoom.loadMap(2);
+			case KeyCode.NUMBER_4 :
+				hxdoom.loadMap(3);
+			case KeyCode.NUMBER_5 :
+				hxdoom.loadMap(4);
+			case KeyCode.NUMBER_6 :
+				hxdoom.loadMap(5);
+			case KeyCode.NUMBER_7 :
+				hxdoom.loadMap(6);
+			case KeyCode.NUMBER_8 :
+				hxdoom.loadMap(7);
+			case KeyCode.NUMBER_9 :
+				hxdoom.loadMap(8);
+			default :
+				
+		}
+	}
+	
+	override public function onKeyDown(keyCode:KeyCode, modifier:KeyModifier):Void 
+	{
+		super.onKeyDown(keyCode, modifier);
+		
+		switch(keyCode) {
+			case KeyCode.LEFT :
+				Engine.ACTIVEMAP.actors_players[0].angle += 1;
+			case KeyCode.RIGHT :
+				Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+			default :
+				
+		}
+	}
+	
+	override public function onMouseWheel(deltaX:Float, deltaY:Float, deltaMode:MouseWheelMode):Void 
+	{
+		super.onMouseWheel(deltaX, deltaY, deltaMode);
+		
+		Environment.AUTOMAP_ZOOM += (0.0001 * deltaY);
 	}
 	
 	override public function update(deltaTime:Int):Void 

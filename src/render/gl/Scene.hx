@@ -3,6 +3,8 @@ package render.gl;
 import lime.graphics.RenderContext;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
+import lime.math.Matrix4;
+import lime.ui.Window;
 import lime.utils.Float32Array;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLShader;
@@ -32,16 +34,20 @@ class Scene
 	 * OSX
 	 */
 	var gl:WebGLRenderContext;
+	var context:RenderContext;
+	var window:Window;
 	var program:GLProgram;
 	var map_lineverts:Array<Float>;
 	
 	var mapVertexShader:GLShader;
 	var mapFragmentShader:GLShader;
 	
-	public function new(_context:RenderContext) 
+	public function new(_context:RenderContext, _window:Window) 
 	{
 		if (gl == null) {
 			gl = _context.webgl;
+			window = _window;
+			context = _context;
 				
 			mapVertexShader = gl.createShader(gl.VERTEX_SHADER);
 			mapFragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -51,12 +57,12 @@ class Scene
 			
 			gl.compileShader(mapVertexShader);
 			if (!gl.getShaderParameter(mapVertexShader, gl.COMPILE_STATUS)) {
-				throw (gl.getShaderInfoLog(mapVertexShader));
+				throw ("Map Vertex Shadder error: \n" + gl.getShaderInfoLog(mapVertexShader));
 			}
 			
 			gl.compileShader(mapFragmentShader);
 			if (!gl.getShaderParameter(mapFragmentShader, gl.COMPILE_STATUS)) {
-				throw (gl.getShaderInfoLog(mapFragmentShader));
+				throw ("Map Fragment Shader error: \n" + gl.getShaderInfoLog(mapFragmentShader));
 			}
 				
 			program = gl.createProgram();
@@ -69,7 +75,13 @@ class Scene
 	}
 	public function render() {
 		
-		if (Environment.IS_IN_AUTOMAP) {
+		gl.viewport(0, 0, window.width, window.height);
+		
+		//Move this to Automap when FPS part is done.
+		gl.clearColor (0, 0, 0, 1);
+		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+		
+		if (!Environment.IS_IN_AUTOMAP) {
 			drawAutoMap();
 		} else {
 			drawFirstPerson();
@@ -78,9 +90,6 @@ class Scene
 	}
 	
 	function drawAutoMap() {
-		
-		gl.clearColor (0, 0, 0, 1);
-		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
 		map_lineverts = new Array();
 		var loadedsegs = Engine.ACTIVEMAP.segments;
@@ -92,6 +101,7 @@ class Scene
 			
 			map_lineverts.push(segs.start.xpos);
 			map_lineverts.push(segs.start.ypos);
+			map_lineverts.push(0);
 			
 			map_lineverts.push(1);
 			map_lineverts.push(1);
@@ -99,6 +109,7 @@ class Scene
 			
 			map_lineverts.push(segs.end.xpos);
 			map_lineverts.push(segs.end.ypos);
+			map_lineverts.push(0);
 			
 			map_lineverts.push(1);
 			map_lineverts.push(1);
@@ -108,6 +119,7 @@ class Scene
 		for (vissegs in Engine.ACTIVEMAP.getVisibleSegments()) {
 			map_lineverts.push(vissegs.start.xpos);
 			map_lineverts.push(vissegs.start.ypos);
+			map_lineverts.push(0);
 			
 			map_lineverts.push(1);
 			map_lineverts.push(0);
@@ -115,6 +127,7 @@ class Scene
 			
 			map_lineverts.push(vissegs.end.xpos);
 			map_lineverts.push(vissegs.end.ypos);
+			map_lineverts.push(0);
 			
 			map_lineverts.push(1);
 			map_lineverts.push(0);
@@ -129,23 +142,33 @@ class Scene
 		var colorAttributeLocation = gl.getAttribLocation(program, Automap.V3_COLOR);
 		gl.vertexAttribPointer(
 			posAttributeLocation,
-			2,
+			3,
 			gl.FLOAT,
 			false,
-			5 * Float32Array.BYTES_PER_ELEMENT,
+			6 * Float32Array.BYTES_PER_ELEMENT,
 			0);
 		gl.vertexAttribPointer(
 			colorAttributeLocation,
 			3,
 			gl.FLOAT,
 			false,
-			5 * Float32Array.BYTES_PER_ELEMENT,
-			2 * Float32Array.BYTES_PER_ELEMENT);
+			6 * Float32Array.BYTES_PER_ELEMENT,
+			3 * Float32Array.BYTES_PER_ELEMENT);
 		gl.enableVertexAttribArray(posAttributeLocation);
 		gl.enableVertexAttribArray(colorAttributeLocation);
 		
-		var numsegs:Int = Std.int(map_lineverts.length / 5); //active maps number of segments
-				
+		var automapPositionMatrixAttribute = gl.getUniformLocation(program, Automap.M4_POSITION);
+		var automapFloat32 = new Float32Array(16);
+		var automapMatrix4:Matrix4 = new Matrix4(automapFloat32);
+		automapMatrix4.identity();
+		
+		automapMatrix4.appendTranslation(-Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
+		automapMatrix4.appendScale(Environment.AUTOMAP_ZOOM, Environment.AUTOMAP_ZOOM, 1);
+		
+		gl.uniformMatrix4fv(automapPositionMatrixAttribute, false, automapFloat32);
+		
+		var numsegs:Int = Std.int(map_lineverts.length / 6); //active maps number of segments
+		
 		gl.useProgram(program);
 		gl.drawArrays(gl.LINES, 0, numsegs);
 	}

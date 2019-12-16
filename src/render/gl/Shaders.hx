@@ -8,33 +8,33 @@ import render.gl.enums.Automap;
  */
 
 //We'll use implicit string casts to make this easier outside of this class.
-enum abstract Automap(String) from String {
-	var V3_POSITION:String;
-	var V3_COLOR:String;
-	var F_COLOR:String;
-}
 class Shaders 
 {
 	public static var automapVertext:String = [
+	#if !desktop
 	'precision mediump float;',
-	'attribute vec2 ' + Automap.V3_POSITION + ';',
-	'attribute vec3 ' + Automap.V3_COLOR + ';',
-	'varying vec3 ' + Automap.F_COLOR + ';',
+	#end
+	'attribute vec3 V3_POSITION;',
+	'attribute vec3 V3_COLOR;',
+	'varying vec3 F_COLOR;',
+	'uniform mat4 M4_POSITION;',
 	'',
 	'void main()',
 	'{',
-	'	' + Automap.F_COLOR + ' = ' + Automap.V3_COLOR + ';',
-	'	gl_Position = vec4(' + Automap.V3_POSITION + ', 0.0, 1.0);',
+	'	F_COLOR = V3_COLOR;',
+	'	gl_Position = M4_POSITION * vec4(V3_POSITION, 1.0);',
 	'}'
 	].join('\n');
 	
 	public static var automapFragment:String = [
+	#if !desktop
 	'precision mediump float;',
-	'varying vec3 ' + Automap.F_COLOR + ';',
+	#end
+	'varying vec3 F_COLOR;',
 	'',
 	'void main()',
 	'{',
-	' 	gl_FragColor = vec4(' + Automap.F_COLOR + ', 1.0);',
+	' 	gl_FragColor = vec4(F_COLOR, 1.0);',
 	'}'
 	].join('\n');
 }

@@ -16,6 +16,7 @@ class Environment
 	
 	//Integers and Floats
 	public static var PLAYER_FOV:Int = 90;
+	public static var AUTOMAP_ZOOM(default, set) = 0.001;
 	
 	//Bools. Make sure to name all vars in the form of a true/false question
 	public static var IS_IN_AUTOMAP:Bool = false;
@@ -47,5 +48,13 @@ class Environment
 		if (PLAYER_FOV > 360) PLAYER_FOV = 360; 
 		if (PLAYER_FOV < 0) PLAYER_FOV = 0; 
 		return PLAYER_FOV;
+	}
+	
+	static function set_AUTOMAP_ZOOM(value:Float):Float
+	{
+		AUTOMAP_ZOOM = value;
+		if (AUTOMAP_ZOOM < 0.0001) AUTOMAP_ZOOM = 0.0001;
+		if (AUTOMAP_ZOOM > 0.01) AUTOMAP_ZOOM = 0.01;
+		return AUTOMAP_ZOOM;
 	}
 }
