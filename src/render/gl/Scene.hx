@@ -50,11 +50,20 @@ class Scene
 			gl.shaderSource(mapFragmentShader, Shaders.automapFragment);
 			
 			gl.compileShader(mapVertexShader);
+			if (!gl.getShaderParameter(mapVertexShader, gl.COMPILE_STATUS)) {
+				throw (gl.getShaderInfoLog(mapVertexShader));
+			}
+			
 			gl.compileShader(mapFragmentShader);
+			if (!gl.getShaderParameter(mapFragmentShader, gl.COMPILE_STATUS)) {
+				throw (gl.getShaderInfoLog(mapFragmentShader));
+			}
 				
 			program = gl.createProgram();
+			
 			gl.attachShader(program, mapVertexShader);
 			gl.attachShader(program, mapFragmentShader);
+			
 			gl.linkProgram(program);
 		}
 	}
