@@ -4,6 +4,7 @@ import lime.graphics.RenderContext;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.math.Matrix4;
+import lime.math.Vector4;
 import lime.ui.Window;
 import lime.utils.Float32Array;
 import lime.graphics.opengl.GL;
@@ -45,6 +46,7 @@ class Scene
 	public function new(_context:RenderContext, _window:Window) 
 	{
 		if (gl == null) {
+			map_lineverts = new Array();
 			gl = _context.webgl;
 			window = _window;
 			context = _context;
@@ -91,47 +93,52 @@ class Scene
 	
 	function drawAutoMap() {
 		
-		map_lineverts = new Array();
 		var loadedsegs = Engine.ACTIVEMAP.segments;
+		var visSegs = Engine.ACTIVEMAP.getVisibleSegments();
+		var numSegs = ((loadedsegs.length -1) * 12) + ((visSegs.length - 1) * 12);
+		map_lineverts.resize(numSegs);
+		var itemCount:Int = 0;
 		
-		var xoff = Engine.ACTIVEMAP.offset_x;
-		var yoff = Engine.ACTIVEMAP.offset_y;
-		
-		for (segs in loadedsegs) {
+		for (segs in 0...loadedsegs.length) {
 			
-			map_lineverts.push(segs.start.xpos);
-			map_lineverts.push(segs.start.ypos);
-			map_lineverts.push(0);
+			map_lineverts[itemCount] = loadedsegs[segs].start.xpos;
+			map_lineverts[itemCount += 1] = loadedsegs[segs].start.ypos;
+			map_lineverts[itemCount += 1] = 0;
 			
-			map_lineverts.push(1);
-			map_lineverts.push(1);
-			map_lineverts.push(1);
+			map_lineverts[itemCount += 1] = 1;
+			map_lineverts[itemCount += 1] = 1;
+			map_lineverts[itemCount += 1] = 1;
 			
-			map_lineverts.push(segs.end.xpos);
-			map_lineverts.push(segs.end.ypos);
-			map_lineverts.push(0);
+			map_lineverts[itemCount += 1] = loadedsegs[segs].end.xpos;
+			map_lineverts[itemCount += 1] = loadedsegs[segs].end.ypos;
+			map_lineverts[itemCount += 1] = 0;
 			
-			map_lineverts.push(1);
-			map_lineverts.push(1);
-			map_lineverts.push(1);
+			map_lineverts[itemCount += 1] = 1;
+			map_lineverts[itemCount += 1] = 1;
+			map_lineverts[itemCount += 1] = 1;
+			
+			++itemCount;
 		}
 		
-		for (vissegs in Engine.ACTIVEMAP.getVisibleSegments()) {
-			map_lineverts.push(vissegs.start.xpos);
-			map_lineverts.push(vissegs.start.ypos);
-			map_lineverts.push(0);
+		for (segs in 0...Engine.ACTIVEMAP.getVisibleSegments().length) {
 			
-			map_lineverts.push(1);
-			map_lineverts.push(0);
-			map_lineverts.push(0);
+			map_lineverts[itemCount] = visSegs[segs].start.xpos;
+			map_lineverts[itemCount += 1] = visSegs[segs].start.ypos;
+			map_lineverts[itemCount += 1] = 0;
 			
-			map_lineverts.push(vissegs.end.xpos);
-			map_lineverts.push(vissegs.end.ypos);
-			map_lineverts.push(0);
+			map_lineverts[itemCount += 1] = 1;
+			map_lineverts[itemCount += 1] = 0;
+			map_lineverts[itemCount += 1] = 0;
 			
-			map_lineverts.push(1);
-			map_lineverts.push(0);
-			map_lineverts.push(0);
+			map_lineverts[itemCount += 1] = visSegs[segs].end.xpos;
+			map_lineverts[itemCount += 1] = visSegs[segs].end.ypos;
+			map_lineverts[itemCount += 1] = 0;
+			
+			map_lineverts[itemCount += 1] = 0;
+			map_lineverts[itemCount += 1] = 0;
+			map_lineverts[itemCount += 1] = 1;
+			
+			++itemCount;
 		}
 		
 		var loadedLineBuffer = gl.createBuffer();
@@ -162,7 +169,9 @@ class Scene
 		var automapMatrix4:Matrix4 = new Matrix4(automapFloat32);
 		automapMatrix4.identity();
 		
-		automapMatrix4.appendTranslation(-Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
+		//translate first, rotate, scale
+		automapMatrix4.appendTranslation( -Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
+		automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].angle - 90, new Vector4(0, 0, -1, 0));
 		automapMatrix4.appendScale(Environment.AUTOMAP_ZOOM, (Environment.AUTOMAP_ZOOM * (context.window.width / context.window.height)), 1);
 		
 		gl.uniformMatrix4fv(automapPositionMatrixAttribute, false, automapFloat32);
