@@ -1,4 +1,5 @@
 package;
+
 import lime.ui.KeyModifier;
 import lime.ui.MouseWheelMode;
 
@@ -143,6 +144,10 @@ class Main extends Application
 				Engine.ACTIVEMAP.actors_players[0].angle += 1;
 			case KeyCode.RIGHT :
 				Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+			case KeyCode.UP :
+				Engine.ACTIVEMAP.actors_players[0].move(5);
+			case KeyCode.DOWN :
+				Engine.ACTIVEMAP.actors_players[0].move(-5);
 			default :
 				
 		}

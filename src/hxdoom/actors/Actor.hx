@@ -38,6 +38,11 @@ class Actor
 		return angle;
 	}
 	
+	public function move(_value:Float) {
+		xpos += (_value * Math.cos(angle));
+		ypos += (_value * Math.sin(angle));
+	}
+	
 	//getters
 	function get_isMonster():Bool 
 	{
