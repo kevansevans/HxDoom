@@ -12,8 +12,8 @@ import hxdoom.wad.maplumps.Vertex;
  */
 class Actor 
 {
-	public var xpos(default, set):Int;
-	public var ypos(default, set):Int;
+	public var xpos:Float;
+	public var ypos:Float;
 	public var angle:Angle;
 	public var type:TypeID;
 	public var flags:Int;
@@ -29,16 +29,6 @@ class Actor
 		angle = _thing.angle;
 		flags = _thing.flags;
 		type = _thing.type;
-	}
-	
-	//Setters
-	function set_xpos(value:Int):Int 
-	{
-		return xpos = value;
-	}
-	function set_ypos(value:Int):Int 
-	{
-		return ypos = value;
 	}
 	
 	public function angleToVertex(_vertex:Vertex):Angle {
