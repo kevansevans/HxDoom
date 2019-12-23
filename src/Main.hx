@@ -109,6 +109,8 @@ class Main extends Application
 			case KeyCode.TAB :
 				Environment.IS_IN_AUTOMAP = !Environment.IS_IN_AUTOMAP;
 				
+				Environment.NEEDS_TO_REBUILD_AUTOMAP = true;
+				
 			case KeyCode.NUMBER_1 :
 				hxdoom.loadMap(0);
 			case KeyCode.NUMBER_2 :

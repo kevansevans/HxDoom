@@ -4,6 +4,7 @@ import haxe.ds.Map;
 
 import hxdoom.wad.BSPMap;
 import hxdoom.wad.Pack;
+import hxdoom.com.Environment;
 
 /**
  * ...
@@ -36,6 +37,7 @@ class Engine
 	}
 	public function loadMap(_index:Int) {
 		ACTIVEMAP = MAPLIST[MAPALIAS[_index]];
+		Environment.NEEDS_TO_REBUILD_AUTOMAP = true;
 	}
 	public function setBaseIwad(_data:Bytes, _name:String) {
 		IWADS[_name] = new Pack(_data, _name, true);

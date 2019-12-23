@@ -20,6 +20,7 @@ class Environment
 	
 	//Bools. Make sure to name all vars in the form of a true/false question
 	public static var IS_IN_AUTOMAP:Bool = false;
+	public static var NEEDS_TO_REBUILD_AUTOMAP:Bool = false;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Functions

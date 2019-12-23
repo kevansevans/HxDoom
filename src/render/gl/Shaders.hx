@@ -10,7 +10,7 @@ import render.gl.enums.Automap;
 //We'll use implicit string casts to make this easier outside of this class.
 class Shaders 
 {
-	public static var automapVertext:String = [
+	public static var vertext:String = [
 	#if !desktop
 	'precision mediump float;',
 	#end
@@ -26,7 +26,7 @@ class Shaders
 	'}'
 	].join('\n');
 	
-	public static var automapFragment:String = [
+	public static var fragment:String = [
 	#if !desktop
 	'precision mediump float;',
 	#end
