@@ -107,6 +107,9 @@ class Pack
 						maps.push(new BSPMap(dir));
 						loadMap(maps.length - 1);
 					}
+				case (Lump.PLAYPAL) :
+					loadPlaypal(
+					trace (directories[dir].size);
 				default :
 					trace (directories[dir].name);
 			}
@@ -207,6 +210,8 @@ class Pack
 		Engine.ACTIVEMAP.parseThings();
 		Engine.ACTIVEMAP.setOffset();
 	}
+	
+	public function loadPlaypal
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Getters
