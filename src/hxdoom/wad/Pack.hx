@@ -31,7 +31,7 @@ class Pack
 	var directory_count:Int;
 	var directory_offset:Int;
 	
-	var playpal:Playpal
+	public var playpal:Playpal;
 	
 	public var maps:Array<BSPMap>;
 	/**
@@ -108,10 +108,10 @@ class Pack
 						loadMap(maps.length - 1);
 					}
 				case (Lump.PLAYPAL) :
-					loadPlaypal();
+					loadPlaypal(directories[dir]);
 					trace (directories[dir].size);
 				default :
-					trace (directories[dir].name);
+					//trace (directories[dir].name);
 			}
 		}
 	}
@@ -211,8 +211,24 @@ class Pack
 		Engine.ACTIVEMAP.setOffset();
 	}
 	
-	public function loadPlaypal() {
-		
+	public function loadPlaypal(_dir:Directory) {
+		playpal = new Playpal();
+		var numPals:Int = Std.int(_dir.size / 768);
+		var offset:Int = 0;
+		for (pal in 0...numPals) {
+			for (sw in 0...256) {
+				
+				var red:Int = Reader.getOneByte(data, _dir.offset + offset);
+				var green:Int = Reader.getOneByte(data, _dir.offset + (offset += 1));
+				var blue:Int = Reader.getOneByte(data, _dir.offset + (offset += 1));
+				
+				var _color:Int = (red << 16) | (green << 8) | blue;
+				
+				playpal.addSwatch(pal, _color);
+				
+				offset += 1;
+			}
+		}
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////

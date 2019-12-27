@@ -133,6 +133,10 @@ class Reader
 	 * @param	_signed Is value an signed value?
 	 * @return Returns an integer from specified position
 	 */
+	public static inline function getOneByte(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int {
+		var val = _data[_offset];
+		return(_signed == true && val > 127 ? val - 255 : val);
+	}
 	public static inline function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
 	{
 		var val = (_data[_offset + 1] << 8) | _data[_offset];
