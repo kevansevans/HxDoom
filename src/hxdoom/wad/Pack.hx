@@ -3,6 +3,7 @@ package hxdoom.wad;
 import haxe.ds.Map;
 import haxe.PosInfos;
 import haxe.io.Bytes;
+import hxdoom.wad.graphiclumps.Playpal;
 import hxdoom.wad.maplumps.LineDef;
 import hxdoom.wad.maplumps.Segment;
 import hxdoom.wad.maplumps.Vertex;
@@ -29,6 +30,8 @@ class Pack
 	var directories:Array<Directory>;
 	var directory_count:Int;
 	var directory_offset:Int;
+	
+	var playpal:Playpal
 	
 	public var maps:Array<BSPMap>;
 	/**
@@ -87,21 +90,26 @@ class Pack
 	{
 		maps = new Array();
 		for (dir in 0...directories.length) {
-			if (dir < 10) continue;
-			if (	directories[dir - 9].name == 		"THINGS" 	// Actors, positions and what they are
-					&& directories[dir - 8].name == 	"LINEDEFS"	// lines, describing behavior between two points
-					&& directories[dir - 7].name == 	"SIDEDEFS"	// Describes which linedefs posses what textures
-					&& directories[dir - 6].name == 	"VERTEXES"	// Each XY position of lines
-					&& directories[dir - 5].name == 	"SEGS"		//
-					&& directories[dir - 4].name == 	"SSECTORS"	//
-					&& directories[dir - 3].name == 	"NODES"		//
-					&& directories[dir - 2].name == 	"SECTORS"	// Closed linedefs
-					&& directories[dir - 1].name == 	"REJECT"	//
-					&& directories[dir].name == 		"BLOCKMAP"	//
-				) {
-					maps.push(new BSPMap(dir));
-					loadMap(maps.length - 1);
-				}
+			switch (directories[dir].name) {
+				case (Lump.BLOCKMAP) :
+					if (dir < 10) continue;
+					if (directories[dir - 9].name 	 == 	Lump.THINGS	
+						&& directories[dir - 8].name == 	Lump.LINEDEFS
+						&& directories[dir - 7].name == 	Lump.SIDEDEFS
+						&& directories[dir - 6].name == 	Lump.VERTEXES
+						&& directories[dir - 5].name == 	Lump.SEGS
+						&& directories[dir - 4].name == 	Lump.SSECTORS
+						&& directories[dir - 3].name == 	Lump.NODES
+						&& directories[dir - 2].name == 	Lump.SECTORS
+						&& directories[dir - 1].name == 	Lump.REJECT
+						&& directories[dir].name 	 == 	Lump.BLOCKMAP
+					) {
+						maps.push(new BSPMap(dir));
+						loadMap(maps.length - 1);
+					}
+				default :
+					trace (directories[dir].name);
+			}
 		}
 	}
 	/**
