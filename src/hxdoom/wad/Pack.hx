@@ -108,7 +108,7 @@ class Pack
 						loadMap(maps.length - 1);
 					}
 				case (Lump.PLAYPAL) :
-					loadPlaypal(
+					loadPlaypal();
 					trace (directories[dir].size);
 				default :
 					trace (directories[dir].name);
@@ -211,7 +211,9 @@ class Pack
 		Engine.ACTIVEMAP.setOffset();
 	}
 	
-	public function loadPlaypal
+	public function loadPlaypal() {
+		
+	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Getters
