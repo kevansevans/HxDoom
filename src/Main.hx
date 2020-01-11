@@ -26,7 +26,6 @@ import hxdoom.Engine;
 import hxdoom.com.Environment;
 import render.gl.Scene;
 
-
 class Main extends Application 
 {
 	var wadsLoaded:Bool = false;
@@ -43,7 +42,9 @@ class Main extends Application
 		 * We're going to assume an iwad picker of some sorts has been made already
 		 */ 
 		#if android
-		throw "android deployment not yet understood XoX";
+		macro throw "android deployment not yet understood XoX";
+		//App crashes when loading in a wad. Doesn't crash when using the JS method, but crashes when the data
+		//is handled in engine side of things
 		#elseif (windows || linux || macos || osx)
 		hxdoom.setBaseIwad(File.getBytes("./IWADS/DOOM1.WAD"), "DOOM1.WAD");
 		
@@ -167,5 +168,6 @@ class Main extends Application
 		if (renderScene != null) {
 			renderScene.render();
 		}
+
 	}
 }
