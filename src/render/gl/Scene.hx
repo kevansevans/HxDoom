@@ -89,9 +89,9 @@ class Scene
 		
 		//Move this to Automap when FPS part is done.
 		
-		gl.useProgram(program);
-		
 		if (Environment.IS_IN_AUTOMAP) {
+			
+			gl.useProgram(program);
 			
 			gl.clearColor (0x6c / 255, 0x54 / 255, 0x40 / 255, 0);
 			gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
