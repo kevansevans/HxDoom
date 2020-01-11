@@ -24,18 +24,20 @@ class Playpal
 		if (palettes[_index] == null) palettes[_index] = new Array();
 		palettes[_index].push(_color);
 	}
-	#if lime
-	public function getImageOfPalette(_palette:Int):Image {
-		var pal:Image = new Image();
-		pal.width = pal.height = 16;
-		var index:Int = 0;
-		for (y in 0...16) {
-			for (x in 0...16) {
-				pal.setPixel(x, y, palettes[_palette][index]);
-				++index;
-			}
+	public function getColor(_index:Int, _rgb:Int, _pal:Int = 0, _asFloat:Bool = false):Float {
+		var col:Int = palettes[_pal][_index];
+		var val:Float = 0;
+		switch (_rgb) {
+			case 0:
+				col = col >> 16;
+			case 1:
+				col = (col >> 8) & 0xFF;
+			case 2:
+				col = col & 0xFF;
 		}
-		return pal;
+		if (_asFloat) {
+			return (col / 255);
+		}
+		return col;
 	}
-	#end
 }
