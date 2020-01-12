@@ -20,7 +20,7 @@ import hxdoom.data.BSPMap;
  * 
  * To reduce typing redundancy, I named this class "pack" to represent the wad data as a whole.
  */
-class Pack 
+class RootPack 
 {
 	//public static var SPRITELIST:Map<String, some class here> = new Map(); 
 	var data:Array<Int>;
