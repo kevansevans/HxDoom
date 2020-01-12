@@ -1,18 +1,18 @@
-package hxdoom.wad;
+package hxdoom.data;
 
 import haxe.ds.Map;
 import haxe.PosInfos;
 import haxe.io.Bytes;
-import hxdoom.wad.graphiclumps.Playpal;
-import hxdoom.wad.maplumps.LineDef;
-import hxdoom.wad.maplumps.Segment;
-import hxdoom.wad.maplumps.Vertex;
-import hxdoom.wad.maplumps.Thing;
+import hxdoom.data.graphiclumps.Playpal;
+import hxdoom.data.maplumps.LineDef;
+import hxdoom.data.maplumps.Segment;
+import hxdoom.data.maplumps.Vertex;
+import hxdoom.data.maplumps.Thing;
 
 import hxdoom.com.Environment;
 
-import hxdoom.wad.Directory;
-import hxdoom.wad.BSPMap;
+import hxdoom.data.Directory;
+import hxdoom.data.BSPMap;
 
 /**
  * ...
@@ -90,6 +90,7 @@ class Pack
 	{
 		maps = new Array();
 		for (dir in 0...directories.length) {
+			//ask if there's a better way to check for maps
 			switch (directories[dir].name) {
 				case (Lump.BLOCKMAP) :
 					if (dir < 10) continue;
@@ -109,7 +110,6 @@ class Pack
 					}
 				case (Lump.PLAYPAL) :
 					loadPlaypal(directories[dir]);
-					trace (directories[dir].size);
 				default :
 					//trace (directories[dir].name);
 			}

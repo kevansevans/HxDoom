@@ -1,6 +1,6 @@
 package hxdoom.actors;
 
-import hxdoom.wad.maplumps.Thing;
+import hxdoom.data.maplumps.Thing;
 
 /**
  * ...

@@ -1,4 +1,4 @@
-package hxdoom.wad.maplumps;
+package hxdoom.data.maplumps;
 
 /**
  * ...

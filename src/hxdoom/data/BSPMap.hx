@@ -1,15 +1,15 @@
-package hxdoom.wad;
+package hxdoom.data;
 
 import hxdoom.actors.Player;
 import hxdoom.actors.TypeID;
-import hxdoom.wad.maplumps.LineDef;
-import hxdoom.wad.maplumps.Node;
-import hxdoom.wad.maplumps.Sector;
-import hxdoom.wad.maplumps.Segment;
-import hxdoom.wad.maplumps.SideDef;
-import hxdoom.wad.maplumps.SubSector;
-import hxdoom.wad.maplumps.Thing;
-import hxdoom.wad.maplumps.Vertex;
+import hxdoom.data.maplumps.LineDef;
+import hxdoom.data.maplumps.Node;
+import hxdoom.data.maplumps.Sector;
+import hxdoom.data.maplumps.Segment;
+import hxdoom.data.maplumps.SideDef;
+import hxdoom.data.maplumps.SubSector;
+import hxdoom.data.maplumps.Thing;
+import hxdoom.data.maplumps.Vertex;
 import packages.actors.*;
 import packages.wad.maplumps.*;
 import hxdoom.com.Environment;
@@ -83,6 +83,7 @@ class BSPMap
 			}
 			
 			visible.push(segment);
+			segment.hasBeenSeen = true;
 		}
 		
 		return visible;

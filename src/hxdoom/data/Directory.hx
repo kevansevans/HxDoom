@@ -1,4 +1,4 @@
-package hxdoom.wad;
+package hxdoom.data;
 
 /**
  * ...

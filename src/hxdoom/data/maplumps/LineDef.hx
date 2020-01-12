@@ -1,4 +1,4 @@
-package hxdoom.wad.maplumps;
+package hxdoom.data.maplumps;
 
 /**
  * ...
@@ -13,6 +13,12 @@ class LineDef
 	public var sectorTag:Int;
 	public var frontSideDef:SideDef;
 	public var backSideDef:SideDef;
+	
+	public var color_r(get, null):Float;
+	public var color_g(get, null):Float;
+	public var color_b(get, null):Float;
+	
+	
 	public function new(_vertexes:Array<Vertex>, _sidedefs:Array<SideDef>, _start:Int, _end:Int, _flags:Int, _lineType:Int, _sectorTag:Int, _frontSideDef:Int, _backSideDef:Int) 
 	{
 		start = _vertexes[_start];
@@ -24,4 +30,18 @@ class LineDef
 		backSideDef = _sidedefs[_backSideDef];
 	}
 	
+	function get_color_r():Float 
+	{
+		return color_r;
+	}
+	
+	function get_color_g():Float 
+	{
+		return color_g;
+	}
+	
+	function get_color_b():Float 
+	{
+		return color_b;
+	}
 }

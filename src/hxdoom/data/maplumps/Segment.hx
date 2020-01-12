@@ -1,4 +1,4 @@
-package hxdoom.wad.maplumps;
+package hxdoom.data.maplumps;
 
 /**
  * ...
@@ -12,6 +12,7 @@ class Segment
 	public var lineDef:LineDef;
 	public var direction:Int;
 	public var offset:Int;
+	public var hasBeenSeen:Bool = false;
 	public var GLOffset:Int;
 	
 	public function new(_lineDefs:Array<LineDef>, _angle:Int, _lineID:Int, _direction:Int, _offset:Int) 
