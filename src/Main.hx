@@ -131,6 +131,16 @@ class Main extends Application
 				hxdoom.loadMap(7);
 			case KeyCode.NUMBER_9 :
 				hxdoom.loadMap(8);
+				
+			case KeyCode.LEFT :
+				Environment.PLAYER_TURNING_LEFT = false;
+			case KeyCode.RIGHT :
+				Environment.PLAYER_TURNING_RIGHT = false;
+			case KeyCode.UP :
+				Environment.PLAYER_MOVING_FORWARD = false;
+			case KeyCode.DOWN :
+				Environment.PLAYER_MOVING_BACKWARD = false;
+			
 			default :
 				
 		}
@@ -142,17 +152,18 @@ class Main extends Application
 		
 		switch(keyCode) {
 			case KeyCode.LEFT :
-				Engine.ACTIVEMAP.actors_players[0].angle += 1;
+				Environment.PLAYER_TURNING_LEFT = true;
 			case KeyCode.RIGHT :
-				Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+				Environment.PLAYER_TURNING_RIGHT = true;
 			case KeyCode.UP :
-				Engine.ACTIVEMAP.actors_players[0].move(5);
+				Environment.PLAYER_MOVING_FORWARD = true;
 			case KeyCode.DOWN :
-				Engine.ACTIVEMAP.actors_players[0].move(-5);
+				Environment.PLAYER_MOVING_BACKWARD = true;
 			default :
 				
 		}
-		trace(Environment.CHEAT_KEYLOGGER[0] = String.fromCharCode(keyCode));
+		
+		Engine.CHEATS.logKeyStroke(String.fromCharCode(keyCode));
 	}
 	
 	override public function onMouseWheel(deltaX:Float, deltaY:Float, deltaMode:MouseWheelMode):Void 
@@ -169,6 +180,21 @@ class Main extends Application
 		if (renderScene != null) {
 			renderScene.render();
 		}
-
+		
+		if (Environment.PLAYER_MOVING_FORWARD) {
+			Engine.ACTIVEMAP.actors_players[0].move(5);
+		}
+		
+		if (Environment.PLAYER_MOVING_BACKWARD) {
+			Engine.ACTIVEMAP.actors_players[0].move(-5);
+		}
+		
+		if (Environment.PLAYER_TURNING_LEFT) {
+			Engine.ACTIVEMAP.actors_players[0].angle += 1;
+		}
+		
+		if (Environment.PLAYER_TURNING_RIGHT) {
+			Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+		}
 	}
 }

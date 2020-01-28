@@ -22,6 +22,13 @@ class Environment
 	public static var IS_IN_AUTOMAP:Bool = false;
 	public static var NEEDS_TO_REBUILD_AUTOMAP:Bool = false;
 	
+	public static var PLAYER_MOVING_FORWARD:Bool = false;
+	public static var PLAYER_MOVING_BACKWARD:Bool = false;
+	public static var PLAYER_STRAFING_LEFT:Bool = false;
+	public static var PLAYER_STRAFING_RIGHT:Bool = false;
+	public static var PLAYER_TURNING_LEFT:Bool = false;
+	public static var PLAYER_TURNING_RIGHT:Bool = false;
+	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Functions
 	////////////////////////////////////////////////////////////////////////////////////////////////////
