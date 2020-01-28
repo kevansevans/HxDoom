@@ -1,0 +1,17 @@
+{
+  "doom": {
+    "iddqd": "godmode",
+    "idspispopd": "noclip",
+    "idclip": "noclip",
+    "idkfa": "ammoandkeys",
+    "idfa": "ammo",
+    "idclev": "setlevel",
+    "idmus": "setmusic",
+    "idbehold": "giveitem",
+    "idchoppers": "givechainsaw",
+    "iddt": "mapdetail",
+    "idmypos": "dumpposisiton",
+    "fhall": "killall",
+    "fhshh": "notarget",
+  }
+}

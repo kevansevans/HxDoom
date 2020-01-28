@@ -1,4 +1,5 @@
 package hxdoom.com;
+import hxdoom.abstracts.CheatCode;
 
 #if js
 import js.Browser;
@@ -21,6 +22,9 @@ class Environment
 	//Bools. Make sure to name all vars in the form of a true/false question
 	public static var IS_IN_AUTOMAP:Bool = false;
 	public static var NEEDS_TO_REBUILD_AUTOMAP:Bool = false;
+	
+	//Arrays
+	public static var CHEAT_KEYLOGGER:CheatCode = new Array<String>();
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Functions

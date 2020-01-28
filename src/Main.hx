@@ -152,6 +152,7 @@ class Main extends Application
 			default :
 				
 		}
+		trace(Environment.CHEAT_KEYLOGGER[0] = String.fromCharCode(keyCode));
 	}
 	
 	override public function onMouseWheel(deltaX:Float, deltaY:Float, deltaMode:MouseWheelMode):Void 
