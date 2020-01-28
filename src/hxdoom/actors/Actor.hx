@@ -39,8 +39,8 @@ class Actor
 	}
 	
 	public function move(_value:Float) {
-		xpos += (_value * Math.cos(angle));
-		ypos += (_value * Math.sin(angle));
+		xpos += _value * Math.cos(angle.toRadians());
+		ypos += _value * Math.sin(angle.toRadians());
 	}
 	
 	//getters

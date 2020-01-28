@@ -12,6 +12,6 @@
     "iddt": "mapdetail",
     "idmypos": "dumpposisiton",
     "fhall": "killall",
-    "fhshh": "notarget",
+    "fhshh": "notarget"
   }
 }

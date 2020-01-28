@@ -10,7 +10,6 @@
 	
 	<assets path="assets" exclude="*.svg" />
 	<assets path="assets/shareware" rename="IWADS"/>
-	<assets path="assets/json" rename="json"/>
 	<icon path="assets/lime.svg" />
 	
 </project>

@@ -9,7 +9,7 @@ abstract Angle(Float) to Float from Float from Int
 	public inline function new(_v:Float) {
 		this = _v;
 	}
-	@:op(A + B)
+	@:noCompletion @:op(A + B)
 	public inline function add(B:Float) {
 		return adjust(this + B);
 	}
@@ -75,6 +75,9 @@ abstract Angle(Float) to Float from Float from Int
 	}
 	public inline function asValue():Float {
 		return cast(this, Float);
+	}
+	public inline function toRadians():Float {
+		return (this * (Math.PI / 180));
 	}
 	static inline function adjust(_v:Float):Float {
 		if (_v > 360) _v -= 360;
