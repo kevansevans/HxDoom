@@ -1,6 +1,7 @@
 package hxdoom;
 import haxe.io.Bytes;
 import haxe.ds.Map;
+import hxdoom.com.CheatHandler;
 
 import hxdoom.data.BSPMap;
 import hxdoom.data.RootPack;
@@ -14,6 +15,8 @@ class Engine
 {
 	public static var IWADS:Map<String, RootPack>;
 	public static var BASEIWAD:String;
+	
+	public static var CHEATS:CheatHandler;
 	
 	/*
 	 * these vars are the accumulated data that's supplies to the engine. Using a Map<String, [type]> format,
@@ -34,6 +37,8 @@ class Engine
 		WADLIST = new Map();
 		MAPLIST = new Map();
 		MAPALIAS = new Array();
+		
+		CHEATS = new CheatHandler();
 	}
 	public function loadMap(_index:Int) {
 		ACTIVEMAP = MAPLIST[MAPALIAS[_index]];
@@ -61,5 +66,9 @@ class Engine
 			}
 		}
 		
+	}
+	
+	public static inline function log(_msg:String) {
+		trace(_msg);
 	}
 }
