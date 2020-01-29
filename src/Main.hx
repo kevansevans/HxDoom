@@ -2,6 +2,7 @@ package;
 
 import lime.ui.KeyModifier;
 import lime.ui.MouseWheelMode;
+import render.gl.GLHandler;
 
 import haxe.io.Bytes;
 import lime.ui.KeyCode;
@@ -24,12 +25,12 @@ import lime.ui.KeyCode;
 
 import hxdoom.Engine;
 import hxdoom.com.Environment;
-import render.gl.Scene;
 
 class Main extends Application 
 {
 	var wadsLoaded:Bool = false;
-	var renderScene:Scene;
+	
+	var gl_scene:GLHandler;
 	
 	var hxdoom:Engine;
 	
@@ -76,8 +77,8 @@ class Main extends Application
 			//Desktop, Android, and HTML5 with WebGL support
 			case OPENGL, OPENGLES, WEBGL:
 				
-				if (renderScene == null) {
-					renderScene = new Scene(context, window);
+				if (gl_scene == null) {
+					gl_scene = new GLHandler(context, window);
 				}
 				
 			//HTML5 without WebGL support
@@ -177,10 +178,6 @@ class Main extends Application
 	{
 		super.update(deltaTime);
 		
-		if (renderScene != null) {
-			renderScene.render();
-		}
-		
 		if (Environment.PLAYER_MOVING_FORWARD) {
 			Engine.ACTIVEMAP.actors_players[0].move(5);
 		}
@@ -195,6 +192,10 @@ class Main extends Application
 		
 		if (Environment.PLAYER_TURNING_RIGHT) {
 			Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+		}
+		
+		if (gl_scene != null) {
+			gl_scene.render_scene();
 		}
 	}
 }
