@@ -46,5 +46,22 @@
     "fhshh": [
       "makeblind:enemies"
     ]
-  }
+  },
+  "heretic" : {
+		"kitty": [
+			"disablecollision"
+		],
+		"quicken" : [
+			"pseudoinvul"
+		],
+		"rambo": [
+			"grantfullammo",
+			"grantweapons",
+			"grantfullhealth",
+			"grantfullarmor"
+		],
+		"iddqd": [
+			"suicide"
+		]
+	}
 }
