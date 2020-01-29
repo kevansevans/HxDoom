@@ -9,6 +9,8 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
+import hxdoom.com.GameActions;
+
 /**
  * ...
  * @author Kaelan
@@ -80,12 +82,15 @@ class CheatHandler
 				var scripts:Array<Dynamic> = cast(currentcheat, Array<Dynamic>);
 				
 				for (actions in scripts) {
+					var actionstring:String = cast(actions, String);
 					switch (cast(actions, String)) {
 						case "logplayerposition" :
-							actionblock += 'logPlayerPosition();';
+							actionblock += 'GameActions.cheat_logPlayerPosition();';
+						case "pseudoinvul" :
+							actionblock += 'GameActions.cheat_degreeless();';
 						default :
 							var act = "" + actions;
-							actionblock += 'cheatNotHandled("poop");';
+							actionblock += 'trace("case not handled: $actionstring");';
 					}
 				}
 				
@@ -100,10 +105,4 @@ class CheatHandler
 	}
 	//cheat functions
 	public function doNothing(){};
-	public function cheatNotHandled(_cheat:String) {
-		trace("Cheat not set yet: " + _cheat);
-	}
-	public function logPlayerPosition() {
-		Engine.log("x: " + Engine.ACTIVEMAP.actors_players[0].xpos + " y: " + Engine.ACTIVEMAP.actors_players[0].ypos);
-	}
 }

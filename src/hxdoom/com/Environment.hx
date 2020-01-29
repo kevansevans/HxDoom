@@ -18,7 +18,10 @@ class Environment
 	public static var PLAYER_FOV:Int = 90;
 	public static var AUTOMAP_ZOOM(default, set) = 0.001;
 	
-	//Bools. Make sure to name all vars in the form of a true/false question
+	//Bools.
+	public static var CHEAT_CLIPPING:Bool = false;
+	public static var CHEAT_INVULNERABILITY:Bool = false;
+	
 	public static var IS_IN_AUTOMAP:Bool = false;
 	public static var NEEDS_TO_REBUILD_AUTOMAP:Bool = false;
 	
