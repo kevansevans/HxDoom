@@ -11,7 +11,8 @@ class GameActions
 {
 	//Cheat Specific actions
 	static public function cheat_logPlayerPosition() {
-		Engine.log("x: " + Engine.ACTIVEMAP.actors_players[0].xpos + " y: " + Engine.ACTIVEMAP.actors_players[0].ypos);
+		Engine.log("x: " + Engine.ACTIVEMAP.actors_players[0].xpos);
+		Engine.log("y: " + Engine.ACTIVEMAP.actors_players[0].ypos);
 	}
 	static public function cheat_degreeless() {
 		Environment.CHEAT_INVULNERABILITY = !Environment.CHEAT_INVULNERABILITY;
