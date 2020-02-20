@@ -5,9 +5,6 @@ package hxdoom.data.graphiclumps;
  * This in theory should make it easier to fork and adapt for other rendering frameworks
  */
 
-#if lime
-import lime.graphics.Image;
-#end
 
 /**
  * ...
