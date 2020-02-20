@@ -22,6 +22,7 @@ class Environment
 	public static var CHEAT_CLIPPING:Bool = false;
 	public static var CHEAT_INVULNERABILITY:Bool = false;
 	
+	public static var AUTOMAP_ROTATES_WITH_PLAYER:Bool = false;
 	public static var IS_IN_AUTOMAP:Bool = false;
 	public static var NEEDS_TO_REBUILD_AUTOMAP:Bool = false;
 	
