@@ -255,30 +255,4 @@ class RootPack
 	{
 		return activeMap.segments;
 	}
-	
-	/*
-	 * Some node traversal functions
-	 * public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool
-	{
-		var dx = _x - activemap.nodes[_nodeID].xPartition;
-		var dy = _y - activemap.nodes[_nodeID].yPartition;
-		
-		return (((dx *  activemap.nodes[_nodeID].changeYPartition) - (dy * activemap.nodes[_nodeID].changeXPartition)) <= 0);
-	}
-	
-	public function getPlayerNode():Node {
-		var node:Int = activemap.nodes.length - 1;
-		while (true) {
-			if (activemap.nodes[node].backChildID & SUBSECTORIDENTIFIER > 0 || activemap.nodes[node].frontChildID & SUBSECTORIDENTIFIER > 0 ) {
-				return activemap.nodes[node];
-			}
-			var isOnBack:Bool = isPointOnBackSide(activemap.things[0].xpos, activemap.things[0].ypos, node);
-			if (isOnBack) {
-				node = activemap.nodes[node].backChildID;
-			} else {
-				node = activemap.nodes[node].frontChildID;
-			}
-		}
-	}
-	 */
 }
