@@ -96,11 +96,18 @@ class Main extends Application
 		}
 	}
 	
+	override public function onWindowCreate():Void 
+	{
+		super.onWindowCreate();
+		
+		window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
+	}
+	
 	override public function onWindowResize(width:Int, height:Int):Void 
 	{
 		super.onWindowResize(width, height);
 		
-		
+		window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
 	}
 	
 	override public function onKeyUp(keyCode:KeyCode, modifier:KeyModifier):Void 
@@ -109,7 +116,7 @@ class Main extends Application
 		
 		switch(keyCode) {
 			
-			case KeyCode.TAB :
+			case KeyCode.TAB | KeyCode.SPACE :
 				Environment.IS_IN_AUTOMAP = !Environment.IS_IN_AUTOMAP;
 				
 				Environment.NEEDS_TO_REBUILD_AUTOMAP = true;
@@ -160,18 +167,26 @@ class Main extends Application
 				Environment.PLAYER_MOVING_FORWARD = true;
 			case KeyCode.DOWN :
 				Environment.PLAYER_MOVING_BACKWARD = true;
+			case KeyCode.LEFT_ALT :
+				trace("BURP");
 			default :
 				
 		}
 		
+		
+		#if !html5
 		Engine.CHEATS.logKeyStroke(String.fromCharCode(keyCode));
+		#end
+		
+		//JS throws errors here, find an alternative method?
 	}
 	
 	override public function onMouseWheel(deltaX:Float, deltaY:Float, deltaMode:MouseWheelMode):Void 
 	{
 		super.onMouseWheel(deltaX, deltaY, deltaMode);
 		
-		Environment.AUTOMAP_ZOOM += (0.0001 * deltaY);
+		var mxa:Float = 
+		Environment.AUTOMAP_ZOOM += (0.0001 * deltaY) / (1 / Environment.AUTOMAP_ZOOM / 200);
 	}
 	
 	override public function update(deltaTime:Int):Void 
@@ -196,6 +211,27 @@ class Main extends Application
 		
 		if (gl_scene != null) {
 			gl_scene.render_scene();
+		}
+	}
+	
+	var mousex:Float = 0;
+	var mousey:Float = 0;
+	
+	override public function onMouseMove(_x:Float, _y:Float):Void 
+	{
+		super.onMouseMove(_x, _y);
+		
+		if (!Environment.IS_IN_AUTOMAP) {
+			mousex = _x;
+			mousey = _y;
+			
+			var distx = (window.width / 2) - mousex;
+			
+			distx *= 0.25;
+			
+			Engine.ACTIVEMAP.actors_players[0].angle += distx;
+			
+			window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
 		}
 	}
 }
