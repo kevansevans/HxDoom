@@ -101,4 +101,46 @@ class BSPMap
 		offset_y = mapy - (actors_players[0].ypos + mapy);
 	}
 	
+	public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool
+	{
+		var dx = _x - nodes[_nodeID].xPartition;
+		var dy = _y - nodes[_nodeID].yPartition;
+		
+		return (((dx *  nodes[_nodeID].changeYPartition) - (dy * nodes[_nodeID].changeXPartition)) <= 0);
+	}
+	
+	public function getPlayerSector():SubSector {
+		var node:Int = nodes.length - 1;
+		while (true) {
+			if (nodes[node].backChildID & Node.SUBSECTORIDENTIFIER > 0 || nodes[node].frontChildID & Node.SUBSECTORIDENTIFIER > 0 ) {
+				return subsectors[node];
+			}
+			var isOnBack:Bool = isPointOnBackSide(things[0].xpos, things[0].ypos, node);
+			if (isOnBack) {
+				node = nodes[node].backChildID;
+			} else {
+				node = nodes[node].frontChildID;
+			}
+		}
+	}
+	
+	public function copy():BSPMap {
+		var _bsp:BSPMap = new BSPMap(this.dirOffset);
+		
+		_bsp.linedefs = linedefs.copy();
+		_bsp.name = name;
+		_bsp.nodes = nodes.copy();
+		_bsp.offset_x = offset_x;
+		_bsp.offset_y = offset_y;
+		_bsp.sectors = sectors.copy();
+		_bsp.segments = segments.copy();
+		_bsp.sidedefs = sidedefs.copy();
+		_bsp.subsectors = subsectors.copy();
+		_bsp.things = things.copy();
+		_bsp.vertexes = vertexes.copy();
+		_bsp.parseThings();
+		
+		return _bsp;
+	}
+	
 }
