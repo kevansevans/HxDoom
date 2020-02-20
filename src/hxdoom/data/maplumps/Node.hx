@@ -6,10 +6,12 @@ package hxdoom.data.maplumps;
  */
 class Node 
 {
+	public static var SUBSECTORIDENTIFIER:Int = 0x8000;
+	
 	public var xPartition:Int;
 	public var yPartition:Int;
-	public var changeXParition:Int;
-	public var changeYParition:Int;
+	public var changeXPartition:Int;
+	public var changeYPartition:Int;
 	
 	public var frontBoxTop:Int;
 	public var frontBoxBottom:Int;
@@ -28,8 +30,8 @@ class Node
 	{
 		xPartition = _x;
 		yPartition = _y;
-		changeXParition = _cx;
-		changeYParition = _cy;
+		changeXPartition = _cx;
+		changeYPartition = _cy;
 		
 		frontBoxTop = _ft;
 		frontBoxBottom = _fb;
