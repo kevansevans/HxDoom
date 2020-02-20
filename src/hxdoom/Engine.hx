@@ -2,6 +2,8 @@ package hxdoom;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.com.CheatHandler;
+import hxdoom.data.graphiclumps.Playpal;
+import hxdoom.data.maplumps.SubSector;
 
 import hxdoom.data.BSPMap;
 import hxdoom.data.RootPack;
@@ -26,6 +28,7 @@ class Engine
 	public static var WADLIST:Map<String, RootPack>;
 	public static var MAPLIST:Map<String, BSPMap>;
 	public static var MAPALIAS:Array<String>;
+	public static var PLAYPAL:Playpal;
 	
 	public static var ACTIVEMAP:BSPMap;
 	
@@ -41,7 +44,7 @@ class Engine
 		CHEATS = new CheatHandler();
 	}
 	public function loadMap(_index:Int) {
-		ACTIVEMAP = MAPLIST[MAPALIAS[_index]];
+		ACTIVEMAP = MAPLIST[MAPALIAS[_index]].copy();
 		Environment.NEEDS_TO_REBUILD_AUTOMAP = true;
 	}
 	public function setBaseIwad(_data:Bytes, _name:String) {
