@@ -22,7 +22,7 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="lime=7.7.0&#xA;lime-harfbuzz&#xA;lime-openal&#xA;tools=7.7.0&#xA;ANDROID_SETUP=true&#xA;lime-cairo&#xA;ANDROID_NDK_ROOT=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk\ndk\20.1.5948944&#xA;lime-opengl&#xA;no-compilation&#xA;native&#xA;lime-curl&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;fdb&#xA;windows&#xA;desktop" />
+    <option directives="lime=7.7.0&#xA;lime-harfbuzz&#xA;lime-openal&#xA;tools=7.7.0&#xA;ANDROID_SETUP=false&#xA;lime-cairo&#xA;lime-opengl&#xA;no-compilation&#xA;native&#xA;lime-curl&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;fdb&#xA;windows&#xA;desktop" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
