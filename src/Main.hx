@@ -140,13 +140,13 @@ class Main extends Application
 			case KeyCode.NUMBER_9 :
 				hxdoom.loadMap(8);
 				
-			case KeyCode.LEFT :
+			case KeyCode.LEFT:
 				Environment.PLAYER_TURNING_LEFT = false;
 			case KeyCode.RIGHT :
 				Environment.PLAYER_TURNING_RIGHT = false;
-			case KeyCode.UP :
+			case KeyCode.UP | KeyCode.W :
 				Environment.PLAYER_MOVING_FORWARD = false;
-			case KeyCode.DOWN :
+			case KeyCode.DOWN | KeyCode.S :
 				Environment.PLAYER_MOVING_BACKWARD = false;
 			
 			default :
@@ -163,12 +163,10 @@ class Main extends Application
 				Environment.PLAYER_TURNING_LEFT = true;
 			case KeyCode.RIGHT :
 				Environment.PLAYER_TURNING_RIGHT = true;
-			case KeyCode.UP :
+			case KeyCode.UP | KeyCode.W :
 				Environment.PLAYER_MOVING_FORWARD = true;
-			case KeyCode.DOWN :
+			case KeyCode.DOWN | KeyCode.S :
 				Environment.PLAYER_MOVING_BACKWARD = true;
-			case KeyCode.LEFT_ALT :
-				trace("BURP");
 			default :
 				
 		}
@@ -229,7 +227,7 @@ class Main extends Application
 			
 			distx *= 0.25;
 			
-			Engine.ACTIVEMAP.actors_players[0].angle += distx;
+			if (Engine.ACTIVEMAP != null) Engine.ACTIVEMAP.actors_players[0].angle += distx;
 			
 			window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
 		}
