@@ -219,15 +219,24 @@ class Main extends Application
 	{
 		super.onMouseMove(_x, _y);
 		
+		#if js
+		return;
+		#end
+		
 		if (!Environment.IS_IN_AUTOMAP) {
 			mousex = _x;
 			mousey = _y;
 			
 			var distx = (window.width / 2) - mousex;
+			var disty = (window.height / 2) - mousey;
 			
 			distx *= 0.25;
+			disty *= 0.25;
 			
-			if (Engine.ACTIVEMAP != null) Engine.ACTIVEMAP.actors_players[0].angle += distx;
+			if (Engine.ACTIVEMAP != null) {
+				Engine.ACTIVEMAP.actors_players[0].angle += distx;
+				Engine.ACTIVEMAP.actors_players[0].pitch += disty;
+			}
 			
 			window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
 		}

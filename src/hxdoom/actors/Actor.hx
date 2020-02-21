@@ -16,6 +16,8 @@ class Actor
 	public var ypos:Float;
 	public var xpos_look(get, null):Float;
 	public var ypos_look(get, null):Float;
+	public var zpos_look(get, null):Float;
+	public var pitch(default, set):Angle;
 	public var angle:Angle;
 	public var type:TypeID;
 	public var flags:Int;
@@ -31,6 +33,7 @@ class Actor
 		angle = _thing.angle;
 		flags = _thing.flags;
 		type = _thing.type;
+		pitch = 0;
 	}
 	
 	public function angleToVertex(_vertex:Vertex):Angle {
@@ -101,4 +104,16 @@ class Actor
 				return false;
 		}
 	}
+	
+	function get_zpos_look():Float 
+	{
+		return 5 * Math.sin(pitch.toRadians());
+	}
+	
+	function set_pitch(value:Angle):Angle 
+	{
+		return pitch = value;
+		trace(pitch);
+	}
+	
 }

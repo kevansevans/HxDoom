@@ -150,15 +150,6 @@ class RootPack
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load Subsectors
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		numitems = Std.int(directories[_offset - 4].size / Reader.SSECTOR_LUMP_SIZE);
-		place = directories[_offset - 4].offset;
-		for (a in 0...numitems) {
-			_map.subsectors[a] = Reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE, _map.segments);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load things
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		numitems = Std.int(directories[_offset - 9].size / Reader.THING_LUMP_SIZE);
@@ -201,6 +192,15 @@ class RootPack
 		place = directories[_offset - 5].offset;
 		for (a in 0...numitems) {
 			_map.segments[a] = Reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.linedefs);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load Subsectors
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		numitems = Std.int(directories[_offset - 4].size / Reader.SSECTOR_LUMP_SIZE);
+		place = directories[_offset - 4].offset;
+		for (a in 0...numitems) {
+			_map.subsectors[a] = Reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE, _map.segments);
 		}
 		
 		//Map name as stated in WAD, IE E#M#/MAP##

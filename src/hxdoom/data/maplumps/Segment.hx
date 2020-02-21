@@ -16,6 +16,7 @@ class Segment
 	public var offset:Int;
 	public var hasBeenSeen:Bool = false;
 	public var GLOffset:Int;
+	public var sector(get, null):Sector;
 	
 	var randswatch = Std.int(255 * Math.random());
 			
@@ -38,6 +39,16 @@ class Segment
 	{
 		return lineDef.start;
 	}
+	
+	function get_sector():Sector 
+	{
+		if (lineDef.backSideDef != null) {
+			return lineDef.backSideDef.sector;
+		} else {
+			return lineDef.frontSideDef.sector;
+		}
+	}
+	
 	function get_end():Vertex 
 	{
 		return lineDef.end;

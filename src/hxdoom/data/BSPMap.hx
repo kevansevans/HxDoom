@@ -101,7 +101,7 @@ class BSPMap
 		offset_y = mapy - (actors_players[0].ypos + mapy);
 	}
 	
-	public function isPointOnBackSide(_x:Int, _y:Int, _nodeID:Int):Bool
+	public function isPointOnBackSide(_x:Float, _y:Float, _nodeID:Int):Bool
 	{
 		var dx = _x - nodes[_nodeID].xPartition;
 		var dy = _y - nodes[_nodeID].yPartition;
@@ -115,7 +115,7 @@ class BSPMap
 			if (nodes[node].backChildID & Node.SUBSECTORIDENTIFIER > 0 || nodes[node].frontChildID & Node.SUBSECTORIDENTIFIER > 0 ) {
 				return subsectors[node];
 			}
-			var isOnBack:Bool = isPointOnBackSide(things[0].xpos, things[0].ypos, node);
+			var isOnBack:Bool = isPointOnBackSide(actors_players[0].xpos, actors_players[0].ypos, node);
 			if (isOnBack) {
 				node = nodes[node].backChildID;
 			} else {
