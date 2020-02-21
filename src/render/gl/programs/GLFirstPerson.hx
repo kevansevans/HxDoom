@@ -3,9 +3,8 @@ package render.gl.programs;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
-import lime.math.Matrix4;
-import lime.math.Vector4;
 import lime.utils.Float32Array;
+import mme.math.glmatrix.Mat4Tools;
 
 import hxdoom.Engine;
 import hxdoom.com.Environment;
@@ -22,13 +21,6 @@ class GLFirstPerson
 	var vertex_shader:GLShader;
 	var fragment_shader:GLShader;
 	
-	var worldMatrix4:Matrix4;
-	var worldArray:Float32Array;
-	var viewMatrix4:Matrix4;
-	var viewArray:Float32Array;
-	var projMatrix4:Matrix4;
-	var projArray:Float32Array;
-	
 	var map_lineverts:Array<Float>;
 	
 	public function new(_gl:WebGLRenderContext)
@@ -40,8 +32,8 @@ class GLFirstPerson
 		vertex_shader = gl.createShader(gl.VERTEX_SHADER);
 		fragment_shader = gl.createShader(gl.FRAGMENT_SHADER);
 				
-		gl.shaderSource(vertex_shader, GLAutoMap.vertex_source);
-		gl.shaderSource(fragment_shader, GLAutoMap.fragment_source);
+		gl.shaderSource(vertex_shader, GLFirstPerson.vertex_source);
+		gl.shaderSource(fragment_shader, GLFirstPerson.fragment_source);
 		
 		gl.compileShader(vertex_shader);
 		if (!gl.getShaderParameter(vertex_shader, gl.COMPILE_STATUS)) {
@@ -69,6 +61,7 @@ class GLFirstPerson
 		
 		var posAttributeLocation = gl.getAttribLocation(program, "V3_POSITION");
 		var colorAttributeLocation = gl.getAttribLocation(program, "V3_COLOR");
+		
 		gl.vertexAttribPointer(
 			posAttributeLocation,
 			3,
@@ -85,20 +78,6 @@ class GLFirstPerson
 			3 * Float32Array.BYTES_PER_ELEMENT);
 		gl.enableVertexAttribArray(posAttributeLocation);
 		gl.enableVertexAttribArray(colorAttributeLocation);
-		
-		var p_vec4 = new Vector4(Engine.ACTIVEMAP.actors_players[0].xpos, 0, Engine.ACTIVEMAP.actors_players[0].ypos, 0);
-		var pc_vec4 = p_vec4;
-		pc_vec4.x += 5;
-		
-		worldArray = new Float32Array(16);
-		worldMatrix4 = new Matrix4(worldArray);
-		worldMatrix4.identity();
-		viewArray = new Float32Array(16);
-		viewMatrix4 = new Matrix4(viewArray);
-		//viewMatrix4.pointAt(p_vec4, pc_vec4, new Vector4(0, 1, 0, 0));
-		projArray = new Float32Array(16);
-		projMatrix4 = new Matrix4(projArray);
-		//projMatrix4.createOrtho( -1, 1, -1, 1, 0.1, 4000);
 	}
 	
 	public function render(_winWidth:Int, _winHeight:Int) {
@@ -112,14 +91,25 @@ class GLFirstPerson
 		gl.clearColor (0, 0, 0, 1);
 		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
+		var worldArray = new Float32Array(16);
+		var viewArray = new Float32Array(16);
+		var projArray = new Float32Array(16);
+		
+		Mat4Tools.identity(worldArray);
+		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, 1], 
+							[Engine.ACTIVEMAP.actors_players[0].xpos_look, Engine.ACTIVEMAP.actors_players[0].ypos_look, 1], 
+							[0, 0, 1], viewArray);
+		Mat4Tools.perspective(45 * (Math.PI / 180), _winWidth / _winHeight, 0.1, 1000, projArray);
+		
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_World"), false, worldArray);
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_View"), false, viewArray);
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_Proj"), false, projArray);
 		
-		gl.drawArrays(gl.LINES, 0, Std.int(map_lineverts.length / 6));
+		gl.drawArrays(gl.TRIANGLES, 0, Std.int(map_lineverts.length / 6));
 	}
 	
 	function rebuildMapArray() {
+		
 		var loadedsegs = Engine.ACTIVEMAP.getVisibleSegments();
 		var sectors = Engine.ACTIVEMAP.sectors;
 		var visSegs = Engine.ACTIVEMAP.getVisibleSegments();
@@ -128,35 +118,29 @@ class GLFirstPerson
 		var itemCount:Int = 0;
 		
 		for (segs in 0...loadedsegs.length) {
-			var randswatch = Std.int(255 * Math.random());
-			
-			var r_color = Engine.PLAYPAL.getColor(randswatch, 0, 0, true); 
-			var g_color = Engine.PLAYPAL.getColor(randswatch, 1, 0, true); 
-			var b_color = Engine.PLAYPAL.getColor(randswatch, 2, 0, true);
-			
 			map_lineverts[itemCount] 		= loadedsegs[segs].start.xpos;
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.ypos;
 			map_lineverts[itemCount += 1] 	= sectors[loadedsegs[segs].lineDef.sectorTag].floorHeight;
 			
-			map_lineverts[itemCount += 1] 	= r_color;
-			map_lineverts[itemCount += 1] 	= g_color;
-			map_lineverts[itemCount += 1] 	= b_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].r_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].g_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].b_color;
 			
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].end.xpos;
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].end.ypos;
 			map_lineverts[itemCount += 1] 	= sectors[loadedsegs[segs].lineDef.sectorTag].floorHeight;
 			
-			map_lineverts[itemCount += 1] 	= r_color;
-			map_lineverts[itemCount += 1] 	= g_color;
-			map_lineverts[itemCount += 1] 	= b_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].r_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].g_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].b_color;
 			
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.xpos;
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.ypos;
 			map_lineverts[itemCount += 1] 	= sectors[loadedsegs[segs].lineDef.sectorTag].ceilingHeight;
 			
-			map_lineverts[itemCount += 1] 	= r_color;
-			map_lineverts[itemCount += 1] 	= g_color;
-			map_lineverts[itemCount += 1] 	= b_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].r_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].g_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].b_color;
 			
 			////////////////////////////////////////////////////////////////////////////////////////////////////
 			
@@ -164,25 +148,25 @@ class GLFirstPerson
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.ypos;
 			map_lineverts[itemCount += 1] 	= sectors[loadedsegs[segs].lineDef.sectorTag].ceilingHeight;
 			
-			map_lineverts[itemCount += 1] 	= r_color;
-			map_lineverts[itemCount += 1] 	= g_color;
-			map_lineverts[itemCount += 1] 	= b_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].r_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].g_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].b_color;
 			
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].end.xpos;
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].end.ypos;
 			map_lineverts[itemCount += 1] 	= sectors[loadedsegs[segs].lineDef.sectorTag].ceilingHeight;
 			
-			map_lineverts[itemCount += 1] 	= r_color;
-			map_lineverts[itemCount += 1] 	= g_color;
-			map_lineverts[itemCount += 1] 	= b_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].r_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].g_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].b_color;
 			
-			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.xpos;
-			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.ypos;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].end.xpos;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].end.ypos;
 			map_lineverts[itemCount += 1] 	= sectors[loadedsegs[segs].lineDef.sectorTag].floorHeight;
 			
-			map_lineverts[itemCount += 1] 	= r_color;
-			map_lineverts[itemCount += 1] 	= g_color;
-			map_lineverts[itemCount += 1] 	= b_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].r_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].g_color;
+			map_lineverts[itemCount += 1] 	= loadedsegs[segs].b_color;
 			
 			++itemCount;
 		}
