@@ -1,27 +1,22 @@
 # HxDoom
 
-Haxe port of Doom
-
-HTML5 Build here: https://kevansevans.github.io/HxDoom/
+Playable HTML5 Build here: https://kevansevans.github.io/HxDoom/
 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//Goals
+//About
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ```
 
-* Vanilla Like Behavior
-* Deployable to several targets, properly taking advantage of what Haxe does
+HxDoom is an attempt to port id Software's Doom to Haxe, while at the same time maintaining cross deployment on all Haxe supported targets.
 
-```
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//Current disclaimer
-////////////////////////////////////////////////////////////////////////////////////////////////////
-```
+In order to maintain wide support, HxDoom's end goal is to be a shareable haxelib for anyone to download and build their own renderer on top of.
+The current renderer being built on Lime is called the "Citrus" renderer, pun very obviously intended. The HxDoom haxelib will serve as the engine backend,
+cradiling any obvious (non-rendering) actions one would expect in an id Tech 1 engine.
 
-HxDoom is not yet functional in the sense that compiling will yield something you can play. HxDoom will
-get a proper release when, as far as I'll be able to tell, it's in a 'playable' state. Feel free to clone
-and compile though, Haxe is Great!
+Help is currently not being accepted. Since what I have now is not ready for release, filing any issues or submitting any code would be extremely redundant.
+HxDoom will get a proper release when I feel I have what feels close to a relatively near identical behaving source compared to classic doom.
+
 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +29,7 @@ HxDoom will by default use the latest libraries and tools when possible.
 As of 13DEC2019, HxDoom utilizes the following:
 * HaxeDevelop
 * Haxe 4.0.3
-* Lime 7.6.3
+* Lime 7.7.0
 
 Other libraries will be dependant on the target you are focusing on, such as HXCPP, HXJAVA, HXCS. 
 The Haxe compiler will inform you if these libraries are needed.
