@@ -91,7 +91,7 @@ class GLFirstPerson
 		var projArray = new Float32Array(16);
 		
 		var p_subsector = Engine.ACTIVEMAP.getPlayerSector();
-		var p_sectorfloor = p_subsector.segments[0].sector.floorHeight + 56;
+		var p_sectorfloor = p_subsector.segments[0].sector.floorHeight + Environment.PLAYER_VIEW_HEIGHT;
 		
 		Mat4Tools.identity(worldArray);
 		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_sectorfloor], 

@@ -32,6 +32,7 @@ class Environment
 	public static var PLAYER_STRAFING_RIGHT:Bool = false;
 	public static var PLAYER_TURNING_LEFT:Bool = false;
 	public static var PLAYER_TURNING_RIGHT:Bool = false;
+	public static var PLAYER_VIEW_HEIGHT:Int = 41;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Functions
