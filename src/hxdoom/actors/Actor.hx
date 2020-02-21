@@ -14,6 +14,8 @@ class Actor
 {
 	public var xpos:Float;
 	public var ypos:Float;
+	public var xpos_look(get, null):Float;
+	public var ypos_look(get, null):Float;
 	public var angle:Angle;
 	public var type:TypeID;
 	public var flags:Int;
@@ -78,6 +80,16 @@ class Actor
 			default :
 				return false;
 		}
+	}
+	
+	function get_xpos_look():Float 
+	{
+		return xpos + 5 * Math.cos(angle.toRadians());
+	}
+	
+	function get_ypos_look():Float 
+	{
+		return ypos + 5 * Math.sin(angle.toRadians());
 	}
 	
 	function get_isPlayer():Bool 
