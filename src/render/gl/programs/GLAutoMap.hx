@@ -55,9 +55,13 @@ class GLAutoMap
 			
 		gl.linkProgram(program);
 	}
-	
-	function bindAttributes() 
-	{
+
+	public function render(_winWidth:Int, _winHeight:Int) {
+		
+		if (Environment.NEEDS_TO_REBUILD_AUTOMAP) {
+			rebuildMapArray();
+		}
+		
 		var loadedLineBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, loadedLineBuffer);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(map_lineverts), gl.STATIC_DRAW);
@@ -84,15 +88,6 @@ class GLAutoMap
 		automapFloat32 = new Float32Array(16);
 		automapMatrix4 = new Matrix4(automapFloat32);
 		automapMatrix4.identity();
-	}
-	
-	public function render(_winWidth:Int, _winHeight:Int) {
-		
-		if (Environment.NEEDS_TO_REBUILD_AUTOMAP) {
-			rebuildMapArray();
-		}
-		
-		bindAttributes();
 		
 		gl.useProgram(program);
 			
