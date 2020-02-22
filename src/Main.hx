@@ -100,6 +100,8 @@ class Main extends Application
 	{
 		super.onWindowCreate();
 		
+		window.frameRate = 120;
+		
 		window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
 	}
 	
@@ -210,6 +212,8 @@ class Main extends Application
 		if (gl_scene != null) {
 			gl_scene.render_scene();
 		}
+		
+		trace(deltaTime, Std.int(1000 / deltaTime));
 	}
 	
 	var mousex:Float = 0;
