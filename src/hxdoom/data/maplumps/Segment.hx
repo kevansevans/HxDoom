@@ -16,8 +16,8 @@ class Segment
 	public var offset:Int;
 	public var hasBeenSeen:Bool = false;
 	public var GLOffset:Int;
-	public var sector(get, null):Sector;
-	public var distFromPlayer:Int;
+	public var frontSector(get, null):Sector;
+	public var backSector(get, null):Sector;
 	
 	var randswatch = Std.int(255 * Math.random());
 			
@@ -48,6 +48,16 @@ class Segment
 		} else {
 			return lineDef.frontSideDef.sector;
 		}
+	}
+	
+	function get_frontSector():Sector 
+	{
+		return lineDef.frontSideDef.sector;
+	}
+	
+	function get_backSector():Sector 
+	{
+		return lineDef.backSideDef.sector;
 	}
 	
 	function get_end():Vertex 

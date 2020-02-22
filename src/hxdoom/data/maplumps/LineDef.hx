@@ -13,6 +13,7 @@ class LineDef
 	public var sectorTag:Int;
 	public var frontSideDef:SideDef;
 	public var backSideDef:SideDef;
+	public var solid(get, null):Bool;
 	
 	public var color_r(get, null):Float;
 	public var color_g(get, null):Float;
@@ -38,6 +39,12 @@ class LineDef
 	function get_color_g():Float 
 	{
 		return color_g;
+	}
+	
+	function get_solid():Bool 
+	{
+		if (backSideDef == null) return true;
+		else return false;
 	}
 	
 	function get_color_b():Float 
