@@ -17,6 +17,7 @@ class Segment
 	public var hasBeenSeen:Bool = false;
 	public var GLOffset:Int;
 	public var sector(get, null):Sector;
+	public var distFromPlayer:Int;
 	
 	var randswatch = Std.int(255 * Math.random());
 			

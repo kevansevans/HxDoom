@@ -97,7 +97,7 @@ class GLFirstPerson
 		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_sectorfloor], 
 							[Engine.ACTIVEMAP.actors_players[0].xpos_look, Engine.ACTIVEMAP.actors_players[0].ypos_look, p_sectorfloor + Engine.ACTIVEMAP.actors_players[0].zpos_look], 
 							[0, 0, 1], viewArray);
-		Mat4Tools.perspective(45 * (Math.PI / 180), _winWidth / _winHeight, 0.1, 1000, projArray);
+		Mat4Tools.perspective(45 * (Math.PI / 180), _winWidth / _winHeight, 0.1, 10000, projArray);
 		
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_World"), false, worldArray);
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_View"), false, viewArray);
@@ -115,7 +115,26 @@ class GLFirstPerson
 		map_lineverts.resize(numSegs);
 		var itemCount:Int = 0;
 		
+		for (segs in loadedsegs) {
+			var midpoint_x = (segs.lineDef.start.xpos + segs.lineDef.end.xpos) / 2;
+			var midpoint_y = (segs.lineDef.start.ypos + segs.lineDef.end.ypos) / 2;
+			var mid_dist = Math.sqrt(Math.pow(midpoint_x - Engine.ACTIVEMAP.actors_players[0].xpos, 2) + Math.pow(midpoint_y - Engine.ACTIVEMAP.actors_players[0].ypos, 2));
+			var start_dist = Math.sqrt(Math.pow(segs.lineDef.start.xpos - Engine.ACTIVEMAP.actors_players[0].xpos, 2) + Math.pow(segs.lineDef.start.ypos - Engine.ACTIVEMAP.actors_players[0].ypos, 2));
+			var end_dist = Math.sqrt(Math.pow(segs.lineDef.end.xpos - Engine.ACTIVEMAP.actors_players[0].xpos, 2) + Math.pow(segs.lineDef.end.ypos - Engine.ACTIVEMAP.actors_players[0].ypos, 2));
+			var closest = Math.min(Math.min(start_dist, end_dist), mid_dist);
+			segs.distFromPlayer = Std.int(closest);
+		}
+		
+		loadedsegs.sort(function(a, b):Int {
+           if(a.distFromPlayer > b.distFromPlayer) return -1;
+           else if(a.distFromPlayer < b.distFromPlayer) return 1;
+           else return 0;
+        });
+		
 		for (segs in 0...loadedsegs.length) {
+			
+			if (loadedsegs[segs].lineDef.backSideDef != null) continue;
+			
 			map_lineverts[itemCount] 		= loadedsegs[segs].start.xpos;
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.ypos;
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].sector.floorHeight;
