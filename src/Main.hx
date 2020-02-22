@@ -57,6 +57,7 @@ class Main extends Application
 		waddata.onComplete(function(data:Bytes):Bytes {
 			hxdoom.setBaseIwad(data, "DOOM1.WAD");
 			hxdoom.loadMap(0);
+			gl_scene.programFirstPerson.buildMapArray();
 			wadsLoaded = true;
 			return data;
 		});
@@ -79,6 +80,7 @@ class Main extends Application
 				
 				if (gl_scene == null) {
 					gl_scene = new GLHandler(context, window);
+					gl_scene.programFirstPerson.buildMapArray();
 				}
 				
 			//HTML5 without WebGL support
@@ -125,22 +127,31 @@ class Main extends Application
 				
 			case KeyCode.NUMBER_1 :
 				hxdoom.loadMap(0);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_2 :
 				hxdoom.loadMap(1);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_3 :
 				hxdoom.loadMap(2);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_4 :
 				hxdoom.loadMap(3);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_5 :
 				hxdoom.loadMap(4);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_6 :
 				hxdoom.loadMap(5);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_7 :
 				hxdoom.loadMap(6);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_8 :
 				hxdoom.loadMap(7);
+				gl_scene.programFirstPerson.buildMapArray();
 			case KeyCode.NUMBER_9 :
 				hxdoom.loadMap(8);
+				gl_scene.programFirstPerson.buildMapArray();
 				
 			case KeyCode.LEFT:
 				Environment.PLAYER_TURNING_LEFT = false;
@@ -189,31 +200,38 @@ class Main extends Application
 		Environment.AUTOMAP_ZOOM += (0.0001 * deltaY) / (1 / Environment.AUTOMAP_ZOOM / 200);
 	}
 	
+	var ticks:Int = 0;
 	override public function update(deltaTime:Int):Void 
 	{
 		super.update(deltaTime);
 		
-		if (Environment.PLAYER_MOVING_FORWARD) {
-			Engine.ACTIVEMAP.actors_players[0].move(5);
-		}
+		ticks += deltaTime;
 		
-		if (Environment.PLAYER_MOVING_BACKWARD) {
-			Engine.ACTIVEMAP.actors_players[0].move(-5);
-		}
-		
-		if (Environment.PLAYER_TURNING_LEFT) {
-			Engine.ACTIVEMAP.actors_players[0].angle += 1;
-		}
-		
-		if (Environment.PLAYER_TURNING_RIGHT) {
-			Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+		if (ticks >= 1000 / 35) {
+			
+			if (Environment.PLAYER_MOVING_FORWARD) {
+				Engine.ACTIVEMAP.actors_players[0].move(5);
+			}
+			
+			if (Environment.PLAYER_MOVING_BACKWARD) {
+				Engine.ACTIVEMAP.actors_players[0].move(-5);
+			}
+			
+			if (Environment.PLAYER_TURNING_LEFT) {
+				Engine.ACTIVEMAP.actors_players[0].angle += 1;
+			}
+			
+			if (Environment.PLAYER_TURNING_RIGHT) {
+				Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+			}
+			
+			ticks = 0;
+			
 		}
 		
 		if (gl_scene != null) {
 			gl_scene.render_scene();
 		}
-		
-		trace(deltaTime, Std.int(1000 / deltaTime));
 	}
 	
 	var mousex:Float = 0;

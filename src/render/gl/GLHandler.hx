@@ -28,7 +28,7 @@ class GLHandler
 	var window:Window;
 	
 	var programAutoMap:GLAutoMap;
-	var programFirstPerson:GLFirstPerson;
+	public var programFirstPerson:GLFirstPerson;
 	
 	public function new(_context:RenderContext, _window:Window) 
 	{
