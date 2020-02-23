@@ -57,7 +57,7 @@ class Main extends Application
 		waddata.onComplete(function(data:Bytes):Bytes {
 			hxdoom.setBaseIwad(data, "DOOM1.WAD");
 			hxdoom.loadMap(0);
-			gl_scene.programFirstPerson.buildMapArray();
+			gl_scene.programMapGeometry.buildMapArray();
 			wadsLoaded = true;
 			return data;
 		});
@@ -80,7 +80,7 @@ class Main extends Application
 				
 				if (gl_scene == null) {
 					gl_scene = new GLHandler(context, window);
-					gl_scene.programFirstPerson.buildMapArray();
+					gl_scene.programMapGeometry.buildMapArray();
 				}
 				
 			//HTML5 without WebGL support
@@ -127,31 +127,31 @@ class Main extends Application
 				
 			case KeyCode.NUMBER_1 :
 				hxdoom.loadMap(0);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_2 :
 				hxdoom.loadMap(1);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_3 :
 				hxdoom.loadMap(2);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_4 :
 				hxdoom.loadMap(3);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_5 :
 				hxdoom.loadMap(4);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_6 :
 				hxdoom.loadMap(5);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_7 :
 				hxdoom.loadMap(6);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_8 :
 				hxdoom.loadMap(7);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 			case KeyCode.NUMBER_9 :
 				hxdoom.loadMap(8);
-				gl_scene.programFirstPerson.buildMapArray();
+				gl_scene.programMapGeometry.buildMapArray();
 				
 			case KeyCode.LEFT:
 				Environment.PLAYER_TURNING_LEFT = false;

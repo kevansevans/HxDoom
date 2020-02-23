@@ -50,7 +50,27 @@ class GLHandler
 			
 		} else {
 			
-			programFirstPerson.render(window.width, window.height);
+			//remove color buffer bit to allow HOM effect.
+			gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+			
+			//depth buffer
+			gl.enable(gl.DEPTH_TEST);
+			gl.depthFunc(gl.LESS);
+			
+			//enable translucency
+			gl.enable(gl.BLEND);
+			gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+			
+			//backface culling
+			gl.enable(gl.CULL_FACE);
+			gl.cullFace(gl.BACK);
+			
+			programMapGeometry.render(window.width, window.height);
+			
+			//disable for stability (?)
+			gl.disable(gl.CULL_FACE);
+			gl.disable(gl.BLEND);
+			gl.disable(gl.DEPTH_TEST);
 			
 		}
 	}
