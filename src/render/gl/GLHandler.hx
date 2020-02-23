@@ -9,7 +9,7 @@ import lime.ui.Window;
 import lime.utils.Float32Array;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLShader;
-import render.gl.programs.GLFirstPerson;
+import render.gl.programs.GLMapGeometry;
 
 import render.gl.programs.GLAutoMap;
 
@@ -28,7 +28,7 @@ class GLHandler
 	var window:Window;
 	
 	var programAutoMap:GLAutoMap;
-	public var programFirstPerson:GLFirstPerson;
+	public var programMapGeometry:GLMapGeometry;
 	
 	public function new(_context:RenderContext, _window:Window) 
 	{
@@ -37,7 +37,7 @@ class GLHandler
 		context = _context;
 		
 		programAutoMap = new GLAutoMap(gl);
-		programFirstPerson = new GLFirstPerson(gl);
+		programMapGeometry = new GLMapGeometry(gl);
 	}
 	
 	public function render_scene() {

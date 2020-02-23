@@ -13,7 +13,7 @@ import hxdoom.com.Environment;
  * ...
  * @author Kaelan
  */
-class GLFirstPerson 
+class GLMapGeometry 
 {
 	var gl:WebGLRenderContext;
 	var program:GLProgram;
@@ -32,8 +32,8 @@ class GLFirstPerson
 		vertex_shader = gl.createShader(gl.VERTEX_SHADER);
 		fragment_shader = gl.createShader(gl.FRAGMENT_SHADER);
 				
-		gl.shaderSource(vertex_shader, GLFirstPerson.vertex_source);
-		gl.shaderSource(fragment_shader, GLFirstPerson.fragment_source);
+		gl.shaderSource(vertex_shader, GLMapGeometry.vertex_source);
+		gl.shaderSource(fragment_shader, GLMapGeometry.fragment_source);
 		
 		gl.compileShader(vertex_shader);
 		if (!gl.getShaderParameter(vertex_shader, gl.COMPILE_STATUS)) {
@@ -80,23 +80,13 @@ class GLFirstPerson
 		gl.enableVertexAttribArray(colorAttributeLocation);
 		
 		gl.useProgram(program);
-			
-		gl.clearColor (0, 0, 0, 1);
-		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-		
-		gl.enable(gl.DEPTH_TEST);
-		gl.depthFunc(gl.LESS);
-		gl.enable(gl.BLEND);
-		gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-		gl.enable(gl.CULL_FACE);
-		gl.cullFace(gl.BACK);
 		
 		var worldArray = new Float32Array(16);
 		var viewArray = new Float32Array(16);
 		var projArray = new Float32Array(16);
 		
 		var p_subsector = Engine.ACTIVEMAP.getPlayerSector();
-		var p_sectorfloor = p_subsector.segments[0].frontSector.floorHeight + Environment.PLAYER_VIEW_HEIGHT;
+		var p_sectorfloor = p_subsector.sector.floorHeight + Environment.PLAYER_VIEW_HEIGHT;
 		
 		Mat4Tools.identity(worldArray);
 		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_sectorfloor], 
