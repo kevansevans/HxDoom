@@ -91,9 +91,6 @@ class GLAutoMap
 		
 		gl.useProgram(program);
 			
-		gl.clearColor (0x6c / 255, 0x54 / 255, 0x40 / 255, 0);
-		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-			
 		automapMatrix4.appendTranslation( -Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
 		if (Environment.AUTOMAP_ROTATES_WITH_PLAYER) automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].angle - 90, new Vector4(0, 0, -1, 1));
 		automapMatrix4.appendScale(Environment.AUTOMAP_ZOOM, (Environment.AUTOMAP_ZOOM * (_winWidth / _winHeight)), 1);
@@ -112,8 +109,6 @@ class GLAutoMap
 		var itemCount:Int = 0;
 		
 		for (segs in 0...loadedsegs.length) {
-			
-			loadedsegs[segs].GLOffset = itemCount;
 			
 			map_lineverts[itemCount] 		= loadedsegs[segs].start.xpos;
 			map_lineverts[itemCount += 1] 	= loadedsegs[segs].start.ypos;

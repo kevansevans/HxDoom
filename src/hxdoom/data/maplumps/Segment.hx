@@ -15,7 +15,7 @@ class Segment
 	public var direction:Int;
 	public var offset:Int;
 	public var hasBeenSeen:Bool = false;
-	public var GLOffset:Int;
+	public var visible:Bool = false;
 	public var frontSector(get, null):Sector;
 	public var backSector(get, null):Sector;
 	

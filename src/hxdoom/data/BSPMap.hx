@@ -71,7 +71,10 @@ class BSPMap
 			var endAngle:Angle = player.angleToVertex(segment.end) - player.angle;
 			
 			var span:Angle = startAngle - endAngle;
-			if (span >= 180) continue;
+			if (span >= 180) {
+				segment.visible = false;
+				continue;
+			}
 			
 			var startAngleLeftFov:Angle = startAngle + (Environment.PLAYER_FOV / 2);
 			
@@ -84,6 +87,7 @@ class BSPMap
 			
 			visible.push(segment);
 			segment.hasBeenSeen = true;
+			segment.visible = true;
 		}
 		
 		return visible;
@@ -113,7 +117,7 @@ class BSPMap
 		var node:Int = nodes.length - 1;
 		while (true) {
 			if (nodes[node].backChildID & Node.SUBSECTORIDENTIFIER > 0 || nodes[node].frontChildID & Node.SUBSECTORIDENTIFIER > 0 ) {
-				return subsectors[node];
+				return subsectors[node & Node.SUBSECTORIDENTIFIER];
 			}
 			var isOnBack:Bool = isPointOnBackSide(actors_players[0].xpos, actors_players[0].ypos, node);
 			if (isOnBack) {

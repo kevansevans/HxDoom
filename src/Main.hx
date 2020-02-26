@@ -57,7 +57,7 @@ class Main extends Application
 		waddata.onComplete(function(data:Bytes):Bytes {
 			hxdoom.setBaseIwad(data, "DOOM1.WAD");
 			hxdoom.loadMap(0);
-			gl_scene.programMapGeometry.buildMapArray();
+			gl_scene.programMapGeometry.buildMapGeometry();
 			wadsLoaded = true;
 			return data;
 		});
@@ -80,7 +80,7 @@ class Main extends Application
 				
 				if (gl_scene == null) {
 					gl_scene = new GLHandler(context, window);
-					gl_scene.programMapGeometry.buildMapArray();
+					gl_scene.programMapGeometry.buildMapGeometry();
 				}
 				
 			//HTML5 without WebGL support
@@ -112,6 +112,7 @@ class Main extends Application
 		super.onWindowResize(width, height);
 		
 		window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
+		gl_scene.resize();
 	}
 	
 	override public function onKeyUp(keyCode:KeyCode, modifier:KeyModifier):Void 
@@ -127,31 +128,31 @@ class Main extends Application
 				
 			case KeyCode.NUMBER_1 :
 				hxdoom.loadMap(0);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_2 :
 				hxdoom.loadMap(1);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_3 :
 				hxdoom.loadMap(2);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_4 :
 				hxdoom.loadMap(3);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_5 :
 				hxdoom.loadMap(4);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_6 :
 				hxdoom.loadMap(5);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_7 :
 				hxdoom.loadMap(6);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_8 :
 				hxdoom.loadMap(7);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 			case KeyCode.NUMBER_9 :
 				hxdoom.loadMap(8);
-				gl_scene.programMapGeometry.buildMapArray();
+				gl_scene.programMapGeometry.buildMapGeometry();
 				
 			case KeyCode.LEFT:
 				Environment.PLAYER_TURNING_LEFT = false;
@@ -201,6 +202,9 @@ class Main extends Application
 	}
 	
 	var ticks:Int = 0;
+	var framecount = 0;
+	var mscount = 0;
+	
 	override public function update(deltaTime:Int):Void 
 	{
 		super.update(deltaTime);
@@ -227,10 +231,21 @@ class Main extends Application
 			
 			ticks = 0;
 			
+			Engine.ACTIVEMAP.getVisibleSegments();
+			
 		}
 		
 		if (gl_scene != null) {
 			gl_scene.render_scene();
+		}
+		
+		framecount += 1;
+		mscount += deltaTime;
+		if (framecount >= window.frameRate) {
+			var average = mscount / window.frameRate;
+			//trace("FPS: " + Std.int(1000 / average));
+			framecount = 0;
+			mscount = 0;
 		}
 	}
 	
@@ -261,6 +276,10 @@ class Main extends Application
 			}
 			
 			window.warpMouse(Std.int(window.width / 2), Std.int(window.height / 2));
+			
+			if (gl_scene != null) {
+				gl_scene.programMapGeometry.buildMapGeometry();
+			}
 		}
 	}
 }

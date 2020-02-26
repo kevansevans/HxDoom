@@ -38,20 +38,28 @@ class GLHandler
 		
 		programAutoMap = new GLAutoMap(gl);
 		programMapGeometry = new GLMapGeometry(gl);
+		
+		resize();
+	}
+	
+	public function resize() {
+		gl.viewport(0, 0, window.width, window.height);
 	}
 	
 	public function render_scene() {
 		
-		gl.viewport(0, 0, window.width, window.height);
+		
+		//remove color buffer bit to allow HOM effect.
+		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
 		if (Environment.IS_IN_AUTOMAP) {
 			
+			gl.clearColor (0x6c / 255, 0x54 / 255, 0x40 / 255, 1);
 			programAutoMap.render(window.width, window.height);
 			
 		} else {
 			
-			//remove color buffer bit to allow HOM effect.
-			gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+			gl.clearColor (0, 0, 0, 1);
 			
 			//depth buffer
 			gl.enable(gl.DEPTH_TEST);

@@ -5,9 +5,11 @@ import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
 import lime.utils.Float32Array;
 import mme.math.glmatrix.Mat4Tools;
+import render.gl.objects.GLPlane;
 
 import hxdoom.Engine;
 import hxdoom.com.Environment;
+import hxdoom.abstracts.Angle;
 
 /**
  * ...
@@ -21,13 +23,14 @@ class GLMapGeometry
 	var vertex_shader:GLShader;
 	var fragment_shader:GLShader;
 	
-	var map_lineverts:Array<Float>;
+	var planes:Array<GLPlane>;
+	
+	var safeToRender:Bool = false;
 	
 	public function new(_gl:WebGLRenderContext)
 	{
 		gl = _gl;
 		program = gl.createProgram();
-		map_lineverts = new Array();
 		
 		vertex_shader = gl.createShader(gl.VERTEX_SHADER);
 		fragment_shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -51,46 +54,87 @@ class GLMapGeometry
 		gl.attachShader(program, fragment_shader);
 			
 		gl.linkProgram(program);
+		
+	}
+	
+	public function buildMapGeometry() {
+		safeToRender = false;
+		
+		var mapSegments = Engine.ACTIVEMAP.segments;
+		
+		var numplanes:Int = 0;
+		for (seg in mapSegments) {
+			if (seg.lineDef.solid) {
+				numplanes += 1;
+				continue;
+			}
+			if (seg.lineDef.frontSideDef.lower_texture != "-") numplanes += 1;
+			if (seg.lineDef.frontSideDef.middle_texture != "-") numplanes += 1;
+			if (seg.lineDef.frontSideDef.upper_texture != "-") numplanes += 1;
+			if (seg.lineDef.backSideDef.lower_texture != "-") numplanes += 1;
+			if (seg.lineDef.backSideDef.middle_texture != "-") numplanes += 1;
+			if (seg.lineDef.backSideDef.upper_texture != "-") numplanes += 1;
+		}
+		
+		planes = new Array();
+		planes.resize(numplanes);
+		
+		var p_index = 0;
+		
+		for (s_index in 0...mapSegments.length) {
+			var segment = mapSegments[s_index];
+			
+			if (segment.lineDef.solid) {
+				planes[p_index] = new GLPlane(gl, mapSegments[s_index], SideType.SOLID);
+			} else {
+				if (segment.lineDef.frontSideDef.lower_texture != "-") {
+					planes[p_index] = new GLPlane(gl, mapSegments[s_index], SideType.FRONT_BOTTOM);
+				}
+				if (segment.lineDef.frontSideDef.middle_texture != "-") {
+					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.FRONT_MIDDLE);
+				}
+				if (segment.lineDef.frontSideDef.upper_texture != "-") {
+					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.FRONT_TOP);
+				}
+				if (segment.lineDef.backSideDef.lower_texture != "-") {
+					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.BACK_BOTTOM);
+				}
+				if (segment.lineDef.backSideDef.middle_texture != "-") {
+					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.BACK_MIDDLE);
+				}
+				if (segment.lineDef.backSideDef.upper_texture != "-") {
+					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.BACK_TOP);
+				}
+			}
+			
+			++p_index;
+		}
+		
+		safeToRender = true;
 	}
 	
 	public function render(_winWidth:Int, _winHeight:Int) {
 		
-		var loadedLineBuffer = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER, loadedLineBuffer);
-		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(map_lineverts), gl.STATIC_DRAW);
-		
-		var posAttributeLocation = gl.getAttribLocation(program, "V3_POSITION");
-		var colorAttributeLocation = gl.getAttribLocation(program, "V4_COLOR");
-		
-		gl.vertexAttribPointer(
-			posAttributeLocation,
-			3,
-			gl.FLOAT,
-			false,
-			7 * Float32Array.BYTES_PER_ELEMENT,
-			0);
-		gl.vertexAttribPointer(
-			colorAttributeLocation,
-			4,
-			gl.FLOAT,
-			false,
-			7 * Float32Array.BYTES_PER_ELEMENT,
-			3 * Float32Array.BYTES_PER_ELEMENT);
-		gl.enableVertexAttribArray(posAttributeLocation);
-		gl.enableVertexAttribArray(colorAttributeLocation);
-		
-		gl.useProgram(program);
+		if (!safeToRender) return;
 		
 		var worldArray = new Float32Array(16);
 		var viewArray = new Float32Array(16);
 		var projArray = new Float32Array(16);
 		
 		var p_subsector = Engine.ACTIVEMAP.getPlayerSector();
-		var p_sectorfloor = p_subsector.sector.floorHeight + Environment.PLAYER_VIEW_HEIGHT;
+		var p_segment = p_subsector.segments[0];
+		
+		var startAngle:Angle =  Engine.ACTIVEMAP.actors_players[0].angleToVertex(p_segment.start) - Engine.ACTIVEMAP.actors_players[0].angle;
+		var endAngle:Angle =  Engine.ACTIVEMAP.actors_players[0].angleToVertex(p_segment.end) - Engine.ACTIVEMAP.actors_players[0].angle;
+		var span:Angle = startAngle - endAngle;
+		
+		var p_subsector = Engine.ACTIVEMAP.getPlayerSector();
+		var p_sectorfloor = p_subsector.segments[0].frontSector.floorHeight;
+		var p_eyeline = p_sectorfloor + 41;
 		
 		Mat4Tools.identity(worldArray);
-		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_sectorfloor], 
-							[Engine.ACTIVEMAP.actors_players[0].xpos_look, Engine.ACTIVEMAP.actors_players[0].ypos_look, p_sectorfloor + Engine.ACTIVEMAP.actors_players[0].zpos_look], 
+		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_eyeline], 
+							[Engine.ACTIVEMAP.actors_players[0].xpos_look, Engine.ACTIVEMAP.actors_players[0].ypos_look, p_eyeline + Engine.ACTIVEMAP.actors_players[0].zpos_look], 
 							[0, 0, 1], viewArray);
 		Mat4Tools.perspective(45 * (Math.PI / 180), _winWidth / _winHeight, 0.1, 10000, projArray);
 		
@@ -98,12 +142,16 @@ class GLMapGeometry
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_View"), false, viewArray);
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_Proj"), false, projArray);
 		
-		gl.drawArrays(gl.TRIANGLES, 0, Std.int(map_lineverts.length / 7));
+		for (plane in planes) {
+			if (plane == null) continue;
+			plane.bind(program);
+			plane.render();
+		}
 	}
 	
-	public function buildMapArray() {
+	/*public function buildMapArray() {
 		
-		var loadedsegs = Engine.ACTIVEMAP.segments;
+		var loadedsegs = Engine.ACTIVEMAP.getVisibleSegments();
 		var sectors = Engine.ACTIVEMAP.sectors;
 		var numSegs = ((loadedsegs.length -1) * 42);
 		map_lineverts.resize(numSegs);
@@ -542,7 +590,7 @@ class GLMapGeometry
 		}
 		
 		Environment.NEEDS_TO_REBUILD_AUTOMAP = false;
-	}
+	}*/
 	
 	public static var vertex_source:String = [
 	#if !desktop
@@ -570,7 +618,7 @@ class GLMapGeometry
 	'',
 	'void main()',
 	'{',
-	' 	gl_FragColor = vec4(F_COLOR);',
+	' 	gl_FragColor = F_COLOR;',
 	'}'
 	].join('\n');
 	
