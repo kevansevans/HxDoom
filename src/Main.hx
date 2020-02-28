@@ -57,7 +57,6 @@ class Main extends Application
 		waddata.onComplete(function(data:Bytes):Bytes {
 			hxdoom.setBaseIwad(data, "DOOM1.WAD");
 			hxdoom.loadMap(0);
-			gl_scene.programMapGeometry.buildMapGeometry();
 			wadsLoaded = true;
 			return data;
 		});
