@@ -45,6 +45,7 @@ class Engine
 	}
 	public function loadMap(_index:Int) {
 		ACTIVEMAP = MAPLIST[MAPALIAS[_index]].copy();
+		ACTIVEMAP.buildNodes(ACTIVEMAP.nodes.length - 1);
 		Environment.NEEDS_TO_REBUILD_AUTOMAP = true;
 	}
 	public function setBaseIwad(_data:Bytes, _name:String) {
