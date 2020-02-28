@@ -34,9 +34,6 @@ class GLPlane
 		
 		var index = 0;
 		
-		switch(_type) {
-			case SOLID:
-				
 		plane_vertexes = new Array();
 		plane_vertexes.resize(42);
 		
