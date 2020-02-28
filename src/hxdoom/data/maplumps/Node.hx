@@ -8,6 +8,8 @@ class Node
 {
 	public static var SUBSECTORIDENTIFIER:Int = 0x8000;
 	
+	public var parent:Int = -1;
+	
 	public var xPartition:Int;
 	public var yPartition:Int;
 	public var changeXPartition:Int;
