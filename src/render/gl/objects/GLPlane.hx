@@ -37,8 +37,12 @@ class GLPlane
 		switch(_type) {
 			case SOLID:
 				
-				plane_vertexes = new Array();
-				plane_vertexes.resize(42);
+		plane_vertexes = new Array();
+		plane_vertexes.resize(42);
+		
+		switch(_type) {
+			
+			case SOLID:
 				
 				plane_vertexes[index] 		= segment.start.xpos;
 				plane_vertexes[index += 1] 	= segment.start.ypos;
