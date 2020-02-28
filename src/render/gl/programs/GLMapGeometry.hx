@@ -121,20 +121,17 @@ class GLMapGeometry
 		var viewArray = new Float32Array(16);
 		var projArray = new Float32Array(16);
 		
-		var p_subsector = Engine.ACTIVEMAP.getPlayerSector();
+		var p_subsector = Engine.ACTIVEMAP.getPlayerSubsector();
 		var p_segment = p_subsector.segments[0];
+		var p_viewheight = p_segment.frontSector.floorHeight + 41;
 		
 		var startAngle:Angle =  Engine.ACTIVEMAP.actors_players[0].angleToVertex(p_segment.start) - Engine.ACTIVEMAP.actors_players[0].angle;
 		var endAngle:Angle =  Engine.ACTIVEMAP.actors_players[0].angleToVertex(p_segment.end) - Engine.ACTIVEMAP.actors_players[0].angle;
 		var span:Angle = startAngle - endAngle;
 		
-		var p_subsector = Engine.ACTIVEMAP.getPlayerSector();
-		var p_sectorfloor = p_subsector.segments[0].frontSector.floorHeight;
-		var p_eyeline = p_sectorfloor + 41;
-		
 		Mat4Tools.identity(worldArray);
-		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_eyeline], 
-							[Engine.ACTIVEMAP.actors_players[0].xpos_look, Engine.ACTIVEMAP.actors_players[0].ypos_look, p_eyeline + Engine.ACTIVEMAP.actors_players[0].zpos_look], 
+		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_viewheight], 
+							[Engine.ACTIVEMAP.actors_players[0].xpos_look, Engine.ACTIVEMAP.actors_players[0].ypos_look, p_viewheight + Engine.ACTIVEMAP.actors_players[0].zpos_look], 
 							[0, 0, 1], viewArray);
 		Mat4Tools.perspective(45 * (Math.PI / 180), _winWidth / _winHeight, 0.1, 10000, projArray);
 		
