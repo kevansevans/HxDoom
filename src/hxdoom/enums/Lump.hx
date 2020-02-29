@@ -1,4 +1,4 @@
-package hxdoom.lumps;
+package hxdoom.enums;
 
 /**
  * @author Kaelan

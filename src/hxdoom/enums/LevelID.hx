@@ -1,4 +1,4 @@
-package hxdoom.lumps;
+package hxdoom.enums;
 
 /**
  * Enum of Vanilla map ID's

@@ -1,4 +1,4 @@
-package hxdoom.lumps;
+package hxdoom.core;
 
 import haxe.ds.Vector;
 import hxdoom.actors.Player;

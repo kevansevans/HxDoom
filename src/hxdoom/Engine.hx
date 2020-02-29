@@ -5,8 +5,8 @@ import hxdoom.com.CheatHandler;
 import hxdoom.lumps.graphiclumps.Playpal;
 import hxdoom.lumps.maplumps.SubSector;
 
-import hxdoom.lumps.BSPMap;
-import hxdoom.lumps.RootPack;
+import hxdoom.core.BSPMap;
+import hxdoom.lumps.Iwad;
 import hxdoom.com.Environment;
 
 /**
@@ -15,7 +15,7 @@ import hxdoom.com.Environment;
  */
 class Engine 
 {
-	public static var IWADS:Map<String, RootPack>;
+	public static var IWADS:Map<String, Iwad>;
 	public static var BASEIWAD:String;
 	
 	public static var CHEATS:CheatHandler;
@@ -25,7 +25,7 @@ class Engine
 	 * this allows it to mimic the same style of namespace overriding all opther sourceports use, at the same
 	 * time allowing new assets to occupy their own name space.
 	 */
-	public static var WADLIST:Map<String, RootPack>;
+	public static var WADLIST:Map<String, Iwad>;
 	public static var MAPLIST:Map<String, BSPMap>;
 	public static var MAPALIAS:Array<String>;
 	public static var PLAYPAL:Playpal;
@@ -49,7 +49,7 @@ class Engine
 		Environment.NEEDS_TO_REBUILD_AUTOMAP = true;
 	}
 	public function setBaseIwad(_data:Bytes, _name:String) {
-		IWADS[_name] = new RootPack(_data, _name, true);
+		IWADS[_name] = new Iwad(_data, _name, true);
 		BASEIWAD = _name;
 		
 		for (bsp in IWADS[_name].maps) {

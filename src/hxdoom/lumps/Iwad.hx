@@ -3,6 +3,8 @@ package hxdoom.lumps;
 import haxe.ds.Map;
 import haxe.PosInfos;
 import haxe.io.Bytes;
+import hxdoom.core.Reader;
+import hxdoom.enums.Lump;
 import hxdoom.lumps.graphiclumps.Playpal;
 import hxdoom.lumps.maplumps.LineDef;
 import hxdoom.lumps.maplumps.Segment;
@@ -12,7 +14,7 @@ import hxdoom.lumps.maplumps.Thing;
 import hxdoom.com.Environment;
 
 import hxdoom.lumps.Directory;
-import hxdoom.lumps.BSPMap;
+import hxdoom.core.BSPMap;
 
 /**
  * ...
@@ -20,7 +22,7 @@ import hxdoom.lumps.BSPMap;
  * 
  * To reduce typing redundancy, I named this class "pack" to represent the wad data as a whole.
  */
-class RootPack 
+class Iwad 
 {
 	//public static var SPRITELIST:Map<String, some class here> = new Map(); 
 	var data:Array<Int>;

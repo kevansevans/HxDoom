@@ -1,4 +1,4 @@
-package hxdoom.lumps;
+package hxdoom.core;
 
 import hxdoom.lumps.Directory;
 import hxdoom.lumps.maplumps.LineDef;
