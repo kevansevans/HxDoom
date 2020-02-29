@@ -46,16 +46,20 @@ class Engine
 	public function loadMap(_index:Int) {
 		ACTIVEMAP = MAPLIST[MAPALIAS[_index]].copy();
 		ACTIVEMAP.buildNodes(ACTIVEMAP.nodes.length - 1);
-		Environment.NEEDS_TO_REBUILD_AUTOMAP = true;
 	}
+	
 	public function setBaseIwad(_data:Bytes, _name:String) {
-		IWADS[_name] = new Iwad(_data, _name, true);
-		BASEIWAD = _name;
 		
-		for (bsp in IWADS[_name].maps) {
-			MAPLIST[bsp.name] = bsp;
-			MAPALIAS[mapindex] = bsp.name;
-			++mapindex;
+		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
+		
+		if (isIwad) {
+			IWADS[_name] = new Iwad(_data, _name);
+			BASEIWAD = _name;
+			for (bsp in IWADS[_name].maps) {
+				MAPLIST[bsp.name] = bsp;
+				MAPALIAS[mapindex] = bsp.name;
+				++mapindex;
+			}
 		}
 	}
 	//we'll call this function when pwad support works

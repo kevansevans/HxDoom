@@ -27,7 +27,6 @@ class Iwad
 	//public static var SPRITELIST:Map<String, some class here> = new Map(); 
 	var data:Array<Int>;
 	var wadname:String;
-	var isIwad:Bool;
 	
 	var directories:Array<Directory>;
 	var directory_count:Int;
@@ -64,7 +63,7 @@ class Iwad
 	 * @param	_name String denoting file name to prevent overlapping
 	 * @param	_iwad Is this wad an IWAD?
 	 */
-	public function new(_data:Bytes, _name:String, _iwad:Bool = false) 
+	public function new(_data:Bytes, _name:String) 
 	{
 		data = new Array();
 		for (a in 0..._data.length) {
@@ -72,8 +71,6 @@ class Iwad
 		}
 		
 		wadname = _name;
-		
-		isIwad = _iwad;
 		
 		getDirectoryListing();
 		indexMaps();
@@ -85,7 +82,6 @@ class Iwad
 		directories = new Array();
 		for (a in 0...directory_count) {
 			directories[a] = Reader.readDirectory(data, directory_offset + a * 16);
-			//trace(directories[a], a);
 		}
 	}
 	function indexMaps() 
