@@ -1,13 +1,13 @@
 package hxdoom;
 import haxe.io.Bytes;
 import haxe.ds.Map;
-import hxdoom.com.CheatHandler;
+import hxdoom.common.CheatHandler;
 import hxdoom.lumps.graphiclumps.Playpal;
 import hxdoom.lumps.maplumps.SubSector;
 
 import hxdoom.core.BSPMap;
 import hxdoom.lumps.Iwad;
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 
 /**
  * ...

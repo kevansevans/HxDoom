@@ -8,7 +8,7 @@ import lime.math.Vector4;
 import lime.utils.Float32Array;
 
 import hxdoom.Engine;
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 
 /**
  * ...

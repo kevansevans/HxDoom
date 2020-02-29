@@ -11,7 +11,7 @@ import hxdoom.lumps.maplumps.Segment;
 import hxdoom.lumps.maplumps.Vertex;
 import hxdoom.lumps.maplumps.Thing;
 
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 
 import hxdoom.lumps.Directory;
 import hxdoom.core.BSPMap;

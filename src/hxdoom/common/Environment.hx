@@ -1,4 +1,4 @@
-package hxdoom.com;
+package hxdoom.common;
 
 #if js
 import js.Browser;

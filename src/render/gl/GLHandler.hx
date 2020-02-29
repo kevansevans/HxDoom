@@ -14,7 +14,7 @@ import render.gl.programs.GLMapGeometry;
 import render.gl.programs.GLAutoMap;
 
 import hxdoom.Engine;
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 
 /**
  * ...

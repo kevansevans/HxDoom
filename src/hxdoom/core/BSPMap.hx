@@ -13,7 +13,7 @@ import hxdoom.lumps.maplumps.Thing;
 import hxdoom.lumps.maplumps.Vertex;
 import packages.actors.*;
 import packages.wad.maplumps.*;
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 import hxdoom.abstracts.Angle;
 /**
  * ...

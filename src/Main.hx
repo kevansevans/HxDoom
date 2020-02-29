@@ -24,7 +24,7 @@ import lime.graphics.RenderContext;
 import lime.ui.KeyCode;
 
 import hxdoom.Engine;
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 
 class Main extends Application 
 {

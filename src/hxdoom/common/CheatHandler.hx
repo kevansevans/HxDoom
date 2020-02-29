@@ -1,4 +1,4 @@
-package hxdoom.com;
+package hxdoom.common;
 import haxe.ds.Vector;
 
 #if macro
@@ -9,7 +9,7 @@ import sys.FileSystem;
 import sys.io.File;
 #end
 
-import hxdoom.com.GameActions;
+import hxdoom.common.GameActions;
 
 /**
  * ...

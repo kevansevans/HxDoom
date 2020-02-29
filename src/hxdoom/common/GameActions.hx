@@ -1,7 +1,7 @@
-package hxdoom.com;
+package hxdoom.common;
 
 import hxdoom.Engine;
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 
 /**
  * ...

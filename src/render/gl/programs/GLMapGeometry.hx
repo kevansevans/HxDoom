@@ -8,7 +8,7 @@ import mme.math.glmatrix.Mat4Tools;
 import render.gl.objects.GLWall;
 
 import hxdoom.Engine;
-import hxdoom.com.Environment;
+import hxdoom.common.Environment;
 import hxdoom.abstracts.Angle;
 
 /**
