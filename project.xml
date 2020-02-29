@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="HxDoom" package="com.Kevans.HxDoom" version="1.0.0" company="Kaelan" />
-	<app main="Main" file="HxDoom" path="bin" />
+	<meta title="Citrus Doom" package="com.Kevans.CitrusDoom" version="1.0.0" company="Kaelan" />
+	<app main="Main" file="Citrus Doom" path="bin" />
 	
 	<source path="src" />
 	
@@ -11,6 +11,6 @@
 	
 	<assets path="assets" exclude="*.svg" />
 	<assets path="assets/shareware" rename="IWADS"/>
-	<icon path="assets/lime.svg" />
+	<icon path="assets/img/CitrusDoomIcon.png" />
 	
 </project>
