@@ -230,7 +230,7 @@ class Main extends Application
 			
 			ticks = 0;
 			
-			Engine.ACTIVEMAP.getVisibleSegments();
+			Engine.ACTIVEMAP.setVisibleSegments();
 			
 		}
 		

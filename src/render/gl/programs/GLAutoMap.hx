@@ -103,7 +103,6 @@ class GLAutoMap
 	
 	function rebuildMapArray() {
 		var loadedsegs = Engine.ACTIVEMAP.segments;
-		var visSegs = Engine.ACTIVEMAP.getVisibleSegments();
 		var numSegs = ((loadedsegs.length -1) * 12);
 		map_lineverts.resize(numSegs);
 		var itemCount:Int = 0;
