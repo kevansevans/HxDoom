@@ -1,11 +1,11 @@
-package render.gl.programs;
+package render.citrusGL.programs;
 
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
 import lime.utils.Float32Array;
 import mme.math.glmatrix.Mat4Tools;
-import render.gl.objects.GLWall;
+import render.citrusGL.objects.GLWall;
 
 import hxdoom.Engine;
 import hxdoom.common.Environment;

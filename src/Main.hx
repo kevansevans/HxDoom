@@ -2,7 +2,7 @@ package;
 
 import lime.ui.KeyModifier;
 import lime.ui.MouseWheelMode;
-import render.gl.GLHandler;
+import render.citrusGL.GLHandler;
 
 import haxe.io.Bytes;
 import lime.ui.KeyCode;

@@ -1,4 +1,4 @@
-package render.gl;
+package render.citrusGL;
 
 import lime.graphics.RenderContext;
 import lime.graphics.WebGLRenderContext;
@@ -9,9 +9,9 @@ import lime.ui.Window;
 import lime.utils.Float32Array;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLShader;
-import render.gl.programs.GLMapGeometry;
+import render.citrusGL.programs.GLMapGeometry;
 
-import render.gl.programs.GLAutoMap;
+import render.citrusGL.programs.GLAutoMap;
 
 import hxdoom.Engine;
 import hxdoom.common.Environment;

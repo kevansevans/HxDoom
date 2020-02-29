@@ -1,4 +1,4 @@
-package render.gl.objects;
+package render.citrusGL.objects;
 
 import hxdoom.lumps.map.Segment;
 import lime.graphics.WebGLRenderContext;
