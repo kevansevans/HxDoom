@@ -1,14 +1,14 @@
 package hxdoom.core;
 
 import hxdoom.lumps.Directory;
-import hxdoom.lumps.maplumps.LineDef;
-import hxdoom.lumps.maplumps.Node;
-import hxdoom.lumps.maplumps.Sector;
-import hxdoom.lumps.maplumps.Segment;
-import hxdoom.lumps.maplumps.SideDef;
-import hxdoom.lumps.maplumps.SubSector;
-import hxdoom.lumps.maplumps.Thing;
-import hxdoom.lumps.maplumps.Vertex;
+import hxdoom.lumps.map.LineDef;
+import hxdoom.lumps.map.Node;
+import hxdoom.lumps.map.Sector;
+import hxdoom.lumps.map.Segment;
+import hxdoom.lumps.map.SideDef;
+import hxdoom.lumps.map.SubSector;
+import hxdoom.lumps.map.Thing;
+import hxdoom.lumps.map.Vertex;
 
 /**
  * ...

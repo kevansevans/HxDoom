@@ -5,11 +5,11 @@ import haxe.PosInfos;
 import haxe.io.Bytes;
 import hxdoom.core.Reader;
 import hxdoom.enums.Lump;
-import hxdoom.lumps.graphiclumps.Playpal;
-import hxdoom.lumps.maplumps.LineDef;
-import hxdoom.lumps.maplumps.Segment;
-import hxdoom.lumps.maplumps.Vertex;
-import hxdoom.lumps.maplumps.Thing;
+import hxdoom.lumps.graphic.Playpal;
+import hxdoom.lumps.map.LineDef;
+import hxdoom.lumps.map.Segment;
+import hxdoom.lumps.map.Vertex;
+import hxdoom.lumps.map.Thing;
 
 import hxdoom.common.Environment;
 

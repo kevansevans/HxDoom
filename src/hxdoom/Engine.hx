@@ -2,8 +2,8 @@ package hxdoom;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.common.CheatHandler;
-import hxdoom.lumps.graphiclumps.Playpal;
-import hxdoom.lumps.maplumps.SubSector;
+import hxdoom.lumps.graphic.Playpal;
+import hxdoom.lumps.map.SubSector;
 
 import hxdoom.core.BSPMap;
 import hxdoom.lumps.Iwad;

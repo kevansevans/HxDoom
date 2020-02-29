@@ -1,4 +1,4 @@
-package hxdoom.lumps.maplumps;
+package hxdoom.lumps.map;
 
 /**
  * ...

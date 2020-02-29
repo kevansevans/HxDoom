@@ -1,6 +1,6 @@
 package render.gl.objects;
 
-import hxdoom.lumps.maplumps.Segment;
+import hxdoom.lumps.map.Segment;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.utils.Float32Array;

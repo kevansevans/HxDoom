@@ -1,8 +1,8 @@
 package hxdoom.actors;
 
 import hxdoom.abstracts.Angle;
-import hxdoom.lumps.maplumps.Thing;
-import hxdoom.lumps.maplumps.Vertex;
+import hxdoom.lumps.map.Thing;
+import hxdoom.lumps.map.Vertex;
 
 /**
  * ...
