@@ -1,18 +1,18 @@
-package hxdoom.data;
+package hxdoom.lumps;
 
 import haxe.ds.Map;
 import haxe.PosInfos;
 import haxe.io.Bytes;
-import hxdoom.data.graphiclumps.Playpal;
-import hxdoom.data.maplumps.LineDef;
-import hxdoom.data.maplumps.Segment;
-import hxdoom.data.maplumps.Vertex;
-import hxdoom.data.maplumps.Thing;
+import hxdoom.lumps.graphiclumps.Playpal;
+import hxdoom.lumps.maplumps.LineDef;
+import hxdoom.lumps.maplumps.Segment;
+import hxdoom.lumps.maplumps.Vertex;
+import hxdoom.lumps.maplumps.Thing;
 
 import hxdoom.com.Environment;
 
-import hxdoom.data.Directory;
-import hxdoom.data.BSPMap;
+import hxdoom.lumps.Directory;
+import hxdoom.lumps.BSPMap;
 
 /**
  * ...

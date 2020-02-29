@@ -1,4 +1,4 @@
-package hxdoom.data.maplumps;
+package hxdoom.lumps.maplumps;
 
 /**
  * XY position of a linedef

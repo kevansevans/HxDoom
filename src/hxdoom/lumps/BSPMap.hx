@@ -1,16 +1,16 @@
-package hxdoom.data;
+package hxdoom.lumps;
 
 import haxe.ds.Vector;
 import hxdoom.actors.Player;
 import hxdoom.actors.TypeID;
-import hxdoom.data.maplumps.LineDef;
-import hxdoom.data.maplumps.Node;
-import hxdoom.data.maplumps.Sector;
-import hxdoom.data.maplumps.Segment;
-import hxdoom.data.maplumps.SideDef;
-import hxdoom.data.maplumps.SubSector;
-import hxdoom.data.maplumps.Thing;
-import hxdoom.data.maplumps.Vertex;
+import hxdoom.lumps.maplumps.LineDef;
+import hxdoom.lumps.maplumps.Node;
+import hxdoom.lumps.maplumps.Sector;
+import hxdoom.lumps.maplumps.Segment;
+import hxdoom.lumps.maplumps.SideDef;
+import hxdoom.lumps.maplumps.SubSector;
+import hxdoom.lumps.maplumps.Thing;
+import hxdoom.lumps.maplumps.Vertex;
 import packages.actors.*;
 import packages.wad.maplumps.*;
 import hxdoom.com.Environment;

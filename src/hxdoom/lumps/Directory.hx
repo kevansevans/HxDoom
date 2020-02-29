@@ -1,4 +1,4 @@
-package hxdoom.data;
+package hxdoom.lumps;
 
 /**
  * ...

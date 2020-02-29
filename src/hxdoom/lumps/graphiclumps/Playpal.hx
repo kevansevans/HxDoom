@@ -1,4 +1,4 @@
-package hxdoom.data.graphiclumps;
+package hxdoom.lumps.graphiclumps;
 
 /*
  * The idea is to keep the doom side of things separate from the API side of things
