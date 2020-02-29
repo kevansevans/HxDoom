@@ -5,7 +5,7 @@ import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
 import lime.utils.Float32Array;
 import mme.math.glmatrix.Mat4Tools;
-import render.gl.objects.GLPlane;
+import render.gl.objects.GLWall;
 
 import hxdoom.Engine;
 import hxdoom.com.Environment;
@@ -23,7 +23,7 @@ class GLMapGeometry
 	var vertex_shader:GLShader;
 	var fragment_shader:GLShader;
 	
-	var planes:Array<GLPlane>;
+	var planes:Array<GLWall>;
 	
 	var safeToRender:Bool = false;
 	
@@ -85,25 +85,25 @@ class GLMapGeometry
 			var segment = mapSegments[s_index];
 			
 			if (segment.lineDef.solid) {
-				planes[p_index] = new GLPlane(gl, mapSegments[s_index], SideType.SOLID);
+				planes[p_index] = new GLWall(gl, mapSegments[s_index], SideType.SOLID);
 			} else {
 				if (segment.lineDef.frontSideDef.lower_texture != "-") {
-					planes[p_index] = new GLPlane(gl, mapSegments[s_index], SideType.FRONT_BOTTOM);
+					planes[p_index] = new GLWall(gl, mapSegments[s_index], SideType.FRONT_BOTTOM);
 				}
 				if (segment.lineDef.frontSideDef.middle_texture != "-") {
-					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.FRONT_MIDDLE);
+					planes[p_index += 1] = new GLWall(gl, mapSegments[s_index], SideType.FRONT_MIDDLE);
 				}
 				if (segment.lineDef.frontSideDef.upper_texture != "-") {
-					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.FRONT_TOP);
+					planes[p_index += 1] = new GLWall(gl, mapSegments[s_index], SideType.FRONT_TOP);
 				}
 				if (segment.lineDef.backSideDef.lower_texture != "-") {
-					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.BACK_BOTTOM);
+					planes[p_index += 1] = new GLWall(gl, mapSegments[s_index], SideType.BACK_BOTTOM);
 				}
 				if (segment.lineDef.backSideDef.middle_texture != "-") {
-					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.BACK_MIDDLE);
+					planes[p_index += 1] = new GLWall(gl, mapSegments[s_index], SideType.BACK_MIDDLE);
 				}
 				if (segment.lineDef.backSideDef.upper_texture != "-") {
-					planes[p_index += 1] = new GLPlane(gl, mapSegments[s_index], SideType.BACK_TOP);
+					planes[p_index += 1] = new GLWall(gl, mapSegments[s_index], SideType.BACK_TOP);
 				}
 			}
 			

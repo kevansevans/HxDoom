@@ -19,7 +19,7 @@ enum SideType {
  * ...
  * @author Kaelan
  */
-class GLPlane 
+class GLWall 
 {
 	var gl:WebGLRenderContext;
 	var plane_vertexes:Array<Float>;
