@@ -230,8 +230,7 @@ class Main extends Application
 			
 			ticks = 0;
 			
-			Engine.ACTIVEMAP.setVisibleSegments();
-			
+			if (Engine.ACTIVEMAP != null) Engine.ACTIVEMAP.setVisibleSegments();
 		}
 		
 		if (gl_scene != null) {

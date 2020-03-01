@@ -15,7 +15,7 @@ class Environment
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//Integers and Floats
-	public static var PLAYER_FOV:Int = 90;
+	public static var PLAYER_FOV:Int = 110;
 	public static var AUTOMAP_ZOOM(default, set) = 0.001;
 	
 	//Bools.
