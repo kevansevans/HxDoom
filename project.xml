@@ -11,6 +11,8 @@
 	
 	<assets path="assets" exclude="*.svg" />
 	<assets path="assets/shareware" rename="IWADS"/>
-	<icon path="assets/img/CitrusDoomIcon.png" />
+	
+	<!--Set default icon, then overide with supported targets -->
+	<icon path="assets/icon.png"/>
 	
 </project>
