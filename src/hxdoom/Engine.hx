@@ -48,7 +48,7 @@ class Engine
 		ACTIVEMAP.buildNodes(ACTIVEMAP.nodes.length - 1);
 	}
 	
-	public function setBaseIwad(_data:Bytes, _name:String) {
+	public function loadWad(_data:Bytes, _name:String) {
 		
 		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
 		
@@ -60,6 +60,8 @@ class Engine
 				MAPALIAS[mapindex] = bsp.name;
 				++mapindex;
 			}
+		} else {
+			
 		}
 	}
 	//we'll call this function when pwad support works

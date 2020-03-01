@@ -19,7 +19,7 @@ class Segment
 	public var frontSector(get, null):Sector;
 	public var backSector(get, null):Sector;
 	
-	var randswatch = Std.int(255 * Math.random());
+	var randswatch = Std.int(254 * Math.random()) + 1;
 			
 	public var r_color:Float; 
 	public var g_color:Float; 
@@ -43,11 +43,7 @@ class Segment
 	
 	function get_sector():Sector 
 	{
-		if (lineDef.backSideDef != null) {
-			return lineDef.backSideDef.sector;
-		} else {
-			return lineDef.frontSideDef.sector;
-		}
+		return lineDef.frontSideDef.sector;
 	}
 	
 	function get_frontSector():Sector 

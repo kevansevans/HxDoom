@@ -14,5 +14,7 @@ class Vertex
 		xpos = _x;
 		ypos = _y;
 	}
-	
+	public function toString():String {
+		return '{x: ' + xpos + ", y:" + ypos + '}'; 
+	}
 }

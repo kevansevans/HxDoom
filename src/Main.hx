@@ -47,7 +47,7 @@ class Main extends Application
 		//App crashes when loading in a wad. Doesn't crash when using the JS method, but crashes when the data
 		//is handled in engine side of things
 		#elseif (windows || linux || macos || osx)
-		hxdoom.setBaseIwad(File.getBytes("./IWADS/DOOM1.WAD"), "DOOM1.WAD");
+		hxdoom.loadWad(File.getBytes("./IWADS/DOOM1.WAD"), "DOOM1.WAD");
 		
 		hxdoom.loadMap(0);
 		
@@ -55,7 +55,7 @@ class Main extends Application
 		#elseif (js)
 		var waddata = Assets.loadBytes("IWADS/DOOM1.WAD");
 		waddata.onComplete(function(data:Bytes):Bytes {
-			hxdoom.setBaseIwad(data, "DOOM1.WAD");
+			hxdoom.loadWad(data, "DOOM1.WAD");
 			hxdoom.loadMap(0);
 			wadsLoaded = true;
 			return data;
@@ -120,7 +120,9 @@ class Main extends Application
 		
 		switch(keyCode) {
 			
-			case KeyCode.TAB | KeyCode.SPACE :
+			case KeyCode.SPACE :
+			
+			case KeyCode.TAB :
 				Environment.IS_IN_AUTOMAP = !Environment.IS_IN_AUTOMAP;
 				
 				Environment.NEEDS_TO_REBUILD_AUTOMAP = true;

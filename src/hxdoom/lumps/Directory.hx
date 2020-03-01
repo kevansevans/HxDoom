@@ -1,4 +1,5 @@
 package hxdoom.lumps;
+import haxe.io.Bytes;
 
 /**
  * ...
@@ -6,6 +7,7 @@ package hxdoom.lumps;
  */
 class Directory 
 {
+	public var data:Array<Int>;
 	public var offset:Int;
 	public var size:Int;
 	public var name:String;
