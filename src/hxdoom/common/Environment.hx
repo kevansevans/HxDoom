@@ -15,15 +15,21 @@ class Environment
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//Integers and Floats
-	public static var PLAYER_FOV:Int = 110;
 	public static var AUTOMAP_ZOOM(default, set) = 0.001;
 	
+	public static var PLAYER_FOV(default, set):Int = 110;
+	public static var PLAYER_VIEW_HEIGHT:Int = 41;
+	
+	public static var SCREEN_DISTANCE_FROM_VIEWER:Int = 0;
+	
 	//Bools.
+	public static var AUTOMAP_ROTATES_WITH_PLAYER:Bool = false;
+	
 	public static var CHEAT_CLIPPING:Bool = false;
 	public static var CHEAT_INVULNERABILITY:Bool = false;
 	
-	public static var AUTOMAP_ROTATES_WITH_PLAYER:Bool = false;
 	public static var IS_IN_AUTOMAP:Bool = false;
+	
 	public static var NEEDS_TO_REBUILD_AUTOMAP:Bool = false;
 	
 	public static var PLAYER_MOVING_FORWARD:Bool = false;
@@ -32,7 +38,6 @@ class Environment
 	public static var PLAYER_STRAFING_RIGHT:Bool = false;
 	public static var PLAYER_TURNING_LEFT:Bool = false;
 	public static var PLAYER_TURNING_RIGHT:Bool = false;
-	public static var PLAYER_VIEW_HEIGHT:Int = 41;
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Functions
