@@ -85,9 +85,8 @@ class CheatHandler
 	 * 		checkCheat(); happens above. This code is precompiled before the main program is compiled,
 	 * 		this class WILL NOT hotload cheats into the engine, this is to provide an easy API for
 	 * 		anyone on the dev side of things to easily modify cheat code behavior.
-	 * 
-	 */		var file = File.getBytes("./assets/json/cheats.txt");
-	/**/	var codesheet:Dynamic = Json.parse(file.getString(0, file.length));
+	 */ 
+	/**/	var codesheet:Dynamic = Json.parse(json_cheat);
 	/**/	var currentgame:Dynamic;
 	/**/	var currentcheat:Dynamic;
 	/**/	
@@ -142,4 +141,54 @@ class CheatHandler
 		return Context.parse(code, Context.currentPos());
 	}
 	public function doNothing(){};
+	
+	static var json_cheat:String = '{
+  "doom": {
+    "iddqd": [
+      "pseudoinvul"
+    ],
+    "idspispopd": [
+      "disablecollision"
+    ],
+    "idclip": [
+      "disablecollision"
+    ],
+    "idkfa": [
+      "grantfullammo",
+      "grantallweapons",
+      "grantfullhealth",
+      "grantfullarmor",
+      "grantallkeys"
+    ],
+    "idfa": [
+      "grantfullammo",
+      "grantweapons",
+      "grantfullhealth",
+      "grantfullarmor"
+    ],
+    "idclev": [
+      "anticipatelevelchange"
+    ],
+    "idmus": [
+      "anticipatemusicchange"
+    ],
+    "idbehold": [
+      "anticipatekitemgive"
+    ],
+    "idchoppers": [
+      "grantitem:doomchainsaw"
+    ],
+    "iddt": [
+      "cyclemapdetail"
+    ],
+    "idmypos": [
+      "logplayerposition"
+    ],
+    "fhall": [
+      "killall:enemies"
+    ],
+    "fhshh": [
+      "makeblind:enemies"
+    ]
+  }'
 }
