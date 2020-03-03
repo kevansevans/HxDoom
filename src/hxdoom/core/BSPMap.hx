@@ -39,6 +39,8 @@ class BSPMap
 	
 	public var actors_players:Array<Player>;
 	
+	public var spanlimit:Angle = 180;
+	
 	public function new(_dirOffset:Int) 
 	{
 		dirOffset = _dirOffset;
@@ -106,7 +108,7 @@ class BSPMap
 			var end:Angle = player.angleToVertex(segment.end);
 			var span:Angle = start - end;
 			
-			if (span > 180) {
+			if (span > spanlimit) {
 				continue;
 			}
 			
@@ -132,8 +134,8 @@ class BSPMap
 					end = -half_fov;
 				}
 				
-				start += 90;
-				end += 90;
+				start += Environment.PLAYER_FOV;
+				end += Environment.PLAYER_FOV;
 				
 				var x_start:Int = angleToScreen(start);
 				var x_end:Int = angleToScreen(end);
@@ -168,17 +170,21 @@ class BSPMap
 				++fail;
 			}
 		}
+		
+		if (pass >= 320) {
+			trace(pass, fail);
+		}
 	}
 	
 	function angleToScreen(_angle:Angle):Int {
 		var x:Int = 0;
 		if (_angle > 90) {
 			_angle -= 90;
-			x = 160 - Math.round(_angle.toRadians() * 160);
+			x = Environment.SCREEN_DISTANCE_FROM_VIEWER - Math.round(_angle.toRadians() * 160);
 		} else {
 			_angle = 90 - _angle.asValue();
 			x = Math.round(_angle.toRadians() * 160);
-			x += 160;
+			x += Environment.SCREEN_DISTANCE_FROM_VIEWER;
 		}
 		return x;
 	}
