@@ -39,8 +39,6 @@ class BSPMap
 	
 	public var actors_players:Array<Player>;
 	
-	public var spanlimit:Angle = 180;
-	
 	public function new(_dirOffset:Int) 
 	{
 		dirOffset = _dirOffset;
@@ -55,6 +53,12 @@ class BSPMap
 		sectors = new Array();
 	}
 	
+	public function build() {
+		parseThings();
+		setOffset();
+		buildNodes(nodes.length - 1);
+	}
+	
 	public function parseThings() {
 		actors_players = new Array();
 		for (thing in things) {
@@ -63,130 +67,6 @@ class BSPMap
 					actors_players.push(new Player(thing));
 			}
 		}
-	}
-	
-	var hwidth:Int = 320;
-	var hor_walldraw:Array<Bool> = new Array();
-	var scanning = false;
-	
-	
-	public function setVisibleSegments() {
-		for (x in 0...(hwidth + 1)) {
-			hor_walldraw[x] = false;
-		}
-		recursiveNodeTraversalVisibility(nodes.length -1);
-	}
-	function recursiveNodeTraversalVisibility(_nodeIndex:Int) {
-		
-		if (_nodeIndex & Node.SUBSECTORIDENTIFIER > 0) {
-			subsectorVisibilityCheck(_nodeIndex & (~Node.SUBSECTORIDENTIFIER));
-			return;
-		}
-		
-		var node = nodes[_nodeIndex];
-		
-		var isOnBack:Bool = isPointOnBackSide(actors_players[0].xpos, actors_players[0].ypos, _nodeIndex);
-		if (isOnBack) {
-			recursiveNodeTraversalVisibility(node.backChildID);
-			recursiveNodeTraversalVisibility(node.frontChildID);
-		} else {
-			recursiveNodeTraversalVisibility(node.frontChildID);
-			recursiveNodeTraversalVisibility(node.backChildID);
-		}
-	}
-	
-	function subsectorVisibilityCheck(_subsector:Int) {
-		
-		var player = actors_players[0];
-		var subsector = subsectors[_subsector];
-		
-		for (segment in subsector.segments) {
-			
-			segment.visible = false;
-			
-			var start:Angle = player.angleToVertex(segment.start);
-			var end:Angle = player.angleToVertex(segment.end);
-			var span:Angle = start - end;
-			
-			if (span > spanlimit) {
-				continue;
-			}
-			
-			start -= player.angle;
-			end -= player.angle;
-			
-			var half_fov:Float = Environment.PLAYER_FOV / 2;
-			
-			var start_moved:Angle = start + half_fov;
-			
-			if (start_moved > Environment.PLAYER_FOV) {
-				if (start_moved > span) {
-					continue;
-				}
-				start = half_fov;
-			}
-			
-			if (segment.lineDef.solid) {
-			
-				var end_moved:Angle = half_fov - Std.int(end);
-				
-				if (end_moved >  Environment.PLAYER_FOV) {
-					end = -half_fov;
-				}
-				
-				start += Environment.PLAYER_FOV;
-				end += Environment.PLAYER_FOV;
-				
-				var x_start:Int = angleToScreen(start);
-				var x_end:Int = angleToScreen(end);
-				
-				x_end = Std.int(Math.min(321, x_end));
-				
-				for (x in x_start...(x_end + 1)) {
-					if (hor_walldraw[x] == true) {
-						continue;
-					} else {
-						hor_walldraw[x] = true;
-						segment.visible = true;
-					}
-				}
-			} else {
-				segment.visible = true;
-			}
-		}
-		
-		checkScreenFill();
-	}
-	
-	function checkScreenFill() 
-	{
-		var pass:Int = 0;
-		var fail:Int = 0;
-		hor_walldraw.resize(hwidth);
-		for (x in 0...320) {
-			if (hor_walldraw[x] == true) {
-				++pass;
-			} else {
-				++fail;
-			}
-		}
-		
-		if (pass >= 320) {
-			trace(pass, fail);
-		}
-	}
-	
-	function angleToScreen(_angle:Angle):Int {
-		var x:Int = 0;
-		if (_angle > 90) {
-			_angle -= 90;
-			x = Environment.SCREEN_DISTANCE_FROM_VIEWER - Math.round(_angle.toRadians() * 160);
-		} else {
-			_angle = 90 - _angle.asValue();
-			x = Math.round(_angle.toRadians() * 160);
-			x += Environment.SCREEN_DISTANCE_FROM_VIEWER;
-		}
-		return x;
 	}
 	
 	public function getPlayerSubsector():SubSector {

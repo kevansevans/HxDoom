@@ -2,10 +2,12 @@ package hxdoom;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.common.CheatHandler;
+import hxdoom.core.Render;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.SubSector;
 
 import hxdoom.core.BSPMap;
+import hxdoom.core.Render;
 import hxdoom.lumps.Iwad;
 import hxdoom.common.Environment;
 
@@ -31,6 +33,7 @@ class Engine
 	public static var PLAYPAL:Playpal;
 	
 	public static var ACTIVEMAP:BSPMap;
+	public static var RENDER:Render;
 	
 	var mapindex:Int = 0;
 	
@@ -42,6 +45,8 @@ class Engine
 		MAPALIAS = new Array();
 		
 		CHEATS = new CheatHandler();
+		
+		RENDER = new Render();
 	}
 	public function loadMap(_index:Int) {
 		ACTIVEMAP = MAPLIST[MAPALIAS[_index]].copy();
