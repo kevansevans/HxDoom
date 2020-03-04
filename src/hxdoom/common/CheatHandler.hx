@@ -143,8 +143,8 @@ class CheatHandler
 	public function doNothing(){};
 	
 	static var json_cheat:String = '{
-  "doom": {
-    "iddqd": [
+	"doom": {
+		"iddqd": [
       "pseudoinvul"
     ],
     "idspispopd": [
@@ -190,5 +190,6 @@ class CheatHandler
     "fhshh": [
       "makeblind:enemies"
     ]
-  }'
+	}
+	}';
 }

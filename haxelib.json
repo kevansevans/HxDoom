@@ -4,8 +4,8 @@
   "license": "GPL",
   "tags": ["cross", "alpha", "game"],
   "description": "Haxelib adaption of id Tech 1, aka HxDoom. Does not come with rendering or IO.",
-  "version": "0.0.2-alpha",
+  "version": "0.0.3-alpha",
   "classPath": "src/",
-  "releasenote": "alpha 2 release",
+  "releasenote": "alpha 3 release",
   "contributors": ["kevansevans"]
 }
