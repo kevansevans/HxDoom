@@ -1,11 +1,14 @@
 package hxdoom;
+import haxe.Timer;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.common.CheatHandler;
+import hxdoom.core.Render;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.SubSector;
 
 import hxdoom.core.BSPMap;
+import hxdoom.core.Render;
 import hxdoom.lumps.Iwad;
 import hxdoom.common.Environment;
 
@@ -13,6 +16,13 @@ import hxdoom.common.Environment;
  * ...
  * @author Kaelan
  */
+
+enum EngineState {
+	START_MENU;
+	IN_GAME;
+	IN_GAME_MENU;
+	IN_GAME_PAUSE; //Pause/Break key is a different pause from pressing escape
+}
 class Engine 
 {
 	public static var IWADS:Map<String, Iwad>;
@@ -31,6 +41,13 @@ class Engine
 	public static var PLAYPAL:Playpal;
 	
 	public static var ACTIVEMAP:BSPMap;
+	public static var RENDER:Render;
+	
+	public static var gamelogic:Void -> Void;
+	
+	public static var STATE:EngineState;
+	
+	var timer:Timer;
 	
 	var mapindex:Int = 0;
 	
@@ -42,7 +59,20 @@ class Engine
 		MAPALIAS = new Array();
 		
 		CHEATS = new CheatHandler();
+		
+		RENDER = new Render();
+		
+		gamelogic = tick;
+		
+		STATE = IN_GAME;
 	}
+	
+	public function start() {
+		
+		timer = new Timer(Std.int(1000 / 35));
+		timer.run = gamelogic;
+	}
+	
 	public function loadMap(_index:Int) {
 		ACTIVEMAP = MAPLIST[MAPALIAS[_index]].copy();
 		ACTIVEMAP.buildNodes(ACTIVEMAP.nodes.length - 1);
@@ -76,6 +106,37 @@ class Engine
 			}
 		}
 		
+	}
+	
+	public function tick() {
+		
+		switch (STATE) {
+			
+			case IN_GAME:
+				if (Environment.PLAYER_MOVING_FORWARD) {
+					Engine.ACTIVEMAP.actors_players[0].move(5);
+				}
+				if (Environment.PLAYER_MOVING_BACKWARD) {
+					Engine.ACTIVEMAP.actors_players[0].move(-5);
+				}
+				if (Environment.PLAYER_TURNING_LEFT) {
+					Engine.ACTIVEMAP.actors_players[0].angle += 1;
+				}
+				if (Environment.PLAYER_TURNING_RIGHT) {
+					Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+				}
+				
+				if (ACTIVEMAP != null) RENDER.setVisibleSegments();
+				
+			case START_MENU :
+				
+			case IN_GAME_MENU :
+				
+			case IN_GAME_PAUSE :
+				
+			default :
+				
+		}
 	}
 	
 	public static inline function log(_msg:String) {

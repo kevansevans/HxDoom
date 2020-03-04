@@ -22,4 +22,12 @@ class SideDef
 		sector = _sectors[_sectorID];
 	}
 	
+	public function toString():String {
+		return([
+			'Offsets: {x: ' + xoffset + ', y: ' + yoffset + '} ',
+			'Upper Texture: {' + upper_texture + '}, ',
+			'Middle Texture: {' + middle_texture + '}, ',
+			'Lower Texture: {' + lower_texture + '}, '
+		].join(""));
+	}
 }

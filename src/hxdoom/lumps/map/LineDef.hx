@@ -51,4 +51,17 @@ class LineDef
 	{
 		return color_b;
 	}
+	
+	public function toString() {
+		return(
+			['Start to End: {' + start.toString() +', ' + end.toString() + '}, ',
+			'Line type: {' + lineType + '}, ',
+			'Sector Tag: {' + sectorTag + '}, ',
+			'Flags: {' + flags + '}, ',
+			'Front Sidedef: {' + (frontSideDef != null ? 'Sidedef Tag: ' : 'No Front Sidedef') + '}, ',
+			'Back Sidedef: {' + (backSideDef != null ? 'Sidedef Tag: ' : 'No Back Sidedef') + '}, ',
+			'Solid: {' + solid + '}'
+			].join("")
+		);
+	}
 }

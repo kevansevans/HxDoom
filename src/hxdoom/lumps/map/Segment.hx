@@ -36,28 +36,31 @@ class Segment
 		direction = _direction;
 		offset = _offset;
 	}
+	
 	function get_start():Vertex 
 	{
 		return lineDef.start;
 	}
-	
-	function get_sector():Sector 
+	function get_end():Vertex 
 	{
-		return lineDef.frontSideDef.sector;
+		return lineDef.end;
 	}
-	
 	function get_frontSector():Sector 
 	{
 		return lineDef.frontSideDef.sector;
 	}
-	
 	function get_backSector():Sector 
 	{
 		return lineDef.backSideDef.sector;
 	}
 	
-	function get_end():Vertex 
-	{
-		return lineDef.end;
+	public function toString():String {
+		return([
+			'Angle: {' + angle + '}, ',
+			'Direction: {' + direction + '}, ',
+			'Offset: {' + offset + '}, ',
+			'Sectors: {' + (frontSector == null ? 'Front Sector: $frontSector.tag'  : ' No Front Sector...? ') + ', ' + (backSector == null ? 'Back Sector: $backSector.tag'  : ' No back sector') + '}, ',
+			'Visible to player: {' + visible + '}' 
+		].join(""));
 	}
 }
