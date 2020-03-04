@@ -24,4 +24,14 @@ class Sector
 		tag = _tag;
 	}
 	
+	public function toString():String
+	{
+		return([
+			'Floor: {Height: ' + floorHeight + ', Texture: ' + floorTexture + '}, ',
+			'Ceiling: {Height: ' + ceilingHeight + ', Texture: ' + ceilingTexture + '}, ',
+			'Light: {' + lightLevel + '}, ',
+			'Special: {' + special + '}, ',
+			'Tag: {' + tag + '}, '
+		].join(""));
+	}
 }

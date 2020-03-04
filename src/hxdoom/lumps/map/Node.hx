@@ -49,4 +49,8 @@ class Node
 		backChildID = _bci;
 	}
 	
+	public function toString():String
+	{
+		return "";
+	}
 }
