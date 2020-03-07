@@ -148,7 +148,6 @@ class Render
 	
 	function set_screen_width(value:Int):Int 
 	{
-		trace("blep");
 		virtual_screen = new Vector(value);
 		return screen_width = value;
 	}
