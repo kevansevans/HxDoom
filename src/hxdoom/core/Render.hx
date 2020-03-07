@@ -94,7 +94,7 @@ class Render
 				var x_end:Int = angleToScreen(end);
 				
 				x_start = Std.int(Math.max(0, x_start));
-				x_end = Std.int(Math.min(321, x_end));
+				x_end = Std.int(Math.min(screen_width + 1, x_end));
 				
 				for (x in x_start...(x_end + 1)) {
 					if (virtual_screen[x] == true) {
@@ -116,27 +116,23 @@ class Render
 	{
 		var pass:Int = 0;
 		var fail:Int = 0;
-		for (x in 0...320) {
+		for (x in 0...(screen_width + 1)) {
 			if (virtual_screen[x] == true) {
 				++pass;
 			} else {
 				++fail;
 			}
 		}
-		
-		if (pass >= 320) {
-			trace(pass, fail);
-		}
 	}
 	
 	function angleToScreen(_angle:Angle):Int {
 		var x:Int = 0;
-		if (_angle > 90) {
-			_angle -= 90;
-			x = Environment.SCREEN_DISTANCE_FROM_VIEWER - Math.round(_angle.toRadians() * 160);
+		if (_angle > Environment.PLAYER_FOV) {
+			_angle -= Environment.PLAYER_FOV;
+			x = Environment.SCREEN_DISTANCE_FROM_VIEWER - Math.round(_angle.toRadians() * (screen_width / 2));
 		} else {
-			_angle = 90 - _angle.asValue();
-			x = Math.round(_angle.toRadians() * 160);
+			_angle = Environment.PLAYER_FOV - _angle.asValue();
+			x = Math.round(_angle.toRadians() * (screen_width / 2));
 			x += Environment.SCREEN_DISTANCE_FROM_VIEWER;
 		}
 		return x;
