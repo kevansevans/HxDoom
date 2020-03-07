@@ -1,10 +1,12 @@
 package hxdoom.core;
 
+import haxe.ds.Map;
 import haxe.ds.Vector;
 import hxdoom.Engine;
 import hxdoom.common.Environment;
 import hxdoom.abstracts.Angle;
 import hxdoom.lumps.map.Node;
+import hxdoom.lumps.map.Segment;
 
 /**
  * ...
@@ -12,21 +14,26 @@ import hxdoom.lumps.map.Node;
  */
 class Render 
 {
-	public var virtual_screen:Vector<Bool>;
+	public var virtual_screen:Map<Int, Segment>;
 	public var map(get, never):BSPMap;
 	public var screen_width(default, set):Int = 320;
 	public var spanlimit:Angle = 180;
 	
 	public function new() 
 	{
-		virtual_screen = new Vector(320);
+		virtual_screen = new Map();
 	}
 	
-	public function setVisibleSegments() {
-		for (x in 0...(screen_width + 1)) {
-			virtual_screen[x] = false;
+	public function setVisibleSegments(?_subsec:Int) {
+		for (seg in map.segments) {
+			seg.visible = false;
 		}
-		recursiveNodeTraversalVisibility(map.nodes.length -1);
+		if (_subsec == null) {
+			virtual_screen = new Map();
+			recursiveNodeTraversalVisibility(map.nodes.length -1);
+		} else {
+			subsectorVisibilityCheck(_subsec);
+		}
 	}
 	
 	function recursiveNodeTraversalVisibility(_nodeIndex:Int) {
@@ -53,9 +60,9 @@ class Render
 		var player = map.actors_players[0];
 		var subsector = map.subsectors[_subsector];
 		
+		if (subsector == null) return;
+		
 		for (segment in subsector.segments) {
-			
-			segment.visible = false;
 			
 			var start:Angle = player.angleToVertex(segment.start);
 			var end:Angle = player.angleToVertex(segment.end);
@@ -78,34 +85,30 @@ class Render
 				}
 				start = half_fov;
 			}
-			
-			if (segment.lineDef.solid) {
-			
-				var end_moved:Angle = half_fov - Std.int(end);
+			var end_moved:Angle = half_fov - Std.int(end);
 				
-				if (end_moved >  Environment.PLAYER_FOV) {
-					end = -half_fov;
-				}
+			if (end_moved >  Environment.PLAYER_FOV) {
+				end = -half_fov;
+			}
 				
-				start += Environment.PLAYER_FOV;
-				end += Environment.PLAYER_FOV;
+			start += Environment.PLAYER_FOV;
+			end += Environment.PLAYER_FOV;
 				
-				var x_start:Int = angleToScreen(start);
-				var x_end:Int = angleToScreen(end);
+			var x_start:Int = angleToScreen(start);
+			var x_end:Int = angleToScreen(end);
 				
-				x_start = Std.int(Math.max(0, x_start));
-				x_end = Std.int(Math.min(screen_width + 1, x_end));
+			x_start = Std.int(Math.max(0, x_start));
+			x_end = Std.int(Math.min(screen_width + 1, x_end));
 				
-				for (x in x_start...(x_end + 1)) {
-					if (virtual_screen[x] == true) {
-						continue;
-					} else {
-						virtual_screen[x] = true;
-						segment.visible = true;
+			for (x in x_start...(x_end + 1)) {
+				if (virtual_screen[x] != null) {
+					if (segment.lineDef.solid) continue;
+				} else {
+					if (segment.lineDef.solid) {
+						virtual_screen[x] = segment;
 					}
+					segment.visible = true;
 				}
-			} else {
-				segment.visible = true;
 			}
 		}
 		
@@ -117,7 +120,7 @@ class Render
 		var pass:Int = 0;
 		var fail:Int = 0;
 		for (x in 0...(screen_width + 1)) {
-			if (virtual_screen[x] == true) {
+			if (virtual_screen[x] != null) {
 				++pass;
 			} else {
 				++fail;
@@ -127,7 +130,8 @@ class Render
 	
 	function angleToScreen(_angle:Angle):Int {
 		var x:Int = 0;
-		if (_angle > Environment.PLAYER_FOV) {
+		_angle -= 45;
+		if (_angle > Environment.PLAYER_FOV + 45) {
 			_angle -= Environment.PLAYER_FOV;
 			x = Environment.SCREEN_DISTANCE_FROM_VIEWER - Math.round(_angle.toRadians() * (screen_width / 2));
 		} else {
@@ -144,7 +148,6 @@ class Render
 	
 	function set_screen_width(value:Int):Int 
 	{
-		virtual_screen = new Vector(value);
 		return screen_width = value;
 	}
 }
