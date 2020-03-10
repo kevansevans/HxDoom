@@ -3,12 +3,13 @@ import haxe.Timer;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.common.CheatHandler;
-import hxdoom.core.Render;
+import hxdoom.core.GameLogic;
+import hxdoom.core.IOLogic;
+import hxdoom.core.RenderLogic;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.SubSector;
 
 import hxdoom.core.BSPMap;
-import hxdoom.core.Render;
 import hxdoom.lumps.Iwad;
 import hxdoom.common.Environment;
 
@@ -17,12 +18,6 @@ import hxdoom.common.Environment;
  * @author Kaelan
  */
 
-enum EngineState {
-	START_MENU;
-	IN_GAME;
-	IN_GAME_MENU;
-	IN_GAME_PAUSE; //Pause/Break key is a different pause from pressing escape
-}
 class Engine 
 {
 	public static var IWADS:Map<String, Iwad>;
@@ -41,36 +36,25 @@ class Engine
 	public static var PLAYPAL:Playpal;
 	
 	public static var ACTIVEMAP:BSPMap;
-	public static var RENDER:Render;
 	
-	public static var gamelogic:Void -> Void;
-	
-	public static var STATE:EngineState;
-	
-	var timer:Timer;
+	public static var RENDER:RenderLogic;
+	public static var GAME:GameLogic;
+	public static var IO:IOLogic;
 	
 	var mapindex:Int = 0;
 	
-	public function new() 
+	public function new(_gameLogic:GameLogic, _ioLogic:IOLogic, _renderLogic:RenderLogic) 
 	{
 		IWADS = new Map();
 		WADLIST = new Map();
 		MAPLIST = new Map();
 		MAPALIAS = new Array();
 		
+		GAME = _gameLogic;
+		IO = _ioLogic;
+		RENDER = _renderLogic;
+		
 		CHEATS = new CheatHandler();
-		
-		RENDER = new Render();
-		
-		gamelogic = tick;
-		
-		STATE = IN_GAME;
-	}
-	
-	public function start() {
-		
-		timer = new Timer(Std.int(1000 / 35));
-		timer.run = gamelogic;
 	}
 	
 	public function loadMap(_index:Int) {
@@ -82,7 +66,7 @@ class Engine
 		
 		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
 		
-		if (isIwad) {
+		//if (isIwad) {
 			IWADS[_name] = new Iwad(_data, _name);
 			BASEIWAD = _name;
 			for (bsp in IWADS[_name].maps) {
@@ -90,9 +74,9 @@ class Engine
 				MAPALIAS[mapindex] = bsp.name;
 				++mapindex;
 			}
-		} else {
+		//} else {
 			
-		}
+		//}
 	}
 	//we'll call this function when pwad support works
 	public function makeFrakenWad() {
@@ -108,36 +92,6 @@ class Engine
 		
 	}
 	
-	public function tick() {
-		
-		switch (STATE) {
-			
-			case IN_GAME:
-				if (Environment.PLAYER_MOVING_FORWARD) {
-					Engine.ACTIVEMAP.actors_players[0].move(5);
-				}
-				if (Environment.PLAYER_MOVING_BACKWARD) {
-					Engine.ACTIVEMAP.actors_players[0].move(-5);
-				}
-				if (Environment.PLAYER_TURNING_LEFT) {
-					Engine.ACTIVEMAP.actors_players[0].angle += 1;
-				}
-				if (Environment.PLAYER_TURNING_RIGHT) {
-					Engine.ACTIVEMAP.actors_players[0].angle -= 1;
-				}
-				
-				if (ACTIVEMAP != null) RENDER.setVisibleSegments();
-				
-			case START_MENU :
-				
-			case IN_GAME_MENU :
-				
-			case IN_GAME_PAUSE :
-				
-			default :
-				
-		}
-	}
 	
 	public static inline function log(_msg:String) {
 		trace(_msg);
