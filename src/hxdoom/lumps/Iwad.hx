@@ -28,7 +28,7 @@ class Iwad
 	var data:Array<Int>;
 	var wadname:String;
 	
-	var directories:Array<Directory>;
+	public var directories:Array<Directory>;
 	var directory_count:Int;
 	var directory_offset:Int;
 	
