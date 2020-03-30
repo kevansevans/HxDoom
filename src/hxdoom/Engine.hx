@@ -3,9 +3,9 @@ import haxe.Timer;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.common.CheatHandler;
-import hxdoom.core.GameLogic;
-import hxdoom.core.IOLogic;
-import hxdoom.core.RenderLogic;
+import hxdoom.core.GameCore;
+import hxdoom.core.IOCore;
+import hxdoom.core.RenderCore;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.SubSector;
 
@@ -37,29 +37,33 @@ class Engine
 	
 	public static var ACTIVEMAP:BSPMap;
 	
-	public static var RENDER:RenderLogic;
-	public static var GAME:GameLogic;
-	public static var IO:IOLogic;
+	public static var RENDER:RenderCore;
+	public static var GAME:GameCore;
+	public static var IO:IOCore;
 	
 	var mapindex:Int = 0;
 	
-	public function new(_gameLogic:GameLogic, _ioLogic:IOLogic, _renderLogic:RenderLogic) 
+	public function new() 
 	{
 		IWADS = new Map();
 		WADLIST = new Map();
 		MAPLIST = new Map();
 		MAPALIAS = new Array();
 		
-		GAME = _gameLogic;
-		IO = _ioLogic;
-		RENDER = _renderLogic;
+		GAME = new GameCore();
+		IO = new IOCore();
+		RENDER = new RenderCore();
 		
 		CHEATS = new CheatHandler();
 	}
 	
 	public function loadMap(_index:Int) {
+		GAME.stop();
 		ACTIVEMAP = MAPLIST[MAPALIAS[_index]].copy();
 		ACTIVEMAP.buildNodes(ACTIVEMAP.nodes.length - 1);
+		RENDER.initializeRenderEnvironment();
+		GAME.start();
+		trace("HURRRRRRR");
 	}
 	
 	public function loadWad(_data:Bytes, _name:String) {
