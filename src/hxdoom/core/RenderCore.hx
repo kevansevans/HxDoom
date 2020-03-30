@@ -11,7 +11,7 @@ import hxdoom.lumps.map.Segment;
  * ...
  * @author Kaelan
  */
-class RenderLogic
+class RenderCore
 {
 	public var virtual_screen:Map<Int, Segment>;
 	public var map(get, never):BSPMap;
@@ -23,6 +23,8 @@ class RenderLogic
 	{
 		virtual_screen = new Map();
 	}
+	
+	public function initializeRenderEnvironment() {}
 	
 	public function setVisibleSegments(?_subsec:Int) {
 		scanning = true;
@@ -107,6 +109,14 @@ class RenderLogic
 				} else {
 					if (segment.lineDef.solid) {
 						virtual_screen[x] = segment;
+					} else {
+						if (segment.frontSector.ceilingHeight == segment.frontSector.floorHeight) {
+							virtual_screen[x] = segment;
+						} else if (segment.backSector != null) {
+							if (segment.backSector.ceilingHeight == segment.backSector.floorHeight) {
+								virtual_screen[x] = segment;
+							}
+						}
 					}
 					segment.visible = true;
 				}
@@ -147,5 +157,9 @@ class RenderLogic
 	function set_screen_width(value:Int):Int 
 	{
 		return screen_width = value;
+	}
+	
+	public function render_scene() {
+		
 	}
 }

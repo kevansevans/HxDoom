@@ -15,7 +15,7 @@ enum EngineState {
 	IN_GAME_MENU;
 	IN_GAME_PAUSE; //Pause/Break key is a different pause from pressing escape
 }
-class GameLogic 
+class GameCore
 {
 	public static var STATE:EngineState;
 	
