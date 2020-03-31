@@ -25,20 +25,19 @@ class GameCore
 	
 	public function new() 
 	{
-		timer = new Timer(Std.int(1000 / ticrate));
 		STATE = IN_GAME;
 	}
 	
 	public function start() {
+		timer = new Timer(Std.int(1000 / ticrate));
 		timer.run = tick;
 	}
 	
 	public function stop() {
-		timer.stop();
+		if (timer != null) timer.stop();
 	}
 	
 	public function tick() {
-		
 		switch (STATE) {
 			
 			case IN_GAME:
