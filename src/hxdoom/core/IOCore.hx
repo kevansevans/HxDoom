@@ -2,6 +2,7 @@ package hxdoom.core;
 
 import hxdoom.common.Environment;
 import hxdoom.common.CheatHandler;
+import hxdoom.core.GameCore;
 
 /**
  * ...
@@ -25,18 +26,53 @@ class IOCore
 	
 	public function keyPress(_keyCode:Int) {
 		
-		switch(_keyCode) {
-			case HXDKeyCode.TAB : 
-				Environment.IS_IN_AUTOMAP = !Environment.IS_IN_AUTOMAP;
-			case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
-				Environment.PLAYER_MOVING_FORWARD = true;
+		switch (GameCore.STATE) {
+			
+			case IN_GAME :
+				
+				switch(_keyCode) {
+					case HXDKeyCode.TAB : 
+						Environment.IS_IN_AUTOMAP = !Environment.IS_IN_AUTOMAP;
+						
+					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
+						Environment.PLAYER_MOVING_FORWARD = true;
+						
+					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
+						Environment.PLAYER_MOVING_BACKWARD = true;
+						
+					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
+						Environment.PLAYER_TURNING_LEFT = true;
+						
+					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
+						Environment.PLAYER_TURNING_RIGHT = true;
+				}
+				
+			default :
+				
 		}
 		
 	}
 	public function keyRelease(_keyCode:Int) {
-		switch(_keyCode) {
-			case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
-				Environment.PLAYER_MOVING_FORWARD = false;
+		
+		switch (GameCore.STATE) {
+			
+			case IN_GAME :
+				
+				switch(_keyCode) {
+					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
+						Environment.PLAYER_MOVING_FORWARD = false;
+						
+					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
+						Environment.PLAYER_MOVING_BACKWARD = false;
+						
+					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
+						Environment.PLAYER_TURNING_LEFT = false;
+						
+					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
+						Environment.PLAYER_TURNING_RIGHT = false;
+				}
+				
+			default :
 		}
 	}
 	
