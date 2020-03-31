@@ -66,7 +66,6 @@ enum abstract HXDKeyCode(Int) from Int {
 	var PLUS:Int;
 	var ACUTE_DIACRITIC:Int;
 	var HYPHEN:Int;
-	var MINUS:Int;
 	var PERIOD:Int;
 	var FOWARD_SLASH:Int;
 	var ZERO:Int;
