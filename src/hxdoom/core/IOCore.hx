@@ -89,7 +89,7 @@ enum abstract HXDKeyCode(Int) from Int {
 	var ESCAPE:Int = 0x1B;
 	var SPACE:Int = 0x20;
 	//Going to rely on implicit casting from here on
-	var EXCLAMATION:Int;
+	var EXCLAMATION:Int = 0x21;
 	var QUOTE:Int;
 	var OCTOTHORPE:Int;
 	var DOLLAR:Int;
