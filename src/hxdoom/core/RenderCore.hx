@@ -14,6 +14,7 @@ import hxdoom.lumps.map.Segment;
 class RenderCore
 {
 	public var virtual_screen:Map<Int, Segment>;
+	public var vis_segments:Array<Segment>;
 	public var map(get, never):BSPMap;
 	public var screen_width(default, set):Int = 320;
 	public var spanlimit:Angle = 180;
@@ -33,6 +34,7 @@ class RenderCore
 		}
 		if (_subsec == null) {
 			virtual_screen = new Map();
+			vis_segments = new Array();
 			recursiveNodeTraversalVisibility(map.nodes.length -1);
 		} else {
 			subsectorVisibilityCheck(_subsec);
@@ -118,7 +120,9 @@ class RenderCore
 							}
 						}
 					}
-					segment.visible = true;
+					if (vis_segments.indexOf(segment) == -1) {
+						vis_segments.push(segment);
+					}
 				}
 			}
 		}
