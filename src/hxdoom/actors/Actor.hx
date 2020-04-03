@@ -3,6 +3,7 @@ package hxdoom.actors;
 import hxdoom.abstracts.Angle;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
+import hxdoom.common.Environment;
 
 /**
  * ...
@@ -85,16 +86,6 @@ class Actor
 		}
 	}
 	
-	function get_xpos_look():Float 
-	{
-		return xpos + 5 * Math.cos(angle.toRadians());
-	}
-	
-	function get_ypos_look():Float 
-	{
-		return ypos + 5 * Math.sin(angle.toRadians());
-	}
-	
 	function get_isPlayer():Bool 
 	{
 		switch (type) {
@@ -108,6 +99,16 @@ class Actor
 	function get_zpos_look():Float 
 	{
 		return 5 * Math.sin(pitch.toRadians());
+	}
+	
+	function get_xpos_look():Float 
+	{
+		return xpos + 5  * Math.cos(angle.toRadians());
+	}
+	
+	function get_ypos_look():Float 
+	{
+		return ypos + 5 * Math.sin(angle.toRadians());
 	}
 	
 	function set_pitch(value:Angle):Angle 

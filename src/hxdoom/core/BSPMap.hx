@@ -35,14 +35,10 @@ class BSPMap
 	public var offset_x:Float;
 	public var offset_y:Float;
 	
-	public var dirOffset:Int;
-	
 	public var actors_players:Array<Player>;
 	
-	public function new(_dirOffset:Int) 
+	public function new() 
 	{
-		dirOffset = _dirOffset;
-		
 		things = new Array();
 		vertexes = new Array();
 		linedefs = new Array();
@@ -135,7 +131,7 @@ class BSPMap
 	}
 	
 	public function copy():BSPMap {
-		var _bsp:BSPMap = new BSPMap(this.dirOffset);
+		var _bsp:BSPMap = new BSPMap();
 		
 		_bsp.linedefs = linedefs.copy();
 		_bsp.name = name;

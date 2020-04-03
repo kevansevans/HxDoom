@@ -17,10 +17,10 @@ class Environment
 	//Integers and Floats
 	public static var AUTOMAP_ZOOM(default, set) = 0.001;
 	
-	public static var PLAYER_FOV(default, set):Int = 110;
+	public static var PLAYER_FOV(default, set):Int = 90;
 	public static var PLAYER_VIEW_HEIGHT:Int = 41;
 	
-	public static var SCREEN_DISTANCE_FROM_VIEWER:Int = 0;
+	public static var SCREEN_DISTANCE_FROM_VIEWER:Int = 160;
 	
 	//Bools.
 	public static var AUTOMAP_ROTATES_WITH_PLAYER:Bool = false;

@@ -17,7 +17,7 @@ class Segment
 	public var hasBeenSeen:Bool = false;
 	public var visible:Bool = false;
 	public var frontSector(get, null):Sector;
-	public var backSector(get, null):Sector;
+	public var backSector(get, null):Null<Sector>;
 	
 	var randswatch = Std.int(254 * Math.random()) + 1;
 			
@@ -45,13 +45,16 @@ class Segment
 	{
 		return lineDef.end;
 	}
-	function get_frontSector():Sector 
+	function get_frontSector():Sector
 	{
 		return lineDef.frontSideDef.sector;
 	}
-	function get_backSector():Sector 
+	function get_backSector():Null<Sector>
 	{
-		return lineDef.backSideDef.sector;
+		if (lineDef.backSideDef != null) {
+			return lineDef.backSideDef.sector;
+		}
+		return null;
 	}
 	
 	public function toString():String {
