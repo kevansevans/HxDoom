@@ -25,11 +25,11 @@ Citrus Doom: https://github.com/kevansevans/CitrusDoom
 //Confirmed specific targets HxDoom has been compiled to and ran on
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ```
-Windows 10
-Manjaro
-HTML5 - Chrome
-HTML5 - Firefox
-HTML5 - Edge
+* Windows 10
+* Manjaro
+* HTML5 - Chrome
+* HTML5 - Firefox
+* HTML5 - Edge
 
 
 ```
