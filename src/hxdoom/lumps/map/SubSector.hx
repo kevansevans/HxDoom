@@ -16,5 +16,9 @@ class SubSector
 		}
 		sector = segments[0].direction == 0 ? segments[0].frontSector : segments[0].backSector;
 	}
-	
+	public function toString():String {
+		return([
+			'Num Segments: ' + segments.length
+		].join(""));
+	}
 }

@@ -51,6 +51,13 @@ class Node
 	
 	public function toString():String
 	{
-		return "";
+		return(
+			['XY Partition: {' + xPartition + ", " + yPartition + '}, ',
+			'Change Partition: {' + changeXPartition + ", " + changeYPartition + '}, ',
+			'Front Box: { Top: ' + frontBoxTop + ', Bottom: ' + frontBoxBottom + ', Left: ' + frontBoxLeft + ', Right: ' + frontBoxRight + '}, ',
+			'Back Box: { Top: ' + backBoxTop + ', Bottom: ' + backBoxBottom + ', Left: ' + backBoxLeft + ', Right: ' + backBoxRight + '}, ',
+			'Children IDs: { Front: ' + frontChildID + ', Back: ' + backChildID + '}'
+			].join("")
+		);
 	}
 }

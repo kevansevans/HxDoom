@@ -19,4 +19,8 @@ class Directory
 		name = _name;
 	}
 	
+	public function toString():String {
+		return(name);
+	}
+	
 }

@@ -37,4 +37,7 @@ class Playpal
 		}
 		return col;
 	}
+	public function toString():String {
+		return ("Num Palettes Loaded: " + palettes.length);
+	}
 }
