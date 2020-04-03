@@ -25,7 +25,7 @@ class RenderCore
 		virtual_screen = new Map();
 	}
 	
-	public function initializeRenderEnvironment() {}
+	public function initScene() {}
 	
 	public function setVisibleSegments(?_subsec:Int) {
 		scanning = true;

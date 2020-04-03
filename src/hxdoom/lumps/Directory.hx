@@ -8,12 +8,13 @@ import haxe.io.Bytes;
 class Directory 
 {
 	public var data:Array<Int>;
-	public var offset:Int;
+	public var dataOffset:Int;
+	public var listIndex:Int;
 	public var size:Int;
 	public var name:String;
-	public function new(_offset:Int, _size:Int, _name:String) 
+	public function new(_dataOffset:Int, _size:Int, _name:String) 
 	{
-		offset = _offset;
+		dataOffset = _dataOffset;
 		size = _size;
 		name = _name;
 	}

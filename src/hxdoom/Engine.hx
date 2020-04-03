@@ -21,7 +21,7 @@ import hxdoom.common.Environment;
 class Engine 
 {
 	public static var IWADS:Map<String, Iwad>;
-	public static var BASEIWAD:String;
+	public static var BASEIWAD:Null<String>;
 	
 	public static var CHEATS:CheatHandler;
 	
@@ -59,41 +59,28 @@ class Engine
 	
 	public function loadMap(_index:Int) {
 		GAME.stop();
-		ACTIVEMAP = MAPLIST[MAPALIAS[_index]].copy();
-		ACTIVEMAP.buildNodes(ACTIVEMAP.nodes.length - 1);
-		RENDER.initializeRenderEnvironment();
+		var maploaded:Bool = IWADS[BASEIWAD].loadMap(_index);
+		if (maploaded) {
+			ACTIVEMAP.build();
+			RENDER.initScene();
+		} else {
+			//resume normal operation
+		}
 		GAME.start();
-		trace("HURRRRRRR");
 	}
 	
 	public function loadWad(_data:Bytes, _name:String) {
 		
 		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
 		
-		//if (isIwad) {
-			IWADS[_name] = new Iwad(_data, _name);
-			BASEIWAD = _name;
-			for (bsp in IWADS[_name].maps) {
-				MAPLIST[bsp.name] = bsp;
-				MAPALIAS[mapindex] = bsp.name;
-				++mapindex;
+		if (isIwad) {
+			if (BASEIWAD == null) {
+				IWADS[_name] = new Iwad(_data, _name);
+				BASEIWAD = _name;
 			}
-		//} else {
+		} else {
 			
-		//}
-	}
-	//we'll call this function when pwad support works
-	public function makeFrakenWad() {
-		for (wad in WADLIST) {
-			for (map in wad.maps) {
-				if (MAPLIST[map.name] == null) {
-					MAPALIAS[mapindex] = map.name;
-					++mapindex;
-				}
-				MAPLIST[map.name] = map;
-			}
 		}
-		
 	}
 	
 	
