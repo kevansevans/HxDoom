@@ -5,7 +5,7 @@ package hxdoom.enums;
  * This enum exists purely for convenience factors until better level system is added.
  * @author Kaelan
  */
-enum abstract LevelID(Int) from Int 
+enum abstract Level(Int) from Int 
 {
 	var E1M1:Int = 0;
 	var E1M2:Int;
