@@ -52,7 +52,6 @@ class Engine
 		
 		GAME = new GameCore();
 		IO = new IOCore();
-		RENDER = new RenderCore();
 		
 		CHEATS = new CheatHandler();
 	}
@@ -62,7 +61,9 @@ class Engine
 		var maploaded:Bool = IWADS[BASEIWAD].loadMap(_index);
 		if (maploaded) {
 			ACTIVEMAP.build();
-			RENDER.initScene();
+			if (RENDER != null) {
+				RENDER.initScene();
+			}
 		} else {
 			//resume normal operation
 		}
