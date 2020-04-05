@@ -45,10 +45,8 @@ class Reader
 		);
 	}
 	
-	public static inline function readLinedef(_data:Array<Int>, _offset:Int, _vertexes:Array<Vertex>, _sidedefs:Array<SideDef>):LineDef {
+	public static inline function readLinedef(_data:Array<Int>, _offset:Int):LineDef {
 		return new LineDef(
-			_vertexes,
-			_sidedefs,
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
 			getTwoBytes(_data, _offset + 4),
@@ -66,9 +64,8 @@ class Reader
 		);
 	}
 	
-	public static inline function readSegment(_data:Array<Int>, _offset:Int, _linedefs:Array<LineDef>):Segment {
+	public static inline function readSegment(_data:Array<Int>, _offset:Int):Segment {
 		return new Segment(
-			_linedefs,
 			getTwoBytes(_data, _offset + 4, true),
 			getTwoBytes(_data, _offset + 6),
 			getTwoBytes(_data, _offset + 8),
@@ -76,9 +73,8 @@ class Reader
 		);
 	}
 	
-	public static inline function readSubSector(_data:Array<Int>, _offset:Int, _segments:Array<Segment>):SubSector {
+	public static inline function readSubSector(_data:Array<Int>, _offset:Int):SubSector {
 		return new SubSector(
-			_segments,
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2)
 		);
@@ -103,9 +99,8 @@ class Reader
 		);
 	}
 	
-	public static inline function readSideDef(_data:Array<Int>, _offset:Int, _sectors:Array<Sector>):SideDef {
+	public static inline function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
 		return new SideDef(
-			_sectors,
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
 			getStringFromRange(_data, _offset + 4, _offset + 12),

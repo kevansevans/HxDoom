@@ -6,39 +6,29 @@ package hxdoom.lumps.map;
  */
 class LineDef 
 {
-	public var start:Vertex;
-	public var end:Vertex;
 	public var flags:Int;
 	public var lineType:Int;
 	public var sectorTag:Int;
-	public var frontSideDef:SideDef;
-	public var backSideDef:SideDef;
+	var frontSideDefID:Int;
+	var backSideDefID:Int;
+	var startVertexID:Int;
+	var endVertexID:Int;
 	public var solid(get, null):Bool;
 	
-	public var color_r(get, null):Float;
-	public var color_g(get, null):Float;
-	public var color_b(get, null):Float;
+	public var frontSideDef(get, null):SideDef;
+	public var backSideDef(get, null):SideDef;
+	public var start(get, null):Vertex;
+	public var end(get, null):Vertex;
 	
-	
-	public function new(_vertexes:Array<Vertex>, _sidedefs:Array<SideDef>, _start:Int, _end:Int, _flags:Int, _lineType:Int, _sectorTag:Int, _frontSideDef:Int, _backSideDef:Int) 
+	public function new(_start:Int, _end:Int, _flags:Int, _lineType:Int, _sectorTag:Int, _frontSideDef:Int, _backSideDef:Int) 
 	{
-		start = _vertexes[_start];
-		end = _vertexes[_end];
+		startVertexID = _start;
+		endVertexID = _end;
 		flags = _flags;
 		lineType = _lineType;
 		sectorTag = _sectorTag;
-		frontSideDef = _sidedefs[_frontSideDef];
-		backSideDef = _sidedefs[_backSideDef];
-	}
-	
-	function get_color_r():Float 
-	{
-		return color_r;
-	}
-	
-	function get_color_g():Float 
-	{
-		return color_g;
+		frontSideDefID = _frontSideDef;
+		backSideDefID = _backSideDef;
 	}
 	
 	function get_solid():Bool 
@@ -47,9 +37,24 @@ class LineDef
 		else return false;
 	}
 	
-	function get_color_b():Float 
+	function get_frontSideDef():SideDef 
 	{
-		return color_b;
+		return Engine.ACTIVEMAP.sidedefs[frontSideDefID];
+	}
+	
+	function get_backSideDef():SideDef 
+	{
+		return Engine.ACTIVEMAP.sidedefs[backSideDefID];
+	}
+	
+	function get_start():Vertex 
+	{
+		return Engine.ACTIVEMAP.vertexes[startVertexID];
+	}
+	
+	function get_end():Vertex 
+	{
+		return Engine.ACTIVEMAP.vertexes[endVertexID];
 	}
 	
 	public function toString() {

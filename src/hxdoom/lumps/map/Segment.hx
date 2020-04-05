@@ -8,62 +8,54 @@ import hxdoom.Engine;
  */
 class Segment 
 {
+	public var angle:Int;
+	public var lineID:Int;
+	public var side:Int;
+	public var offset:Int;
+	
 	public var start(get, null):Vertex;
 	public var end(get, null):Vertex;
-	public var angle:Int;
-	public var lineDef:LineDef;
-	public var direction:Int;
-	public var offset:Int;
-	public var hasBeenSeen:Bool = false;
-	public var visible:Bool = false;
-	public var frontSector(get, null):Sector;
-	public var backSector(get, null):Null<Sector>;
+	public var sector(get, null):Sector;
+	public var lineDef(get, null):LineDef;
 	
-	var randswatch = Std.int(254 * Math.random()) + 1;
-			
-	public var r_color:Float; 
-	public var g_color:Float; 
-	public var b_color:Float;
-	
-	public function new(_lineDefs:Array<LineDef>, _angle:Int, _lineID:Int, _direction:Int, _offset:Int) 
+	public function new(_angle:Int, _lineID:Int, _side:Int, _offset:Int) 
 	{
-		r_color = Engine.PLAYPAL.getColor(randswatch, 0, 0, true); 
-		g_color = Engine.PLAYPAL.getColor(randswatch, 1, 0, true); 
-		b_color = Engine.PLAYPAL.getColor(randswatch, 2, 0, true);
-		
 		angle = _angle;
-		lineDef = _lineDefs[_lineID];
-		direction = _direction;
+		lineID = _lineID;
+		side = _side;
 		offset = _offset;
 	}
 	
 	function get_start():Vertex 
 	{
-		return lineDef.start;
+		return Engine.ACTIVEMAP.linedefs[lineID].start;
 	}
+	
 	function get_end():Vertex 
 	{
-		return lineDef.end;
+		return Engine.ACTIVEMAP.linedefs[lineID].end;
 	}
-	function get_frontSector():Sector
+	
+	function get_sector():Sector 
 	{
-		return lineDef.frontSideDef.sector;
-	}
-	function get_backSector():Null<Sector>
-	{
-		if (lineDef.backSideDef != null) {
+		if (side == 0) {
+			return lineDef.frontSideDef.sector;
+		} else {
 			return lineDef.backSideDef.sector;
 		}
-		return null;
+	}
+	
+	function get_lineDef():LineDef 
+	{
+		return Engine.ACTIVEMAP.linedefs[lineID];
 	}
 	
 	public function toString():String {
 		return([
 			'Angle: {' + angle + '}, ',
-			'Direction: {' + direction + '}, ',
+			'Direction: {' + (side == 0 ? '0: Front' : '1: back') + '}, ',
 			'Offset: {' + offset + '}, ',
-			'Sectors: {' + (frontSector == null ? 'Front Sector: $frontSector.tag'  : ' No Front Sector...? ') + ', ' + (backSector == null ? 'Back Sector: $backSector.tag'  : ' No back sector') + '}, ',
-			'Visible to player: {' + visible + '}' 
+			'Sector: {' + sector + '}, '
 		].join(""));
 	}
 }

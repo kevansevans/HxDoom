@@ -117,16 +117,42 @@ class Iwad
 		var _offset = lumpPointers[mapname].listIndex;
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load nodes
+		//Load things
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 7].name != Lump.NODES) {
-			Engine.log("Map data corrupt: Expected Nodes, found: " + directories[_offset + 7].name);
+		if (directories[_offset + 1].name != Lump.THINGS) {
+			Engine.log("Map data corrupt: Expected Things, found: " + directories[_offset + 1].name);
 			return false;
 		}
-		numitems = Std.int(directories[_offset + 7].size / Reader.NODE_LUMP_SIZE);
-		place = directories[_offset + 7].dataOffset;
+		numitems = Std.int(directories[_offset + 1].size / Reader.THING_LUMP_SIZE);
+		place = directories[_offset + 1].dataOffset;
 		for (a in 0...numitems) {
-			_map.nodes[a] = Reader.readNode(data, place + a * Reader.NODE_LUMP_SIZE);
+			_map.things[a] = Reader.readThing(data, place + a * Reader.THING_LUMP_SIZE);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load linedefs
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (directories[_offset + 2].name != Lump.LINEDEFS) {
+			Engine.log("Map data corrupt: Expected Linedefss, found: " + directories[_offset + 2].name);
+			return false;
+		}
+		numitems = Std.int(directories[_offset + 2].size / Reader.LINEDEF_LUMP_SIZE);
+		place = directories[_offset + 2].dataOffset;
+		for (a in 0...numitems) {
+			_map.linedefs[a] = Reader.readLinedef(data, place + a * Reader.LINEDEF_LUMP_SIZE);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load sidedefs
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (directories[_offset + 3].name != Lump.SIDEDEFS) {
+			Engine.log("Map data corrupt: Expected Sidedefs, found: " + directories[_offset + 3].name);
+			return false;
+		}
+		numitems = Std.int(directories[_offset + 3].size / Reader.SIDEDEF_LUMP_SIZE);
+		place = directories[_offset + 3].dataOffset;
+		for (a in 0...numitems) {
+			_map.sidedefs[a] = Reader.readSideDef(data, place + a * Reader.SIDEDEF_LUMP_SIZE);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,16 +169,42 @@ class Iwad
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load things
+		//Load segments
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 1].name != Lump.THINGS) {
-			Engine.log("Map data corrupt: Expected Things, found: " + directories[_offset + 1].name);
+		if (directories[_offset + 5].name != Lump.SEGS) {
+			Engine.log("Map data corrupt: Expected Segments, found: " + directories[_offset + 5].name);
 			return false;
 		}
-		numitems = Std.int(directories[_offset + 1].size / Reader.THING_LUMP_SIZE);
-		place = directories[_offset + 1].dataOffset;
+		numitems = Std.int(directories[_offset + 5].size / Reader.SEG_LUMP_SIZE);
+		place = directories[_offset + 5].dataOffset;
 		for (a in 0...numitems) {
-			_map.things[a] = Reader.readThing(data, place + a * Reader.THING_LUMP_SIZE);
+			_map.segments[a] = Reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load Subsectors
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (directories[_offset + 6].name != Lump.SSECTORS) {
+			Engine.log("Map data corrupt: Expected Subsectors, found: " + directories[_offset + 6].name);
+			return false;
+		}
+		numitems = Std.int(directories[_offset + 6].size / Reader.SSECTOR_LUMP_SIZE);
+		place = directories[_offset + 6].dataOffset;
+		for (a in 0...numitems) {
+			_map.subsectors[a] = Reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		//Load nodes
+		////////////////////////////////////////////////////////////////////////////////////////////////////
+		if (directories[_offset + 7].name != Lump.NODES) {
+			Engine.log("Map data corrupt: Expected Nodes, found: " + directories[_offset + 7].name);
+			return false;
+		}
+		numitems = Std.int(directories[_offset + 7].size / Reader.NODE_LUMP_SIZE);
+		place = directories[_offset + 7].dataOffset;
+		for (a in 0...numitems) {
+			_map.nodes[a] = Reader.readNode(data, place + a * Reader.NODE_LUMP_SIZE);
 		}
 		
 		////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,58 +218,6 @@ class Iwad
 		place = directories[_offset + 8].dataOffset;
 		for (a in 0...numitems) {
 			_map.sectors[a] = Reader.readSector(data, place + a * Reader.SECTOR_LUMP_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load sidedefs
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 3].name != Lump.SIDEDEFS) {
-			Engine.log("Map data corrupt: Expected Sidedefs, found: " + directories[_offset + 3].name);
-			return false;
-		}
-		numitems = Std.int(directories[_offset + 3].size / Reader.SIDEDEF_LUMP_SIZE);
-		place = directories[_offset + 3].dataOffset;
-		for (a in 0...numitems) {
-			_map.sidedefs[a] = Reader.readSideDef(data, place + a * Reader.SIDEDEF_LUMP_SIZE, _map.sectors);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load linedefs
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 2].name != Lump.LINEDEFS) {
-			Engine.log("Map data corrupt: Expected Linedefss, found: " + directories[_offset + 2].name);
-			return false;
-		}
-		numitems = Std.int(directories[_offset + 2].size / Reader.LINEDEF_LUMP_SIZE);
-		place = directories[_offset + 2].dataOffset;
-		for (a in 0...numitems) {
-			_map.linedefs[a] = Reader.readLinedef(data, place + a * Reader.LINEDEF_LUMP_SIZE, _map.vertexes, _map.sidedefs);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load segments
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 5].name != Lump.SEGS) {
-			Engine.log("Map data corrupt: Expected Segments, found: " + directories[_offset + 5].name);
-			return false;
-		}
-		numitems = Std.int(directories[_offset + 5].size / Reader.SEG_LUMP_SIZE);
-		place = directories[_offset + 5].dataOffset;
-		for (a in 0...numitems) {
-			_map.segments[a] = Reader.readSegment(data, place + a * Reader.SEG_LUMP_SIZE, _map.linedefs);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load Subsectors
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 6].name != Lump.SSECTORS) {
-			Engine.log("Map data corrupt: Expected Subsectors, found: " + directories[_offset + 6].name);
-			return false;
-		}
-		numitems = Std.int(directories[_offset + 6].size / Reader.SSECTOR_LUMP_SIZE);
-		place = directories[_offset + 6].dataOffset;
-		for (a in 0...numitems) {
-			_map.subsectors[a] = Reader.readSubSector(data, place + a * Reader.SSECTOR_LUMP_SIZE, _map.segments);
 		}
 		
 		//Map name as stated in WAD, IE E#M#/MAP##

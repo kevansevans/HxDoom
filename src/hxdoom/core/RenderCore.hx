@@ -29,9 +29,6 @@ class RenderCore
 	
 	public function setVisibleSegments(?_subsec:Int) {
 		scanning = true;
-		for (seg in map.segments) {
-			seg.visible = false;
-		}
 		if (_subsec == null) {
 			virtual_screen = new Map();
 			vis_segments = new Array();
@@ -111,14 +108,6 @@ class RenderCore
 				} else {
 					if (segment.lineDef.solid) {
 						virtual_screen[x] = segment;
-					} else {
-						if (segment.frontSector.ceilingHeight == segment.frontSector.floorHeight) {
-							virtual_screen[x] = segment;
-						} else if (segment.backSector != null) {
-							if (segment.backSector.ceilingHeight == segment.backSector.floorHeight) {
-								virtual_screen[x] = segment;
-							}
-						}
 					}
 					if (vis_segments.indexOf(segment) == -1) {
 						vis_segments.push(segment);

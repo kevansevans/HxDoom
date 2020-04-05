@@ -6,16 +6,33 @@ package hxdoom.lumps.map;
  */
 class SubSector 
 {
-	public var segments:Array<Segment>;
-	public var sector:Sector;
-	public function new(_segments:Array<Segment>, _count:Int, _id:Int) 
+	public var count:Int;
+	public var firstSegID:Int;
+	
+	public var sector(get, null):Sector;
+	public var segments(get, null):Array<Segment>;
+	
+	public function new(_count:Int, _firstSegID:Int) 
 	{
-		segments = new Array();
-		for (_seg in _id...(_id + _count)) {
-			segments.push(_segments[_seg]);
-		}
-		sector = segments[0].direction == 0 ? segments[0].frontSector : segments[0].backSector;
+		count = _count;
+		firstSegID = _firstSegID;
+		
 	}
+	
+	function get_sector():Sector 
+	{
+		return Engine.ACTIVEMAP.segments[firstSegID].sector;
+	}
+	
+	function get_segments():Array<Segment> 
+	{
+		var t_segments = new Array();
+		for (_seg in firstSegID...(firstSegID + count)) {
+			t_segments.push(Engine.ACTIVEMAP.segments[_seg]);
+		}
+		return(t_segments);
+	}
+	
 	public function toString():String {
 		return([
 			'Num Segments: ' + segments.length
