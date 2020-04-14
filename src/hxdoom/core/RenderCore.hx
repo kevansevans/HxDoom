@@ -6,6 +6,7 @@ import hxdoom.common.Environment;
 import hxdoom.utils.Angle;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Segment;
+import hxdoom.utils.Camera;
 
 /**
  * ...
@@ -61,23 +62,24 @@ class RenderCore
 	
 	function subsectorVisibilityCheck(_subsector:Int) {
 		
-		var player = map.actors_players[0];
+		var camera:Camera = map.camera;
 		var subsector = map.subsectors[_subsector];
 		
 		if (subsector == null) return;
 		
 		for (segment in subsector.segments) {
 			
-			var start:Angle = player.angleToVertex(segment.start);
-			var end:Angle = player.angleToVertex(segment.end);
+			var start:Angle = camera.angleToVertex(segment.start);
+			var end:Angle = camera.angleToVertex(segment.end);
 			var span:Angle = start - end;
 			
 			if (span > spanlimit) {
 				continue;
 			}
 			
-			start -= player.yaw;
-			end -= player.yaw;
+			
+			start -= camera.yaw;
+			end -= camera.yaw;
 			
 			var half_fov:Float = Environment.PLAYER_FOV / 2;
 			
