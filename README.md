@@ -13,10 +13,10 @@ HxDoom is a Haxe port of id Software's Doom for anyone to use. The goal of this 
 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//Current projects using HxDoom
+//Current frameworks using HxDoom
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ```
-Citrus Doom: https://github.com/kevansevans/CitrusDoom
+Citrus Doom
 * Runs on Lime
 * Playable HTML5 (WebGL) build here: https://kevansevans.github.io/HxDoom/
 
