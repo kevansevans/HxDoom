@@ -3,6 +3,8 @@ package citrus.render.limeGL.programs;
 import haxe.PosInfos;
 import haxe.ds.Vector;
 import hxdoom.lumps.map.SubSector;
+import hxdoom.utils.Camera;
+import hxdoom.utils.CameraPoint;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
@@ -110,12 +112,12 @@ class GLMapGeometry
 		var viewArray = new Float32Array(16);
 		var projArray = new Float32Array(16);
 		
-		var p_subsector = Engine.ACTIVEMAP.getPlayerSubsector();
-		var p_viewheight = p_subsector.sector.floorHeight + 41;
+		var camera:Camera = Engine.ACTIVEMAP.camera;
+		var focus:CameraPoint = Engine.ACTIVEMAP.focus;
 		
 		Mat4Tools.identity(worldArray);
-		Mat4Tools.lookAt(	[Engine.ACTIVEMAP.actors_players[0].xpos, Engine.ACTIVEMAP.actors_players[0].ypos, p_viewheight], 
-							[Engine.ACTIVEMAP.actors_players[0].xpos_look, Engine.ACTIVEMAP.actors_players[0].ypos_look, p_viewheight + Engine.ACTIVEMAP.actors_players[0].zpos_look], 
+		Mat4Tools.lookAt(	[camera.xpos, camera.ypos, camera.zpos], 
+							[focus.x, focus.y, focus.z], 
 							[0, 0, 1], viewArray);
 		Mat4Tools.perspective(45 * (Math.PI / 180), (_winWidth / _winHeight), 0.1, 10000, projArray);
 		
