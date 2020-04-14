@@ -20,7 +20,7 @@ import lime.ui.WindowAttributes;
 import openfl.net.URLRequest;
 import openfl.utils.ByteArray;
 import lime.net.HTTPRequest;
-import render.citrusGL.GLHandler;
+import citrus.render.citrusGL.GLHandler;
 import hxdoom.Engine;
 
 import openfl.display.Stage;

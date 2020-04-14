@@ -1,4 +1,4 @@
-package render.citrusGL.programs;
+package citrus.render.citrusGL.programs;
 
 import haxe.PosInfos;
 import haxe.ds.Vector;
@@ -8,8 +8,8 @@ import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
 import lime.utils.Float32Array;
 import mme.math.glmatrix.Mat4Tools;
-import render.citrusGL.objects.GLWall;
-import render.citrusGL.objects.GLFlat;
+import citrus.render.citrusGL.objects.GLWall;
+import citrus.render.citrusGL.objects.GLFlat;
 
 import hxdoom.Engine;
 import hxdoom.common.Environment;
