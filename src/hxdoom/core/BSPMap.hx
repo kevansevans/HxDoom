@@ -14,7 +14,7 @@ import hxdoom.lumps.map.Vertex;
 import packages.actors.*;
 import packages.wad.maplumps.*;
 import hxdoom.common.Environment;
-import hxdoom.abstracts.Angle;
+import hxdoom.utils.Angle;
 /**
  * ...
  * @author Kaelan

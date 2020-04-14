@@ -3,7 +3,7 @@ package hxdoom.core;
 import haxe.ds.Map;
 import hxdoom.Engine;
 import hxdoom.common.Environment;
-import hxdoom.abstracts.Angle;
+import hxdoom.utils.Angle;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Segment;
 
@@ -26,6 +26,8 @@ class RenderCore
 	}
 	
 	public function initScene() {}
+	
+	public function resize(_width:Int, _height:Int) {}
 	
 	public function setVisibleSegments(?_subsec:Int) {
 		scanning = true;
@@ -74,6 +76,7 @@ class RenderCore
 				continue;
 			}
 			
+			
 			start -= player.angle;
 			end -= player.angle;
 			
@@ -104,7 +107,9 @@ class RenderCore
 				
 			for (x in x_start...(x_end + 1)) {
 				if (virtual_screen[x] != null) {
-					if (segment.lineDef.solid) continue;
+					if (segment.lineDef.solid) {
+						continue;
+					}
 				} else {
 					if (segment.lineDef.solid) {
 						virtual_screen[x] = segment;
@@ -132,11 +137,11 @@ class RenderCore
 	
 	function angleToScreen(_angle:Angle):Int {
 		var x:Int = 0;
-		if (_angle > Environment.PLAYER_FOV) {
-			_angle -= Environment.PLAYER_FOV;
+		if (_angle > (Environment.PLAYER_FOV + 45)) {
+			_angle -= (Environment.PLAYER_FOV + 45);
 			x = Environment.SCREEN_DISTANCE_FROM_VIEWER - Math.round(_angle.toRadians() * (screen_width / 2));
 		} else {
-			_angle = Environment.PLAYER_FOV - _angle.asValue();
+			_angle = (Environment.PLAYER_FOV + 45) - _angle.asValue();
 			x = Math.round(_angle.toRadians() * (screen_width / 2));
 			x += Environment.SCREEN_DISTANCE_FROM_VIEWER;
 		}

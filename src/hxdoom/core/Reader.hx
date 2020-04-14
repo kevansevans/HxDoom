@@ -160,4 +160,9 @@ class Reader
 		}
 		return str;
 	}
+	/*public static inline function getMidi(_data:Array<Int>, _offset:Int, _size:Int) {
+		for (byte in _offset..._offset(_offset + _size)) {
+			
+		}
+	}*/
 }

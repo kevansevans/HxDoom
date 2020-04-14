@@ -4,7 +4,7 @@ import haxe.ds.Map;
 import haxe.PosInfos;
 import haxe.io.Bytes;
 import hxdoom.core.Reader;
-import hxdoom.enums.Lump;
+import hxdoom.utils.Lump;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Segment;

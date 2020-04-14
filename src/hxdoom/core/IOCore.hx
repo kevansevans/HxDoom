@@ -45,6 +45,33 @@ class IOCore
 						
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
 						Environment.PLAYER_TURNING_RIGHT = true;
+						
+					case HXDKeyCode.ONE :
+						Engine.LOADMAP(0);
+						
+					case HXDKeyCode.TWO :
+						Engine.LOADMAP(1);
+						
+					case HXDKeyCode.THREE :
+						Engine.LOADMAP(2);
+						
+					case HXDKeyCode.FOUR :
+						Engine.LOADMAP(3);
+						
+					case HXDKeyCode.FIVE :
+						Engine.LOADMAP(4);
+						
+					case HXDKeyCode.SIX :
+						Engine.LOADMAP(5);
+						
+					case HXDKeyCode.SEVEN :
+						Engine.LOADMAP(6);
+						
+					case HXDKeyCode.EIGHT :
+						Engine.LOADMAP(7);
+						
+					case HXDKeyCode.NINE :
+						Engine.LOADMAP(8);
 				}
 				
 			default :

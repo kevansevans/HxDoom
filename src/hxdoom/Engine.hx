@@ -6,6 +6,7 @@ import hxdoom.common.CheatHandler;
 import hxdoom.core.GameCore;
 import hxdoom.core.IOCore;
 import hxdoom.core.RenderCore;
+import hxdoom.core.SoundCore;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.SubSector;
 
@@ -40,6 +41,9 @@ class Engine
 	public static var RENDER:RenderCore;
 	public static var GAME:GameCore;
 	public static var IO:IOCore;
+	public static var SOUND:SoundCore;
+	
+	public static var LOADMAP:Int -> Void;
 	
 	var mapindex:Int = 0;
 	
@@ -54,6 +58,8 @@ class Engine
 		IO = new IOCore();
 		
 		CHEATS = new CheatHandler();
+		
+		LOADMAP = loadMap;
 	}
 	
 	public function loadMap(_index:Int) {
@@ -74,14 +80,14 @@ class Engine
 		
 		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
 		
-		if (isIwad) {
+		//if (isIwad) {
 			if (BASEIWAD == null) {
 				IWADS[_name] = new Iwad(_data, _name);
 				BASEIWAD = _name;
 			}
-		} else {
+		//} else {
 			
-		}
+		//}
 	}
 	
 	

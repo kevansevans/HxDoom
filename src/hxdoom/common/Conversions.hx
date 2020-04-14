@@ -1,6 +1,6 @@
 package hxdoom.common;
 
-import hxdoom.enums.Level;
+import hxdoom.utils.Level;
 
 /**
  * ...

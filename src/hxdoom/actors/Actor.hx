@@ -1,9 +1,10 @@
 package hxdoom.actors;
 
-import hxdoom.abstracts.Angle;
+import hxdoom.utils.Angle;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.common.Environment;
+import hxdoom.Engine;
 
 /**
  * ...
@@ -15,6 +16,7 @@ class Actor
 {
 	public var xpos:Float;
 	public var ypos:Float;
+	public var zpos(get, null):Float;
 	public var xpos_look(get, null):Float;
 	public var ypos_look(get, null):Float;
 	public var zpos_look(get, null):Float;
@@ -111,10 +113,16 @@ class Actor
 		return ypos + 5 * Math.sin(angle.toRadians());
 	}
 	
+	function get_zpos():Float
+	{
+		var node = Engine.ACTIVEMAP.getPlayerNode();
+		var height = Engine.ACTIVEMAP.subsectors[node].sector.floorHeight + 42;
+		return height;
+	}
+	
 	function set_pitch(value:Angle):Angle 
 	{
 		return pitch = value;
-		trace(pitch);
 	}
 	
 }

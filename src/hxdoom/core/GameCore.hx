@@ -42,16 +42,16 @@ class GameCore
 			
 			case IN_GAME:
 				if (Environment.PLAYER_MOVING_FORWARD) {
-					Engine.ACTIVEMAP.actors_players[0].move(5);
+					Engine.ACTIVEMAP.actors_players[0].move(8);
 				}
 				if (Environment.PLAYER_MOVING_BACKWARD) {
-					Engine.ACTIVEMAP.actors_players[0].move(-5);
+					Engine.ACTIVEMAP.actors_players[0].move(-8);
 				}
 				if (Environment.PLAYER_TURNING_LEFT) {
-					Engine.ACTIVEMAP.actors_players[0].angle += 1;
+					Engine.ACTIVEMAP.actors_players[0].angle += 2;
 				}
 				if (Environment.PLAYER_TURNING_RIGHT) {
-					Engine.ACTIVEMAP.actors_players[0].angle -= 1;
+					Engine.ACTIVEMAP.actors_players[0].angle -= 2;
 				}
 				
 			case START_MENU :
