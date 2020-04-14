@@ -1,6 +1,9 @@
 package hxdoom.core;
 
+import cpp.Callable;
 import haxe.Timer;
+import hxdoom.utils.Camera;
+import hxdoom.utils.CameraPoint;
 
 import hxdoom.Engine;
 import hxdoom.common.Environment;
@@ -38,6 +41,10 @@ class GameCore
 	}
 	
 	public function tick() {
+		
+		var camera:Camera = Engine.ACTIVEMAP.camera;
+		var focus:CameraPoint = Engine.ACTIVEMAP.focus;
+		
 		switch (STATE) {
 			
 			case IN_GAME:
@@ -48,11 +55,15 @@ class GameCore
 					Engine.ACTIVEMAP.actors_players[0].move(-8);
 				}
 				if (Environment.PLAYER_TURNING_LEFT) {
-					Engine.ACTIVEMAP.actors_players[0].angle += 2;
+					Engine.ACTIVEMAP.actors_players[0].yaw += 2;
 				}
 				if (Environment.PLAYER_TURNING_RIGHT) {
-					Engine.ACTIVEMAP.actors_players[0].angle -= 2;
+					Engine.ACTIVEMAP.actors_players[0].yaw -= 2;
 				}
+				
+				focus.x = camera.xpos + 5 * Math.cos(camera.actorToFollow.yaw.toRadians());
+				focus.y = camera.ypos + 5 * Math.sin(camera.actorToFollow.yaw.toRadians());
+				focus.z = camera.zpos + 5 * Math.sin(camera.actorToFollow.pitch.toRadians());
 				
 			case START_MENU :
 				

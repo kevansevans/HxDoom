@@ -17,11 +17,14 @@ class Actor
 	public var xpos:Float;
 	public var ypos:Float;
 	public var zpos(get, null):Float;
-	public var xpos_look(get, null):Float;
-	public var ypos_look(get, null):Float;
-	public var zpos_look(get, null):Float;
-	public var pitch(default, set):Angle;
-	public var angle:Angle;
+	public var zpos_flight:Float;
+	public var zpos_eyeheight:Float;
+	public var zpos_view(get, null):Float;
+	
+	public var pitch:Angle;
+	public var yaw:Angle;
+	public var roll:Angle;
+	
 	public var type:TypeID;
 	public var flags:Int;
 	
@@ -33,7 +36,7 @@ class Actor
 	{
 		xpos = _thing.xpos;
 		ypos = _thing.ypos;
-		angle = _thing.angle;
+		yaw = _thing.angle;
 		flags = _thing.flags;
 		type = _thing.type;
 		pitch = 0;
@@ -47,8 +50,8 @@ class Actor
 	}
 	
 	public function move(_value:Float) {
-		xpos += _value * Math.cos(angle.toRadians());
-		ypos += _value * Math.sin(angle.toRadians());
+		xpos += _value * Math.cos(yaw.toRadians());
+		ypos += _value * Math.sin(yaw.toRadians());
 	}
 	
 	//getters
@@ -98,31 +101,14 @@ class Actor
 		}
 	}
 	
-	function get_zpos_look():Float 
+	function get_zpos_view():Float 
 	{
-		return 5 * Math.sin(pitch.toRadians());
-	}
-	
-	function get_xpos_look():Float 
-	{
-		return xpos + 5  * Math.cos(angle.toRadians());
-	}
-	
-	function get_ypos_look():Float 
-	{
-		return ypos + 5 * Math.sin(angle.toRadians());
+		return zpos + zpos_eyeheight;
 	}
 	
 	function get_zpos():Float
 	{
-		var node = Engine.ACTIVEMAP.getPlayerNode();
-		var height = Engine.ACTIVEMAP.subsectors[node].sector.floorHeight + 42;
-		return height;
-	}
-	
-	function set_pitch(value:Angle):Angle 
-	{
-		return pitch = value;
+		return Engine.ACTIVEMAP.getActorSubsector(this).sector.floorHeight;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package hxdoom.core;
 
 import haxe.ds.Vector;
+import hxdoom.actors.Actor;
 import hxdoom.actors.Player;
 import hxdoom.actors.TypeID;
 import hxdoom.lumps.map.LineDef;
@@ -11,6 +12,8 @@ import hxdoom.lumps.map.SideDef;
 import hxdoom.lumps.map.SubSector;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
+import hxdoom.utils.Camera;
+import hxdoom.utils.CameraPoint;
 import packages.actors.*;
 import packages.wad.maplumps.*;
 import hxdoom.common.Environment;
@@ -37,6 +40,9 @@ class BSPMap
 	
 	public var actors_players:Array<Player>;
 	
+	public var camera:Camera;
+	public var focus:CameraPoint;
+	
 	public function new() 
 	{
 		things = new Array();
@@ -53,6 +59,9 @@ class BSPMap
 		parseThings();
 		setOffset();
 		buildNodes(nodes.length - 1);
+		
+		camera = new Camera(actors_players[0]);
+		focus = new CameraPoint();
 	}
 	
 	public function parseThings() {
@@ -65,34 +74,17 @@ class BSPMap
 		}
 	}
 	
-	public function getPlayerSubsector():SubSector {
+	
+	public function getActorSubsector(_actor:Actor):SubSector {
 		var node:Int = nodes.length - 1;
 		while (true) {
 			if (node & Node.SUBSECTORIDENTIFIER > 0) {
 				return subsectors[node & (~Node.SUBSECTORIDENTIFIER)];
 			}
-			var isOnBack:Bool = isPointOnBackSide(actors_players[0].xpos, actors_players[0].ypos, node);
+			var isOnBack:Bool = isPointOnBackSide(_actor.xpos, _actor.ypos, node);
 			if (isOnBack) {
 				node = nodes[node].backChildID;
 			} else {
-				node = nodes[node].frontChildID;
-			}
-		}
-	}
-	
-	public function getPlayerNode():Int {
-		var node:Int = nodes.length - 1;
-		while (true) {
-			var isOnBack:Bool = isPointOnBackSide(actors_players[0].xpos, actors_players[0].ypos, node);
-			if (isOnBack) {
-				if (nodes[node].backChildID & Node.SUBSECTORIDENTIFIER > 0) {
-					return node;
-				}
-				node = nodes[node].backChildID;
-			} else {
-				if (nodes[node].frontChildID & Node.SUBSECTORIDENTIFIER > 0) {
-					return node;
-				}
 				node = nodes[node].frontChildID;
 			}
 		}

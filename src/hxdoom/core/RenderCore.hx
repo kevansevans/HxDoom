@@ -76,9 +76,8 @@ class RenderCore
 				continue;
 			}
 			
-			
-			start -= player.angle;
-			end -= player.angle;
+			start -= player.yaw;
+			end -= player.yaw;
 			
 			var half_fov:Float = Environment.PLAYER_FOV / 2;
 			
