@@ -7,6 +7,10 @@ import hxdoom.actors.Actor;
  */
 class CameraPoint 
 {
+	/*
+	 * This @:isVars are only here because haxe for some reason would not let me leave these as getters AND
+	 * write to them. So we've got useless setter functions bloating my source. Ew.
+	 */
 	@:isVar public var x(get, set):Float;
 	@:isVar public var y(get, set):Float;
 	@:isVar public var z(get, set):Float;
