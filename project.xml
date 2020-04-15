@@ -18,4 +18,6 @@
 	<!--Set default icon, then overide with supported targets -->
 	<icon path="assets/icon.png"/>
 	
+	<!--<haxeflag name="-dce full" /> -->
+	
 </project>
