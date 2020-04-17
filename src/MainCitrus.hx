@@ -78,8 +78,16 @@ class MainCitrus extends Application
 		 */
 		//build_ui();
 		
+		#if sys
 		getwads();
 		launchGame(File.getBytes(env_path + "/DOOM1.WAD"));
+		#else
+		var wadbytes = Assets.loadBytes("IWADS/DOOM1.WAD");
+		wadbytes.onComplete(function(data:Bytes):Bytes {
+			launchGame(data);
+			return data;
+		});
+		#end
 	}
 	
 	var root_vbox:HBox = new HBox();
@@ -112,6 +120,7 @@ class MainCitrus extends Application
 		iwad_selector = new DropDown();
 		leftbox.addComponent(iwad_selector);
 		
+		#if sys
 		grabwads = new Button();
 		grabwads.text = "Update Wad List";
 		grabwads.onClick = function(e:UIEvent) {
@@ -119,6 +128,7 @@ class MainCitrus extends Application
 			download_wads();
 		}
 		leftbox.addComponent(grabwads);
+		#end
 		
 		iwad_selector.disabled = true;
 		iwad_selector.width = 150;
@@ -127,9 +137,13 @@ class MainCitrus extends Application
 		leftbox.addComponent(launch_button);
 		launch_button.text = "Launch";
 		launch_button.onClick = function(e:UIEvent) {
+			#if sys
 			var env = Sys.environment();
 			var wad = File.getBytes(env["DOOMWADDIR"] + "/" + iwad_selector.value);
 			launchGame(wad);
+			#else
+			//launchGame(Assets.getBytes("IWADS/DOOM1.WAD"));
+			#end
 		}
 	}
 	
