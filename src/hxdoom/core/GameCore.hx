@@ -48,16 +48,16 @@ class GameCore
 		switch (STATE) {
 			
 			case IN_GAME:
-				if (Environment.PLAYER_MOVING_FORWARD) {
+				if (CVarCore.getCvar(EnvName.PLAYER_MOVING_FORWARD)) {
 					Engine.ACTIVEMAP.actors_players[0].move(8);
 				}
-				if (Environment.PLAYER_MOVING_BACKWARD) {
+				if (CVarCore.getCvar(EnvName.PLAYER_MOVING_BACKWARD)) {
 					Engine.ACTIVEMAP.actors_players[0].move(-8);
 				}
-				if (Environment.PLAYER_TURNING_LEFT) {
+				if (CVarCore.getCvar(EnvName.PLAYER_TURNING_LEFT)) {
 					Engine.ACTIVEMAP.actors_players[0].yaw += 2;
 				}
-				if (Environment.PLAYER_TURNING_RIGHT) {
+				if (CVarCore.getCvar(EnvName.PLAYER_TURNING_RIGHT)) {
 					Engine.ACTIVEMAP.actors_players[0].yaw -= 2;
 				}
 				

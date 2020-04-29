@@ -32,19 +32,19 @@ class IOCore
 				
 				switch(_keyCode) {
 					case HXDKeyCode.TAB : 
-						Environment.IS_IN_AUTOMAP = !Environment.IS_IN_AUTOMAP;
+						CVarCore.setCVar(EnvName.AUTOMAP_MODE, !CVarCore.getCvar(EnvName.AUTOMAP_MODE));
 						
 					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
-						Environment.PLAYER_MOVING_FORWARD = true;
+						CVarCore.setCVar(EnvName.PLAYER_MOVING_FORWARD, true);
 						
 					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
-						Environment.PLAYER_MOVING_BACKWARD = true;
+						CVarCore.setCVar(EnvName.PLAYER_MOVING_BACKWARD, true);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
-						Environment.PLAYER_TURNING_LEFT = true;
+						CVarCore.setCVar(EnvName.PLAYER_TURNING_LEFT, true);
 						
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
-						Environment.PLAYER_TURNING_RIGHT = true;
+						CVarCore.setCVar(EnvName.PLAYER_TURNING_RIGHT, true);
 						
 					case HXDKeyCode.ONE :
 						Engine.LOADMAP(0);
@@ -87,16 +87,16 @@ class IOCore
 				
 				switch(_keyCode) {
 					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
-						Environment.PLAYER_MOVING_FORWARD = false;
+						CVarCore.setCVar(EnvName.PLAYER_MOVING_FORWARD, false);
 						
 					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
-						Environment.PLAYER_MOVING_BACKWARD = false;
+						CVarCore.setCVar(EnvName.PLAYER_MOVING_BACKWARD, false);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
-						Environment.PLAYER_TURNING_LEFT = false;
+						CVarCore.setCVar(EnvName.PLAYER_TURNING_LEFT, false);
 						
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
-						Environment.PLAYER_TURNING_RIGHT = false;
+						CVarCore.setCVar(EnvName.PLAYER_TURNING_RIGHT, false);
 				}
 				
 			default :

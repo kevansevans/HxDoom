@@ -69,6 +69,8 @@ class RenderCore
 		
 		for (segment in subsector.segments) {
 			
+			var p_fov = CVarCore.getCvar(EnvName.PLAYER_FOV);
+			
 			var start:Angle = camera.angleToVertex(segment.start);
 			var end:Angle = camera.angleToVertex(segment.end);
 			var span:Angle = start - end;
@@ -81,11 +83,11 @@ class RenderCore
 			start -= camera.yaw;
 			end -= camera.yaw;
 			
-			var half_fov:Float = Environment.PLAYER_FOV / 2;
+			var half_fov:Float = p_fov / 2;
 			
 			var start_moved:Angle = start + half_fov;
 			
-			if (start_moved > Environment.PLAYER_FOV) {
+			if (start_moved > p_fov) {
 				if (start_moved > span) {
 					continue;
 				}
@@ -93,15 +95,15 @@ class RenderCore
 			}
 			var end_moved:Angle = half_fov - Std.int(end);
 				
-			if (end_moved >  Environment.PLAYER_FOV) {
+			if (end_moved >  p_fov) {
 				end = -half_fov;
 			}
 				
-			start += Environment.PLAYER_FOV;
-			end += Environment.PLAYER_FOV;
+			start += p_fov;
+			end += p_fov;
 				
-			var x_start:Int = angleToScreen(start);
-			var x_end:Int = angleToScreen(end);
+			var x_start:Int = angleToScreen(start, p_fov);
+			var x_end:Int = angleToScreen(end, p_fov);
 				
 			x_start = Std.int(Math.max(0, x_start));
 			x_end = Std.int(Math.min(screen_width + 1, x_end));
@@ -136,15 +138,15 @@ class RenderCore
 		}
 	}
 	
-	function angleToScreen(_angle:Angle):Int {
+	function angleToScreen(_angle:Angle, _fov:Int):Int {
 		var x:Int = 0;
-		if (_angle > (Environment.PLAYER_FOV + 45)) {
-			_angle -= (Environment.PLAYER_FOV + 45);
-			x = Environment.SCREEN_DISTANCE_FROM_VIEWER - Math.round(_angle.toRadians() * (screen_width / 2));
+		if (_angle > (_fov + 45)) {
+			_angle -= (_fov + 45);
+			x = Std.int(CVarCore.getCvar(EnvName.SCREEN_DISTANCE_FROM_VIEWER) - Math.round(_angle.toRadians() * (screen_width / 2)));
 		} else {
-			_angle = (Environment.PLAYER_FOV + 45) - _angle.asValue();
+			_angle = (_fov + 45) - _angle.asValue();
 			x = Math.round(_angle.toRadians() * (screen_width / 2));
-			x += Environment.SCREEN_DISTANCE_FROM_VIEWER;
+			x += CVarCore.getCvar(EnvName.SCREEN_DISTANCE_FROM_VIEWER);
 		}
 		return x;
 	}

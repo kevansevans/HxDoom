@@ -60,6 +60,8 @@ class Engine
 		CHEATS = new CheatHandler();
 		
 		LOADMAP = loadMap;
+		
+		setDefaultCVARS();
 	}
 	
 	public function loadMap(_index:Int) {
@@ -90,6 +92,23 @@ class Engine
 		//}
 	}
 	
+	function setDefaultCVARS() 
+	{
+		CVarCore.setNewCVar(EnvName.AUTOMAP_MODE, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.AUTOMAP_ZOOM, CVarType.CFloat, 0.001);
+		CVarCore.setNewCVar(EnvName.CHEAT_DEGREELESS, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.CHEAT_TRUEGOD, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.CHEAT_NOCLIP, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.PLAYER_FOV, CVarType.CInt, 90);
+		CVarCore.setNewCVar(EnvName.PLAYER_MOVING_FORWARD, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.PLAYER_MOVING_BACKWARD, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.PLAYER_STRAFING_LEFT, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.PLAYER_STRAFING_RIGHT, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.PLAYER_TURNING_LEFT, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.PLAYER_TURNING_RIGHT, CVarType.CBool, false);
+		CVarCore.setNewCVar(EnvName.PLAYER_VIEW_HEIGHT, CVarType.CInt, 41);
+		CVarCore.setNewCVar(EnvName.SCREEN_DISTANCE_FROM_VIEWER, CVarType.CInt, 160);
+	}
 	
 	public static inline function log(_msg:String) {
 		trace(_msg);

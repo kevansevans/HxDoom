@@ -15,8 +15,8 @@ class GameActions
 		Engine.log("y: " + Engine.ACTIVEMAP.actors_players[0].ypos);
 	}
 	static public function cheat_degreeless() {
-		Environment.CHEAT_INVULNERABILITY = !Environment.CHEAT_INVULNERABILITY;
-		switch (Environment.CHEAT_INVULNERABILITY) {
+		CVarCore.setCVar(EnvName.CHEAT_DEGREELESS, !CVarCore.getCvar(EnvName.CHEAT_DEGREELESS));
+		switch (CVarCore.getCvar(EnvName.CHEAT_DEGREELESS)) {
 			case true :
 				trace("Degreeless mode on");
 			case false :
@@ -24,8 +24,8 @@ class GameActions
 		}
 	}
 	static public function cheat_clipping() {
-		Environment.CHEAT_CLIPPING = !Environment.CHEAT_CLIPPING;
-		switch (Environment.CHEAT_CLIPPING) {
+		CVarCore.setCVar(EnvName.CHEAT_NOCLIP, !CVarCore.getCvar(EnvName.CHEAT_NOCLIP));
+		switch (CVarCore.getCvar(EnvName.CHEAT_NOCLIP)) {
 			case true :
 				trace("Noclip on");
 			case false :
