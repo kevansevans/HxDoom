@@ -36,35 +36,59 @@ class CVarCore
 		}
 	}
 	public static function setCVar(_name:String, _value:Any) {
-		if (CVarMap[_name] == null) Engine.log('Set: CVar Namespace "$_name" does not exist');
+		if (CVarMap[_name] == null) Engine.log('Set error: CVar Namespace "$_name" does not exist');
 		else {
-			CVarMap[_name].value = _value;
+			switch (CVarMap[_name].type) {
+				case CInt :
+					if (Std.is(_value, Int)) CVarMap[_name].value = _value;
+					else if (Std.is(_value, Float)) CVarMap[_name].value = Std.int(_value);
+					else if (Std.is(_value, String)) {
+						if (Std.parseInt(_value) == null) Engine.log('Set error: CVar Namespace "$_name" expects an Integer');
+						else CVarMap[_name].value = Std.parseInt(_value);
+					}
+					else if (Std.is(_value, Bool)) Engine.log('Set error: CVar Namespace "$_name" expects an Integer');
+				case CFloat :
+					if (Std.is(_value, Int) || Std.is(_value, Float)) CVarMap[_name].value = _value;
+					else if (Std.is(_value, String)) {
+						if (Math.isNaN(Std.parseFloat(_value))) Engine.log('Set error: CVar Namespace "$_name" expects a Float');
+						else CVarMap[_name].value = Std.parseFloat(_value);
+					}
+					else if (Std.is(_value, Bool)) Engine.log('Set error: CVar Namespace "$_name" expects a Float');
+				case CBool :
+					if (!Std.is(_value, Bool)) Engine.log('Set error: CVar Namespace "$_name" expects a Boolean');
+					else CVarMap[_name].value = _value;
+				case CString :
+					CVarMap[_name].value = "" + _value;
+			}
 			if (CVarMap[_name].onSet != null) CVarMap[_name].onSet();
 		}
 	}
 	public static function getCvar(_name:String):Dynamic {
 		if (CVarMap[_name] == null) {
-			Engine.log('Get: CVar Namespace "$_name" does not exist');
+			Engine.log('Get error: CVar Namespace "$_name" does not exist');
 			return null;
 		} else {
 			switch (CVarMap[_name].type) {
 				case CInt :
-					if (Type.typeof(CVarMap[_name].value) != Type.ValueType.TInt) {
+					if (!Std.is(CVarMap[_name].value, Int)) {
 						return 0;
 					} else {
 						return CVarMap[_name].value;
 					}
 				case CFloat :
-					if (Type.typeof(CVarMap[_name].value) != Type.ValueType.TFloat) {
+					if (!Std.is(CVarMap[_name].value, Float)) {
 						return 0;
 					} else {
 						return CVarMap[_name].value;
 					}
 				case CString :
-					trace(Type.typeof(CVarMap[_name].value));
-					return "";
+					if (!Std.is(CVarMap[_name].value, String)) {
+						return "";
+					} else {
+						return CVarMap[_name].value;
+					}
 				case CBool :
-					if (Type.typeof(CVarMap[_name].value) != Type.ValueType.TBool) {
+					if (!Std.is(CVarMap[_name].value, Bool)) {
 						return false;
 					} else {
 						return CVarMap[_name].value;
