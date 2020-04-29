@@ -66,7 +66,7 @@ class MainCitrus extends Application
 	{
 		super.onWindowCreate();
 		
-		window.frameRate = 30;
+		window.frameRate = 35;
 		
 		window.width = 640;
 		window.height = 480;
