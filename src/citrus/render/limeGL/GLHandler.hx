@@ -46,7 +46,7 @@ class GLHandler extends RenderCore
 	}
 	
 	override public function resize(_width:Int, _height:Int) {
-		gl.viewport(0, 0, window.width, window.height);
+		gl.viewport(0, 0, _width, _height);
 		screen_width = window.width;
 	}
 	
@@ -63,7 +63,11 @@ class GLHandler extends RenderCore
 		//remove color buffer bit to allow HOM effect.
 		gl.clear (gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 		
-		if (Environment.IS_IN_AUTOMAP) {
+		#if js
+		resize(window.width, window.height);
+		#end
+		
+		if (CVarCore.getCvar(EnvName.AUTOMAP_MODE)) {
 			
 			gl.clearColor (0x6c / 255, 0x54 / 255, 0x40 / 255, 1);
 			programAutoMap.render(window.width, window.height);

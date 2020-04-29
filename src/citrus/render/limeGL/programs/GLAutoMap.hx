@@ -88,14 +88,16 @@ class GLAutoMap
 		automapMatrix4.identity();
 		
 		gl.useProgram(program);
+		
+		var mapzoom:Float = CVarCore.getCvar(EnvName.AUTOMAP_ZOOM);
 			
 		automapMatrix4.appendTranslation( -Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
-		if (Environment.AUTOMAP_ROTATES_WITH_PLAYER) automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].yaw - 90, new Vector4(0, 0, -1, 1));
-		automapMatrix4.appendScale(Environment.AUTOMAP_ZOOM, (Environment.AUTOMAP_ZOOM * (_winWidth / _winHeight)), 1);
+		//if (Environment.AUTOMAP_ROTATES_WITH_PLAYER) automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].yaw - 90, new Vector4(0, 0, -1, 1));
+		automapMatrix4.appendScale(mapzoom, (mapzoom * (_winWidth / _winHeight)), 1);
 		
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_POSITION"), false, automapFloat32);
 			
-		gl.lineWidth(1 / (2 / Environment.AUTOMAP_ZOOM));
+		gl.lineWidth(1 / (2 / mapzoom));
 		gl.drawArrays(gl.LINES, 0, Std.int(map_lineverts.length / 6));
 	}
 	
@@ -125,8 +127,6 @@ class GLAutoMap
 			
 			++itemCount;
 		}
-		
-		Environment.NEEDS_TO_REBUILD_AUTOMAP = false;
 	}
 	
 	public static var vertex_source:String = [

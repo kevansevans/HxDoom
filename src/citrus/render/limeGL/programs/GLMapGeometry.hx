@@ -69,8 +69,7 @@ class GLMapGeometry
 		safeToRender = false;
 		
 		walls = new Map();
-		var mapSegments = Engine.ACTIVEMAP.segments;
-		
+		var mapSegments = Engine.ACTIVEMAP.segments;	
 		for (seg in mapSegments) {
 			
 			if (seg.lineDef.solid) {
@@ -119,7 +118,7 @@ class GLMapGeometry
 		Mat4Tools.lookAt(	[camera.xpos, camera.ypos, camera.zpos], 
 							[focus.x, focus.y, focus.z], 
 							[0, 0, 1], viewArray);
-		Mat4Tools.perspective(45 * (Math.PI / 180), (_winWidth / _winHeight), 0.1, 10000, projArray);
+		Mat4Tools.perspective(45 * (Math.PI / 180), (320 / 200), 0.1, 10000, projArray);
 		
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_World"), false, worldArray);
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_View"), false, viewArray);
