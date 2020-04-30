@@ -2,17 +2,13 @@ package hxdoom;
 import haxe.Timer;
 import haxe.io.Bytes;
 import haxe.ds.Map;
-import hxdoom.common.CheatHandler;
-import hxdoom.core.GameCore;
-import hxdoom.core.IOCore;
-import hxdoom.core.RenderCore;
-import hxdoom.core.SoundCore;
+import hxdoom.utils.enums.CVarType;
+
+import hxdoom.utils.enums.Defaults;
+import hxdoom.core.*;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.SubSector;
-
-import hxdoom.core.BSPMap;
 import hxdoom.lumps.Iwad;
-import hxdoom.common.Environment;
 
 /**
  * ...
@@ -24,7 +20,7 @@ class Engine
 	public static var IWADS:Map<String, Iwad>;
 	public static var BASEIWAD:Null<String>;
 	
-	public static var CHEATS:CheatHandler;
+	public static var CHEATS:CheatCore;
 	
 	/*
 	 * these vars are the accumulated data that's supplies to the engine. Using a Map<String, [type]> format,
@@ -57,7 +53,7 @@ class Engine
 		GAME = new GameCore();
 		IO = new IOCore();
 		
-		CHEATS = new CheatHandler();
+		CHEATS = new CheatCore();
 		
 		LOADMAP = loadMap;
 		
@@ -94,20 +90,20 @@ class Engine
 	
 	function setDefaultCVARS() 
 	{
-		CVarCore.setNewCVar(EnvName.AUTOMAP_MODE, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.AUTOMAP_ZOOM, CVarType.CFloat, 0.001);
-		CVarCore.setNewCVar(EnvName.CHEAT_DEGREELESS, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.CHEAT_TRUEGOD, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.CHEAT_NOCLIP, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.PLAYER_FOV, CVarType.CInt, 90);
-		CVarCore.setNewCVar(EnvName.PLAYER_MOVING_FORWARD, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.PLAYER_MOVING_BACKWARD, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.PLAYER_STRAFING_LEFT, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.PLAYER_STRAFING_RIGHT, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.PLAYER_TURNING_LEFT, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.PLAYER_TURNING_RIGHT, CVarType.CBool, false);
-		CVarCore.setNewCVar(EnvName.PLAYER_VIEW_HEIGHT, CVarType.CInt, 41);
-		CVarCore.setNewCVar(EnvName.SCREEN_DISTANCE_FROM_VIEWER, CVarType.CInt, 160);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.AUTOMAP_MODE, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.AUTOMAP_ZOOM, hxdoom.utils.enums.CVarType.CFloat, 0.001);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.CHEAT_DEGREELESS, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.CHEAT_TRUEGOD, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.CHEAT_NOCLIP, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_FOV, hxdoom.utils.enums.CVarType.CInt, 90);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_MOVING_FORWARD, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_MOVING_BACKWARD, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_STRAFING_LEFT, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_STRAFING_RIGHT, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_TURNING_LEFT, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_TURNING_RIGHT, hxdoom.utils.enums.CVarType.CBool, false);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_VIEW_HEIGHT, hxdoom.utils.enums.CVarType.CInt, 41);
+		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.SCREEN_DISTANCE_FROM_VIEWER, hxdoom.utils.enums.CVarType.CInt, 160);
 	}
 	
 	public static inline function log(_msg:String) {

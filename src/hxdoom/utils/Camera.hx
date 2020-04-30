@@ -2,6 +2,7 @@ package hxdoom.utils;
 
 import hxdoom.actors.Actor;
 import hxdoom.lumps.map.Vertex;
+import hxdoom.utils.geom.Angle;
 
 /**
  * ...

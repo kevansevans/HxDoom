@@ -1,4 +1,4 @@
-package hxdoom.utils;
+package hxdoom.utils.enums;
 
 /**
  * Enum of Vanilla map ID's

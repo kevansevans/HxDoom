@@ -1,8 +1,8 @@
 package hxdoom.core;
 
-import hxdoom.common.Environment;
-import hxdoom.common.CheatHandler;
+import hxdoom.core.CheatCore;
 import hxdoom.core.GameCore;
+import hxdoom.utils.enums.Defaults;
 
 /**
  * ...
@@ -32,19 +32,19 @@ class IOCore
 				
 				switch(_keyCode) {
 					case HXDKeyCode.TAB : 
-						CVarCore.setCVar(EnvName.AUTOMAP_MODE, !CVarCore.getCvar(EnvName.AUTOMAP_MODE));
+						CVarCore.setCVar(Defaults.AUTOMAP_MODE, !CVarCore.getCvar(Defaults.AUTOMAP_MODE));
 						
 					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
-						CVarCore.setCVar(EnvName.PLAYER_MOVING_FORWARD, true);
+						CVarCore.setCVar(Defaults.PLAYER_MOVING_FORWARD, true);
 						
 					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
-						CVarCore.setCVar(EnvName.PLAYER_MOVING_BACKWARD, true);
+						CVarCore.setCVar(Defaults.PLAYER_MOVING_BACKWARD, true);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
-						CVarCore.setCVar(EnvName.PLAYER_TURNING_LEFT, true);
+						CVarCore.setCVar(Defaults.PLAYER_TURNING_LEFT, true);
 						
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
-						CVarCore.setCVar(EnvName.PLAYER_TURNING_RIGHT, true);
+						CVarCore.setCVar(Defaults.PLAYER_TURNING_RIGHT, true);
 						
 					case HXDKeyCode.ONE :
 						Engine.LOADMAP(0);
@@ -87,16 +87,16 @@ class IOCore
 				
 				switch(_keyCode) {
 					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
-						CVarCore.setCVar(EnvName.PLAYER_MOVING_FORWARD, false);
+						CVarCore.setCVar(Defaults.PLAYER_MOVING_FORWARD, false);
 						
 					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
-						CVarCore.setCVar(EnvName.PLAYER_MOVING_BACKWARD, false);
+						CVarCore.setCVar(Defaults.PLAYER_MOVING_BACKWARD, false);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
-						CVarCore.setCVar(EnvName.PLAYER_TURNING_LEFT, false);
+						CVarCore.setCVar(Defaults.PLAYER_TURNING_LEFT, false);
 						
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
-						CVarCore.setCVar(EnvName.PLAYER_TURNING_RIGHT, false);
+						CVarCore.setCVar(Defaults.PLAYER_TURNING_RIGHT, false);
 				}
 				
 			default :

@@ -1,12 +1,14 @@
 package hxdoom.core;
 
 import haxe.ds.Map;
+
 import hxdoom.Engine;
-import hxdoom.common.Environment;
-import hxdoom.utils.Angle;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Segment;
+import hxdoom.lumps.map.SubSector;
 import hxdoom.utils.Camera;
+import hxdoom.utils.enums.Defaults;
+import hxdoom.utils.geom.Angle;
 
 /**
  * ...
@@ -16,6 +18,8 @@ class RenderCore
 {
 	public var virtual_screen:Map<Int, Segment>;
 	public var vis_segments:Array<Segment>;
+	public var vis_subsecs:Array<SubSector>;
+	public var vis_floors:Array<Segment>;
 	public var map(get, never):BSPMap;
 	public var screen_width(default, set):Int = 320;
 	public var spanlimit:Angle = 180;
@@ -35,6 +39,7 @@ class RenderCore
 		if (_subsec == null) {
 			virtual_screen = new Map();
 			vis_segments = new Array();
+			vis_subsecs = new Array();
 			recursiveNodeTraversalVisibility(map.nodes.length -1);
 		} else {
 			subsectorVisibilityCheck(_subsec);
@@ -69,7 +74,7 @@ class RenderCore
 		
 		for (segment in subsector.segments) {
 			
-			var p_fov = CVarCore.getCvar(EnvName.PLAYER_FOV);
+			var p_fov = CVarCore.getCvar(Defaults.PLAYER_FOV);
 			
 			var start:Angle = camera.angleToVertex(segment.start);
 			var end:Angle = camera.angleToVertex(segment.end);
@@ -142,11 +147,11 @@ class RenderCore
 		var x:Int = 0;
 		if (_angle > (_fov + 45)) {
 			_angle -= (_fov + 45);
-			x = Std.int(CVarCore.getCvar(EnvName.SCREEN_DISTANCE_FROM_VIEWER) - Math.round(_angle.toRadians() * (screen_width / 2)));
+			x = Std.int(CVarCore.getCvar(Defaults.SCREEN_DISTANCE_FROM_VIEWER) - Math.round(_angle.toRadians() * (screen_width / 2)));
 		} else {
 			_angle = (_fov + 45) - _angle.asValue();
 			x = Math.round(_angle.toRadians() * (screen_width / 2));
-			x += CVarCore.getCvar(EnvName.SCREEN_DISTANCE_FROM_VIEWER);
+			x += CVarCore.getCvar(Defaults.SCREEN_DISTANCE_FROM_VIEWER);
 		}
 		return x;
 	}

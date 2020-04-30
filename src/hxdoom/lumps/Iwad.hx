@@ -4,7 +4,7 @@ import haxe.ds.Map;
 import haxe.PosInfos;
 import haxe.io.Bytes;
 import hxdoom.core.Reader;
-import hxdoom.utils.Lump;
+import hxdoom.utils.enums.Lump;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Segment;
@@ -12,7 +12,6 @@ import hxdoom.lumps.map.Vertex;
 import hxdoom.lumps.map.Thing;
 
 import hxdoom.common.Conversions;
-import hxdoom.common.Environment;
 
 import hxdoom.lumps.Directory;
 import hxdoom.core.BSPMap;
@@ -119,7 +118,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load things
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 1].name != Lump.THINGS) {
+		if (directories[_offset + 1].name != hxdoom.utils.enums.Lump.THINGS) {
 			Engine.log("Map data corrupt: Expected Things, found: " + directories[_offset + 1].name);
 			return false;
 		}
@@ -132,7 +131,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load linedefs
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 2].name != Lump.LINEDEFS) {
+		if (directories[_offset + 2].name != hxdoom.utils.enums.Lump.LINEDEFS) {
 			Engine.log("Map data corrupt: Expected Linedefss, found: " + directories[_offset + 2].name);
 			return false;
 		}
@@ -145,7 +144,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load sidedefs
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 3].name != Lump.SIDEDEFS) {
+		if (directories[_offset + 3].name != hxdoom.utils.enums.Lump.SIDEDEFS) {
 			Engine.log("Map data corrupt: Expected Sidedefs, found: " + directories[_offset + 3].name);
 			return false;
 		}
@@ -158,7 +157,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load vertexes
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 4].name != Lump.VERTEXES) {
+		if (directories[_offset + 4].name != hxdoom.utils.enums.Lump.VERTEXES) {
 			Engine.log("Map data corrupt: Expected Vertexes, found: " + directories[_offset + 4].name);
 			return false;
 		}
@@ -171,7 +170,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load segments
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 5].name != Lump.SEGS) {
+		if (directories[_offset + 5].name != hxdoom.utils.enums.Lump.SEGS) {
 			Engine.log("Map data corrupt: Expected Segments, found: " + directories[_offset + 5].name);
 			return false;
 		}
@@ -184,7 +183,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load Subsectors
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 6].name != Lump.SSECTORS) {
+		if (directories[_offset + 6].name != hxdoom.utils.enums.Lump.SSECTORS) {
 			Engine.log("Map data corrupt: Expected Subsectors, found: " + directories[_offset + 6].name);
 			return false;
 		}
@@ -197,7 +196,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load nodes
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 7].name != Lump.NODES) {
+		if (directories[_offset + 7].name != hxdoom.utils.enums.Lump.NODES) {
 			Engine.log("Map data corrupt: Expected Nodes, found: " + directories[_offset + 7].name);
 			return false;
 		}
@@ -210,7 +209,7 @@ class Iwad
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load sectors
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directories[_offset + 8].name != Lump.SECTORS) {
+		if (directories[_offset + 8].name != hxdoom.utils.enums.Lump.SECTORS) {
 			Engine.log("Map data corrupt: Expected Sectors, found: " + directories[_offset + 8].name);
 			return false;
 		}

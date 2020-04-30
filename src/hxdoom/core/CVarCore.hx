@@ -1,4 +1,5 @@
 package hxdoom.core;
+import hxdoom.utils.enums.CVarType;
 
 /**
  * ...
@@ -6,18 +7,11 @@ package hxdoom.core;
  */
 typedef CVar = {
 	var name : String;
-	var type : CVarType;
+	var type : hxdoom.utils.enums.CVarType;
 	var value : Any;
 	@:optional var onSet : Void -> Void;
 }
 
-enum CVarType {
-	CInt;
-	CFloat;
-	CString;
-	CBool;
-}
- 
 class CVarCore
 {
 	static var CVarMap:Map<String, CVar> = new Map();
@@ -27,7 +21,7 @@ class CVarCore
 		
 	}
 	
-	public static inline function setNewCVar(_name:String, _type:CVarType, _value:Any, ?_onSet:Void -> Void) {
+	public static inline function setNewCVar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void) {
 		CVarMap[_name] = {
 			name : _name,
 			type : _type,

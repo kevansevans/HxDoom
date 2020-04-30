@@ -1,4 +1,4 @@
-package hxdoom.common;
+package hxdoom.core;
 import haxe.ds.Vector;
 
 #if macro
@@ -15,7 +15,7 @@ import hxdoom.common.GameActions;
  * ...
  * @author Kaelan
  */
-class CheatHandler 
+class CheatCore 
 {
 	var keylogger:Array<String>;
 	

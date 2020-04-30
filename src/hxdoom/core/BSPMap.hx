@@ -16,8 +16,7 @@ import hxdoom.utils.Camera;
 import hxdoom.utils.CameraPoint;
 import packages.actors.*;
 import packages.wad.maplumps.*;
-import hxdoom.common.Environment;
-import hxdoom.utils.Angle;
+import hxdoom.utils.geom.Angle;
 /**
  * ...
  * @author Kaelan
