@@ -27,7 +27,6 @@ import openfl.display.Stage;
 
 import haxe.io.Bytes;
 import lime.ui.KeyCode;
-import hxdoom.common.Environment;
 
 
 #if sys

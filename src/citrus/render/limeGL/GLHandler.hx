@@ -1,6 +1,5 @@
 package citrus.render.limeGL;
 
-import hxdoom.core.RenderCore;
 import lime.graphics.RenderContext;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
@@ -10,12 +9,14 @@ import lime.ui.Window;
 import lime.utils.Float32Array;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLShader;
-import citrus.render.limeGL.programs.GLMapGeometry;
 
+import citrus.render.limeGL.programs.GLMapGeometry;
 import citrus.render.limeGL.programs.GLAutoMap;
 
 import hxdoom.Engine;
-import hxdoom.common.Environment;
+import hxdoom.core.CVarCore;
+import hxdoom.core.RenderCore;
+import hxdoom.utils.enums.Defaults;
 
 /**
  * ...
@@ -67,7 +68,7 @@ class GLHandler extends RenderCore
 		resize(window.width, window.height);
 		#end
 		
-		if (CVarCore.getCvar(EnvName.AUTOMAP_MODE)) {
+		if (CVarCore.getCvar(Defaults.AUTOMAP_MODE)) {
 			
 			gl.clearColor (0x6c / 255, 0x54 / 255, 0x40 / 255, 1);
 			programAutoMap.render(window.width, window.height);

@@ -8,7 +8,8 @@ import lime.math.Vector4;
 import lime.utils.Float32Array;
 
 import hxdoom.Engine;
-import hxdoom.common.Environment;
+import hxdoom.core.CVarCore;
+import hxdoom.utils.enums.Defaults;
 
 /**
  * ...
@@ -89,7 +90,7 @@ class GLAutoMap
 		
 		gl.useProgram(program);
 		
-		var mapzoom:Float = CVarCore.getCvar(EnvName.AUTOMAP_ZOOM);
+		var mapzoom:Float = CVarCore.getCvar(Defaults.AUTOMAP_ZOOM);
 			
 		automapMatrix4.appendTranslation( -Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
 		//if (Environment.AUTOMAP_ROTATES_WITH_PLAYER) automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].yaw - 90, new Vector4(0, 0, -1, 1));
