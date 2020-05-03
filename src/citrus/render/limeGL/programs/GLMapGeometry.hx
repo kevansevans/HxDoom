@@ -34,7 +34,7 @@ class GLMapGeometry
 	var fragment_shader:GLShader;
 	
 	var walls:Map<Segment, Vector<GLWall>>;
-	var flats:Map<SubSector, Vector<GLFlat>>;
+	var flats:Map<Sector, Vector<GLFlat>>;
 	
 	var safeToRender:Bool = false;
 	
@@ -69,16 +69,18 @@ class GLMapGeometry
 	}
 	
 	public function buildMapGeometry() {
+		
 		safeToRender = false;
 		
 		walls = new Map();
+		flats = new Map();
+		
 		var mapSegments = Engine.ACTIVEMAP.segments;	
 		for (seg in mapSegments) {
 			
 			if (seg.lineDef.solid) {
 				walls[seg] = new Vector(1);
 				walls[seg][0] = new GLWall(gl, seg, SideType.SOLID);
-				continue;
 			} else {
 				walls[seg] = new Vector(6);
 				
@@ -92,19 +94,25 @@ class GLMapGeometry
 				walls[seg][4] = new GLWall(gl, seg, SideType.BACK_MIDDLE);
 				walls[seg][5] = new GLWall(gl, seg, SideType.BACK_TOP);
 			}
+			
+			if (flats[seg.sector] == null) {
+				flats[seg.sector] = new Vector(2);
+				flats[seg.sector][0] = new GLFlat(gl, FLOOR);
+				flats[seg.sector][1] = new GLFlat(gl, CEILING);
+			}
+			
+			flats[seg.sector][0].addSegment(seg);
+			flats[seg.sector][1].addSegment(seg);
 		}
 		
-		flats = new Map();
-		var mapSubsectors = Engine.ACTIVEMAP.subsectors;
-		
-		for (subsec in mapSubsectors) {
-			flats[subsec] = new Vector(2);
-			flats[subsec][0] = new GLFlat(gl, subsec, FlatType.FLOOR);
-			flats[subsec][1] = new GLFlat(gl, subsec, FlatType.FLOOR);
+		for (flat in flats) {
+			flat[0].buildShells();
+			flat[1].buildShells();
 		}
 		
 		safeToRender = true;
 	}
+	
 	
 	public function render(_winWidth:Int, _winHeight:Int) {
 		
@@ -137,7 +145,7 @@ class GLMapGeometry
 		
 		for (flat in flats) {
 			flat[0].render(program);
-			flat[1].render(program);
+			//flat[1].render(program);
 		}
 	}
 	

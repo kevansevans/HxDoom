@@ -9,62 +9,141 @@ import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.utils.Float32Array;
 
+/**
+ * ...
+ * @author Kaelan
+ */
+
 enum FlatType {
 	FLOOR;
 	CEILING;
 }
 
-/**
- * ...
- * @author Kaelan
- */
+typedef VertexPair = {
+	var start : Vertex;
+	var end : Vertex;
+	@:optional var next : VertexPair;
+	@:optional var prev : VertexPair;
+}
+
 class GLFlat 
 {
 	var gl:WebGLRenderContext;
 	var planeheight:Int = 0;
-	var subsector:SubSector;
 	var plane_vertexes:Array<Float>;
 	var type:FlatType;
 	var texturename:String;
+	var segments:Array<Segment>;
+	var vertpairs:Array<VertexPair>;
 	
-	public function new(_context:WebGLRenderContext, _subsector:SubSector, _type:FlatType) 
+	var r_redcolor:Float;
+	var r_grncolor:Float;
+	var r_blucolor:Float;
+	
+	public function new(_context:WebGLRenderContext, _type:FlatType) 
 	{
 		gl = _context;
-		subsector = _subsector;
 		type = _type;
 		
-		buildPlane();
+		segments = new Array();
+		vertpairs = new Array();
+		
+		r_redcolor = Math.random();
+		r_grncolor = Math.random();
+		r_blucolor = Math.random();
 	}
-	function buildPlane() {
+	
+	public function addSegment(_segment:Segment) {
+		segments.push(_segment);
+	}
+	
+	public function buildShells() {
 		
-		plane_vertexes = new Array();
-		
-		var segs:Array<Segment> = new Array();
-		for (seg in subsector.firstSegID...(subsector.count + subsector.firstSegID)) {
-			segs.push(Engine.ACTIVEMAP.segments[seg]);
+		//build vertex pairs
+		for (segment in segments) {
+			switch (segment.side) {
+				case 0:
+					var vertpair = {
+						start : segment.start,
+						end : segment.end
+					}
+					vertpairs.push(vertpair);
+				case 1 :
+					var vertpair = {
+						start : segment.end,
+						end : segment.start
+					}
+					vertpairs.push(vertpair);
+			}
 		}
 		
-		switch (type) {
-			case FLOOR :
-				//segs.reverse();
-				planeheight = subsector.sector.floorHeight;
-				texturename = subsector.sector.floorTexture;
-			case CEILING :
-				planeheight = subsector.sector.ceilingHeight;
-				texturename = subsector.sector.ceilingTexture;
-			default :
-				trace("What in the god damn hell did you do to accomplish this!?");
+		//create an elaborate game of connect the dots
+		for (pair_a in vertpairs) {
+			
+			if (pair_a.next != null && pair_a.prev != null) continue;
+			
+			for (pair_b in vertpairs) {
+				if (pair_a.next == null) {
+					if (pair_a.end == pair_b.start) {
+						pair_a.next = pair_b;
+						pair_b.prev = pair_a;
+					}
+				}
+				if (pair_a.prev == null) {
+					if (pair_a.start == pair_b.end) {
+						pair_a.prev = pair_b;
+						pair_b.next = pair_a;
+					}
+				}
+			}
 		}
 		
-		return;
+		/*
+		 * Remove any pairs that do not connect to another line.
+		 * MAP30 of Doom 2 is a good example, there's a stray segment in the bottom right of the map
+		 * if one end is null, we follow back until we get to the other broken end and close that loop.
+		 */
+		for (pair in vertpairs) {
+			if (pair.next == null && pair.prev == null) {
+				vertpairs.remove(pair);
+			}
+			/*to do: loop closing*/
+			if (pair.next == null) {
+				trace("Uh oh!");
+			}
+			if (pair.prev == null) {
+				trace("Spaghettio!");
+			}
+			
+			if (pair.prev == pair || pair.next == pair) {
+				trace("Oh now you really dun goofed");
+			}
+		}
 		
+		//play the elaborate game of connect the dots
+		var shells:Array<Array<Vertex>> = new Array();
+		var index:Int = 0;
+		var startpair:VertexPair = vertpairs[0];
+		var workpair:VertexPair = startpair.next;
+		
+		shells[index] = new Array();
+		shells[index].push(startpair.start);
+		shells[index].push(startpair.end);
+		
+		/*while (true) {
+			
+		}*/
+	}
+	
+	function earClip(_shells:Array<Array<Vertex>>) {
+		var temp_vertexes:Array<Vertex> = new Array();
 	}
 	
 	public function render(_program:GLProgram) {
 		
-		return;
-		
 		if (texturename == "-") return;
+		if (plane_vertexes == null) return;
+		if (plane_vertexes.length == 0) return;
 		
 		switch (type) {
 			case FLOOR :
