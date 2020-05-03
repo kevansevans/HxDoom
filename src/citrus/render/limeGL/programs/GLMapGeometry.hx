@@ -2,21 +2,24 @@ package citrus.render.limeGL.programs;
 
 import haxe.PosInfos;
 import haxe.ds.Vector;
-import hxdoom.lumps.map.SubSector;
-import hxdoom.utils.Camera;
-import hxdoom.utils.CameraPoint;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
 import lime.utils.Float32Array;
+
 import mme.math.glmatrix.Mat4Tools;
+
 import citrus.render.limeGL.objects.GLWall;
 import citrus.render.limeGL.objects.GLFlat;
 
 import hxdoom.Engine;
-import hxdoom.common.Environment;
-import hxdoom.utils.Angle;
+import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Segment;
+import hxdoom.lumps.map.SubSector;
+import hxdoom.lumps.map.Sector;
+import hxdoom.utils.geom.Angle;
+import hxdoom.utils.Camera;
+import hxdoom.utils.CameraPoint;
 
 /**
  * ...
