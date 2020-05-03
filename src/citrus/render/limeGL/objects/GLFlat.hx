@@ -59,6 +59,13 @@ class GLFlat
 	
 	public function buildShells() {
 		
+		switch (type) {
+			case FLOOR :
+				planeheight = segments[0].sector.floorHeight;
+			case CEILING :
+				planeheight = segments[0].sector.ceilingHeight;
+		}
+		
 		//build vertex pairs
 		for (segment in segments) {
 			switch (segment.side) {
@@ -147,10 +154,10 @@ class GLFlat
 		
 		switch (type) {
 			case FLOOR :
-				if (planeheight > Engine.ACTIVEMAP.actors_players[0].zpos) return;
+				if (planeheight > Engine.ACTIVEMAP.actors_players[0].zpos + 41) return;
 				
 			case CEILING :
-				if (planeheight > Engine.ACTIVEMAP.actors_players[0].zpos) return;
+				if (planeheight < Engine.ACTIVEMAP.actors_players[0].zpos + 41) return;
 		}
 		
 		var loadedLineBuffer = gl.createBuffer();
