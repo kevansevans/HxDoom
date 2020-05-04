@@ -145,7 +145,7 @@ class GLMapGeometry
 		
 		for (flat in flats) {
 			flat[0].render(program);
-			//flat[1].render(program);
+			flat[1].render(program);
 		}
 	}
 	

@@ -220,12 +220,29 @@ class GLFlat
 	}
 	
 	function earClip(_shells:Array<Array<Vertex>>) {
-		var temp_vertexes:Array<Vertex> = new Array();
+		
+		plane_vertexes = new Array();
+		
+		for (vert in _shells[0]) {
+			plane_vertexes.push(vert.xpos);
+			plane_vertexes.push(vert.ypos);
+			switch (type) {
+				case FLOOR :
+					plane_vertexes.push(segments[0].sector.floorHeight);
+				case CEILING :
+					plane_vertexes.push(segments[0].sector.ceilingHeight);
+			}
+			
+			plane_vertexes.push(r_redcolor);
+			plane_vertexes.push(r_grncolor);
+			plane_vertexes.push(r_blucolor);
+			plane_vertexes.push(1.0);
+		}
 	}
 	
 	public function render(_program:GLProgram) {
 		
-		if (texturename == "-") return;
+		if (texturename == "-" || texturename == "F_SKY1") return;
 		if (plane_vertexes == null) return;
 		if (plane_vertexes.length == 0) return;
 		
@@ -266,6 +283,6 @@ class GLFlat
 		gl.useProgram(_program);
 		
 		if (plane_vertexes == null) return;
-		gl.drawArrays(gl.TRIANGLE_FAN, 0, Std.int(plane_vertexes.length / 7));
+		gl.drawArrays(gl.TRIANGLES, 0, Std.int(plane_vertexes.length / 7));
 	}
 }
