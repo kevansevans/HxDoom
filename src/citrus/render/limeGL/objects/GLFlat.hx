@@ -165,9 +165,9 @@ class GLFlat
 					for (pair in startpair.next) {
 						if (pair.end.xpos < mostleft) {
 							mostleft = pair.end.xpos;
-							startpair.next.remove(pair);
 							workpair = pair;
 						}
+						startpair.next.remove(workpair);
 					}
 				}
 			}
@@ -180,12 +180,13 @@ class GLFlat
 				kill_list.push(workpair);
 				if (workpair.next.length > 1) {
 					var mostleft:Float = Math.POSITIVE_INFINITY;
+					var prevpair = workpair;
 					for (pair in workpair.next) {
 						if (pair.end.xpos < mostleft) {
 							mostleft = pair.end.xpos;
-							workpair.next.remove(pair);
 							workpair = pair;
 						}
+						prevpair.next.remove(workpair);
 					}
 				} else {
 					workpair = workpair.next[0];
