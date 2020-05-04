@@ -35,6 +35,7 @@ class GLMapGeometry
 	
 	var walls:Map<Segment, Vector<GLWall>>;
 	var flats:Map<Sector, Vector<GLFlat>>;
+	var visflats:Array<Vector<GLFlat>>;
 	
 	var safeToRender:Bool = false;
 	
@@ -136,16 +137,18 @@ class GLMapGeometry
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_Proj"), false, projArray);
 		
 		var lastseg:Null<Segment> = null;
+		visflats = new Array();
 		for (vis_seg in Engine.RENDER.vis_segments) {
 			for (plane in walls[vis_seg]) {
 				if (plane == null) continue;
 				plane.render(program);
+				if (visflats.indexOf(flats[vis_seg.sector]) == -1) {
+					visflats.push(flats[vis_seg.sector]);
+					for (flat in flats[vis_seg.sector]) {
+						flat.render(program);
+					}
+				}
 			}
-		}
-		
-		for (flat in flats) {
-			flat[0].render(program);
-			flat[1].render(program);
 		}
 	}
 	
