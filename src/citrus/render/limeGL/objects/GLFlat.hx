@@ -20,10 +20,12 @@ enum FlatType {
 }
 
 typedef VertexPair = {
+	var seg_id : Int;
 	var start : Vertex;
 	var end : Vertex;
-	@:optional var next : VertexPair;
-	@:optional var prev : VertexPair;
+	@:optional var next : Array<VertexPair>;
+	//Prev pair is only needed to isolate lines that do not go anywhere. See MAP30 of DOOOM2.WAD
+	@:optional var prev : Array<VertexPair>;
 }
 
 class GLFlat 
@@ -71,14 +73,24 @@ class GLFlat
 			switch (segment.side) {
 				case 0:
 					var vertpair = {
+						seg_id : segment.lineID,
 						start : segment.start,
 						end : segment.end
+					}
+					//avoid duplicates that cause endless loop
+					for (pair in vertpairs) {
+						if (pair.seg_id == vertpair.seg_id) return;
 					}
 					vertpairs.push(vertpair);
 				case 1 :
 					var vertpair = {
+						seg_id : segment.lineID,
 						start : segment.end,
 						end : segment.start
+					}
+					//avoid duplicates that cause endless loop
+					for (pair in vertpairs) {
+						if (pair.seg_id == vertpair.seg_id) return;
 					}
 					vertpairs.push(vertpair);
 			}
@@ -87,20 +99,22 @@ class GLFlat
 		//create an elaborate game of connect the dots
 		for (pair_a in vertpairs) {
 			
-			if (pair_a.next != null && pair_a.prev != null) continue;
-			
 			for (pair_b in vertpairs) {
-				if (pair_a.next == null) {
-					if (pair_a.end == pair_b.start) {
-						pair_a.next = pair_b;
-						pair_b.prev = pair_a;
-					}
+				
+				//avoid indexing the same segments if by some sheer coincidence that happens
+				if (pair_a == pair_b) continue;
+				
+				if (pair_a.end == pair_b.start) {
+					if (pair_a.next == null) pair_a.next = new Array();
+					pair_a.next.push(pair_b);
+					if (pair_b.prev == null) pair_b.prev = new Array();
+					pair_b.prev.push(pair_a);
 				}
-				if (pair_a.prev == null) {
-					if (pair_a.start == pair_b.end) {
-						pair_a.prev = pair_b;
-						pair_b.next = pair_a;
-					}
+				if (pair_a.start == pair_b.end) {
+					if (pair_a.prev == null) pair_a.prev = new Array();
+					pair_a.prev.push(pair_b);
+					if (pair_b.next == null) pair_b.next = new Array();
+					pair_b.next.push(pair_a);
 				}
 			}
 		}
@@ -121,25 +135,88 @@ class GLFlat
 			if (pair.prev == null) {
 				trace("Spaghettio!");
 			}
+		}
+		
+		/*
+		 * Play Elaborate game of connect the dots
+		 */
+		
+		var shells:Array<Array<Vertex>> = new Array();
+		var shell_index:Int = 0;
+		var startpair = vertpairs[0];
+		var workpair = vertpairs[0];
+		var loopclosed:Bool = false;
+		var kill_list:Array<VertexPair> = new Array();
+		
+		shells[0] = new Array();
+		shells[0].push(startpair.start);
+		shells[0].push(startpair.end);
+		
+		kill_list.push(startpair);
+		
+		while (true) {
 			
-			if (pair.prev == pair || pair.next == pair) {
-				trace("Oh now you really dun goofed");
+			if (workpair == startpair) {
+				if (startpair.next.length == 1) {
+					workpair = startpair.next[0];
+				} else {
+					var mostleft:Float = Math.POSITIVE_INFINITY;
+					for (pair in startpair.next) {
+						if (pair.end.xpos < mostleft) {
+							mostleft = pair.end.xpos;
+							startpair.next.remove(pair);
+							workpair = pair;
+						}
+					}
+				}
+			}
+			
+			if (workpair.end == startpair.start) {
+				kill_list.push(workpair);
+				loopclosed = true;
+			} else {
+				shells[shell_index].push(workpair.end);
+				kill_list.push(workpair);
+				if (workpair.next.length > 1) {
+					var mostleft:Float = Math.POSITIVE_INFINITY;
+					for (pair in workpair.next) {
+						if (pair.end.xpos < mostleft) {
+							mostleft = pair.end.xpos;
+							workpair.next.remove(pair);
+							workpair = pair;
+						}
+					}
+				} else {
+					workpair = workpair.next[0];
+				}
+			}
+			
+			if (loopclosed) {
+				
+				for (pair in kill_list) {
+					
+					vertpairs.remove(pair);
+					
+				}
+				
+				kill_list = new Array();
+				
+				if (vertpairs.length <= 2) {
+					
+					break;
+					
+				} else {
+					
+					loopclosed = false;
+					shell_index += 1;
+					shells[shell_index] = new Array();
+					startpair = vertpairs[0];
+					workpair = vertpairs[0];
+				}
 			}
 		}
 		
-		//play the elaborate game of connect the dots
-		var shells:Array<Array<Vertex>> = new Array();
-		var index:Int = 0;
-		var startpair:VertexPair = vertpairs[0];
-		var workpair:VertexPair = startpair.next;
-		
-		shells[index] = new Array();
-		shells[index].push(startpair.start);
-		shells[index].push(startpair.end);
-		
-		/*while (true) {
-			
-		}*/
+		earClip(shells);
 	}
 	
 	function earClip(_shells:Array<Array<Vertex>>) {
