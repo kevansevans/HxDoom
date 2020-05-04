@@ -115,11 +115,9 @@ class RenderCore
 				
 			for (x in x_start...(x_end + 1)) {
 				if (virtual_screen[x] != null) {
-					if (segment.lineDef.solid) {
-						continue;
-					}
+					continue;
 				} else {
-					if (segment.lineDef.solid) {
+					if (segment.lineDef.solid || segment.sector.ceilingHeight <= segment.sector.floorHeight) {
 						virtual_screen[x] = segment;
 					}
 					if (vis_segments.indexOf(segment) == -1) {
