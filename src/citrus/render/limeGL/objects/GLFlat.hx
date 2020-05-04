@@ -158,6 +158,7 @@ class GLFlat
 			
 			if (workpair == startpair) {
 				if (startpair.next.length == 1) {
+					kill_list.push(startpair);
 					workpair = startpair.next[0];
 				} else {
 					var mostleft:Float = Math.POSITIVE_INFINITY;
