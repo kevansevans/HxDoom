@@ -203,7 +203,7 @@ class GLFlat
 				
 				kill_list = new Array();
 				
-				if (vertpairs.length <= 2) {
+				if (vertpairs.length == 0) {
 					
 					break;
 					
