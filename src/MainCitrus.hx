@@ -383,8 +383,8 @@ class MainCitrus extends Application
 		//removeModule(entryway);
 		//entryway = null;
 		hxdoom = new Engine();
-		hxdoom.loadWad(_wadbytes, "DOOM1.WAD");
-		hxdoom.loadMap(0);
+		hxdoom.addWad(_wadbytes, "DOOM1.WAD");
+		hxdoom.loadMap("E1M1");
 	}
 	
 	override public function onWindowResize(width:Int, height:Int):Void 
