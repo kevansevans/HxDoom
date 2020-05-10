@@ -225,36 +225,26 @@ class GLFlat
 		
 		plane_vertexes = new Array();
 		
-		for (vert in _shells[0]) {
-			plane_vertexes.push(vert.xpos);
-			plane_vertexes.push(vert.ypos);
-			switch (type) {
-				case FLOOR :
-					plane_vertexes.push(segments[0].sector.floorHeight);
-				case CEILING :
-					plane_vertexes.push(segments[0].sector.ceilingHeight);
+		for (shell in _shells) {
+			for (vert in shell) {
+				plane_vertexes.push(vert.xpos);
+				plane_vertexes.push(vert.ypos);
+				switch (type) {
+					case FLOOR :
+						plane_vertexes.push(segments[0].sector.floorHeight);
+					case CEILING :
+						plane_vertexes.push(segments[0].sector.ceilingHeight);
+				}
+				
+				plane_vertexes.push(r_redcolor);
+				plane_vertexes.push(r_grncolor);
+				plane_vertexes.push(r_blucolor);
+				plane_vertexes.push(1.0);
 			}
-			
-			plane_vertexes.push(r_redcolor);
-			plane_vertexes.push(r_grncolor);
-			plane_vertexes.push(r_blucolor);
-			plane_vertexes.push(1.0);
 		}
 	}
 	
 	public function render(_program:GLProgram) {
-		
-		if (texturename == "-" || texturename == "F_SKY1") return;
-		if (plane_vertexes == null) return;
-		if (plane_vertexes.length == 0) return;
-		
-		switch (type) {
-			case FLOOR :
-				if (planeheight > Engine.ACTIVEMAP.actors_players[0].zpos + 41) return;
-				
-			case CEILING :
-				if (planeheight < Engine.ACTIVEMAP.actors_players[0].zpos + 41) return;
-		}
 		
 		var loadedLineBuffer = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, loadedLineBuffer);
@@ -285,6 +275,6 @@ class GLFlat
 		gl.useProgram(_program);
 		
 		if (plane_vertexes == null) return;
-		gl.drawArrays(gl.TRIANGLES, 0, Std.int(plane_vertexes.length / 7));
+		gl.drawArrays(gl.LINE_LOOP, 0, Std.int(plane_vertexes.length / 7));
 	}
 }
