@@ -1,6 +1,7 @@
 package citrus.render.limeGL.programs;
 
 import haxe.PosInfos;
+import haxe.ds.Map;
 import haxe.ds.Vector;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
@@ -11,6 +12,7 @@ import mme.math.glmatrix.Mat4Tools;
 
 import citrus.render.limeGL.objects.GLWall;
 import citrus.render.limeGL.objects.GLFlat;
+import citrus.render.limeGL.objects.GLDodecahedron;
 
 import hxdoom.Engine;
 import hxdoom.lumps.map.Node;
@@ -20,6 +22,7 @@ import hxdoom.lumps.map.Sector;
 import hxdoom.utils.geom.Angle;
 import hxdoom.utils.Camera;
 import hxdoom.utils.CameraPoint;
+import hxdoom.actors.Actor;
 
 /**
  * ...
@@ -36,6 +39,7 @@ class GLMapGeometry
 	var walls:Map<Segment, Vector<GLWall>>;
 	var flats:Map<Sector, Vector<GLFlat>>;
 	var visflats:Array<Vector<GLFlat>>;
+	var actors:Map<Actor, GLDodecahedron>;
 	
 	var safeToRender:Bool = false;
 	
@@ -75,6 +79,7 @@ class GLMapGeometry
 		
 		walls = new Map();
 		flats = new Map();
+		actors = new Map();
 		
 		var mapSegments = Engine.ACTIVEMAP.segments;	
 		for (seg in mapSegments) {
@@ -109,6 +114,10 @@ class GLMapGeometry
 		for (flat in flats) {
 			flat[0].buildShells();
 			flat[1].buildShells();
+		}
+		
+		for (actor in Engine.ACTIVEMAP.actors) {
+			actors[actor] = new GLDodecahedron(gl, actor);
 		}
 		
 		safeToRender = true;
@@ -149,6 +158,10 @@ class GLMapGeometry
 					}
 				}
 			}
+		}
+		
+		for (thing in actors) {
+			thing.render(program);
 		}
 	}
 	
