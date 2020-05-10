@@ -26,6 +26,7 @@ class BSPMap
 	public var name:String;
 	
 	public var things:Array<Thing>;
+	public var actors:Array<Actor>;
 	public var vertexes:Array<Vertex>;
 	public var linedefs:Array<LineDef>;
 	public var nodes:Array<Node>;
@@ -45,6 +46,7 @@ class BSPMap
 	public function new() 
 	{
 		things = new Array();
+		actors = new Array();
 		vertexes = new Array();
 		linedefs = new Array();
 		nodes = new Array();
@@ -66,6 +68,7 @@ class BSPMap
 	public function parseThings() {
 		actors_players = new Array();
 		for (thing in things) {
+			actors.push(new Actor(thing));
 			switch (thing.type) {
 				case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR:
 					actors_players.push(new Player(thing));
