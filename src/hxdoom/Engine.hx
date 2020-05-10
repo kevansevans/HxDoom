@@ -90,20 +90,20 @@ class Engine
 	
 	function setDefaultCVARS() 
 	{
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.AUTOMAP_MODE, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.AUTOMAP_ZOOM, hxdoom.utils.enums.CVarType.CFloat, 0.001);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.CHEAT_DEGREELESS, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.CHEAT_TRUEGOD, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.CHEAT_NOCLIP, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_FOV, hxdoom.utils.enums.CVarType.CInt, 90);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_MOVING_FORWARD, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_MOVING_BACKWARD, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_STRAFING_LEFT, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_STRAFING_RIGHT, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_TURNING_LEFT, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_TURNING_RIGHT, hxdoom.utils.enums.CVarType.CBool, false);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.PLAYER_VIEW_HEIGHT, hxdoom.utils.enums.CVarType.CInt, 41);
-		CVarCore.setNewCVar(hxdoom.utils.enums.Defaults.SCREEN_DISTANCE_FROM_VIEWER, hxdoom.utils.enums.CVarType.CInt, 160);
+		CVarCore.setNewCVar(Defaults.AUTOMAP_MODE, 					CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.AUTOMAP_ZOOM, 					CVarType.CFloat, 0.001);
+		CVarCore.setNewCVar(Defaults.CHEAT_DEGREELESS, 				CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.CHEAT_TRUEGOD, 				CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.CHEAT_NOCLIP, 					CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.PLAYER_FOV, 					CVarType.CInt, 90);
+		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_FORWARD, 		CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_BACKWARD, 		CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.PLAYER_STRAFING_LEFT, 			CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.PLAYER_STRAFING_RIGHT, 		CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.PLAYER_TURNING_LEFT, 			CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.PLAYER_TURNING_RIGHT, 			CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.PLAYER_VIEW_HEIGHT, 			CVarType.CInt, 41);
+		CVarCore.setNewCVar(Defaults.SCREEN_DISTANCE_FROM_VIEWER, 	CVarType.CInt, 160);
 	}
 	
 	public static inline function log(_msg:String) {
