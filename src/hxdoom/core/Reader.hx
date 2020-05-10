@@ -27,11 +27,13 @@ class Reader
 	
 	public function new() { }
 	
-	public static inline function readDirectory(_data:Array<Int>, _offset:Int):Directory {
+	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String, _index:Int):Directory {
 		return new Directory(
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
-			getStringFromRange(_data, _offset + 0x08, _offset + 0x10)
+			getStringFromRange(_data, _offset + 0x08, _offset + 0x10),
+			_wadname,
+			_index
 		);
 	}
 	

@@ -6,9 +6,7 @@ import hxdoom.utils.enums.CVarType;
 
 import hxdoom.utils.enums.Defaults;
 import hxdoom.core.*;
-import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.SubSector;
-import hxdoom.lumps.Iwad;
 
 /**
  * ...
@@ -17,20 +15,14 @@ import hxdoom.lumps.Iwad;
 
 class Engine 
 {
-	public static var IWADS:Map<String, Iwad>;
-	public static var BASEIWAD:Null<String>;
-	
-	public static var CHEATS:CheatCore;
-	
 	/*
 	 * these vars are the accumulated data that's supplies to the engine. Using a Map<String, [type]> format,
 	 * this allows it to mimic the same style of namespace overriding all opther sourceports use, at the same
 	 * time allowing new assets to occupy their own name space.
 	 */
-	public static var WADLIST:Map<String, Iwad>;
-	public static var MAPLIST:Map<String, BSPMap>;
-	public static var MAPALIAS:Array<String>;
-	public static var PLAYPAL:Playpal;
+	
+	public static var CHEATS:CheatCore;
+	public static var WADDATA:WadCore;
 	
 	public static var ACTIVEMAP:BSPMap;
 	
@@ -39,17 +31,13 @@ class Engine
 	public static var IO:IOCore;
 	public static var SOUND:SoundCore;
 	
-	public static var LOADMAP:Int -> Void;
+	public static var LOADMAP:String -> Void;
 	
 	var mapindex:Int = 0;
 	
 	public function new() 
 	{
-		IWADS = new Map();
-		WADLIST = new Map();
-		MAPLIST = new Map();
-		MAPALIAS = new Array();
-		
+		WADDATA = new WadCore();
 		GAME = new GameCore();
 		IO = new IOCore();
 		
@@ -60,32 +48,22 @@ class Engine
 		setDefaultCVARS();
 	}
 	
-	public function loadMap(_index:Int) {
+	public function loadMap(_mapMarker:String) {
 		GAME.stop();
-		var maploaded:Bool = IWADS[BASEIWAD].loadMap(_index);
-		if (maploaded) {
-			ACTIVEMAP.build();
+		
+		var mapLoaded = WADDATA.loadMap(_mapMarker);
+		if (mapLoaded) {
+			Engine.ACTIVEMAP.build();
 			if (RENDER != null) {
 				RENDER.initScene();
 			}
-		} else {
-			//resume normal operation
 		}
+		
 		GAME.start();
 	}
 	
-	public function loadWad(_data:Bytes, _name:String) {
-		
-		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
-		
-		//if (isIwad) {
-			if (BASEIWAD == null) {
-				IWADS[_name] = new Iwad(_data, _name);
-				BASEIWAD = _name;
-			}
-		//} else {
-			
-		//}
+	public function addWad(_wadBytes:Bytes, _wadName:String) {
+		WADDATA.addWad(_wadBytes, _wadName);
 	}
 	
 	function setDefaultCVARS() 

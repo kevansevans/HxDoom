@@ -47,31 +47,31 @@ class IOCore
 						CVarCore.setCVar(Defaults.PLAYER_TURNING_RIGHT, true);
 						
 					case HXDKeyCode.ONE :
-						Engine.LOADMAP(0);
+						Engine.LOADMAP("E1M1");
 						
 					case HXDKeyCode.TWO :
-						Engine.LOADMAP(1);
+						Engine.LOADMAP("E1M2");
 						
 					case HXDKeyCode.THREE :
-						Engine.LOADMAP(2);
+						Engine.LOADMAP("E1M3");
 						
 					case HXDKeyCode.FOUR :
-						Engine.LOADMAP(3);
+						Engine.LOADMAP("E1M4");
 						
 					case HXDKeyCode.FIVE :
-						Engine.LOADMAP(4);
+						Engine.LOADMAP("E1M5");
 						
 					case HXDKeyCode.SIX :
-						Engine.LOADMAP(5);
+						Engine.LOADMAP("E1M6");
 						
 					case HXDKeyCode.SEVEN :
-						Engine.LOADMAP(6);
+						Engine.LOADMAP("E1M7");
 						
 					case HXDKeyCode.EIGHT :
-						Engine.LOADMAP(7);
+						Engine.LOADMAP("E1M8");
 						
 					case HXDKeyCode.NINE :
-						Engine.LOADMAP(8);
+						Engine.LOADMAP("E1M9");
 				}
 				
 			default :
