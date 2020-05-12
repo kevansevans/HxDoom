@@ -71,7 +71,7 @@ class WadCore
 		}
 	}
 	
-	public function verifyLumpLocation(_lumps:Array<String>):Bool {
+	public function wadContains(_lumps:Array<String>):Bool {
 		var verified:Bool = true;
 		for (name in _lumps) {
 			if (directory_name_map[name] == null) {
@@ -109,7 +109,7 @@ class WadCore
 	
 	public function loadMap(_mapMarker:String):Bool {
 		
-		if (!verifyLumpLocation([_mapMarker])) {
+		if (!wadContains([_mapMarker])) {
 			return false;
 		}
 		
