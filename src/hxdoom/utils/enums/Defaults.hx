@@ -14,6 +14,12 @@ enum abstract Defaults(String) from String {
 	var CHEAT_DEGREELESS:String;
 	var CHEAT_TRUEGOD:String;
 	
+	var OVERRIDE_CHEATS:String;
+	var OVERRIDE_GAME:String;
+	var OVERRIDE_IO:String;
+	var OVERRIDE_RENDER:String;
+	var OVERRIDE_SOUND:String;
+	
 	var PLAYER_FOV:String;
 	var PLAYER_VIEW_HEIGHT:String;
 	var PLAYER_MOVING_FORWARD:String;
