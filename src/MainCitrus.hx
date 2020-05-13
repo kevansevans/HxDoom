@@ -20,8 +20,12 @@ import lime.ui.WindowAttributes;
 import openfl.net.URLRequest;
 import openfl.utils.ByteArray;
 import lime.net.HTTPRequest;
+
 import citrus.render.limeGL.GLHandler;
+
 import hxdoom.Engine;
+import hxdoom.core.CVarCore;
+import hxdoom.utils.enums.Defaults;
 
 import openfl.display.Stage;
 
@@ -341,18 +345,14 @@ class MainCitrus extends Application
 	
 	#end
 	
-	var render_override:Bool = false;
-	
 	override public function render(context:RenderContext):Void 
 	{
 		
 		if (hxdoom == null) return;
 		
-		if (!render_override) {
-			//hook into Engine
-			Engine.RENDER = new GLHandler(context, this.window);
+		if (!CVarCore.getCvar(Defaults.OVERRIDE_RENDER)) {
+			hxdoom.override_render(new GLHandler(context, this.window));
 			Engine.RENDER.initScene();
-			render_override = true;
 		}
 		
 		switch (context.type) {
@@ -391,7 +391,7 @@ class MainCitrus extends Application
 	{
 		super.onWindowResize(width, height);
 		
-		if (Engine.RENDER != null) Engine.RENDER.resize(width, height);
+		Engine.RENDER.resize(width, height);
 	}
 	
 	override public function onKeyUp(keyCode:KeyCode, modifier:KeyModifier):Void 
