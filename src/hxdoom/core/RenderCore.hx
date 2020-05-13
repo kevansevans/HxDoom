@@ -46,7 +46,7 @@ class RenderCore
 		}
 	}
 	
-	function recursiveNodeTraversalVisibility(_nodeIndex:Int) {
+	public function recursiveNodeTraversalVisibility(_nodeIndex:Int) {
 		
 		if (_nodeIndex & Node.SUBSECTORIDENTIFIER > 0) {
 			subsectorVisibilityCheck(_nodeIndex & (~Node.SUBSECTORIDENTIFIER));
@@ -65,7 +65,7 @@ class RenderCore
 		}
 	}
 	
-	function subsectorVisibilityCheck(_subsector:Int) {
+	public function subsectorVisibilityCheck(_subsector:Int) {
 		
 		var camera:Camera = map.camera;
 		var subsector = map.subsectors[_subsector];
@@ -107,27 +107,30 @@ class RenderCore
 			start += p_fov;
 			end += p_fov;
 				
-			var x_start:Int = angleToScreen(start, p_fov);
-			var x_end:Int = angleToScreen(end, p_fov);
+			registerSegToScreenWidth(segment, start, end);
+		}
+	}
+	
+	public function registerSegToScreenWidth(_seg:Segment, _start:Angle, _end:Angle) {
+		var segment = _seg;
+		var x_start:Int = angleToScreen(_start, 90);
+		var x_end:Int = angleToScreen(_end, 90);
 				
-			x_start = Std.int(Math.max(0, x_start));
-			x_end = Std.int(Math.min(screen_width + 1, x_end));
+		x_start = Std.int(Math.max(0, x_start));
+		x_end = Std.int(Math.min(screen_width + 1, x_end));
 				
-			for (x in x_start...(x_end + 1)) {
-				if (virtual_screen[x] != null) {
-					continue;
-				} else {
-					if (segment.lineDef.solid || segment.sector.ceilingHeight <= segment.sector.floorHeight) {
-						virtual_screen[x] = segment;
-					}
-					if (vis_segments.indexOf(segment) == -1) {
-						vis_segments.push(segment);
-					}
+		for (x in x_start...(x_end + 1)) {
+			if (virtual_screen[x] != null) {
+				continue;
+			} else {
+				if (segment.lineDef.solid || segment.sector.ceilingHeight <= segment.sector.floorHeight) {
+					virtual_screen[x] = segment;
+				}
+				if (vis_segments.indexOf(segment) == -1) {
+					vis_segments.push(segment);
 				}
 			}
 		}
-		
-		checkScreenFill();
 	}
 	
 	function checkScreenFill() 
@@ -141,7 +144,7 @@ class RenderCore
 		}
 	}
 	
-	function angleToScreen(_angle:Angle, _fov:Int):Int {
+	public function angleToScreen(_angle:Angle, _fov:Int):Int {
 		var x:Int = 0;
 		if (_angle > (_fov + 45)) {
 			_angle -= (_fov + 45);
