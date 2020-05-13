@@ -351,7 +351,7 @@ class MainCitrus extends Application
 		if (hxdoom == null) return;
 		
 		if (!CVarCore.getCvar(Defaults.OVERRIDE_RENDER)) {
-			hxdoom.override_render(new GLHandler(context, this.window));
+			hxdoom.setcore_render(new GLHandler(context, this.window));
 			Engine.RENDER.initScene();
 		}
 		
