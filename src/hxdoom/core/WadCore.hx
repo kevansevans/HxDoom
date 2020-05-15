@@ -6,6 +6,7 @@ import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.Directory;
 import hxdoom.core.Reader;
 import hxdoom.utils.enums.Lump;
+import hxdoom.utils.enums.Defaults;
 
 /**
  * ...
@@ -33,14 +34,14 @@ class WadCore
 	
 	public function addWad(_data:Bytes, _wadName:String) {
 		
+		if (!CVarCore.getCvar(Defaults.ALLOW_PWADS) && iwadLoaded) return;
+		
 		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
 		if (isIwad) {
 			if (iwadLoaded) {
-				#if HxDoom_AllowMultipleIwads
-				Engine.log("Iwad has already been loaded, wad " + _name + " will be skipped. Use custom Haxedef 'HxDoom_AllowMultipleIwads' to override this function.");
-				return;
-				#end
+				if (!CVarCore.getCvar(Defaults.ALLOW_MULTIPLE_IWADS)) return;
 			} else {
+				Engine.setcore_profile_byWadBytes(_data);
 				iwadLoaded = true;
 			}
 		}

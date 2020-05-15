@@ -19,6 +19,7 @@ enum abstract Defaults(String) from String {
 	var OVERRIDE_CHEATS:String;
 	var OVERRIDE_GAME:String;
 	var OVERRIDE_IO:String;
+	var OVERRIDE_PROFILE:String;
 	var OVERRIDE_RENDER:String;
 	var OVERRIDE_SOUND:String;
 	

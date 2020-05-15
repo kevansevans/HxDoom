@@ -26,6 +26,7 @@ class Engine
 	
 	public static var ACTIVEMAP:BSPMap;
 	
+	public static var PROFILE(get, null):ProfileCore;
 	public static var RENDER(get, null):RenderCore;
 	public static var GAME(get, null):GameCore;
 	public static var IO(get, null):IOCore;
@@ -43,10 +44,20 @@ class Engine
 		RENDER = new RenderCore();
 		CHEATS = new CheatCore();
 		SOUND = new SoundCore();
-		
+		PROFILE = new ProfileCore();
 		LOADMAP = loadMap;
 		
 		setDefaultCVARS();
+	}
+	
+	public function setcore_cheats(?_cheats:CheatCore) {
+		if (_cheats == null) {
+			CHEATS = new CheatCore();
+			CVarCore.setCVar(Defaults.OVERRIDE_CHEATS, false);
+		} else {
+			CHEATS = _cheats;
+			CVarCore.setCVar(Defaults.OVERRIDE_CHEATS, true);
+		}
 	}
 	
 	public function setcore_game(?_game:GameCore) {
@@ -69,6 +80,20 @@ class Engine
 		}
 	}
 	
+	public function setcore_profile(?_profile:ProfileCore) {
+		if (_profile == null) {
+			PROFILE = new ProfileCore();
+			CVarCore.setCVar(Defaults.OVERRIDE_PROFILE, false);
+		} else {
+			PROFILE = _profile;
+			CVarCore.setCVar(Defaults.OVERRIDE_PROFILE, true);
+		}
+	}
+	
+	public static function setcore_profile_byWadBytes(_bytes:Bytes) {
+		PROFILE = ProfileCore.getWadProfile(_bytes);
+	}
+	
 	public function setcore_render(?_render:RenderCore) {
 		if (_render == null) {
 			RENDER = new RenderCore();
@@ -76,16 +101,6 @@ class Engine
 		} else {
 			RENDER = _render;
 			CVarCore.setCVar(Defaults.OVERRIDE_RENDER, true);
-		}
-	}
-	
-	public function setcore_cheats(?_cheats:CheatCore) {
-		if (_cheats == null) {
-			CHEATS = new CheatCore();
-			CVarCore.setCVar(Defaults.OVERRIDE_CHEATS, false);
-		} else {
-			CHEATS = _cheats;
-			CVarCore.setCVar(Defaults.OVERRIDE_CHEATS, true);
 		}
 	}
 	
@@ -121,6 +136,7 @@ class Engine
 		CVarCore.setNewCVar(Defaults.OVERRIDE_CHEATS, 				CVarType.CBool, false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_GAME, 				CVarType.CBool, false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_IO, 					CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_PROFILE, 				CVarType.CBool, false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_RENDER, 				CVarType.CBool, false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_SOUND, 				CVarType.CBool, false);
 		
@@ -164,6 +180,11 @@ class Engine
 	static function get_SOUND():SoundCore 
 	{
 		return SOUND;
+	}
+	
+	static function get_PROFILE():ProfileCore 
+	{
+		return PROFILE;
 	}
 	
 	public static inline function log(_msg:String) {
