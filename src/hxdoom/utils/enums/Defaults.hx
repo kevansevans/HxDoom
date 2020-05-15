@@ -6,6 +6,8 @@ package hxdoom.utils.enums;
  * Contains the default CVar values needed.
  */
 enum abstract Defaults(String) from String {
+	var ALLOW_MULTIPLE_IWADS:String;
+	var ALLOW_PWADS:String;
 	var AUTOMAP_MODE:String;
 	var AUTOMAP_ROTATES_WITH_PLAYER:String;
 	var AUTOMAP_ZOOM:String;

@@ -109,6 +109,8 @@ class Engine
 	
 	function setDefaultCVARS() 
 	{
+		CVarCore.setNewCVar(Defaults.ALLOW_MULTIPLE_IWADS, 			CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.ALLOW_PWADS, 					CVarType.CBool, true);
 		CVarCore.setNewCVar(Defaults.AUTOMAP_MODE, 					CVarType.CBool, false);
 		CVarCore.setNewCVar(Defaults.AUTOMAP_ZOOM, 					CVarType.CFloat, 0.001);
 		
