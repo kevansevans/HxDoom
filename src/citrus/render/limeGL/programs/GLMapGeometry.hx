@@ -112,8 +112,8 @@ class GLMapGeometry
 		}
 		
 		for (flat in flats) {
-			flat[0].buildShells();
-			flat[1].buildShells();
+			//flat[0].buildShells();
+			//flat[1].buildShells();
 		}
 		
 		for (actor in Engine.ACTIVEMAP.actors) {
@@ -154,7 +154,7 @@ class GLMapGeometry
 				if (visflats.indexOf(flats[vis_seg.sector]) == -1) {
 					visflats.push(flats[vis_seg.sector]);
 					for (flat in flats[vis_seg.sector]) {
-						flat.render(program);
+						//flat.render(program);
 					}
 				}
 			}
