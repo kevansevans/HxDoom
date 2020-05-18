@@ -90,10 +90,6 @@ class Engine
 		}
 	}
 	
-	public static function setcore_profile_byWadBytes(_bytes:Bytes) {
-		PROFILE = ProfileCore.getWadProfile(_bytes);
-	}
-	
 	public function setcore_render(?_render:RenderCore) {
 		if (_render == null) {
 			RENDER = new RenderCore();

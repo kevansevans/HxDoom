@@ -41,7 +41,6 @@ class WadCore
 			if (iwadLoaded) {
 				if (!CVarCore.getCvar(Defaults.ALLOW_MULTIPLE_IWADS)) return;
 			} else {
-				Engine.setcore_profile_byWadBytes(_data);
 				iwadLoaded = true;
 			}
 		}
