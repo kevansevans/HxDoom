@@ -69,6 +69,8 @@ class WadCore
 				directory_name_map[dir.name].unshift(dir);
 			}
 		}
+		
+		CVarCore.setCVar(Defaults.WADS_LOADED, true);
 	}
 	
 	public function wadContains(_lumps:Array<String>):Bool {

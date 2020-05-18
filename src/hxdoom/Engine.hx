@@ -146,6 +146,8 @@ class Engine
 		CVarCore.setNewCVar(Defaults.PLAYER_VIEW_HEIGHT, 			CVarType.CInt, 41);
 		
 		CVarCore.setNewCVar(Defaults.SCREEN_DISTANCE_FROM_VIEWER, 	CVarType.CInt, 160);
+		
+		CVarCore.setNewCVar(Defaults.WADS_LOADED, 					CVarType.CBool, false);
 	}
 	
 	static function get_CHEATS():CheatCore 

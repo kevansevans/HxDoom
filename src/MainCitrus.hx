@@ -347,8 +347,9 @@ class MainCitrus extends Application
 	
 	override public function render(context:RenderContext):Void 
 	{
-		
 		if (hxdoom == null) return;
+		
+		if (!CVarCore.getCvar(Defaults.WADS_LOADED)) return;
 		
 		if (!CVarCore.getCvar(Defaults.OVERRIDE_RENDER)) {
 			hxdoom.setcore_render(new GLHandler(context, this.window));

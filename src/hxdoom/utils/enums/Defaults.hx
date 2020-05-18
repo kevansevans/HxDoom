@@ -33,4 +33,6 @@ enum abstract Defaults(String) from String {
 	var PLAYER_TURNING_RIGHT:String;
 	
 	var SCREEN_DISTANCE_FROM_VIEWER:String;
+	
+	var WADS_LOADED:String;
 }
