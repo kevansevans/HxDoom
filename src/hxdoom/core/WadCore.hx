@@ -1,6 +1,7 @@
 package hxdoom.core;
 
 import haxe.io.Bytes;
+import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.graphic.Playpal;
 
 import hxdoom.lumps.Directory;
@@ -71,6 +72,12 @@ class WadCore
 		}
 		
 		CVarCore.setCVar(Defaults.WADS_LOADED, true);
+	}
+	
+	public function getPatch(_patchName:String):Patch {
+		var dir = directory_name_map[_patchName][0];
+		var patch = Reader.readPatch(wad_data_map[dir.wad], dir.dataOffset);
+		return patch;
 	}
 	
 	public function wadContains(_lumps:Array<String>):Bool {

@@ -1,6 +1,7 @@
 package hxdoom.core;
 
 import hxdoom.lumps.Directory;
+import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Sector;
@@ -122,6 +123,17 @@ class Reader
 			getTwoBytes(_data, _offset + 22),
 			getTwoBytes(_data, _offset + 24)
 		);
+	}
+	
+	public static inline function readPatch(_data:Array<Int>, _offset:Int):Patch {
+		return new Patch(
+			getTwoBytes(_data, _offset),
+			getTwoBytes(_data, _offset + 2),
+			getTwoBytes(_data, _offset + 4, true),
+			getTwoBytes(_data, _offset + 6, true),
+			_offset + 8;
+		);
+		
 	}
 	/**
 	 * Get an 8 bit value from provided data and location
