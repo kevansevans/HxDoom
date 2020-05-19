@@ -124,7 +124,7 @@ class Reader
 		);
 	}
 	/**
-	 * Get a 16bit value from provided address by "reading" a byte of information.
+	 * Get an 8 bit value from provided data and location
 	 * @param	_data Data of current wad loaded
 	 * @param	_offset Position of data needed
 	 * @param	_signed Is value an signed value?
@@ -134,13 +134,20 @@ class Reader
 		var val = _data[_offset];
 		return(_signed == true && val > 127 ? val - 255 : val);
 	}
+	/**
+	 * Get an 16 bit value (Short) from provided data and location
+	 * @param	_data
+	 * @param	_offset
+	 * @param	_signed
+	 * @return
+	 */
 	public static inline function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
 	{
 		var val = (_data[_offset + 1] << 8) | _data[_offset];
 		return(_signed == true && val > 32768 ? val - 65536 : val);
 	}
 	/**
-	 * Get a 32bit value from provided address by "reading" two bytes of information.
+	 * Get a 32 bit bit value (Long) from provided data and location
 	 * @param	_data Data of current wad loaded
 	 * @param	_offset Position of data needed
 	 * @return Returns an integer from specified position
@@ -149,7 +156,7 @@ class Reader
 		return((_data[_offset + 3] << 24) | (_data[_offset + 2] << 16) | (_data[_offset + 1] << 8) | _data[_offset]);
 	}
 	/**
-	 * Get a string value from specified range 
+	 * Get and construct a string value from specified range 
 	 * @param	_data Data of current wad loaded
 	 * @param	_start Start position of string
 	 * @param	_end End position of string
