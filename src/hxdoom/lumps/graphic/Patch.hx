@@ -13,9 +13,9 @@ class Patch
 	public var height:Int;
 	public var offset_x:Int;
 	public var offset_y:Int;
-	public var columns:Vector<Column>;
+	public var columns:Vector<Vector<Int>>;
 	public var data:Vector<Int>;
-	public function new(_width:Int, _height:Int, _offsetX:Int, _offsetY:Int, _offset:Int) 
+	public function new(_width:Int, _height:Int, _offsetX:Int, _offsetY:Int) 
 	{
 		width = _width;
 		height = _height;
@@ -33,7 +33,4 @@ class Patch
 			'User must construct <data> into bitmap to test if data is being loaded correctly'
 		]).join("");
 	}
-}
-typedef Column = {
-	
 }

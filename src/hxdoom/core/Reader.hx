@@ -1,5 +1,6 @@
 package hxdoom.core;
 
+import haxe.ds.Vector;
 import hxdoom.lumps.Directory;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.map.LineDef;
@@ -126,14 +127,50 @@ class Reader
 	}
 	
 	public static inline function readPatch(_data:Array<Int>, _offset:Int):Patch {
-		return new Patch(
+			
+		var patch = new Patch(
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
 			getTwoBytes(_data, _offset + 4, true),
-			getTwoBytes(_data, _offset + 6, true),
-			_offset + 8;
+			getTwoBytes(_data, _offset + 6, true)
 		);
 		
+		var place:Int = _offset + 8;
+		
+		for (w_index in 0...patch.width) {
+			
+			if (patch.columns[w_index] == null) patch.columns[w_index] = new Vector(patch.height);
+			
+			var c_offset:Int = getFourBytes(_data, place + (w_index * 4));
+			
+			var y_offset:Int = getOneByte(_data, _offset + c_offset);
+			var length:Int = getOneByte(_data, _offset + c_offset + 1);
+			
+			var d_offset:Int = 2;
+			
+			var h_index:Int = 0;
+			
+			while (h_index < patch.height) {
+				
+				if (y_offset >= 0) {
+					patch.columns[w_index][h_index] = -1;
+					++h_index;
+					--y_offset;
+				} else if (length > 0) {
+					patch.columns[w_index][h_index] = getOneByte(_data, (_offset + c_offset + d_offset));
+					++d_offset;
+					++h_index;
+					--length;
+				} else {
+					d_offset += 2;
+					y_offset = getOneByte(_data, _offset + c_offset + d_offset);
+					length = getOneByte(_data, _offset + c_offset + d_offset + 1);
+					d_offset += 2;
+				}
+			}
+		}
+		
+		return patch;
 	}
 	/**
 	 * Get an 8 bit value from provided data and location
