@@ -21,7 +21,7 @@ class Playpal
 		if (palettes[_index] == null) palettes[_index] = new Array();
 		palettes[_index].push(_color);
 	}
-	public function getColor(_index:Int, _rgb:Int, _pal:Int = 0, _asFloat:Bool = false):Float {
+	public function getColorChannel(_index:Int, _rgb:Int, _pal:Int = 0, _asFloat:Bool = false):Float {
 		var col:Int = palettes[_pal][_index];
 		var val:Float = 0;
 		switch (_rgb) {
@@ -36,6 +36,9 @@ class Playpal
 			return (col / 255);
 		}
 		return col;
+	}
+	public function getColorHex(_index:Int, _rgb:Int, _pal:Int = 0):Int {
+		return palettes[_pal][_index];
 	}
 	public function toString():String {
 		return ("Num Palettes Loaded: " + palettes.length);
