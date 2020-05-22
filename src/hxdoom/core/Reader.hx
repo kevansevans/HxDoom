@@ -152,7 +152,7 @@ class Reader
 			
 			var d_offset:Int = 2;
 			
-			while (h_index < patch.height) {
+			while (h_index != 255) {
 				
 				if (length > 0) {
 					patch.columns[w_index][h_index] = getOneByte(_data, (_offset + c_offset + d_offset));
