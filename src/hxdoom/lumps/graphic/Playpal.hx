@@ -38,7 +38,11 @@ class Playpal
 		return col;
 	}
 	public function getColorHex(_index:Int, _rgb:Int, _pal:Int = 0):Int {
-		return palettes[_pal][_index];
+		if (_index != -1) {
+			return 0xFF << 24 | palettes[_pal][_index];
+		} else {
+			return 0x00000000;
+		}
 	}
 	public function toString():String {
 		return ("Num Palettes Loaded: " + palettes.length);
