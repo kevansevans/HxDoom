@@ -102,9 +102,9 @@ class WadCore
 		for (pal in 0...numPals) {
 			for (sw in 0...256) {
 				
-				var red:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.index + offset);
-				var green:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.index + (offset += 1));
-				var blue:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.index + (offset += 1));
+				var red:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.dataOffset + offset);
+				var green:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.dataOffset + (offset += 1));
+				var blue:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.dataOffset + (offset += 1));
 				
 				var _color:Int = (red << 16) | (green << 8) | blue;
 				
