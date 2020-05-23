@@ -125,7 +125,12 @@ class Reader
 			getTwoBytes(_data, _offset + 24)
 		);
 	}
-	
+	/**
+	 * Read data and return a patch from given location
+	 * @param	_data Specified wad data array
+	 * @param	_offset Location of patch
+	 * @return New patch with correct data values
+	 *///With thanks to Phantombeta for getting this to work
 	public static inline function readPatch(_data:Array<Int>, _offset:Int):Patch {
 			
 		var patch = new Patch(
@@ -135,37 +140,36 @@ class Reader
 			getTwoBytes(_data, _offset + 6, true)
 		);
 		
-		var place:Int = _offset + 8;
+		var columnsOffsets:Vector<Int> = new Vector<Int> (patch.width);
 		
 		for (w_index in 0...patch.width) {
-			
+			var c_offset:Int = getFourBytes(_data, _offset + 8 + (w_index * 4));
+			columnsOffsets[w_index] = c_offset;
+		}
+		
+		for (w_index in 0...columnsOffsets.length) {
 			if (patch.columns[w_index] == null) patch.columns[w_index] = new Vector(patch.height);
 			
 			for (h in 0...patch.columns[w_index].length) {
 				patch.columns[w_index][h] = -1;
 			}
 			
-			var c_offset:Int = getFourBytes(_data, place + (w_index * 4));
+			var c_offset:Int = columnsOffsets[w_index];
 			
-			var h_index:Int = getOneByte(_data, _offset + c_offset);
-			var length:Int = getOneByte(_data, _offset + c_offset + 1);
+			var rowStart:Int = 0;
 			
-			var d_offset:Int = 2;
-			
-			while (h_index != 255) {
+			while (rowStart < 255) {
+				rowStart = getOneByte(_data, _offset + c_offset);
 				
-				if (length > 0) {
-					patch.columns[w_index][h_index] = getOneByte(_data, (_offset + c_offset + d_offset));
-					++d_offset;
-					++h_index;
-					--length;
-				} else {
-					d_offset += 2;
-					h_index = getOneByte(_data, _offset + c_offset + d_offset);
-					if (h_index == 0xFF) break;
-					length = getOneByte(_data, _offset + c_offset + d_offset + 1);
-					d_offset += 2;
+				if (rowStart == 255) break;
+				
+				var pixelCount:Int = getOneByte(_data, _offset + c_offset + 1);
+				c_offset += 3;
+				
+				for (d_offset in 0...pixelCount) {
+					patch.columns[w_index][rowStart + d_offset] = getOneByte(_data, _offset + c_offset + d_offset);
 				}
+				c_offset += pixelCount+1;
 			}
 		}
 		
@@ -175,7 +179,7 @@ class Reader
 	 * Get an 8 bit value from provided data and location
 	 * @param	_data Data of current wad loaded
 	 * @param	_offset Position of data needed
-	 * @param	_signed Is value an signed value?
+	 * @param	_signed Is value a signed value?
 	 * @return Returns an integer from specified position
 	 */
 	public static inline function getOneByte(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int {
@@ -183,7 +187,7 @@ class Reader
 		return(_signed == true && val > 127 ? val - 255 : val);
 	}
 	/**
-	 * Get an 16 bit value (Short) from provided data and location
+	 * Get a 16 bit value (Short) from provided data and location
 	 * @param	_data
 	 * @param	_offset
 	 * @param	_signed
@@ -213,7 +217,8 @@ class Reader
 	public static inline function getStringFromRange(_data:Array<Int>, _start:Int, _end:Int):String {
 		var str:String = "";
 		for (a in _start..._end) {
-			if (_data[a] != 0 && Math.isNaN(_data[a]) == false) str += String.fromCharCode(_data[a]);
+			if (_data[a] == 0) break;
+			str += String.fromCharCode(_data[a]);
 		}
 		return str;
 	}
