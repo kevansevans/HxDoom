@@ -15,6 +15,7 @@ import citrus.render.limeGL.objects.GLFlat;
 import citrus.render.limeGL.objects.GLDodecahedron;
 
 import hxdoom.Engine;
+import hxdoom.utils.enums.SideType;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.map.SubSector;

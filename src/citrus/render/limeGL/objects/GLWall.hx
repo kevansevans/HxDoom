@@ -1,20 +1,13 @@
 package citrus.render.limeGL.objects;
 
+import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Sector;
 import hxdoom.lumps.map.Segment;
+import hxdoom.utils.enums.SideType;
+import hxdoom.core.Reader;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.utils.Float32Array;
-
-enum SideType {
-	FRONT_TOP;
-	FRONT_BOTTOM;
-	FRONT_MIDDLE;
-	BACK_TOP;
-	BACK_BOTTOM;
-	BACK_MIDDLE;
-	SOLID;
-}
 
 /**
  * ...
