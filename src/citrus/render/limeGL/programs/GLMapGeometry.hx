@@ -171,15 +171,12 @@ class GLMapGeometry
 	'precision mediump float;',
 	#end
 	'attribute vec3 V3_POSITION;',
-	'attribute vec4 V4_COLOR;',
-	'varying vec4 F_COLOR;',
 	'uniform mat4 M4_World;',
 	'uniform mat4 M4_View;',
 	'uniform mat4 M4_Proj;',
 	'',
 	'void main()',
 	'{',
-	'	F_COLOR = V4_COLOR;',
 	'	gl_Position = M4_Proj * M4_View * M4_World * vec4(V3_POSITION, 1.0);',
 	'}'
 	].join('\n');
@@ -188,11 +185,10 @@ class GLMapGeometry
 	#if !desktop
 	'precision mediump float;',
 	#end
-	'varying vec4 F_COLOR;',
 	'',
 	'void main()',
 	'{',
-	' 	gl_FragColor = F_COLOR;',
+	' 	gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);' ,
 	'}'
 	].join('\n');
 	
