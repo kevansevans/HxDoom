@@ -1,5 +1,11 @@
 package hxdoom.lumps.map;
 
+import hxdoom.Engine;
+
+import hxdoom.lumps.graphic.Patch;
+
+import hxdoom.utils.enums.SideType;
+
 /**
  * ...
  * @author Kaelan
@@ -29,6 +35,25 @@ class LineDef
 		sectorTag = _sectorTag;
 		frontSideDefID = _frontSideDef;
 		backSideDefID = _backSideDef;
+	}
+	
+	public function getPatch(_side:SideType):Patch {
+		switch(_side) {
+			case SOLID :
+				return Engine.WADDATA.getPatch(frontSideDef.middle_texture);
+			case FRONT_TOP :
+				return Engine.WADDATA.getPatch(frontSideDef.upper_texture);
+			case FRONT_MIDDLE :
+				return Engine.WADDATA.getPatch(frontSideDef.middle_texture);
+			case FRONT_BOTTOM :
+				return Engine.WADDATA.getPatch(frontSideDef.lower_texture);
+			case BACK_TOP :
+				return Engine.WADDATA.getPatch(backSideDef.upper_texture);
+			case BACK_MIDDLE :
+				return Engine.WADDATA.getPatch(backSideDef.middle_texture);
+			case BACK_BOTTOM :
+				return Engine.WADDATA.getPatch(backSideDef.lower_texture);
+		}
 	}
 	
 	function get_solid():Bool 
