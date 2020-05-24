@@ -22,6 +22,9 @@ class Playpal
 		palettes[_index].push(_color);
 	}
 	public function getColorChannel(_index:Int, _rgb:Int, _pal:Int = 0, _asFloat:Bool = false):Float {
+		if (_index == -1) {
+			return (0);
+		}
 		var col:Int = palettes[_pal][_index];
 		var val:Float = 0;
 		switch (_rgb) {
