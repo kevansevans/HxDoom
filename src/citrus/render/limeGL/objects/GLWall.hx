@@ -271,11 +271,6 @@ class GLWall
 				plane_vertexes[index += 1] 	= segment.end.ypos;
 				plane_vertexes[index += 1] 	= segment.lineDef.backSideDef.sector.ceilingHeight;
 				
-				plane_vertexes[index += 1] 	= r_redcolor;
-				plane_vertexes[index += 1] 	= r_grncolor;
-				plane_vertexes[index += 1] 	= r_blucolor;
-				plane_vertexes[index += 1] 	= 1.0;
-				
 				////////////////////////////////////////////////////////////////////////////////////////////////////
 				
 				plane_vertexes[index += 1] 	= segment.start.xpos;
@@ -289,11 +284,6 @@ class GLWall
 				plane_vertexes[index += 1] 	= segment.end.xpos;
 				plane_vertexes[index += 1] 	= segment.end.ypos;
 				plane_vertexes[index += 1] 	= segment.lineDef.backSideDef.sector.floorHeight;
-				
-				plane_vertexes[index += 1] 	= r_redcolor;
-				plane_vertexes[index += 1] 	= r_grncolor;
-				plane_vertexes[index += 1] 	= r_blucolor;
-				plane_vertexes[index += 1] 	= 1.0;
 				
 			case BACK_BOTTOM:
 				
