@@ -195,7 +195,8 @@ class GLMapGeometry
 	'}',
 	'void main()',
 	'{',
-	' 	gl_FragColor = vec4(vec3(gl_FragCoord.z), 1.0);' ,
+	'	 float depth = LinearizeDepth(gl_FragCoord.z) / far;',
+	' 	gl_FragColor = vec4(vec3(depth), 1.0);' ,
 	'}'
 	].join('\n');
 	
