@@ -9,6 +9,7 @@
 	
 	<haxelib name="openfl" />
 	<haxelib name="lime" />
+	<haxelib name="hxdoom" />
 	<haxelib name="haxe-gl-matrix" />
 	<haxelib name="haxeui-core" />
 	<haxelib name="haxeui-openfl" />
