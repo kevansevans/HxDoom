@@ -1,0 +1,7 @@
+-cp src
+-main Main
+-lib heaps
+-lib hlsdl
+-lib hxdoom
+-hl app.hl
+-D windowsSize=800x480
