@@ -39,7 +39,7 @@ class Playpal
 		}
 		return col;
 	}
-	public function getColorHex(_index:Int, _rgb:Int, _pal:Int = 0):Int {
+	public function getColorHex(_index:Int, _pal:Int = 0):Int {
 		if (_index != -1) {
 			return 0xFF << 24 | palettes[_pal][_index];
 		} else {
