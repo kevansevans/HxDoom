@@ -148,10 +148,10 @@ class Reader
 		}
 		
 		for (w_index in 0...columnsOffsets.length) {
-			if (patch.columns[w_index] == null) patch.columns[w_index] = new Vector(patch.height);
+			if (patch.pixels[w_index] == null) patch.pixels[w_index] = new Vector(patch.height);
 			
-			for (h in 0...patch.columns[w_index].length) {
-				patch.columns[w_index][h] = -1;
+			for (h in 0...patch.pixels[w_index].length) {
+				patch.pixels[w_index][h] = -1;
 			}
 			
 			var c_offset:Int = columnsOffsets[w_index];
@@ -167,7 +167,7 @@ class Reader
 				c_offset += 3;
 				
 				for (d_offset in 0...pixelCount) {
-					patch.columns[w_index][rowStart + d_offset] = getOneByte(_data, _offset + c_offset + d_offset);
+					patch.pixels[w_index][rowStart + d_offset] = getOneByte(_data, _offset + c_offset + d_offset);
 				}
 				c_offset += pixelCount+1;
 			}
