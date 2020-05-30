@@ -77,6 +77,9 @@ class PatchBitmap extends Bitmap
 		 */
 		
 		for (width in 0...patch.width) for (height in 0...patch.height) {
+			
+			trace(patch.pixels[width][height]);
+			
 			var color = pallete.getColorHex(patch.pixels[width][height], 0);
 			data.setPixel32(width, height, color);
 		}
