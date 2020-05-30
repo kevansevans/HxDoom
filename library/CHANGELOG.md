@@ -1,4 +1,4 @@
-### Alpha 0.0.5
+### 29MAY2020 Alpha 0.0.5
 * Improved Core overriding system
 * Cleaner map lumps
 * Reduced memory useage
