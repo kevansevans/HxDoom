@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	
-	<meta title="Citrus Doom" package="com.Kevans.CitrusDoom" version="1.0.0" company="Kaelan" />
-	<app main="Main" file="Citrus Doom" path="bin" />
+	<meta title="Citrus Doom" package="com.kevans.citrusdoom" version="0.0.1" company="Kaelan" />
+	
+	<app main="MainCitrus" file="Citrus Doom" path="bin/lime" />
 	
 	<source path="src" />
 	
+	<haxelib name="openfl" />
 	<haxelib name="lime" />
+	<haxelib name="hxdoom" />
 	<haxelib name="haxe-gl-matrix" />
+	<haxelib name="haxeui-core" />
+	<haxelib name="haxeui-openfl" />
 	
-	<assets path="assets" exclude="*.svg" />
-	<assets path="assets/shareware" rename="IWADS"/>
+	<assets path="assets/shareware" rename="IWADS" unless="native"/>
 	
 	<!--Set default icon, then overide with supported targets -->
 	<icon path="assets/icon.png"/>
+	
+	<!--<haxeflag name="-dce full" /> -->
 	
 </project>

@@ -1,0 +1,67 @@
+{
+  "doom": {
+    "iddqd": [
+      "pseudoinvul"
+    ],
+    "idspispopd": [
+      "disablecollision"
+    ],
+    "idclip": [
+      "disablecollision"
+    ],
+    "idkfa": [
+      "grantfullammo",
+      "grantallweapons",
+      "grantfullhealth",
+      "grantfullarmor",
+      "grantallkeys"
+    ],
+    "idfa": [
+      "grantfullammo",
+      "grantweapons",
+      "grantfullhealth",
+      "grantfullarmor"
+    ],
+    "idclev": [
+      "anticipatelevelchange"
+    ],
+    "idmus": [
+      "anticipatemusicchange"
+    ],
+    "idbehold": [
+      "anticipatekitemgive"
+    ],
+    "idchoppers": [
+      "grantitem:doomchainsaw"
+    ],
+    "iddt": [
+      "cyclemapdetail"
+    ],
+    "idmypos": [
+      "logplayerposition"
+    ],
+    "fhall": [
+      "killall:enemies"
+    ],
+    "fhshh": [
+      "makeblind:enemies"
+    ]
+  },
+  "heretic" : {
+		"kitty": [
+			"disablecollision"
+		],
+		"quicken" : [
+			"pseudoinvul"
+		],
+		"rambo": [
+			"grantfullammo",
+			"grantweapons",
+			"grantfullhealth",
+			"grantfullarmor"
+		],
+		"iddqd": [
+			"suicide"
+		]
+	}
+}
