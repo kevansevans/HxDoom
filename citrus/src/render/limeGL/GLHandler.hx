@@ -1,4 +1,4 @@
-package citrus.render.limeGL;
+package render.limeGL;
 
 import lime.graphics.RenderContext;
 import lime.graphics.WebGLRenderContext;
@@ -10,8 +10,8 @@ import lime.utils.Float32Array;
 import lime.graphics.opengl.GL;
 import lime.graphics.opengl.GLShader;
 
-import citrus.render.limeGL.programs.GLMapGeometry;
-import citrus.render.limeGL.programs.GLAutoMap;
+import render.limeGL.programs.GLMapGeometry;
+import render.limeGL.programs.GLAutoMap;
 
 import hxdoom.Engine;
 import hxdoom.core.CVarCore;

@@ -21,7 +21,7 @@ import openfl.net.URLRequest;
 import openfl.utils.ByteArray;
 import lime.net.HTTPRequest;
 
-import citrus.render.limeGL.GLHandler;
+import render.limeGL.GLHandler;
 
 import hxdoom.Engine;
 import hxdoom.core.CVarCore;

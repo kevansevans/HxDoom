@@ -1,4 +1,4 @@
-package citrus.render.limeGL.objects;
+package render.limeGL.objects;
 
 import hxdoom.actors.Actor;
 import hxdoom.lumps.map.Segment;

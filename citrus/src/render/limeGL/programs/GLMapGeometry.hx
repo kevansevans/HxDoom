@@ -1,4 +1,4 @@
-package citrus.render.limeGL.programs;
+package render.limeGL.programs;
 
 import haxe.PosInfos;
 import haxe.ds.Map;
@@ -10,9 +10,9 @@ import lime.utils.Float32Array;
 
 import mme.math.glmatrix.Mat4Tools;
 
-import citrus.render.limeGL.objects.GLWall;
-import citrus.render.limeGL.objects.GLFlat;
-import citrus.render.limeGL.objects.GLDodecahedron;
+import render.limeGL.objects.GLWall;
+import render.limeGL.objects.GLFlat;
+import render.limeGL.objects.GLDodecahedron;
 
 import hxdoom.Engine;
 import hxdoom.utils.enums.SideType;

@@ -1,4 +1,4 @@
-package citrus.render.limeGL.programs;
+package render.limeGL.programs;
 
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
