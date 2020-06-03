@@ -1,25 +1,21 @@
 package;
 
 import haxe.Http;
+import haxe.io.Bytes;
 import haxe.Json;
-import haxe.ui.components.Button;
-import haxe.ui.components.DropDown;
-import haxe.ui.components.HorizontalProgress;
-import haxe.ui.components.Label;
-import haxe.ui.containers.HBox;
-import haxe.ui.containers.VBox;
-import haxe.ui.data.ArrayDataSource;
-import haxe.ui.events.UIEvent;
-import haxe.zip.Reader;
 import haxe.zip.Uncompress;
 import haxe.zip.Entry;
+import haxe.zip.Reader;
+
 import lime.graphics.RenderContext;
+import lime.net.HTTPRequest;
+import lime.ui.KeyCode;
 import lime.ui.KeyModifier;
 import lime.ui.MouseWheelMode;
 import lime.ui.WindowAttributes;
+
 import openfl.net.URLRequest;
 import openfl.utils.ByteArray;
-import lime.net.HTTPRequest;
 
 import render.limeGL.GLHandler;
 
@@ -27,10 +23,6 @@ import hxdoom.Engine;
 import hxdoom.core.CVarCore;
 import hxdoom.utils.enums.Defaults;
 
-import openfl.display.Stage;
-
-import haxe.io.Bytes;
-import lime.ui.KeyCode;
 
 
 #if sys
@@ -49,13 +41,13 @@ import lime.utils.Bytes;
 import lime.app.Application;
 import lime.ui.KeyCode;
 
-import haxe.ui.Toolkit;
-
 class Main extends Application 
 {
 	var hxdoom:Engine;
-	var entryway:Stage;
 	var env_path:Null<String>;
+	
+	var launcher:Window;
+	var attrib:WindowAttributes;
 	
 	#if sys
 	var pathlist:Map<String, String>;
@@ -74,13 +66,6 @@ class Main extends Application
 		window.width = 640;
 		window.height = 480;
 		
-		/*
-		 * We're going to skip this for now until Lime updates.
-		 * Lime currently has a bug with removing the OpenFL stage and is currently unreliable.
-		 * This issue has been brought up and should come in the next update.
-		 */
-		//build_ui();
-		
 		#if sys
 		getwads();
 		launchGame(File.getBytes(env_path + "/DOOM1.WAD"));
@@ -91,63 +76,6 @@ class Main extends Application
 			return data;
 		});
 		#end
-	}
-	
-	var root_vbox:HBox = new HBox();
-	var taskbox:VBox;
-	var leftbox:VBox;
-	var rightbox:VBox;
-	var grabwads:Button;
-	var iwad_selector:DropDown;
-	var wadDataSource:ArrayDataSource<String> = new ArrayDataSource();
-	var launch_button:Button;
-	function build_ui() 
-	{
-		Toolkit.init();
-		
-		entryway = new Stage(this.window, 0xCCCCCC);
-		addModule(entryway);
-		
-		entryway.addChild(root_vbox);
-		root_vbox.x = root_vbox.y = 5;
-		
-		leftbox = new VBox();
-		rightbox = new VBox();
-		leftbox.width = rightbox.width = 200;
-		root_vbox.addComponent(leftbox);
-		root_vbox.addComponent(rightbox);
-		
-		taskbox = new VBox();
-		rightbox.addComponent(taskbox);
-		
-		iwad_selector = new DropDown();
-		leftbox.addComponent(iwad_selector);
-		
-		#if sys
-		grabwads = new Button();
-		grabwads.text = "Update Wad List";
-		grabwads.onClick = function(e:UIEvent) {
-			grabwads.disabled = true;
-			download_wads();
-		}
-		leftbox.addComponent(grabwads);
-		#end
-		
-		iwad_selector.disabled = true;
-		iwad_selector.width = 150;
-		
-		launch_button = new Button();
-		leftbox.addComponent(launch_button);
-		launch_button.text = "Launch";
-		launch_button.onClick = function(e:UIEvent) {
-			#if sys
-			var env = Sys.environment();
-			var wad = File.getBytes(env["DOOMWADDIR"] + "/" + iwad_selector.value);
-			launchGame(wad);
-			#else
-			//launchGame(Assets.getBytes("IWADS/DOOM1.WAD"));
-			#end
-		}
 	}
 	
 	function getwads()
@@ -186,20 +114,6 @@ class Main extends Application
 			}
 		}
 		
-		wadDataSource = new ArrayDataSource();
-		for (wad in pathlist.keys()) {
-			wadDataSource.add(wad);
-		}
-		if (wadDataSource.size != 0) {
-			iwad_selector.disabled = false;
-			iwad_selector.selectedIndex = 0;
-			iwad_selector.updateComponentDisplay();
-		} else {
-			wadDataSource.add("No IWADS found");
-			iwad_selector.disabled = true;
-		}
-		iwad_selector.dataSource = wadDataSource;
-		
 		#end
 	}
 	
@@ -211,8 +125,6 @@ class Main extends Application
 		try {
 			header = file.readString(4);
 		} catch (_msg:String) {
-			var warning:Label = new Label();
-			warning.text = "Error! Unknown file, potentially corrupted!\n" + _name +"\n" + _msg;
 			return false;
 		}
 		if (header == "IWAD") return true;
@@ -254,12 +166,6 @@ class Main extends Application
 		
 		++pendingdownload;
 		
-		var label = new Label();
-		var bar = new HorizontalProgress();
-		label.value = _name;
-		taskbox.addComponent(label);
-		taskbox.addComponent(bar);
-		
 		var file = File.write(_path + "/" + _name);
 		var httpfile = new HTTPRequest<Bytes>(_url);
 		httpfile.followRedirects = true;
@@ -270,13 +176,9 @@ class Main extends Application
 			checkifstilldownloading();
 		}).onProgress(function(loaded, total)
 		{
-			bar.max = total;
-			bar.value = loaded;
 		}).onComplete(function (bytes:Bytes) {
 			file.write(bytes);
 			file.close();
-			taskbox.removeComponent(bar);
-			taskbox.removeComponent(label);
 			--pendingdownload;
 			checkifstilldownloading();
 		});
@@ -284,7 +186,6 @@ class Main extends Application
 	
 	function checkifstilldownloading() {
 		if (pendingdownload == 0) {
-			grabwads.disabled = false;
 			process_downloads();
 		}
 	}
@@ -380,9 +281,6 @@ class Main extends Application
 	}
 	
 	function launchGame(_wadbytes:Bytes) {
-		//entryway.removeChild(root_vbox);
-		//removeModule(entryway);
-		//entryway = null;
 		hxdoom = new Engine();
 		hxdoom.addWad(_wadbytes, "DOOM1.WAD");
 		hxdoom.loadMap("E1M1");
@@ -403,17 +301,5 @@ class Main extends Application
 	override public function onKeyDown(keyCode:KeyCode, modifier:KeyModifier):Void 
 	{
 		Engine.IO.keyPress(keyCode);
-	}
-	
-	/*override public function onMouseWheel(deltaX:Float, deltaY:Float, deltaMode:MouseWheelMode):Void 
-	{
-		super.onMouseWheel(deltaX, deltaY, deltaMode);
-		
-		var mxa:Float = 
-		Environment.AUTOMAP_ZOOM += (0.0001 * deltaY) / (1 / Environment.AUTOMAP_ZOOM / 200);
-	}*/
-	
-	public static function getWadDir() {
-		
 	}
 }

@@ -11,8 +11,8 @@
 	<haxelib name="lime" />
 	<haxelib name="hxdoom" />
 	<haxelib name="haxe-gl-matrix" />
-	<haxelib name="haxeui-core" />
-	<haxelib name="haxeui-openfl" />
+	
+	<!-- UI Haxelib Stuff, yet to be implmented -->
 	
 	<assets path="assets/shareware" rename="IWADS" unless="native"/>
 	
