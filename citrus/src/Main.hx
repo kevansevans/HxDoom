@@ -51,7 +51,7 @@ import lime.ui.KeyCode;
 
 import haxe.ui.Toolkit;
 
-class MainCitrus extends Application 
+class Main extends Application 
 {
 	var hxdoom:Engine;
 	var entryway:Stage;

@@ -1,5 +1,5 @@
 
-# HxDoom
+# Citrus Doom
 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -7,29 +7,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ```
 
-HxDoom is a Haxe port of id Software's Doom for anyone to use. The goal of this library is to provide anyone developing on Haxe an easy and comprehensive way to build their own rendering code and their own IO code without having to port the entirety of a game engine and gutting out needless code.
-
-``haxelib install hxdoom``
-
-```
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//Current frameworks using HxDoom
-////////////////////////////////////////////////////////////////////////////////////////////////////
-```
-Citrus Doom
-* Runs on Lime
-* Playable HTML5 (WebGL) build here: https://kevansevans.github.io/HxDoom/
-
-```
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//Confirmed specific targets HxDoom has been compiled to and ran on
-////////////////////////////////////////////////////////////////////////////////////////////////////
-```
-* Windows 10
-* Manjaro
-* HTML5 - Chrome
-* HTML5 - Firefox
-* HTML5 - Edge
+Citrus Doom is a Haxe port of id Software's Doom using HxDoom and Lime.
 
 
 ```
@@ -38,7 +16,7 @@ Citrus Doom
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ```
 
-Contributions to HxDoom are not currently accepted, but will be in the future when I feel the engine is up to snuff. If and when this
+Contributions to Citrus Doom are not currently accepted, but will be in the future when I feel the engine is up to snuff. If and when this
 happens, it is encouraged, but not mandatory, that you have knowledge of the following:
 
 * Understanding of Doom modding
@@ -46,7 +24,7 @@ happens, it is encouraged, but not mandatory, that you have knowledge of the fol
 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//Haxe port by kevansevans
+//Haxe code by kevansevans
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //
 //                         ...,,,,,,,,..                     

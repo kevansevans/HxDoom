@@ -44,40 +44,48 @@ HxDoom is a haxelib and is meant to be used as a library, not an engine. If you 
 - Maps are indexed by their marker name, which is a string. To load the first level of The Ultimate Doom, you would use ``myDoomGame.loadMap("E1M1");``, or to load the first level of Doom II, you would use ``myDoomGame.loadMap("MAP01");``
 - Once loaded, you can access the static map variable in ``Engine.ACTIVEMAP``, which will access the assembled ``hxdoom.core.BSPMap`` created when ``loadMap()`` was called.
 
-# Extrapolating and using data
-One of the key things developers need to remember when using HxDoom is that it does not provide any tools for "using" the data, but only acts as a back end for any parts of the engine that aren't platform dependent. This means that HxDoom **will not come bundled** with the following abilities:
+```
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//Confirmed specific targets HxDoom has been compiled to and ran on
+////////////////////////////////////////////////////////////////////////////////////////////////////
+```
+* C++ (Widows, Manjaro)
+* Hashlink JIT
+* HTML5
 
-* Rendering
-* Sound output
-* Player Input
-* Filesystem access
-
-What developers are encouraged to do however is inherit from the provided cores and  are expected to override functions that are provided in each core. This system should allow for near parity behaviors across implementations of HxDoom, and to prevent the need of splitting HxDoom development, causing different ports to constantly play a game of catch up.
-***
-### Input
-* Currently, HxDoom  only supports keyboard input and should not require much effort from the developer to change it's behavior.
-* Developer must send inputs to ``IOCore.hx``. ``Engine.hx`` will declare a new IOCore when initilized, so it can be accessed via ``Engine.IO``
-* Send 'key down' events to ``Engine.IO.keyPress()`` and 'key release' events to ``Engine.IO.keyRelease()``.
-* HxDoom expects [standard ASCII codes](http://www.asciitable.com/) integers for input. It provides it's own ASCII enum (``hxdoom.utils.enums.HXDKeyCode``) in case the developer is unable to send in correct inputs.
-
-### Rendering
-When a map is loaded, all loaded walls can be found through either the static ACTIVEMAP variable ``Engine.ACTIVEMAP.linedefs`` or ``Engine.ACTIVEMAP.segments``, however it's more encouraged to rely on ``RenderCore.hx`` to solve which walls are visible.
-* RenderCore.hx has to be manually declared as new. HxDoom does not come with the ability to create a window and draw a scene, as many platforms have different ways to go about this, and we're avoiding any target/library dependent code.
-* Instead, the developer is recommended to create a class that inherits from ``RenderCore.hx`` so they can add their own rendering code. As an example for an OpenGL approach, see [GLHandler.hx for the Citrus Doom](https://github.com/kevansevans/HxDoom/blob/0.0.5-alpha/src/citrus/render/limeGL/GLHandler.hx) adaption of HxDoom.
-* ``initScene()`` This is the first function in RenderCore to get called when a map is loaded into memory. If the developer requires to perform some pre-calculations with the map geometry, IE triangulation of walls, floors, ceilings, sprites for a GL based library, the developer must override this function. Otherwise, the function does nothing and can be ignored.
-* ``setVisibleSegments()`` This function determines the visible geometry and items within the player's FOV. It will call a private function ``subsectorVisibilityCheck()`` and will populate the public array ``vis_segments`` with every visible wall. Developers can derive visible floors/ceilings and actors from this array. These functions do not need to be overriden unless non-vanilla behavior is desired.
-* ``render_scene()`` This function is meant to be called during the developers render loop. Minimum framerate desired should be 35FPS. On it's own, it will do nothing and must be overriden. Developers can access ``vis_segments`` and pass those values to however they're drawn on screen.
-
-# TO DO
-so much time so little to do...
-
-# Credits
-
-* HxDoom is loosely based on id Software's Doom: https://github.com/id-Software/DOOM
-* HxDoom had it's start thanks to the DIY Doom Project: https://github.com/amroibrahim/DIYDoom
-* DIY Doom is led by Amro Ibrahim https://twitter.com/AngryCPPCoder and Marl https://twitter.com/DOOMReboot
-* Chocolate Doom, which is the source port DIY Doom is based on: https://www.chocolate-doom.org/wiki/index.php/Chocolate_Doom
-* The Haxe Discord server https://discordapp.com/invite/0uEuWH3spjck73Lo
-* The OpenFL Discord server: https://discordapp.com/invite/SnJBC53
-* The ZDoom community for being very open and welcoming to this approach for a Doom source port: https://forum.zdoom.org/index.php
-
+```
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//Haxe code by kevansevans
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//                         ...,,,,,,,,..                     
+//                  ./&&%(/**,,,,,,,,,**/%&*               
+//              .//,,,,,,,,,,,,,,,,,,,,,,,,/&&/            
+//           ./&/,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,*&&,         
+//         .#%*,*#/,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#&,       
+//        ,@#,,(*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,/&(      
+//      .%@*,/#,,,,,,,,,,,,,,,,*((/,,,,,,,,,,,,,,,,,,,##     
+//     .&&/,*/,,,,,,,,,,,,,/#/,,,,,,,,,,,,,,,,,,,,,,,,,#&.   
+//     %##,*%,,,,,,,,,,,,#(,,,,,,,,,,,,,,,,,,,,,,,,,,,,,%#   
+//    ,%(/,#*,,,,,,,,,*#(,,,,,,,,,,,,,,,,,,,*/#%#%,,,,,,*&.  
+//    (/#*,#,,,,,,,,,*%,,,,,,,,,,,,,,*/#%#*.    (*,,,,,,,((  
+//    &*%**(,,,,,,,,/#,,,,,,,,,,*(&%(%.       /#,,,,,,,,,*%. 
+//    &/%**(,,,,,,,/#,,,,,,,*/&%/%(  ,*     ,#/(#,,,,,,,,,&. 
+//    ((##*%*******%*******#&&/*(@&**#,    *. (#,,,,,,,,,,&, 
+//    .%/&/%/******%*****(&*.%**(@&*/&      *&/,,,,,,,,,,,&. 
+//     /%/&/%******%****(#.  ,#****#(     /%**(*,,,,,,,,,*%. 
+//      .%(&/%/****%/**/&(/    /%%/      .,#%*%*,,,,,,,,,#*  
+//        ,%####***/%**#/   ....      /%/*****%*,,,,,,,,/&.  
+//          .(%%/*/%*#*         .(#*.%/*****%,,,,,,,,*&*   
+//              #%&@@%#%%#/*/%...#*    *%****(/,,,,,,,*&,    
+//             /#*****/(%***#*...#,    (%***/%,,,,,,,(&.     
+//          .%%*,,,,*#%&%%%,......*.,&/**/(,,,,,,/%,       
+//       (&(((((##(/%%,,,,*%,....../##&/*(#*,,,,*&(.         
+//         /%(/***/&/,,,,,,/(......*(#/,,,*(&(,            
+//             .,(&,,,,,,,,*%    .*/(*,.                 
+//              (#,,,,,**,,,/*    ..,#(#&&&/                 
+//             *(,,,,*&/*,,,,%.  #*,,,,***&/                 
+//           .#(,,,*%#(%******%(.%*******(&.                 
+//           %/,,,/@(//##*******##*******&%#   
+////////////////////////////////////////////////////////////////////////////////////////////////////
+```

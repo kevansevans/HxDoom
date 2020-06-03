@@ -3,7 +3,7 @@
 	
 	<meta title="Citrus Doom" package="com.kevans.citrusdoom" version="0.0.1" company="Kaelan" />
 	
-	<app main="MainCitrus" file="Citrus Doom" path="bin/lime" />
+	<app main="Main" file="Citrus Doom" path="bin" />
 	
 	<source path="src" />
 	
