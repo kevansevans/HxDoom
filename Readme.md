@@ -44,6 +44,10 @@ HxDoom is a haxelib and is meant to be used as a library, not an engine. If you 
 - Maps are indexed by their marker name, which is a string. To load the first level of The Ultimate Doom, you would use ``myDoomGame.loadMap("E1M1");``, or to load the first level of Doom II, you would use ``myDoomGame.loadMap("MAP01");``
 - Once loaded, you can access the static map variable in ``Engine.ACTIVEMAP``, which will access the assembled ``hxdoom.core.BSPMap`` created when ``loadMap()`` was called.
 
+***
+
+More info can be found by reading the API docs: https://kevansevans.github.io/HxDoom/api/
+
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //Confirmed specific targets HxDoom has been compiled to and ran on
