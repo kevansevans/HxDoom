@@ -10,3 +10,9 @@ src/hxdoom.zip
 hxdoom.zip
 
 HxDoom.hxproj
+
+library/doc/
+
+library/pages/
+
+library/docgen.hxml
