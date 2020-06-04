@@ -31,6 +31,7 @@ class Engine
 	public static var GAME(get, null):GameCore;
 	public static var IO(get, null):IOCore;
 	public static var SOUND(get, null):SoundCore;
+	public static var TEXTURES(get, null):TextureCore;
 	
 	public static var LOADMAP:String -> Void;
 	
@@ -45,6 +46,7 @@ class Engine
 		CHEATS = new CheatCore();
 		SOUND = new SoundCore();
 		PROFILE = new ProfileCore();
+		TEXTURES = new TextureCore();
 		LOADMAP = loadMap;
 		
 		setDefaultCVARS();
@@ -100,6 +102,16 @@ class Engine
 		}
 	}
 	
+	public function setcore_textures(?_textures:TextureCore) {
+		if (_textures == null) {
+			TEXTURES = new TextureCore();
+			CVarCore.setCVar(Defaults.OVERRIDE_TEXTURES, false);
+		} else {
+			TEXTURES = _textures;
+			CVarCore.setCVar(Defaults.OVERRIDE_TEXTURES, true);
+		}
+	}
+	
 	public function loadMap(_mapMarker:String) {
 		GAME.stop();
 		
@@ -120,34 +132,35 @@ class Engine
 	
 	function setDefaultCVARS() 
 	{
-		CVarCore.setNewCVar(Defaults.ALLOW_MULTIPLE_IWADS, 			CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.ALLOW_PWADS, 					CVarType.CBool, true);
-		CVarCore.setNewCVar(Defaults.AUTOMAP_MODE, 					CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.AUTOMAP_ZOOM, 					CVarType.CFloat, 0.001);
+		CVarCore.setNewCVar(Defaults.ALLOW_MULTIPLE_IWADS, 			CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.ALLOW_PWADS, 					CVarType.CBool, 	true);
+		CVarCore.setNewCVar(Defaults.AUTOMAP_MODE, 					CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.AUTOMAP_ZOOM, 					CVarType.CFloat, 	0.001);
 		
-		CVarCore.setNewCVar(Defaults.CHEAT_DEGREELESS, 				CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.CHEAT_TRUEGOD, 				CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.CHEAT_NOCLIP, 					CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.CHEAT_DEGREELESS, 				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.CHEAT_TRUEGOD, 				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.CHEAT_NOCLIP, 					CVarType.CBool, 	false);
 		
-		CVarCore.setNewCVar(Defaults.OVERRIDE_CHEATS, 				CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.OVERRIDE_GAME, 				CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.OVERRIDE_IO, 					CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.OVERRIDE_PROFILE, 				CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.OVERRIDE_RENDER, 				CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.OVERRIDE_SOUND, 				CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_CHEATS, 				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_GAME, 				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_IO, 					CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_PROFILE, 				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_RENDER, 				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_SOUND, 				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_TEXTURES,				CVarType.CBool, 	false);
 		
-		CVarCore.setNewCVar(Defaults.PLAYER_FOV, 					CVarType.CInt, 90);
-		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_FORWARD, 		CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_BACKWARD, 		CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.PLAYER_STRAFING_LEFT, 			CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.PLAYER_STRAFING_RIGHT, 		CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.PLAYER_TURNING_LEFT, 			CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.PLAYER_TURNING_RIGHT, 			CVarType.CBool, false);
-		CVarCore.setNewCVar(Defaults.PLAYER_VIEW_HEIGHT, 			CVarType.CInt, 41);
+		CVarCore.setNewCVar(Defaults.PLAYER_FOV, 					CVarType.CInt, 		90);
+		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_FORWARD, 		CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_BACKWARD, 		CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.PLAYER_STRAFING_LEFT, 			CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.PLAYER_STRAFING_RIGHT, 		CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.PLAYER_TURNING_LEFT, 			CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.PLAYER_TURNING_RIGHT, 			CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.PLAYER_VIEW_HEIGHT, 			CVarType.CInt, 		41);
 		
-		CVarCore.setNewCVar(Defaults.SCREEN_DISTANCE_FROM_VIEWER, 	CVarType.CInt, 160);
+		CVarCore.setNewCVar(Defaults.SCREEN_DISTANCE_FROM_VIEWER, 	CVarType.CInt, 		160);
 		
-		CVarCore.setNewCVar(Defaults.WADS_LOADED, 					CVarType.CBool, false);
+		CVarCore.setNewCVar(Defaults.WADS_LOADED, 					CVarType.CBool, 	false);
 	}
 	
 	static function get_CHEATS():CheatCore 
@@ -183,6 +196,11 @@ class Engine
 	static function get_PROFILE():ProfileCore 
 	{
 		return PROFILE;
+	}
+	
+	static function get_TEXTURES():TextureCore 
+	{
+		return TEXTURES;
 	}
 	
 	public static inline function log(_msg:String) {
