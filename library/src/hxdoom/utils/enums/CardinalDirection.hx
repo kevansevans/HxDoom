@@ -2,7 +2,7 @@ package hxdoom.utils.enums;
 
 
 /**
- * ...
+ * Describe values of the needed cardinal directions to describe sprite directions. One provided as integers, and one provided as strings.
  * @author Kaelan
  */
 enum abstract CardInt(Int) from Int to Int {
