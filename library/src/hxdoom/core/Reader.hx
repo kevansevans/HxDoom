@@ -30,6 +30,7 @@ class Reader
 	public function new() { }
 	
 	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String, _index:Int):Directory {
+	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String == "", _index:Int = -1):Directory {
 		return new Directory(
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
