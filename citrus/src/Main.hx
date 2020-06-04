@@ -46,9 +46,6 @@ class Main extends Application
 	var hxdoom:Engine;
 	var env_path:Null<String>;
 	
-	var launcher:Window;
-	var attrib:WindowAttributes;
-	
 	#if sys
 	var pathlist:Map<String, String>;
 	#end
