@@ -21,9 +21,10 @@ class CVarCore
 		
 	}
 	
-	public static inline function setNewCVar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void) {
+	/**
+	public static inline function setNewCVar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void, ?_callAfterSet:Bool = false) {
 		if (CVarMap[_name] != null) {
-			Engine.log('Cvar $_name is already set, use replaceCvar() instead');
+			Engine.log('Cvar $_name is already set, use replaceCvar() instead if this is intentional');
 			return;
 		}
 		CVarMap[_name] = {
@@ -32,14 +33,16 @@ class CVarCore
 			value : _value,
 			onSet : _onSet
 		}
+		if (_onSet != null && _callAfterSet) _onSet();
 	}
-	public static inline function replaceCvar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void) {
+	public static inline function replaceCvar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void, ?_callAfterSet:Bool = false) {
 		CVarMap[_name] = {
 			name : _name,
 			type : _type,
 			value : _value,
 			onSet : _onSet
 		}
+		if (_onSet != null && _callAfterSet) _onSet();
 	}
 	public static function setCVar(_name:String, _value:Any) {
 		if (CVarMap[_name] == null) Engine.log('Set error: CVar Namespace "$_name" does not exist');
