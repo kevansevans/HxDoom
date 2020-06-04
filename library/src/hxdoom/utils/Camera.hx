@@ -5,7 +5,7 @@ import hxdoom.lumps.map.Vertex;
 import hxdoom.utils.geom.Angle;
 
 /**
- * ...
+ * Camera class that follows a given actor, if provided, and points at a given camera point, if provided.
  * @author Kaelan
  */
 class Camera
@@ -27,6 +27,11 @@ class Camera
 		cameraPoint = _pointingAt;
 	}
 	
+	/**
+	 * Converts a given vertex to an angle relative to the cameras position. This function assumes the camera is always facing east, IE 0 degrees.
+	 * @param	_vertex
+	 * @return
+	 */
 	public function angleToVertex(_vertex:Vertex):Angle {
 		var vdx:Float = _vertex.xpos - this.xpos;
 		var vdy:Float = _vertex.ypos - this.ypos;
