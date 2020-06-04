@@ -59,7 +59,6 @@ class BSPMap
 	public function build() {
 		parseThings();
 		setOffset();
-		buildNodes(nodes.length - 1);
 		
 		camera = new Camera(actors_players[0]);
 		focus = new CameraPoint();
@@ -110,18 +109,6 @@ class BSPMap
 		var dy = _y - nodes[_nodeID].yPartition;
 		
 		return (((dx *  nodes[_nodeID].changeYPartition) - (dy * nodes[_nodeID].changeXPartition)) <= 0);
-	}
-	
-	public function buildNodes(_node:Int) {
-		var node = nodes[_node];
-		if (node.frontChildID & Node.SUBSECTORIDENTIFIER == 0) {
-			nodes[node.frontChildID].parent = _node;
-			buildNodes(node.frontChildID);
-		}
-		if (node.backChildID & Node.SUBSECTORIDENTIFIER == 0) {
-			nodes[node.backChildID].parent = _node;
-			buildNodes(node.backChildID);
-		}
 	}
 	
 	public function copy():BSPMap {
