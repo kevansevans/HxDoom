@@ -1,4 +1,6 @@
 package hxdoom;
+
+import haxe.PosInfos;
 import haxe.Timer;
 import haxe.io.Bytes;
 import haxe.ds.Map;
@@ -217,8 +219,8 @@ class Engine
 	 * Placeholder for future engine logging
 	 * @param	_msg
 	 */
-	public static inline function log(_msg:String) {
-		trace(_msg);
+	public static inline function log(_msg:String, ?_pos:PosInfos) {
+		trace(_pos, _msg);
 	}
 	
 	static function get_CHEATS():CheatCore 
