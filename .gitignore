@@ -16,3 +16,7 @@ library/doc/
 library/pages/
 
 library/docgen.hxml
+
+library/api/
+
+library/docgen.bat
