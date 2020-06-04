@@ -22,6 +22,7 @@ enum abstract Defaults(String) from String {
 	var OVERRIDE_PROFILE:String;
 	var OVERRIDE_RENDER:String;
 	var OVERRIDE_SOUND:String;
+	var OVERRIDE_TEXTURES:String;
 	
 	var PLAYER_FOV:String;
 	var PLAYER_VIEW_HEIGHT:String;
