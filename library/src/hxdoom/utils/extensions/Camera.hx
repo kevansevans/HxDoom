@@ -1,6 +1,7 @@
-package hxdoom.utils;
+package hxdoom.utils.extensions;
 
 import hxdoom.actors.Actor;
+import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.utils.geom.Angle;
 
@@ -8,38 +9,20 @@ import hxdoom.utils.geom.Angle;
  * Camera class that follows a given actor, if provided, and points at a given camera point, if provided.
  * @author Kaelan
  */
-class Camera
+class Camera extends Actor
 {
 	public var actorToFollow:Null<Actor>;
 	public var cameraPoint:Null<CameraPoint>;
 	
-	public var xpos(get, null):Float = 0.0;
-	public var ypos(get, null):Float = 0.0;
-	public var zpos(get, null):Float = 0.0;
-	
-	public var pitch(get, null):Angle = 0;
-	public var yaw(get, null):Angle = 0;
-	public var roll(get, null):Angle = 0;
-	
 	public function new(?_follow:Actor, ?_pointingAt:CameraPoint) 
 	{
+		super(new Thing(0, 0, 0, -1, 0));
+		
 		actorToFollow = _follow;
 		cameraPoint = _pointingAt;
 	}
 	
-	/**
-	 * Converts a given vertex to an angle relative to the cameras position. This function assumes the camera is always facing east, IE 0 degrees.
-	 * @param	_vertex
-	 * @return
-	 */
-	public function angleToVertex(_vertex:Vertex):Angle {
-		var vdx:Float = _vertex.xpos - this.xpos;
-		var vdy:Float = _vertex.ypos - this.ypos;
-		var angle:Angle = (Math.atan2(vdy, vdx) * 180 / Math.PI);
-		return angle;
-	}
-	
-	function get_xpos():Float 
+	override public function get_xpos():Float 
 	{
 		if (actorToFollow == null) {
 			return xpos;
@@ -48,7 +31,7 @@ class Camera
 		}
 	}
 	
-	function get_ypos():Float 
+	override public function get_ypos():Float 
 	{
 		if (actorToFollow == null) {
 			return ypos;
@@ -57,7 +40,7 @@ class Camera
 		}
 	}
 	
-	function get_zpos():Float 
+	override public function get_zpos():Float 
 	{
 		if (actorToFollow == null) {
 			return zpos;
@@ -66,7 +49,7 @@ class Camera
 		}
 	}
 	
-	function get_pitch():Angle 
+	override public function get_pitch():Angle 
 	{
 		if (cameraPoint == null) {
 			if (actorToFollow == null) {
@@ -79,7 +62,7 @@ class Camera
 		}
 	}
 	
-	function get_yaw():Angle 
+	override public function get_yaw():Angle 
 	{
 		if (cameraPoint == null) {
 			if (actorToFollow == null) {
@@ -95,7 +78,7 @@ class Camera
 		}
 	}
 	
-	function get_roll():Angle 
+	override public function get_roll():Angle 
 	{
 		if (actorToFollow == null) {
 			return roll;

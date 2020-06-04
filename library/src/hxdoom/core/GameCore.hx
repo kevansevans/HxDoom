@@ -1,8 +1,8 @@
 package hxdoom.core;
 
 import haxe.Timer;
-import hxdoom.utils.Camera;
-import hxdoom.utils.CameraPoint;
+import hxdoom.utils.extensions.Camera;
+import hxdoom.utils.extensions.CameraPoint;
 
 import hxdoom.Engine;
 import hxdoom.utils.enums.data.Defaults;

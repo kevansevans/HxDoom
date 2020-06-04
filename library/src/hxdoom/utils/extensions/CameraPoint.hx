@@ -1,4 +1,4 @@
-package hxdoom.utils;
+package hxdoom.utils.extensions;
 import hxdoom.actors.Actor;
 
 /**

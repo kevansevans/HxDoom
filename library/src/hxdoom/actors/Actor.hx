@@ -14,16 +14,16 @@ import hxdoom.Engine;
  */
 class Actor 
 {
-	public var xpos:Float;
-	public var ypos:Float;
-	public var zpos(get, null):Float;
+	public var xpos(get, null):Float = 0.0;
+	public var ypos(get, null):Float = 0.0;
+	public var zpos(get, null):Float = 0.0;
 	public var zpos_flight:Float;
 	public var zpos_eyeheight:Float;
 	public var zpos_view(get, null):Float;
 	
-	public var pitch:Angle;
-	public var yaw:Angle;
-	public var roll:Angle;
+	public var pitch(get, default):Angle = 0.0;
+	public var yaw(get, default):Angle = 0.0;
+	public var roll(get, default):Angle = 0.0;
 	
 	public var type:DoomID;
 	public var flags:Int;
@@ -106,9 +106,34 @@ class Actor
 		return zpos + zpos_eyeheight;
 	}
 	
-	function get_zpos():Float
+	public function get_xpos():Float 
+	{
+		return xpos;
+	}
+	
+	public function get_ypos():Float 
+	{
+		return ypos;
+	}
+	
+	public function get_zpos():Float
 	{
 		return Engine.ACTIVEMAP.getActorSubsector(this).sector.floorHeight;
+	}
+	
+	public function get_pitch():Angle 
+	{
+		return pitch;
+	}
+	
+	public function get_yaw():Angle 
+	{
+		return yaw;
+	}
+	
+	public function get_roll():Angle 
+	{
+		return roll;
 	}
 	
 }

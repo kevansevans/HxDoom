@@ -6,7 +6,7 @@ import hxdoom.Engine;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.map.SubSector;
-import hxdoom.utils.Camera;
+import hxdoom.utils.extensions.Camera;
 import hxdoom.utils.enums.data.Defaults;
 import hxdoom.utils.geom.Angle;
 
