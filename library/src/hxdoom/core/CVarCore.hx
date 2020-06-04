@@ -1,5 +1,5 @@
 package hxdoom.core;
-import hxdoom.utils.enums.CVarType;
+import hxdoom.utils.enums.data.CVarType;
 
 /**
  * Main handler for controlling CVar behavior.
@@ -11,7 +11,7 @@ typedef CVar = {
 	/**
 	 * Controls the return behavior when accessing this CVar.
 	 */
-	var type : hxdoom.utils.enums.CVarType;
+	var type : hxdoom.utils.enums.data.CVarType;
 	var value : Any;
 	/**
 	 * Function to call if this CVar is changed.
@@ -36,7 +36,7 @@ class CVarCore
 	 * @param	_onSet Function to call when changing the value
 	 * @param	_callAfterSet Call this function immedaitely after creating this CVar
 	 */
-	public static inline function setNewCVar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void, ?_callAfterSet:Bool = false) {
+	public static inline function setNewCVar(_name:String, _type:hxdoom.utils.enums.data.CVarType, _value:Any, ?_onSet:Void -> Void, ?_callAfterSet:Bool = false) {
 		if (CVarMap[_name] != null) {
 			Engine.log('Cvar $_name is already set, use replaceCvar() instead if this is intentional');
 			return;
@@ -57,7 +57,7 @@ class CVarCore
 	 * @param	_onSet Function to call when changing the value
 	 * @param	_callAfterSet Call this function immedaitely after creating this CVar
 	 */
-	public static inline function replaceCvar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void, ?_callAfterSet:Bool = false) {
+	public static inline function replaceCvar(_name:String, _type:hxdoom.utils.enums.data.CVarType, _value:Any, ?_onSet:Void -> Void, ?_callAfterSet:Bool = false) {
 		CVarMap[_name] = {
 			name : _name,
 			type : _type,

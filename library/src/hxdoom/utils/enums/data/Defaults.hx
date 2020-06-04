@@ -1,4 +1,4 @@
-package hxdoom.utils.enums;
+package hxdoom.utils.enums.data;
 
 /**
  * @author Kaelan

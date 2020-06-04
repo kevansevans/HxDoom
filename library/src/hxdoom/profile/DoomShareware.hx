@@ -2,8 +2,8 @@ package hxdoom.profile;
 
 import hxdoom.core.ProfileCore;
 import hxdoom.core.CVarCore;
-import hxdoom.utils.enums.CVarType;
-import hxdoom.utils.enums.Defaults;
+import hxdoom.utils.enums.data.CVarType;
+import hxdoom.utils.enums.data.Defaults;
 
 /**
  * ...

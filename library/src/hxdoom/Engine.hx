@@ -4,9 +4,9 @@ import haxe.PosInfos;
 import haxe.Timer;
 import haxe.io.Bytes;
 import haxe.ds.Map;
-import hxdoom.utils.enums.CVarType;
+import hxdoom.utils.enums.data.CVarType;
 
-import hxdoom.utils.enums.Defaults;
+import hxdoom.utils.enums.data.Defaults;
 import hxdoom.core.*;
 import hxdoom.lumps.map.SubSector;
 

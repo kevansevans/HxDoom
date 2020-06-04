@@ -3,7 +3,7 @@ package hxdoom.core;
 import haxe.ds.Vector;
 import hxdoom.actors.Actor;
 import hxdoom.actors.Player;
-import hxdoom.actors.TypeID;
+import hxdoom.utils.enums.game.DoomID;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Sector;
@@ -69,7 +69,7 @@ class BSPMap
 		for (thing in things) {
 			actors.push(new Actor(thing));
 			switch (thing.type) {
-				case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR:
+				case DoomID.P_PLAYERONE | DoomID.P_PLAYERTWO | DoomID.P_PLAYERTHREE | DoomID.P_PLAYERFOUR:
 					actors_players.push(new Player(thing));
 			}
 		}

@@ -1,5 +1,6 @@
 package hxdoom.actors;
 
+import hxdoom.utils.enums.game.DoomID;
 import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
@@ -24,7 +25,7 @@ class Actor
 	public var yaw:Angle;
 	public var roll:Angle;
 	
-	public var type:TypeID;
+	public var type:DoomID;
 	public var flags:Int;
 	
 	public var isPlayer(get, never):Bool;
@@ -57,14 +58,14 @@ class Actor
 	function get_isMonster():Bool 
 	{
 		switch (type) {
-			case	TypeID.M_SPIDERMASTERMIND | TypeID.M_FORMERSERGEANT | TypeID.M_CYBERDEMON |
-					TypeID.M_DEADFORMERHUMAN | TypeID.M_DEADFORMERSERGEANT | TypeID.M_DEADIMP | TypeID.M_DEADDEMON |
-					TypeID.M_DEADCACODEMON | TypeID.M_DEADLOSTSOUL | TypeID.M_SPECTRE | TypeID.M_ARCHVILE |
-					TypeID.M_FORMERCOMMANDO | TypeID.M_REVENANT | TypeID.M_MANCUBUS | TypeID.M_ARACHNOTRON |
-					TypeID.M_HELLKNIGHT | TypeID.M_PAINELEMENTAL | TypeID.M_COMMANDERKEEN | TypeID.M_WOLFSS |
-					TypeID.M_SPAWNSPOT | TypeID.M_BOSSBRAIN | TypeID.M_BOSSSHOOTER | TypeID.M_IMP |
-					TypeID.M_DEMON | TypeID.M_BARONOFHELL | TypeID.M_FORMERTROOPER | TypeID.M_CACODEMON |
-					TypeID.M_LOSTSOUL
+			case	DoomID.M_SPIDERMASTERMIND | DoomID.M_FORMERSERGEANT | DoomID.M_CYBERDEMON |
+					DoomID.M_DEADFORMERHUMAN | DoomID.M_DEADFORMERSERGEANT | DoomID.M_DEADIMP | DoomID.M_DEADDEMON |
+					DoomID.M_DEADCACODEMON | DoomID.M_DEADLOSTSOUL | DoomID.M_SPECTRE | DoomID.M_ARCHVILE |
+					DoomID.M_FORMERCOMMANDO | DoomID.M_REVENANT | DoomID.M_MANCUBUS | DoomID.M_ARACHNOTRON |
+					DoomID.M_HELLKNIGHT | DoomID.M_PAINELEMENTAL | DoomID.M_COMMANDERKEEN | DoomID.M_WOLFSS |
+					DoomID.M_SPAWNSPOT | DoomID.M_BOSSBRAIN | DoomID.M_BOSSSHOOTER | DoomID.M_IMP |
+					DoomID.M_DEMON | DoomID.M_BARONOFHELL | DoomID.M_FORMERTROOPER | DoomID.M_CACODEMON |
+					DoomID.M_LOSTSOUL
 					:
 						return true;
 			default :
@@ -75,14 +76,14 @@ class Actor
 	function get_isPickup():Bool 
 	{
 		switch (type) {
-			case 	TypeID.I_AMMOCLIP | TypeID.I_BACKPACK | TypeID.I_BERSERK | TypeID.I_BLUEARMOR |
-					TypeID.I_BLUEKEYCARD | TypeID.I_BLUESKULLKEY | TypeID.I_BOXOFAMMO | TypeID.I_BOXOFROCKETS |
-					TypeID.I_BOXOFSHELLS | TypeID.I_CELLCHARGE | TypeID.I_CELLCHARGEPACK | TypeID.I_COMPUTERMAP |
-					TypeID.I_GREENARMOR | TypeID.I_HEALTHPOTION | TypeID.I_INVISIBILITY | TypeID.I_INVULNERABILITY |
-					TypeID.I_LIGHTAMPLIFICATIONVISOR | TypeID.I_MEDIKIT | TypeID.I_MEGASPHERE | TypeID.I_RADIATIONSUIT |
-					TypeID.I_REDKEYCARD | TypeID.I_REDSKULLKEY | TypeID.I_ROCKET | TypeID.I_SHOTGUNSHELLS |
-					TypeID.I_SOULSPHERE | TypeID.I_SPIRITARMOR | TypeID.I_STIMPACK | TypeID.I_YELLOWKEYCARD |
-					TypeID.I_YELLOWSKULLKEY
+			case 	DoomID.I_AMMOCLIP | DoomID.I_BACKPACK | DoomID.I_BERSERK | DoomID.I_BLUEARMOR |
+					DoomID.I_BLUEKEYCARD | DoomID.I_BLUESKULLKEY | DoomID.I_BOXOFAMMO | DoomID.I_BOXOFROCKETS |
+					DoomID.I_BOXOFSHELLS | DoomID.I_CELLCHARGE | DoomID.I_CELLCHARGEPACK | DoomID.I_COMPUTERMAP |
+					DoomID.I_GREENARMOR | DoomID.I_HEALTHPOTION | DoomID.I_INVISIBILITY | DoomID.I_INVULNERABILITY |
+					DoomID.I_LIGHTAMPLIFICATIONVISOR | DoomID.I_MEDIKIT | DoomID.I_MEGASPHERE | DoomID.I_RADIATIONSUIT |
+					DoomID.I_REDKEYCARD | DoomID.I_REDSKULLKEY | DoomID.I_ROCKET | DoomID.I_SHOTGUNSHELLS |
+					DoomID.I_SOULSPHERE | DoomID.I_SPIRITARMOR | DoomID.I_STIMPACK | DoomID.I_YELLOWKEYCARD |
+					DoomID.I_YELLOWSKULLKEY
 					:
 						return true;
 			default :
@@ -93,7 +94,7 @@ class Actor
 	function get_isPlayer():Bool 
 	{
 		switch (type) {
-			case TypeID.P_PLAYERONE | TypeID.P_PLAYERTWO | TypeID.P_PLAYERTHREE | TypeID.P_PLAYERFOUR :
+			case DoomID.P_PLAYERONE | DoomID.P_PLAYERTWO | DoomID.P_PLAYERTHREE | DoomID.P_PLAYERFOUR :
 				return true;
 			default :
 				return false;
