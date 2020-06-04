@@ -2,15 +2,11 @@ package hxdoom.utils;
 import hxdoom.actors.Actor;
 
 /**
- * ...
+ * Acts as a location for a camera to point to. Can be set to follow an actor.
  * @author Kaelan
  */
 class CameraPoint 
 {
-	/*
-	 * This @:isVars are only here because haxe for some reason would not let me leave these as getters AND
-	 * write to them. So we've got useless setter functions bloating my source. Ew.
-	 */
 	@:isVar public var x(get, set):Float;
 	@:isVar public var y(get, set):Float;
 	@:isVar public var z(get, set):Float;
@@ -63,6 +59,11 @@ class CameraPoint
 		return z = value;
 	}
 	
+	/**
+	 * 
+	 * @param	_actor Any item within a map
+	 * @return New camera point automatically set to the location of provided actor
+	 */
 	public static function fromActor(_actor:Actor):CameraPoint {
 		return new CameraPoint(_actor.xpos, _actor.ypos, _actor.zpos);
 	}
