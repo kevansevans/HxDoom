@@ -2,7 +2,7 @@ package hxdoom.common;
 
 import hxdoom.Engine;
 import hxdoom.core.CVarCore;
-import hxdoom.utils.enums.data.Defaults;
+import hxdoom.enums.data.Defaults;
 
 /**
  * ...

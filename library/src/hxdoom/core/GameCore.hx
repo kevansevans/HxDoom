@@ -5,7 +5,7 @@ import hxdoom.utils.extensions.Camera;
 import hxdoom.utils.extensions.CameraPoint;
 
 import hxdoom.Engine;
-import hxdoom.utils.enums.data.Defaults;
+import hxdoom.enums.data.Defaults;
 
 /**
  * ...

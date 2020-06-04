@@ -1,4 +1,4 @@
-package hxdoom.utils.enums.game;
+package hxdoom.enums.game;
 
 /**
  * @author Kaelan

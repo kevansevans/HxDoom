@@ -5,8 +5,8 @@ import haxe.io.Bytes;
 import hxdoom.core.Reader;
 import hxdoom.lumps.Directory;
 import hxdoom.lumps.graphic.*;
-import hxdoom.utils.enums.eng.Lump;
-import hxdoom.utils.enums.data.Defaults;
+import hxdoom.enums.eng.Lump;
+import hxdoom.enums.data.Defaults;
 
 /**
  * ...
@@ -139,7 +139,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load things
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 1].name != hxdoom.utils.enums.eng.Lump.THINGS) {
+		if (directory_index_map[directory.wad][directory.index + 1].name != hxdoom.enums.eng.Lump.THINGS) {
 			Engine.log("Map data corrupt: Expected Things, found: " + directory_index_map[directory.wad][directory.index + 1].name);
 			return false;
 		}
@@ -152,7 +152,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load linedefs
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 2].name != hxdoom.utils.enums.eng.Lump.LINEDEFS) {
+		if (directory_index_map[directory.wad][directory.index + 2].name != hxdoom.enums.eng.Lump.LINEDEFS) {
 			Engine.log("Map data corrupt: Expected Linedefss, found: " + directory_index_map[directory.wad][directory.index + 2].name);
 			return false;
 		}
@@ -165,7 +165,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load sidedefs
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 3].name != hxdoom.utils.enums.eng.Lump.SIDEDEFS) {
+		if (directory_index_map[directory.wad][directory.index + 3].name != hxdoom.enums.eng.Lump.SIDEDEFS) {
 			Engine.log("Map data corrupt: Expected Sidedefs, found: " + directory_index_map[directory.wad][directory.index + 3].name);
 			return false;
 		}
@@ -178,7 +178,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load vertexes
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 4].name != hxdoom.utils.enums.eng.Lump.VERTEXES) {
+		if (directory_index_map[directory.wad][directory.index + 4].name != hxdoom.enums.eng.Lump.VERTEXES) {
 			Engine.log("Map data corrupt: Expected Vertexes, found: " + directory_index_map[directory.wad][directory.index + 4].name);
 			return false;
 		}
@@ -191,7 +191,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load segments
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 5].name != hxdoom.utils.enums.eng.Lump.SEGS) {
+		if (directory_index_map[directory.wad][directory.index + 5].name != hxdoom.enums.eng.Lump.SEGS) {
 			Engine.log("Map data corrupt: Expected Segments, found: " + directory_index_map[directory.wad][directory.index + 5].name);
 			return false;
 		}
@@ -204,7 +204,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load Subsectors
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 6].name != hxdoom.utils.enums.eng.Lump.SSECTORS) {
+		if (directory_index_map[directory.wad][directory.index + 6].name != hxdoom.enums.eng.Lump.SSECTORS) {
 			Engine.log("Map data corrupt: Expected Subsectors, found: " + directory_index_map[directory.wad][directory.index + 6].name);
 			return false;
 		}
@@ -217,7 +217,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load nodes
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 7].name != hxdoom.utils.enums.eng.Lump.NODES) {
+		if (directory_index_map[directory.wad][directory.index + 7].name != hxdoom.enums.eng.Lump.NODES) {
 			Engine.log("Map data corrupt: Expected Nodes, found: " + directory_index_map[directory.wad][directory.index + 7].name);
 			return false;
 		}
@@ -230,7 +230,7 @@ class WadCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load sectors
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (directory_index_map[directory.wad][directory.index + 8].name != hxdoom.utils.enums.eng.Lump.SECTORS) {
+		if (directory_index_map[directory.wad][directory.index + 8].name != hxdoom.enums.eng.Lump.SECTORS) {
 			Engine.log("Map data corrupt: Expected Sectors, found: " + directory_index_map[directory.wad][directory.index + 8].name);
 			return false;
 		}

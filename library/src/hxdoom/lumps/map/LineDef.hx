@@ -4,7 +4,7 @@ import hxdoom.Engine;
 
 import hxdoom.lumps.graphic.Patch;
 
-import hxdoom.utils.enums.eng.SideType;
+import hxdoom.enums.eng.SideType;
 
 /**
  * ...

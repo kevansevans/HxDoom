@@ -2,8 +2,8 @@ package hxdoom.core;
 
 import hxdoom.core.CheatCore;
 import hxdoom.core.GameCore;
-import hxdoom.utils.enums.data.Defaults;
-import hxdoom.utils.enums.data.HXDKeyCode;
+import hxdoom.enums.data.Defaults;
+import hxdoom.enums.data.HXDKeyCode;
 
 /**
  * ...

@@ -3,7 +3,7 @@ package hxdoom.core;
 import haxe.ds.Vector;
 import hxdoom.actors.Actor;
 import hxdoom.actors.Player;
-import hxdoom.utils.enums.game.DoomID;
+import hxdoom.enums.game.DoomID;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Sector;

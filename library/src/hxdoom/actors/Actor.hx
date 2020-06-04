@@ -1,6 +1,6 @@
 package hxdoom.actors;
 
-import hxdoom.utils.enums.game.DoomID;
+import hxdoom.enums.game.DoomID;
 import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
