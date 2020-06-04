@@ -22,6 +22,18 @@ class CVarCore
 	}
 	
 	public static inline function setNewCVar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void) {
+		if (CVarMap[_name] != null) {
+			Engine.log('Cvar $_name is already set, use replaceCvar() instead');
+			return;
+		}
+		CVarMap[_name] = {
+			name : _name,
+			type : _type,
+			value : _value,
+			onSet : _onSet
+		}
+	}
+	public static inline function replaceCvar(_name:String, _type:hxdoom.utils.enums.CVarType, _value:Any, ?_onSet:Void -> Void) {
 		CVarMap[_name] = {
 			name : _name,
 			type : _type,
