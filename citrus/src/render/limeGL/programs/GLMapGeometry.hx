@@ -15,14 +15,14 @@ import render.limeGL.objects.GLFlat;
 import render.limeGL.objects.GLDodecahedron;
 
 import hxdoom.Engine;
-import hxdoom.utils.enums.eng.SideType;
+import hxdoom.enums.eng.SideType;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.map.SubSector;
 import hxdoom.lumps.map.Sector;
 import hxdoom.utils.geom.Angle;
-import hxdoom.utils.Camera;
-import hxdoom.utils.CameraPoint;
+import hxdoom.utils.extensions.Camera;
+import hxdoom.utils.extensions.CameraPoint;
 import hxdoom.actors.Actor;
 
 /**
