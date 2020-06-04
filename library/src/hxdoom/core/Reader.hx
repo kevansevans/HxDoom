@@ -29,8 +29,15 @@ class Reader
 	
 	public function new() { }
 	
-	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String, _index:Int):Directory {
-	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String == "", _index:Int = -1):Directory {
+	/**
+	 * Reads from provided data and returns a new directory.
+	 * @param	_data
+	 * @param	_offset
+	 * @param	_wadname
+	 * @param	_index
+	 * @return
+	 */
+	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String = "", _index:Int = -1):Directory {
 		return new Directory(
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
@@ -39,7 +46,12 @@ class Reader
 			_index
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Thing
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readThing(_data:Array<Int>, _offset:Int):Thing {
 		return new Thing(
 			getTwoBytes(_data, _offset, true),
@@ -49,7 +61,12 @@ class Reader
 			getTwoBytes(_data, _offset + 8, true)
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Linedef
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readLinedef(_data:Array<Int>, _offset:Int):LineDef {
 		return new LineDef(
 			getTwoBytes(_data, _offset),
@@ -61,14 +78,24 @@ class Reader
 			getTwoBytes(_data, _offset + 12)
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Vertex
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readVertex(_data:Array<Int>, _offset:Int):Vertex {
 		return new Vertex(
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true)
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Segment
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readSegment(_data:Array<Int>, _offset:Int):Segment {
 		return new Segment(
 			getTwoBytes(_data, _offset + 4, true),
@@ -77,14 +104,24 @@ class Reader
 			getTwoBytes(_data, _offset + 10)
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Subsector
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readSubSector(_data:Array<Int>, _offset:Int):SubSector {
 		return new SubSector(
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2)
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Node
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readNode(_data:Array<Int>, _offset:Int):Node {
 		return new Node(
 			getTwoBytes(_data, _offset, true),
@@ -103,7 +140,12 @@ class Reader
 			getTwoBytes(_data, _offset + 26)
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Sidedef
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
 		return new SideDef(
 			getTwoBytes(_data, _offset, true),
@@ -114,7 +156,12 @@ class Reader
 			getTwoBytes(_data, _offset + 28)
 		);
 	}
-	
+	/**
+	 * Reads from provided data and returns a new Sector
+	 * @param	_data
+	 * @param	_offset
+	 * @return
+	 */
 	public static inline function readSector(_data:Array<Int>, _offset:Int):Sector {
 		return new Sector(
 			getTwoBytes(_data, _offset, true),
@@ -223,9 +270,4 @@ class Reader
 		}
 		return str;
 	}
-	/*public static inline function getMidi(_data:Array<Int>, _offset:Int, _size:Int) {
-		for (byte in _offset..._offset(_offset + _size)) {
-			
-		}
-	}*/
 }
