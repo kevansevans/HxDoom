@@ -9,30 +9,53 @@ import hxdoom.core.*;
 import hxdoom.lumps.map.SubSector;
 
 /**
- * ...
+ * Engine.hx acts as the hub class for accessing data. It contains "cores" that can be utilized for wad data manipulation.
+ * Cores can be overriden by the developers to modify behavior. Some of these cores are mandatory to change in order to use.
+ * @see https://kevansevans.github.io/HxDoom/demo/
  * @author Kaelan
  */
 
 class Engine 
 {
-	/*
-	 * these vars are the accumulated data that's supplies to the engine. Using a Map<String, [type]> format,
-	 * this allows it to mimic the same style of namespace overriding all opther sourceports use, at the same
-	 * time allowing new assets to occupy their own name space.
-	 */
-	
+	/**
+	 * Handles cheat code processing
+	 **/
 	public static var CHEATS(get, null):CheatCore;
+	/**
+	 * Handles wad loading and parsing
+	 **/
 	public static var WADDATA(get, null):WadCore;
-	
+	/**
+	 * Stores an instance of the currently running map
+	 **/
 	public static var ACTIVEMAP:BSPMap;
-	
+	/**
+	 * Sets behavior based on the first IWAD provided
+	 **/
 	public static var PROFILE(get, null):ProfileCore;
+	/**
+	 * Handles render behavior
+	 **/
 	public static var RENDER(get, null):RenderCore;
+	/**
+	 * Handles game behavior, not yet implemented
+	 **/
 	public static var GAME(get, null):GameCore;
+	/**
+	 * Handles input and output behavior
+	 **/
 	public static var IO(get, null):IOCore;
+	/**
+	 * Handles sound processing
+	 **/
 	public static var SOUND(get, null):SoundCore;
+	/**
+	 * Handles texture reading and building
+	 **/
 	public static var TEXTURES(get, null):TextureCore;
-	
+	/**
+	 * Function to call when loading a map. Can be overriden to change behavior.
+	 **/
 	public static var LOADMAP:String -> Void;
 	
 	var mapindex:Int = 0;
@@ -51,7 +74,10 @@ class Engine
 		
 		setDefaultCVARS();
 	}
-	
+	/**
+	 * Setter to override CheatCore behavior. Changes CVar flag when overriden. Optional.
+	 * @param	_cheats Providing 'null' will reset to default core
+	 */
 	public function setcore_cheats(?_cheats:CheatCore) {
 		if (_cheats == null) {
 			CHEATS = new CheatCore();
@@ -61,7 +87,10 @@ class Engine
 			CVarCore.setCVar(Defaults.OVERRIDE_CHEATS, true);
 		}
 	}
-	
+	/**
+	 * Setter to override GameCore behavior. Changes CVar flag when overriden. Optional.
+	 * @param	_cheats Providing 'null' will reset to default core
+	 */
 	public function setcore_game(?_game:GameCore) {
 		if (_game == null) {
 			GAME = new GameCore();
@@ -71,7 +100,10 @@ class Engine
 			CVarCore.setCVar(Defaults.OVERRIDE_GAME, true);
 		}
 	}
-	
+	/**
+	 * Setter to override IOCore behavior. Changes CVar flag when overriden. Optional.
+	 * @param	_cheats Providing 'null' will reset to default core
+	 */
 	public function setcore_IO(?_IO:IOCore) {
 		if (_IO == null) {
 			IO = new IOCore();
@@ -81,7 +113,10 @@ class Engine
 			CVarCore.setCVar(Defaults.OVERRIDE_IO, true);
 		}
 	}
-	
+	/**
+	 * Setter to override ProfileCore behavior. Changes CVar flag when overriden. Optional.
+	 * @param	_cheats Providing 'null' will reset to default core
+	 */
 	public function setcore_profile(?_profile:ProfileCore) {
 		if (_profile == null) {
 			PROFILE = new ProfileCore();
@@ -91,7 +126,10 @@ class Engine
 			CVarCore.setCVar(Defaults.OVERRIDE_PROFILE, true);
 		}
 	}
-	
+	/**
+	 * Setter to override RenderCore behavior. Changes CVar flag when overriden. Mandatory to draw a scene.
+	 * @param	_cheats Providing 'null' will reset to default core
+	 */
 	public function setcore_render(?_render:RenderCore) {
 		if (_render == null) {
 			RENDER = new RenderCore();
@@ -101,7 +139,10 @@ class Engine
 			CVarCore.setCVar(Defaults.OVERRIDE_RENDER, true);
 		}
 	}
-	
+	/**
+	 * Setter to override TextureCore behavior. Changes CVar flag when overriden. Optional.
+	 * @param	_cheats Providing 'null' will reset to default core
+	 */
 	public function setcore_textures(?_textures:TextureCore) {
 		if (_textures == null) {
 			TEXTURES = new TextureCore();
@@ -111,7 +152,10 @@ class Engine
 			CVarCore.setCVar(Defaults.OVERRIDE_TEXTURES, true);
 		}
 	}
-	
+	/**
+	 * Default function to load a map that's set to Engine.LOADMAP()
+	 * @param	_mapMarker String denoting map marker directory
+	 */
 	public function loadMap(_mapMarker:String) {
 		GAME.stop();
 		
@@ -125,12 +169,18 @@ class Engine
 		
 		GAME.start();
 	}
-	
+	/**
+	 * Adds and parses wad into memory.
+	 * @param	_wadBytes Wad as bytes
+	 * @param	_wadName Name of wad
+	 */
 	public function addWad(_wadBytes:Bytes, _wadName:String) {
 		WADDATA.addWad(_wadBytes, _wadName);
 	}
-	
-	function setDefaultCVARS() 
+	/**
+	 * Sets default CVar environment vars.
+	 */
+	public function setDefaultCVARS() 
 	{
 		CVarCore.setNewCVar(Defaults.ALLOW_MULTIPLE_IWADS, 			CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.ALLOW_PWADS, 					CVarType.CBool, 	true);
@@ -161,6 +211,14 @@ class Engine
 		CVarCore.setNewCVar(Defaults.SCREEN_DISTANCE_FROM_VIEWER, 	CVarType.CInt, 		160);
 		
 		CVarCore.setNewCVar(Defaults.WADS_LOADED, 					CVarType.CBool, 	false);
+	}
+	
+	/**
+	 * Placeholder for future engine logging
+	 * @param	_msg
+	 */
+	public static inline function log(_msg:String) {
+		trace(_msg);
 	}
 	
 	static function get_CHEATS():CheatCore 
@@ -201,9 +259,5 @@ class Engine
 	static function get_TEXTURES():TextureCore 
 	{
 		return TEXTURES;
-	}
-	
-	public static inline function log(_msg:String) {
-		trace(_msg);
 	}
 }
