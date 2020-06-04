@@ -16,7 +16,7 @@ import render.limeGL.programs.GLAutoMap;
 import hxdoom.Engine;
 import hxdoom.core.CVarCore;
 import hxdoom.core.RenderCore;
-import hxdoom.utils.enums.Defaults;
+import hxdoom.utils.enums.data.Defaults;
 
 /**
  * ...

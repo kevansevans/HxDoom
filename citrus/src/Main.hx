@@ -21,7 +21,7 @@ import render.limeGL.GLHandler;
 
 import hxdoom.Engine;
 import hxdoom.core.CVarCore;
-import hxdoom.utils.enums.Defaults;
+import hxdoom.utils.enums.data.Defaults;
 
 
 

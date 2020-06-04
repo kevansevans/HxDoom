@@ -4,7 +4,7 @@ import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Sector;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.graphic.Patch;
-import hxdoom.utils.enums.SideType;
+import hxdoom.utils.enums.eng.SideType;
 import hxdoom.core.Reader;
 import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;

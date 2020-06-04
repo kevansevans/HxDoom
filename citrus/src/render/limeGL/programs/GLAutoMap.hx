@@ -9,7 +9,7 @@ import lime.utils.Float32Array;
 
 import hxdoom.Engine;
 import hxdoom.core.CVarCore;
-import hxdoom.utils.enums.Defaults;
+import hxdoom.utils.enums.data.Defaults;
 
 /**
  * ...
