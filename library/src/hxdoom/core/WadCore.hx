@@ -1,11 +1,10 @@
 package hxdoom.core;
 
 import haxe.io.Bytes;
-import hxdoom.lumps.graphic.Patch;
-import hxdoom.lumps.graphic.Playpal;
 
-import hxdoom.lumps.Directory;
 import hxdoom.core.Reader;
+import hxdoom.lumps.Directory;
+import hxdoom.lumps.graphic.*;
 import hxdoom.utils.enums.Lump;
 import hxdoom.utils.enums.Defaults;
 
@@ -63,15 +62,24 @@ class WadCore
 			
 			directory_index_map[_wadName][index] = dir;
 			
-			if (directory_name_map[dir.name] == null) {
-				directory_name_map[dir.name] = new Array();
-				directory_name_map[dir.name][0] = dir;
-			} else {
-				directory_name_map[dir.name].unshift(dir);
+			switch (dir.name) {
+				case Lump.LINEDEFS | Lump.NODES | Lump.SEGS | Lump.SIDEDEFS | Lump.SECTORS | Lump.SSECTORS | Lump.THINGS | Lump.VERTEXES :
+					continue;
 			}
+			
+			indexLump(dir);
 		}
 		
 		CVarCore.setCVar(Defaults.WADS_LOADED, true);
+	}
+	
+	public function indexLump(_dir:Directory) {
+		if (directory_name_map[_dir.name] == null) {
+			directory_name_map[_dir.name] = new Array();
+			directory_name_map[_dir.name][0] = _dir;
+		} else {
+			directory_name_map[_dir.name].unshift(_dir);
+		}
 	}
 	
 	public function getPatch(_patchName:String):Patch {
