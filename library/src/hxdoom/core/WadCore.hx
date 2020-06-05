@@ -75,7 +75,6 @@ class WadCore
 			indexLump(dir);
 		}
 		
-		
 		CVarCore.setCVar(Defaults.WADS_LOADED, true);
 	}
 	
