@@ -63,7 +63,7 @@ class WadCore
 			
 			directory_index_map[_wadName][index] = dir;
 			
-			var lumpType = Reader.checkLumpType(dir);
+			var lumpType = Reader.getLumpType(dir);
 			
 			switch (lumpType) {
 				case KeyLump.LINEDEFS | KeyLump.NODES | KeyLump.SEGS | KeyLump.SIDEDEFS | KeyLump.SECTORS | KeyLump.SSECTORS | KeyLump.THINGS | KeyLump.VERTEXES | KeyLump.REJECT | KeyLump.BLOCKMAP :
