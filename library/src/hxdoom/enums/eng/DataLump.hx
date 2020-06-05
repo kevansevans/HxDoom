@@ -11,4 +11,5 @@ enum abstract DataLump(String) from String
 	var SOUNDPC:String;
 	var MIDIMUS:String;
 	var UNKNOWN:String;
+	var MARKER:String;
 }
