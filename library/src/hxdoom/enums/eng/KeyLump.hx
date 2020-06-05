@@ -3,9 +3,9 @@ package hxdoom.enums.eng;
 /**
  * @author Kaelan
  * 
- * Using implicit casts just for the sake of autocomplete in my IDE
+ * Key Lumps are lumps that posses namespaces that easily point to their intended behavior.
  */
-enum abstract Lump(String) from String
+enum abstract KeyLump(String) from String
 {
 	var BLOCKMAP:String; //= "BLOCKMAP";
 	var LINEDEFS:String; //= "LINEDEFS"; etcetera
