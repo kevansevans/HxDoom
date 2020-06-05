@@ -225,7 +225,7 @@ class Reader
 		
 		return patch;
 	}
-	public static function checkLumpType(_dir:Directory, _returnAsLump:Bool = false):Dynamic
+	public static function getLumpType(_dir:Directory, _returnAsLump:Bool = false):Dynamic
 	{
 		switch (_dir.name) {
 			case KeyLump.PLAYPAL :
@@ -263,7 +263,6 @@ class Reader
 				break;
 			}
 		}
-		
 		if (graphic) {
 			if (_returnAsLump) {
 				return readPatch(data, offset);
