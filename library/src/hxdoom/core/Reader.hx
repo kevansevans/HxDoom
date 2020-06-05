@@ -1,6 +1,8 @@
 package hxdoom.core;
 
 import haxe.ds.Vector;
+import hxdoom.enums.eng.DataLump;
+import hxdoom.enums.eng.KeyLump;
 import hxdoom.lumps.Directory;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.map.LineDef;
@@ -222,6 +224,54 @@ class Reader
 		}
 		
 		return patch;
+	}
+	public static function checkLumpType(_dir:Directory, _returnAsLump:Bool = false):Dynamic
+	{
+		switch (_dir.name) {
+			case KeyLump.PLAYPAL :
+				return KeyLump.PLAYPAL;
+			case KeyLump.LINEDEFS | KeyLump.NODES | KeyLump.SEGS | KeyLump.SIDEDEFS | KeyLump.SECTORS | KeyLump.SSECTORS | KeyLump.THINGS | KeyLump.VERTEXES | KeyLump.REJECT | KeyLump.BLOCKMAP :
+				//These enum values are casted to their exact lump names.
+				return _dir.name;
+		}
+		
+		var offset = _dir.dataOffset;
+		var data = Engine.WADDATA.wad_data_map[_dir.wad];
+		
+		//soundcard sounds
+		var three:Int = getTwoBytes(data, offset);
+		var fq_11or22_KHZ:Int = getTwoBytes(data, offset + 2);
+		var zero:Int = getTwoBytes(data, offset + 6);
+		if (three == 3 && (fq_11or22_KHZ == 11025 || fq_11or22_KHZ == 22050) && zero == 0) return DataLump.SOUNDFX;
+		
+		//PC Speaker sounds
+		var short_a:Int = getTwoBytes(data, offset);
+		var short_b:Int = getTwoBytes(data, offset + 2);
+		if (32 + (short_b * 8) == _dir.size * 8 && short_a == 0) return DataLump.SOUNDPC;
+		
+		//graphic check
+		var width:Int = getTwoBytes(data, offset);
+		var highest = 0;
+		var graphic:Bool = true;
+		for (index in 0...width) {
+			var c_offset:Int = getFourBytes(data, offset + 8 + (index * 4));
+			if (c_offset > highest) {
+				highest = c_offset;
+				continue;
+			} else {
+				graphic = false;
+				break;
+			}
+		}
+		
+		if (graphic) {
+			if (_returnAsLump) {
+				return readPatch(data, offset);
+			}
+			return DataLump.GRAPHIC;
+		}
+		
+		return DataLump.UNKNOWN;
 	}
 	/**
 	 * Get an 8 bit value from provided data and location

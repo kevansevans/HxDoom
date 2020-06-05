@@ -1,7 +1,7 @@
 package hxdoom.lumps.map;
 
-import hxdoom.utils.enums.eng.CardinalDirection.CardInt;
-import hxdoom.utils.enums.eng.CardinalDirection.CardString;
+import hxdoom.enums.eng.Direction.CardInt;
+import hxdoom.enums.eng.Direction.CardString;
 
 /**
  * ...
