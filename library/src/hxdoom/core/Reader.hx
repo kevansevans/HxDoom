@@ -264,12 +264,17 @@ class Reader
 			}
 		}
 		if (graphic) {
-			if (_returnAsLump) {
-				return readPatch(data, offset);
+			var pheight:Int = getTwoBytes(data, offset + 2);
+			var pcolumn = getFourBytes(data, offset + 8);
+			var poffset = getOneByte(data, offset + pcolumn);
+			var plength = getOneByte(data, offset + pcolumn + 1);
+			var pterminate = getOneByte(data, offset + pcolumn + plength + 4);
+			if (poffset <= pheight && plength <= pheight && (pterminate == 0xFF || pterminate == 0)) {
+				return DataLump.GRAPHIC;
 			}
-			return DataLump.GRAPHIC;
 		}
 		
+		//Engine.log('Lump type unknown: $_dir.name');
 		return DataLump.UNKNOWN;
 	}
 	/**
