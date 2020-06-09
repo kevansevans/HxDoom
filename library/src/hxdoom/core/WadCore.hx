@@ -17,6 +17,8 @@ class WadCore
 {
 	var iwadLoaded:Bool = false;
 	
+	var lastKeyLumpMarkerRead:KeyLump;
+	
 	//Jump to a specific registered lump by lump name
 	public var directory_name_map:Map<String, Array<Directory>>;
 	//Jump to a specific registered lump by wadname and directory index
@@ -68,6 +70,9 @@ class WadCore
 			switch (lumpType) {
 				case KeyLump.LINEDEFS | KeyLump.NODES | KeyLump.SEGS | KeyLump.SIDEDEFS | KeyLump.SECTORS | KeyLump.SSECTORS | KeyLump.THINGS | KeyLump.VERTEXES | KeyLump.REJECT | KeyLump.BLOCKMAP :
 					continue;
+				case KeyLump.P_START | KeyLump.P1_START | KeyLump.P2_START | KeyLump.P_END | KeyLump.P1_END | KeyLump.P2_END | KeyLump.F_START | KeyLump.F1_START | KeyLump.F2_START | KeyLump.F_END | KeyLump.F1_END | KeyLump.F2_END :
+					lastKeyLumpMarkerRead = lumpType;
+					trace(lastKeyLumpMarkerRead);
 				default :
 					
 			}
