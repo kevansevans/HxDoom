@@ -18,4 +18,16 @@ enum abstract KeyLump(String) from String
 	var SSECTORS:String;
 	var THINGS:String;
 	var VERTEXES:String;
+	var P_START:String;
+	var P1_START:String;
+	var P1_END:String;
+	var P2_START:String;
+	var P2_END:String;
+	var P_END:String;
+	var F_START:String;
+	var F1_START:String;
+	var F1_END:String;
+	var F2_START:String;
+	var F2_END:String;
+	var F_END:String;
 }

@@ -228,9 +228,10 @@ class Reader
 	public static function getLumpType(_dir:Directory, _returnAsLump:Bool = false):Dynamic
 	{
 		switch (_dir.name) {
-			case KeyLump.PLAYPAL :
-				return KeyLump.PLAYPAL;
-			case KeyLump.LINEDEFS | KeyLump.NODES | KeyLump.SEGS | KeyLump.SIDEDEFS | KeyLump.SECTORS | KeyLump.SSECTORS | KeyLump.THINGS | KeyLump.VERTEXES | KeyLump.REJECT | KeyLump.BLOCKMAP :
+			case 	KeyLump.PLAYPAL | KeyLump.LINEDEFS | KeyLump.NODES | KeyLump.SEGS | KeyLump.SIDEDEFS | KeyLump.SECTORS | 
+					KeyLump.SSECTORS | KeyLump.THINGS | KeyLump.VERTEXES | KeyLump.REJECT | KeyLump.BLOCKMAP | KeyLump.P_START | 
+					KeyLump.P1_START | KeyLump.P2_START | KeyLump.P_END | KeyLump.P1_END | KeyLump.P2_END | KeyLump.F_START | 
+					KeyLump.F1_START | KeyLump.F2_START | KeyLump.F_END | KeyLump.F1_END | KeyLump.F2_END :
 				//These enum values are casted to their exact lump names.
 				return _dir.name;
 		}
