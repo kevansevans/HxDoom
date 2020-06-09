@@ -29,6 +29,9 @@ class Reader
 	public static inline var SIDEDEF_LUMP_SIZE:Int = 30;
 	public static inline var SECTOR_LUMP_SIZE:Int = 26;
 	
+	public static var keyLumpList:Array<String>;
+	public static var dataLumpList:Array<String>;
+	
 	public function new() { }
 	
 	/**
@@ -227,13 +230,9 @@ class Reader
 	}
 	public static function getLumpType(_dir:Directory, _returnAsLump:Bool = false):Dynamic
 	{
-		switch (_dir.name) {
-			case 	KeyLump.PLAYPAL | KeyLump.LINEDEFS | KeyLump.NODES | KeyLump.SEGS | KeyLump.SIDEDEFS | KeyLump.SECTORS | 
-					KeyLump.SSECTORS | KeyLump.THINGS | KeyLump.VERTEXES | KeyLump.REJECT | KeyLump.BLOCKMAP | KeyLump.P_START | 
-					KeyLump.P1_START | KeyLump.P2_START | KeyLump.P_END | KeyLump.P1_END | KeyLump.P2_END | KeyLump.F_START | 
-					KeyLump.F1_START | KeyLump.F2_START | KeyLump.F_END | KeyLump.F1_END | KeyLump.F2_END :
-				//These enum values are casted to their exact lump names.
-				return _dir.name;
+		if (keyLumpList.contains(_dir.name)) {
+			//These lumps don't need any special methods of identifying them, as their name is a direct indicator of their use and behavior
+			return _dir.name;
 		}
 		
 		var offset = _dir.dataOffset;

@@ -9,6 +9,10 @@ import hxdoom.enums.data.CVarType;
 import hxdoom.enums.data.Defaults;
 import hxdoom.core.*;
 import hxdoom.lumps.map.SubSector;
+import hxdoom.enums.eng.KeyLump;
+import hxdoom.enums.eng.DataLump;
+
+import hxdoom.enums.EnumTool;
 
 /**
  * Engine.hx acts as the hub class for accessing data. It contains "cores" that can be utilized for wad data manipulation.
@@ -75,6 +79,9 @@ class Engine
 		LOADMAP = loadMap;
 		
 		setDefaultCVARS();
+		
+		Reader.keyLumpList = EnumTool.toStringArray(KeyLump);
+		Reader.dataLumpList = EnumTool.toStringArray(DataLump);
 	}
 	/**
 	 * Setter to override CheatCore behavior. Changes CVar flag when overriden. Optional.
