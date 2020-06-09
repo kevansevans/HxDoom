@@ -5,7 +5,7 @@ package hxdoom.enums.eng;
  * 
  * Key Lumps are lumps that posses namespaces that easily point to their intended behavior.
  */
-enum abstract KeyLump(String) from String
+enum abstract KeyLump(String) from String to String
 {
 	var BLOCKMAP:String; //= "BLOCKMAP";
 	var LINEDEFS:String; //= "LINEDEFS"; etcetera
