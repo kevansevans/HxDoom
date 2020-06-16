@@ -21,21 +21,22 @@ class Playpal
 		if (palettes[_index] == null) palettes[_index] = new Array();
 		palettes[_index].push(_color);
 	}
-	public function getColorChannel(_index:Int, _rgb:Int, _pal:Int = 0, _asFloat:Bool = false):Float {
+	public function getColorChannelFloat(_index:Int, _rgb:Int, _pal:Int = 0):Float {
+		return getColorChannelInt(_index, _rgb, _pal) / 255;
+	}
+	public function getColorChannelInt(_index:Int, _rgb:Int, _pal:Int = 0):Int {
 		var col:Int = palettes[_pal][_index];
 		var val:Float = 0;
 		switch (_rgb) {
-			case -1: 
-				col = 0;
 			case 0:
 				col = col >> 16;
 			case 1:
 				col = (col >> 8) & 0xFF;
 			case 2:
 				col = col & 0xFF;
-		}
-		if (_asFloat) {
-			return (col / 255);
+			case 3:
+				if (col == -1) col = 0;
+				else col = 0xFF;
 		}
 		return col;
 	}
