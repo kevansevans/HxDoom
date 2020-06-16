@@ -12,7 +12,6 @@ import mme.math.glmatrix.Mat4Tools;
 
 import render.limeGL.objects.GLWall;
 import render.limeGL.objects.GLFlat;
-import render.limeGL.objects.GLDodecahedron;
 
 import hxdoom.Engine;
 import hxdoom.enums.eng.SideType;
@@ -40,7 +39,6 @@ class GLMapGeometry
 	var walls:Map<Segment, Vector<GLWall>>;
 	var flats:Map<Sector, Vector<GLFlat>>;
 	var visflats:Array<Vector<GLFlat>>;
-	var actors:Map<Actor, GLDodecahedron>;
 	
 	var safeToRender:Bool = false;
 	
@@ -80,7 +78,6 @@ class GLMapGeometry
 		
 		walls = new Map();
 		flats = new Map();
-		actors = new Map();
 		
 		var mapSegments = Engine.ACTIVEMAP.segments;	
 		for (seg in mapSegments) {
@@ -115,10 +112,6 @@ class GLMapGeometry
 		for (flat in flats) {
 			//flat[0].buildShells();
 			//flat[1].buildShells();
-		}
-		
-		for (actor in Engine.ACTIVEMAP.actors) {
-			actors[actor] = new GLDodecahedron(gl, actor);
 		}
 		
 		safeToRender = true;
@@ -159,10 +152,6 @@ class GLMapGeometry
 					}
 				}
 			}
-		}
-		
-		for (thing in actors) {
-			thing.render(program);
 		}
 	}
 	
