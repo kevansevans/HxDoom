@@ -20,11 +20,11 @@ class WadCore
 	var lastKeyLumpMarkerRead:KeyLump;
 	
 	//Jump to a specific registered lump by lump name
-	public var directory_name_map:Map<String, Array<Directory>>;
+	var directory_name_map:Map<String, Array<Directory>>;
 	//Jump to a specific registered lump by wadname and directory index
-	public var directory_index_map:Map<String, Array<Directory>>;
+	var directory_index_map:Map<String, Array<Directory>>;
 	//Raw per wad data as integers
-	public var wad_data_map:Map<String, Array<Int>>;
+	var wad_data_map:Map<String, Array<Int>>;
 	
 	public var playpal:Playpal;
 	
@@ -90,6 +90,18 @@ class WadCore
 		} else {
 			directory_name_map[_dir.name].unshift(_dir);
 		}
+	}
+	
+	public function getGeneralDir(_name:String, _index:Int = 0) {
+		return directory_name_map[_name][_index];
+	}
+	
+	public function getWadSpecificDir(_wad:String, _index:Int) {
+		return directory_index_map[_wad][_index];
+	}
+	
+	public function getWadByteArray(_name:String) {
+		return wad_data_map[_name];
 	}
 	
 	public function getPatch(_patchName:String):Patch {

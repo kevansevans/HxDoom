@@ -236,7 +236,7 @@ class Reader
 		}
 		
 		var offset = _dir.dataOffset;
-		var data = Engine.WADDATA.wad_data_map[_dir.wad];
+		var data = Engine.WADDATA.getWadByteArray(_dir.wad);
 		
 		//soundcard sounds
 		var three:Int = getTwoBytes(data, offset);
