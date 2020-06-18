@@ -76,8 +76,16 @@ class RenderCore
 			
 			var p_fov = CVarCore.getCvar(Defaults.PLAYER_FOV);
 			
-			var start:Angle = camera.angleToVertex(segment.start);
-			var end:Angle = camera.angleToVertex(segment.end);
+			var start:Angle;
+			var end:Angle;
+			
+			if (segment.side == 0) {
+				start = camera.angleToVertex(segment.start);
+				end = camera.angleToVertex(segment.end);
+			} else {
+				start = camera.angleToVertex(segment.end);
+				end = camera.angleToVertex(segment.start);
+			}
 			var span:Angle = start - end;
 			
 			if (span > spanlimit) {
