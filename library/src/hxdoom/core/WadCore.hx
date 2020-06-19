@@ -1,5 +1,6 @@
 package hxdoom.core;
 
+import haxe.ds.Vector;
 import haxe.io.Bytes;
 
 import hxdoom.core.Reader;
@@ -104,9 +105,27 @@ class WadCore
 	}
 	
 	public function getPatch(_patchName:String):Patch {
-		var dir = directory_name_map[_patchName][0];
-		var patch = Reader.readPatch(wad_data_map[dir.wad], dir.dataOffset);
-		return patch;
+		
+		if (directory_name_map[_patchName] != null) {
+			var dir = directory_name_map[_patchName][0];
+			if (Reader.getLumpType(dir) == DataLump.GRAPHIC) {
+				var patch = Reader.readPatch(wad_data_map[dir.wad], dir.dataOffset);
+				return patch;
+			} else {
+				dir = directory_name_map["STFOUCH4"][0];
+				var patch = Reader.readPatch(wad_data_map[dir.wad], dir.dataOffset);
+				return patch;
+			}
+		} else {
+			var patch = new Patch(16, 16, 16, 16);
+			for (a in 0...16) {
+				for (b in 0...16) {
+					patch.pixels[a] = new Vector(16);
+					patch.pixels[a][b] = a * b;
+				}
+			}
+			return patch;
+		}
 	}
 	
 	public function wadContains(_lumps:Array<String>):Bool {
