@@ -25,6 +25,9 @@ class Playpal
 		return getColorChannelInt(_index, _rgb, _pal) / 255;
 	}
 	public function getColorChannelInt(_index:Int, _rgb:Int, _pal:Int = 0):Int {
+		
+		if (_index == -1) return 0;
+		
 		var col:Int = palettes[_pal][_index];
 		var val:Float = 0;
 		switch (_rgb) {
@@ -35,8 +38,7 @@ class Playpal
 			case 2:
 				col = col & 0xFF;
 			case 3:
-				if (col == -1) col = 0;
-				else col = 0xFF;
+				col = 0xFF;
 		}
 		return col;
 	}
