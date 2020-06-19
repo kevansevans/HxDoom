@@ -93,7 +93,7 @@ class GLAutoMap
 		var mapzoom:Float = CVarCore.getCvar(Defaults.AUTOMAP_ZOOM);
 			
 		automapMatrix4.appendTranslation( -Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
-		//if (Environment.AUTOMAP_ROTATES_WITH_PLAYER) automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].yaw - 90, new Vector4(0, 0, -1, 1));
+		automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].yaw - 90, new Vector4(0, 0, -1, 1));
 		automapMatrix4.appendScale(mapzoom, (mapzoom * (_winWidth / _winHeight)), 1);
 		
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_POSITION"), false, automapFloat32);

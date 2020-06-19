@@ -89,7 +89,6 @@ class GLHandler extends RenderCore
 			
 			//backface culling
 			gl.enable(gl.CULL_FACE);
-			gl.cullFace(gl.BACK);
 			
 			programMapGeometry.render(window.width, window.height);
 			

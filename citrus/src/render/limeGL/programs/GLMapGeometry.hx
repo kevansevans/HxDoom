@@ -7,6 +7,8 @@ import lime.graphics.WebGLRenderContext;
 import lime.graphics.opengl.GLProgram;
 import lime.graphics.opengl.GLShader;
 import lime.utils.Float32Array;
+import lime.utils.UInt8Array;
+import lime.graphics.Image;
 
 import mme.math.glmatrix.Mat4Tools;
 
@@ -23,11 +25,19 @@ import hxdoom.utils.geom.Angle;
 import hxdoom.utils.extensions.Camera;
 import hxdoom.utils.extensions.CameraPoint;
 import hxdoom.actors.Actor;
+import hxdoom.lumps.graphic.Patch;
 
 /**
  * ...
  * @author Kaelan
  */
+typedef TexData = {
+	var name : String;
+	var glIndex : Int;
+	var limeImage : Image;
+	var patch : Patch;
+}
+
 class GLMapGeometry 
 {
 	var gl:WebGLRenderContext;
@@ -37,15 +47,21 @@ class GLMapGeometry
 	var fragment_shader:GLShader;
 	
 	var walls:Map<Segment, Vector<GLWall>>;
+	var midwalls:Map<Segment, Vector<GLWall>>;
 	var flats:Map<Sector, Vector<GLFlat>>;
 	var visflats:Array<Vector<GLFlat>>;
 	
 	var safeToRender:Bool = false;
 	
+	public static var textureCache:Map<String, TexData>;
+	public static var glTextureIndex:Int = 0;
+	
 	public function new(_gl:WebGLRenderContext)
 	{
 		gl = _gl;
 		program = gl.createProgram();
+		
+		textureCache = new Map();
 		
 		vertex_shader = gl.createShader(gl.VERTEX_SHADER);
 		fragment_shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -77,6 +93,7 @@ class GLMapGeometry
 		safeToRender = false;
 		
 		walls = new Map();
+		midwalls = new Map();
 		flats = new Map();
 		
 		var mapSegments = Engine.ACTIVEMAP.segments;	
@@ -86,17 +103,19 @@ class GLMapGeometry
 				walls[seg] = new Vector(1);
 				walls[seg][0] = new GLWall(gl, seg, SideType.SOLID);
 			} else {
-				walls[seg] = new Vector(6);
+				walls[seg] = new Vector(4);
+				midwalls[seg] = new Vector(2);
 				
 				var front = seg.lineDef.frontSideDef;
 				var back = seg.lineDef.backSideDef;
 				
 				walls[seg][0] = new GLWall(gl, seg, SideType.FRONT_BOTTOM);
-				walls[seg][1] = new GLWall(gl, seg, SideType.FRONT_MIDDLE);
-				walls[seg][2] = new GLWall(gl, seg, SideType.FRONT_TOP);
-				walls[seg][3] = new GLWall(gl, seg, SideType.BACK_BOTTOM);
-				walls[seg][4] = new GLWall(gl, seg, SideType.BACK_MIDDLE);
-				walls[seg][5] = new GLWall(gl, seg, SideType.BACK_TOP);
+				walls[seg][1] = new GLWall(gl, seg, SideType.FRONT_TOP);
+				walls[seg][2] = new GLWall(gl, seg, SideType.BACK_BOTTOM);
+				walls[seg][3] = new GLWall(gl, seg, SideType.BACK_TOP);
+				
+				midwalls[seg][0] = new GLWall(gl, seg, SideType.FRONT_MIDDLE);
+				midwalls[seg][1] = new GLWall(gl, seg, SideType.BACK_MIDDLE);
 			}
 			
 			if (flats[seg.sector] == null) {
@@ -122,6 +141,8 @@ class GLMapGeometry
 		
 		if (!safeToRender) return;
 		
+		gl.useProgram(program);
+		
 		var worldArray = new Float32Array(16);
 		var viewArray = new Float32Array(16);
 		var projArray = new Float32Array(16);
@@ -145,11 +166,14 @@ class GLMapGeometry
 			for (plane in walls[vis_seg]) {
 				if (plane == null) continue;
 				plane.render(program);
-				if (visflats.indexOf(flats[vis_seg.sector]) == -1) {
-					visflats.push(flats[vis_seg.sector]);
-					for (flat in flats[vis_seg.sector]) {
-						//flat.render(program);
-					}
+			}
+		}
+		for (vis_seg in Engine.RENDER.vis_segments) {
+			if (vis_seg.lineDef.solid) continue;
+			else {
+				for (plane in midwalls[vis_seg]) {
+					if (plane == null) continue;
+					plane.render(program);
 				}
 			}
 		}
@@ -163,9 +187,12 @@ class GLMapGeometry
 	'uniform mat4 M4_World;',
 	'uniform mat4 M4_View;',
 	'uniform mat4 M4_Proj;',
+	'varying vec2 fragTexCoord;',
+	'attribute vec2 vTextureCoord;',
 	'',
 	'void main()',
 	'{',
+	'	fragTexCoord = vTextureCoord;',
 	'	gl_Position = M4_Proj * M4_View * M4_World * vec4(V3_POSITION, 1.0);',
 	'}'
 	].join('\n');
@@ -175,17 +202,12 @@ class GLMapGeometry
 	'precision mediump float;',
 	#end
 	'',
-	'float near = 0.1;',
-	'float far  = 100.0;',
-	'float LinearizeDepth(float depth)',
-	'{',
-	'	float z = depth * 2.0 - 1.0;',
-	'	return (2.0 * near * far) / (far + near - z * (far - near));',
-	'}',
+	'varying vec2 vTextureCoord;',
+	'uniform sampler2D uSampler;',
+	'varying vec2 fragTexCoord;',
 	'void main()',
 	'{',
-	'	 float depth = LinearizeDepth(gl_FragCoord.z) / far;',
-	' 	gl_FragColor = vec4(vec3(depth), 1.0);' ,
+	' 	gl_FragColor = texture2D(uSampler, fragTexCoord);' ,
 	'}'
 	].join('\n');
 	
