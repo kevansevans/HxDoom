@@ -185,6 +185,9 @@ class GLWall
 		if (texturename == "-") return;
 		
 		//This switch block is a placeholder and only used for testing
+		//mostly to see how much impact loading in arbitrary textures has on the engine
+		//these aren't the actual textures needed, the original engine stiches several together to save on memory
+		//testing is very positive.
 		switch(texturename) {
 			case "AASTINKY" :
 				texturename = "-";
