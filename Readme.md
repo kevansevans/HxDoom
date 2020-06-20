@@ -14,7 +14,7 @@ HxDoom is a haxelib and is meant to be used as a library, not an engine. If you 
 
 1) **Installing Haxe and HxDoom**
  - Download and install the latest version of Haxe from https://haxe.org/download/
- - The earliest version supported is 4.0.0 as HxDoom utilizes ``enum abstract`` for some of it's enums. For Haxe 3 and lower, (currently) all instances of these enums must be replaced with ``@:enum abstract`` and the individual values must be added, as the Haxe 3 compiler does not support being able to use implicit declaration.
+ - The earliest version supported is 4.1.2, as HxDoom uses the newly featured ``contains`` function for arrays. Some time in the future, I might work on a Haxe 3 compatible version.
  - After install, open your systems terminal and run the command ``haxelib setup``. Unix users may need to use ``sudo``.
  - Run the command ``haxelib install hxdoom``. This will download and extract the latest version of HxDoom for you. Alternatively if you need a specific version, you can use ``haxelib install hxdoom`` and add the version number to the end of the command, IE ``haxelib install hxdoom 0.0.4``. Haxelib also can install the latest git version with ``haxelib git hxdoom [git URL here]``
 2) **Initializing HxDoom**
