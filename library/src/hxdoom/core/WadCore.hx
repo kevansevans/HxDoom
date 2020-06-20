@@ -119,9 +119,9 @@ class WadCore
 		} else {
 			var patch = new Patch(16, 16, 16, 16);
 			for (a in 0...16) {
+				patch.pixels[a] = new Vector(16);
 				for (b in 0...16) {
-					patch.pixels[a] = new Vector(16);
-					patch.pixels[a][b] = a * b;
+					patch.pixels[a][b] = Std.int(Math.min(a * b, 255));
 				}
 			}
 			return patch;
