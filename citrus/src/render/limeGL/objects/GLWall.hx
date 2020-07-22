@@ -130,9 +130,6 @@ class GLWall
 		
 		var image:Image = GLMapGeometry.textureCache[texturename].limeImage;
 		
-		textureAttribute = gl.getAttribLocation (_program, "aTextureCoord");
-		gl.enableVertexAttribArray (textureAttribute);
-		
 		texture = gl.createTexture ();
 		gl.bindTexture (gl.TEXTURE_2D, texture);
 		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
@@ -144,8 +141,6 @@ class GLWall
 		#end
 		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
 		gl.texParameteri (gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-		
-		gl.vertexAttribPointer (textureAttribute, 2, gl.FLOAT, false, 4 * Float32Array.BYTES_PER_ELEMENT, 2 * Float32Array.BYTES_PER_ELEMENT);
 		
 		if (plane_vertexes == null) return;
 		
