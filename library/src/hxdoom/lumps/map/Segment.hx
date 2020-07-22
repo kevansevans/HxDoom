@@ -8,6 +8,8 @@ import hxdoom.Engine;
  */
 class Segment 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Segment = Segment.new;
+	
 	public var angle:Int;
 	public var lineID:Int;
 	public var side:Int;
@@ -18,12 +20,12 @@ class Segment
 	public var sector(get, null):Sector;
 	public var lineDef(get, null):LineDef;
 	
-	public function new(_angle:Int, _lineID:Int, _side:Int, _offset:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		angle = _angle;
-		lineID = _lineID;
-		side = _side;
-		offset = _offset;
+		angle = 	_args[0];
+		lineID = 	_args[1];
+		side = 		_args[2];
+		offset = 	_args[3];
 	}
 	
 	function get_start():Vertex 

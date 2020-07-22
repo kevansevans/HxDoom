@@ -7,12 +7,14 @@ package hxdoom.lumps.map;
  */
 class Vertex 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Vertex = Vertex.new;
+	
 	public var xpos:Int;
 	public var ypos:Int;
-	public function new(_x:Int, _y:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		xpos = _x;
-		ypos = _y;
+		xpos = _args[0];
+		ypos = _args[1];
 	}
 	public function toString():String {
 		return '{x: ' + xpos + ", y:" + ypos + '}'; 

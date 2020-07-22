@@ -43,13 +43,13 @@ class Reader
 	 * @return
 	 */
 	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String = "", _index:Int = -1):Directory {
-		return new Directory(
+		return Directory.CONSTRUCTOR([
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
 			getStringFromRange(_data, _offset + 0x08, _offset + 0x10),
 			_wadname,
 			_index
-		);
+		]);
 	}
 	/**
 	 * Reads from provided data and returns a new Thing
@@ -58,13 +58,13 @@ class Reader
 	 * @return
 	 */
 	public static inline function readThing(_data:Array<Int>, _offset:Int):Thing {
-		return new Thing(
+		return Thing.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
 			getTwoBytes(_data, _offset + 4, true),
 			getTwoBytes(_data, _offset + 6, true),
 			getTwoBytes(_data, _offset + 8, true)
-		);
+		]);
 	}
 	/**
 	 * Reads from provided data and returns a new Linedef
@@ -73,7 +73,7 @@ class Reader
 	 * @return
 	 */
 	public static inline function readLinedef(_data:Array<Int>, _offset:Int):LineDef {
-		return new LineDef(
+		return LineDef.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
 			getTwoBytes(_data, _offset + 4),
@@ -81,7 +81,7 @@ class Reader
 			getTwoBytes(_data, _offset + 8),
 			getTwoBytes(_data, _offset + 10),
 			getTwoBytes(_data, _offset + 12)
-		);
+		]);
 	}
 	/**
 	 * Reads from provided data and returns a new Vertex
@@ -90,10 +90,12 @@ class Reader
 	 * @return
 	 */
 	public static inline function readVertex(_data:Array<Int>, _offset:Int):Vertex {
-		return new Vertex(
-			getTwoBytes(_data, _offset, true),
+		
+		return Vertex.CONSTRUCTOR([
+			getTwoBytes(_data, _offset, true), 
 			getTwoBytes(_data, _offset + 2, true)
-		);
+		]);
+		
 	}
 	/**
 	 * Reads from provided data and returns a new Segment
@@ -102,12 +104,12 @@ class Reader
 	 * @return
 	 */
 	public static inline function readSegment(_data:Array<Int>, _offset:Int):Segment {
-		return new Segment(
+		return Segment.CONSTRUCTOR([
 			getTwoBytes(_data, _offset + 4, true),
 			getTwoBytes(_data, _offset + 6),
 			getTwoBytes(_data, _offset + 8),
 			getTwoBytes(_data, _offset + 10)
-		);
+		]);
 	}
 	/**
 	 * Reads from provided data and returns a new Subsector
@@ -116,10 +118,10 @@ class Reader
 	 * @return
 	 */
 	public static inline function readSubSector(_data:Array<Int>, _offset:Int):SubSector {
-		return new SubSector(
+		return SubSector.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2)
-		);
+		]);
 	}
 	/**
 	 * Reads from provided data and returns a new Node
@@ -128,7 +130,7 @@ class Reader
 	 * @return
 	 */
 	public static inline function readNode(_data:Array<Int>, _offset:Int):Node {
-		return new Node(
+		return Node.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
 			getTwoBytes(_data, _offset + 4, true),
@@ -143,7 +145,7 @@ class Reader
 			getTwoBytes(_data, _offset + 22, true),
 			getTwoBytes(_data, _offset + 24),
 			getTwoBytes(_data, _offset + 26)
-		);
+		]);
 	}
 	/**
 	 * Reads from provided data and returns a new Sidedef
@@ -152,14 +154,14 @@ class Reader
 	 * @return
 	 */
 	public static inline function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
-		return new SideDef(
+		return SideDef.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
 			getStringFromRange(_data, _offset + 4, _offset + 12),
 			getStringFromRange(_data, _offset + 12, _offset + 20),
 			getStringFromRange(_data, _offset + 20, _offset + 28),
 			getTwoBytes(_data, _offset + 28)
-		);
+		]);
 	}
 	/**
 	 * Reads from provided data and returns a new Sector
@@ -168,7 +170,7 @@ class Reader
 	 * @return
 	 */
 	public static inline function readSector(_data:Array<Int>, _offset:Int):Sector {
-		return new Sector(
+		return Sector.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
 			getStringFromRange(_data, _offset + 4, _offset + 12),
@@ -176,7 +178,7 @@ class Reader
 			getTwoBytes(_data, _offset + 20, true),
 			getTwoBytes(_data, _offset + 22),
 			getTwoBytes(_data, _offset + 24)
-		);
+		]);
 	}
 	/**
 	 * Read data and return a patch from given location
@@ -186,12 +188,12 @@ class Reader
 	 *///With thanks to Phantombeta for getting this to work
 	public static inline function readPatch(_data:Array<Int>, _offset:Int):Patch {
 			
-		var patch = new Patch(
+		var patch = Patch.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
 			getTwoBytes(_data, _offset + 4, true),
 			getTwoBytes(_data, _offset + 6, true)
-		);
+		]);
 		
 		var columnsOffsets:Vector<Int> = new Vector<Int> (patch.width);
 		

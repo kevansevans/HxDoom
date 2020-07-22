@@ -9,17 +9,18 @@ import hxdoom.core.Reader;
  */
 class Patch 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Patch = Patch.new;
 	public var width:Int;
 	public var height:Int;
 	public var offset_x:Int;
 	public var offset_y:Int;
 	public var pixels:Vector<Vector<Int>>;
-	public function new(_width:Int, _height:Int, _offsetX:Int, _offsetY:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		width = _width;
-		height = _height;
-		offset_x = _offsetX;
-		offset_y = _offsetY;
+		width = 	_args[0];
+		height = 	_args[1];
+		offset_x = 	_args[2];
+		offset_y = 	_args[3];
 		pixels = new Vector(width);
 	}
 	

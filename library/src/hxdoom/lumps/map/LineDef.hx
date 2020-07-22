@@ -12,6 +12,8 @@ import hxdoom.enums.eng.SideType;
  */
 class LineDef 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> LineDef = LineDef.new;
+	
 	public var flags:Int;
 	public var lineType:Int;
 	public var sectorTag:Int;
@@ -26,15 +28,15 @@ class LineDef
 	public var start(get, null):Vertex;
 	public var end(get, null):Vertex;
 	
-	public function new(_start:Int, _end:Int, _flags:Int, _lineType:Int, _sectorTag:Int, _frontSideDef:Int, _backSideDef:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		startVertexID = _start;
-		endVertexID = _end;
-		flags = _flags;
-		lineType = _lineType;
-		sectorTag = _sectorTag;
-		frontSideDefID = _frontSideDef;
-		backSideDefID = _backSideDef;
+		startVertexID = 	_args[0];
+		endVertexID = 		_args[1];
+		flags = 			_args[2];
+		lineType = 			_args[3];
+		sectorTag = 		_args[4];
+		frontSideDefID = 	_args[5];
+		backSideDefID = 	_args[6];
 	}
 	
 	public function getPatch(_side:SideType):Patch {

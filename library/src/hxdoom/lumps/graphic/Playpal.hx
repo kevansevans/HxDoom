@@ -12,8 +12,10 @@ package hxdoom.lumps.graphic;
  */
 class Playpal 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Playpal = Playpal.new;
+	
 	public var palettes:Array<Array<Int>>;
-	public function new() 
+	public function new(_args:Array<Any>) 
 	{
 		palettes = new Array();
 	}

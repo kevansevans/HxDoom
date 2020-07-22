@@ -6,6 +6,8 @@ package hxdoom.lumps.map;
  */
 class SideDef 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> SideDef = SideDef.new;
+	
 	public var xoffset:Int;
 	public var yoffset:Int;
 	public var upper_texture:String;
@@ -15,14 +17,14 @@ class SideDef
 	
 	public var sector(get, null):Sector;
 	
-	public function new(_xoff:Int, _yoff:Int, _upper:String, _lower:String, _middle:String, _sectorID:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		xoffset = _xoff;
-		yoffset = _yoff;
-		upper_texture = _upper;
-		lower_texture = _lower; 
-		middle_texture = _middle;
-		sectorID = _sectorID;
+		xoffset = 			_args[0];
+		yoffset = 			_args[1];
+		upper_texture = 	_args[2];
+		lower_texture = 	_args[3]; 
+		middle_texture = 	_args[4];
+		sectorID = 			_args[5];
 	}
 	
 	function get_sector():Sector

@@ -6,6 +6,8 @@ package hxdoom.lumps.map;
  */
 class Sector 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Sector = Sector.new;
+	
 	public var floorHeight:Int;
 	public var ceilingHeight:Int;
 	public var floorTexture:String;
@@ -13,15 +15,15 @@ class Sector
 	public var lightLevel:Int;
 	public var special:Int;
 	public var tag:Int;
-	public function new(_floorHeight:Int, _ceilingHeight:Int, _floorTexture:String, _ceilingTexture:String, _lightLevel:Int, _special:Int, _tag:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		floorHeight = _floorHeight;
-		ceilingHeight = _ceilingHeight;
-		floorTexture = _floorTexture;
-		ceilingTexture = _ceilingTexture;
-		lightLevel = _lightLevel;
-		special = _special;
-		tag = _tag;
+		floorHeight = 		_args[0];
+		ceilingHeight = 	_args[1];
+		floorTexture = 		_args[2];
+		ceilingTexture = 	_args[3];
+		lightLevel = 		_args[4];
+		special = 			_args[5];
+		tag = 				_args[6];
 	}
 	
 	public function toString():String

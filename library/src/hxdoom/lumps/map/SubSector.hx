@@ -6,17 +6,18 @@ package hxdoom.lumps.map;
  */
 class SubSector 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> SubSector = SubSector.new;
+	
 	public var count:Int;
 	public var firstSegID:Int;
 	
 	public var sector(get, null):Sector;
 	public var segments(get, null):Array<Segment>;
 	
-	public function new(_count:Int, _firstSegID:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		count = _count;
-		firstSegID = _firstSegID;
-		
+		count = 		_args[0];
+		firstSegID = 	_args[1];
 	}
 	
 	function get_sector():Sector 

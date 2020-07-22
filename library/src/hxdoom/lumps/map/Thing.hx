@@ -9,18 +9,20 @@ import hxdoom.enums.eng.Direction.CardString;
  */
 class Thing 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Thing = Thing.new;
+	
 	public var xpos:Int;
 	public var ypos:Int;
 	public var angle:Int;
 	public var type:Int;
 	public var flags:Int;
-	public function new(_xpos:Int, _ypos:Int, _angle:Int, _type:Int, _flags:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		xpos = _xpos;
-		ypos = _ypos;
-		angle = _angle;
-		type = _type;
-		flags = _flags;
+		xpos = 	_args[0];
+		ypos = 	_args[1];
+		angle = _args[2];
+		type = 	_args[3];
+		flags = _args[4];
 	}
 	
 	public function toString():String {

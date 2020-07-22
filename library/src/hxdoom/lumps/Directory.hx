@@ -7,18 +7,20 @@ import haxe.io.Bytes;
  */
 class Directory 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Directory = Directory.new;
+	
 	public var dataOffset:Int;
 	public var size:Int;
 	public var name:String;
 	public var wad:String;
 	public var index:Int;
-	public function new(_dataOffset:Int, _size:Int, _name:String, _wad:String, _index:Int) 
+	public function new(_args:Array<Any>) 
 	{
-		dataOffset = _dataOffset;
-		size = _size;
-		name = _name;
-		wad = _wad;
-		index = _index;
+		dataOffset = 	_args[0];
+		size = 			_args[1];
+		name = 			_args[2];
+		wad = 			_args[3];
+		index = 		_args[4];
 	}
 	
 	public function toString():String {

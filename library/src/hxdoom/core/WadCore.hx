@@ -117,7 +117,7 @@ class WadCore
 				return patch;
 			}
 		} else {
-			var patch = new Patch(16, 16, 16, 16);
+			var patch = Patch.CONSTRUCTOR([16, 16, 16, 16]);
 			for (a in 0...16) {
 				patch.pixels[a] = new Vector(16);
 				for (b in 0...16) {
@@ -143,7 +143,7 @@ class WadCore
 		
 		var directory = directory_name_map[KeyLump.PLAYPAL][0];
 		
-		playpal = new Playpal();
+		playpal = Playpal.CONSTRUCTOR([]);
 		
 		var numPals:Int = Std.int(directory.size / 768);
 		var offset:Int = 0;
