@@ -23,8 +23,6 @@ import hxdoom.Engine;
 import hxdoom.core.CVarCore;
 import hxdoom.enums.data.Defaults;
 
-
-
 #if sys
 import sys.FileSystem;
 import sys.io.File;
@@ -59,9 +57,6 @@ class Main extends Application
 		super.onWindowCreate();
 		
 		window.frameRate = 35;
-		
-		window.width = 640;
-		window.height = 480;
 		
 		#if sys
 		getwads();
