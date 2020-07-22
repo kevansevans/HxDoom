@@ -46,6 +46,7 @@ class Actor
 		var vdx:Float = _vertex.xpos - this.xpos;
 		var vdy:Float = _vertex.ypos - this.ypos;
 		var angle:Angle = (Math.atan2(vdy, vdx) * 180 / Math.PI);
+		angle = Angle.adjust(angle);
 		return angle;
 	}
 	
