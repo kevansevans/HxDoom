@@ -1,7 +1,7 @@
 # HxDoom readme
 
 # What is HxDoom?
-Haxe Doom is a Haxe library adaption of id Software's Doom, or more specifically, "id Tech 1". While primarily being used as the back end of a game engine (To play Doom of course), it's primary function is to serve as a library/haxelib that Doom related tools and engines can be built on top of. Development of HxDoom must adhere to the singular core rule:
+Haxe Doom is a Haxe library adaption of id Software's Doom, or more specifically, "id Tech 1". While currently being used as the back end of a game engine (To play Doom of course), it's primary function is to serve as a library/haxelib that Doom related tools and engines can be built on top of. Development of HxDoom must adhere to the singular core rule:
 
 * **Wherever Haxe can deploy, HxDoom must do the same!**
 
@@ -9,8 +9,14 @@ The point of Haxe is to be able to maintain a singular source that can be bridge
 
 The only time this should be allowed is if it's to maintain the above rule, IE JavaScript doesn't allow for array access with [haxe.io.BytesData](https://api.haxe.org/haxe/io/BytesData.html), so an integer array is used instead, allowing for identical behavior (see [hxdoom.core.WadCore.hx](https://github.com/kevansevans/HxDoom/blob/0.0.5-alpha/src/hxdoom/core/WadCore.hx)). This isn't an explicit conditional compilation, but if the issue were to arise, it would be used and listed on this readme.
 
+# Features and goals
+
+* Act as a unifying library for anything Doom related.
+* Easy integration and use within any project.
+* Dependency injection, change behaviors without changing the library!
+
 # How do I use HxDoom?
-HxDoom is a haxelib and is meant to be used as a library, not an engine. If you are looking to make your own Doom engine or Doom tools, and Haxe seems to be a pretty cool thing, you've come to the right place.
+HxDoom is a haxelib and is meant to be used as a library, it provides tools needed to make building your engine or tools easier.
 
 1) **Installing Haxe and HxDoom**
  - Download and install the latest version of Haxe from https://haxe.org/download/
