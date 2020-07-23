@@ -16,7 +16,7 @@ class Camera extends Actor
 	
 	public function new(?_follow:Actor, ?_pointingAt:CameraPoint) 
 	{
-		super(Thing.CONSTRUCTOR([0, 0, 0, -1, 0]));
+		super([0, 0, 0, -1, 0]);
 		
 		actorToFollow = _follow;
 		cameraPoint = _pointingAt;

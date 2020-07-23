@@ -14,6 +14,7 @@ import hxdoom.Engine;
  */
 class Actor 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> Actor = Actor.new;
 	public var xpos(get, null):Float = 0.0;
 	public var ypos(get, null):Float = 0.0;
 	public var zpos(get, null):Float = 0.0;
@@ -32,13 +33,17 @@ class Actor
 	public var isMonster(get, never):Bool;
 	public var isPickup(get, never):Bool;
 	
-	public function new(_thing:Thing) 
+	public static function fromThing(_thing:Thing):Actor {
+		return Actor.CONSTRUCTOR([_thing.xpos, _thing.ypos, _thing.angle, _thing.flags, _thing.type]);
+	}
+	
+	public function new(_args:Array<Any>) 
 	{
-		xpos = _thing.xpos;
-		ypos = _thing.ypos;
-		yaw = _thing.angle;
-		flags = _thing.flags;
-		type = _thing.type;
+		xpos = 		_args[0];
+		ypos = 		_args[1];
+		yaw = 		_args[2];
+		flags = 	_args[3];
+		type = 		_args[4];
 		pitch = 0;
 	}
 	

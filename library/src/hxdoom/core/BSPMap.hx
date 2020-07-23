@@ -67,10 +67,10 @@ class BSPMap
 	public function parseThings() {
 		actors_players = new Array();
 		for (thing in things) {
-			actors.push(new Actor(thing));
+			actors.push(Actor.fromThing(thing));
 			switch (thing.type) {
 				case DoomID.P_PLAYERONE | DoomID.P_PLAYERTWO | DoomID.P_PLAYERTHREE | DoomID.P_PLAYERFOUR:
-					actors_players.push(new Player(thing));
+					actors_players.push(Player.fromThing(thing));
 			}
 		}
 	}
