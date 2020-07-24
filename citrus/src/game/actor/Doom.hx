@@ -1,4 +1,4 @@
-package hxdoom.enums.game;
+package game.actor;
 
 /**
  * @author Kaelan
@@ -16,7 +16,7 @@ package hxdoom.enums.game;
  * Emphasis on "ZDoom like", this ain't going to be zdoom or a ZDoom competitor. Just SOURCE friendly. Hopefully.
  * 
  */
-enum abstract DoomID(Int) from Int
+enum abstract Doom(Int) from Int
 {
 	var P_PLAYERONE:Int = 1; //= 1 initializes the enums correctly, each var further on incriments by one. If there's a jump in value, that needs to be explicitly set. See W_SHOTGUN below.
 	var P_PLAYERTWO:Int; //= 2

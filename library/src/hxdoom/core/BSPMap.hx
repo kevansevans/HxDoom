@@ -3,7 +3,6 @@ package hxdoom.core;
 import haxe.ds.Vector;
 import hxdoom.actors.Actor;
 import hxdoom.actors.Player;
-import hxdoom.enums.game.DoomID;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Sector;
@@ -57,24 +56,11 @@ class BSPMap
 	}
 	
 	public function build() {
-		parseThings();
 		setOffset();
 		
 		camera = new Camera(actors_players[0]);
 		focus = new CameraPoint();
 	}
-	
-	public function parseThings() {
-		actors_players = new Array();
-		for (thing in things) {
-			actors.push(Actor.fromThing(thing));
-			switch (thing.type) {
-				case DoomID.P_PLAYERONE | DoomID.P_PLAYERTWO | DoomID.P_PLAYERTHREE | DoomID.P_PLAYERFOUR:
-					actors_players.push(Player.fromThing(thing));
-			}
-		}
-	}
-	
 	
 	public function getActorSubsector(_actor:Actor):SubSector {
 		var node:Int = nodes.length - 1;
@@ -125,7 +111,6 @@ class BSPMap
 		_bsp.subsectors = subsectors.copy();
 		_bsp.things = things.copy();
 		_bsp.vertexes = vertexes.copy();
-		_bsp.parseThings();
 		
 		return _bsp;
 	}
