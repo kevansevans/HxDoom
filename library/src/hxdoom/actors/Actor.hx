@@ -13,7 +13,7 @@ import hxdoom.Engine;
  */
 class Actor 
 {
-	public static var CONSTRUCTOR:(Array<Any>) -> Actor = Actor.new;
+	public static var CONSTRUCTOR:() -> Actor = Actor.new;
 	
 	public var xpos(get, null):Float = 0.0;
 	public var ypos(get, null):Float = 0.0;
@@ -30,17 +30,20 @@ class Actor
 	public var flags:Int;
 	
 	public static function fromThing(_thing:Thing):Actor {
-		return Actor.CONSTRUCTOR([_thing.xpos, _thing.ypos, _thing.angle, _thing.flags, _thing.type]);
+		
+		var actor = Actor.CONSTRUCTOR();
+		
+		actor.xpos = _thing.xpos;
+		actor.ypos = _thing.ypos;
+		actor.yaw = _thing.angle;
+		actor.flags = _thing.flags;
+		
+		return actor;
 	}
 	
-	public function new(_args:Array<Any>) 
+	public function new() 
 	{
-		xpos = 		_args[0];
-		ypos = 		_args[1];
-		yaw = 		_args[2];
-		flags = 	_args[3];
-		type = 		_args[4];
-		pitch = 0;
+		//Actor.hx to assume unknown class
 	}
 	
 	public function angleToVertex(_vertex:Vertex):Angle {

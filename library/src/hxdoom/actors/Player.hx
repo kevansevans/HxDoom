@@ -8,15 +8,23 @@ import hxdoom.lumps.map.Thing;
  */
 class Player extends Actor
 {
-	public static var CONSTRUCTOR:(Array<Any>) -> Player = Player.new;
+	public static var CONSTRUCTOR:() -> Player = Player.new;
 	
 	public static function fromThing(_thing:Thing):Player {
-		return Player.CONSTRUCTOR([_thing.xpos, _thing.ypos, _thing.angle, _thing.flags, _thing.type]);
+		
+		var player = Player.CONSTRUCTOR();
+		
+		player.xpos = _thing.xpos;
+		player.ypos = _thing.ypos;
+		player.yaw = _thing.angle;
+		player.flags = _thing.flags;
+		
+		return player;
 	}
 	
-	public function new(_args:Array<Any>) 
+	public function new() 
 	{
-		super(_args);
+		super();
 		
 		zpos_eyeheight = 41;
 	}
