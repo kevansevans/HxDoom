@@ -1,20 +1,16 @@
 package hxdoom.core;
 
 import haxe.ds.Vector;
+
 import hxdoom.actors.Actor;
 import hxdoom.actors.Player;
-import hxdoom.lumps.map.LineDef;
-import hxdoom.lumps.map.Node;
-import hxdoom.lumps.map.Sector;
-import hxdoom.lumps.map.Segment;
-import hxdoom.lumps.map.SideDef;
-import hxdoom.lumps.map.SubSector;
-import hxdoom.lumps.map.Thing;
-import hxdoom.lumps.map.Vertex;
+
+import hxdoom.enums.game.SharedID;
+
+import hxdoom.lumps.map.*;
+
 import hxdoom.utils.extensions.Camera;
 import hxdoom.utils.extensions.CameraPoint;
-import packages.actors.*;
-import packages.wad.maplumps.*;
 import hxdoom.utils.geom.Angle;
 /**
  * ...
@@ -56,11 +52,24 @@ class BSPMap
 	}
 	
 	public function build() {
+		parseThings();
 		setOffset();
 		
 		camera = new Camera(actors_players[0]);
 		focus = new CameraPoint();
 	}
+	
+	public function parseThings() {
+		actors_players = new Array();
+		for (thing in things) {
+			actors.push(Actor.fromThing(thing));
+			switch (thing.type) {
+				case SharedID.PLAYER_1 | SharedID.PLAYER_2 | SharedID.PLAYER_3 | SharedID.PLAYER_4:
+					actors_players.push(Player.fromThing(thing));
+			}
+		}
+	}
+	
 	
 	public function getActorSubsector(_actor:Actor):SubSector {
 		var node:Int = nodes.length - 1;
@@ -111,6 +120,7 @@ class BSPMap
 		_bsp.subsectors = subsectors.copy();
 		_bsp.things = things.copy();
 		_bsp.vertexes = vertexes.copy();
+		_bsp.parseThings();
 		
 		return _bsp;
 	}

@@ -284,6 +284,7 @@ class WadCore
 		_map.name = directory_index_map[directory.wad][directory.index].name;
 		
 		Engine.ACTIVEMAP = _map;
+		Engine.ACTIVEMAP.parseThings();
 		Engine.ACTIVEMAP.setOffset();
 		
 		return true;
