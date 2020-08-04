@@ -35,8 +35,32 @@ class WadCore
 		directory_index_map = new Map();
 		wad_data_map = new Map();
 	}
+	public function addWadFromString(_data:String, _wadName:String) {
+		
+		if (!CVarCore.getCvar(Defaults.ALLOW_PWADS) && iwadLoaded) return;
+		
+		var isIwad:Bool = _data.substr(0, 4) == "IWAD";
+		if (isIwad) {
+			if (iwadLoaded) {
+				if (!CVarCore.getCvar(Defaults.ALLOW_MULTIPLE_IWADS)) return;
+			} else {
+				iwadLoaded = true;
+			}
+		}
+		
+		directory_index_map[_wadName] = new Array();
+		
+		var data = new Array();
+		for (a in 0..._data.length) {
+			data.push(_data.charCodeAt(a));
+		}
+		wad_data_map[_wadName] = data;
+		
+		parseWad(_wadName);
+		
+	}
 	
-	public function addWad(_data:Bytes, _wadName:String) {
+	public function addWadFromBytes(_data:Bytes, _wadName:String) {
 		
 		if (!CVarCore.getCvar(Defaults.ALLOW_PWADS) && iwadLoaded) return;
 		
@@ -57,6 +81,10 @@ class WadCore
 		}
 		wad_data_map[_wadName] = data;
 		
+		parseWad(_wadName);
+	}
+	
+	public function parseWad(_wadName:String) {
 		var directory_count = Reader.getFourBytes(wad_data_map[_wadName], 0x04);
 		var directory_offset = Reader.getFourBytes(wad_data_map[_wadName], 0x08);
 		

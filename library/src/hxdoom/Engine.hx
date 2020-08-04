@@ -183,8 +183,11 @@ class Engine
 	 * @param	_wadBytes Wad as bytes
 	 * @param	_wadName Name of wad
 	 */
-	public function addWad(_wadBytes:Bytes, _wadName:String) {
-		WADDATA.addWad(_wadBytes, _wadName);
+	public function addWadBytes(_wadBytes:Bytes, _wadName:String) {
+		WADDATA.addWadFromBytes(_wadBytes, _wadName);
+	}
+	public function addWadString(_wadString:String, _wadname:String) {
+		WADDATA.addWadFromString(_wadString, _wadname);
 	}
 	/**
 	 * Sets default CVar environment vars.
