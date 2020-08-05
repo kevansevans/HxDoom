@@ -1,5 +1,8 @@
 package hxdoom.lumps.graphic;
 
+import hxdoom.enums.eng.ColorChannel;
+import hxdoom.enums.eng.ColorMode;
+
 /*
  * The idea is to keep the doom side of things separate from the API side of things
  * This in theory should make it easier to fork and adapt for other rendering frameworks
@@ -23,32 +26,35 @@ class Playpal
 		if (palettes[_index] == null) palettes[_index] = new Array();
 		palettes[_index].push(_color);
 	}
-	public function getColorChannelFloat(_index:Int, _rgb:Int, _pal:Int = 0):Float {
-		return getColorChannelInt(_index, _rgb, _pal) / 255;
+	public function getColorChannelFloat(_index:Int, _channel:ColorChannel, _pal:Int = 0):Float {
+		return getColorChannelInt(_index, _channel, _pal) / 255;
 	}
-	public function getColorChannelInt(_index:Int, _rgb:Int, _pal:Int = 0):Int {
+	public function getColorChannelInt(_index:Int, _channel:ColorChannel, _pal:Int = 0):Int {
 		
 		if (_index == -1) return 0;
 		
 		var col:Int = palettes[_pal][_index];
 		var val:Float = 0;
-		switch (_rgb) {
-			case 0:
+		switch (_channel) {
+			case ColorChannel.RED:
 				col = col >> 16;
-			case 1:
+			case ColorChannel.GREEN:
 				col = (col >> 8) & 0xFF;
-			case 2:
+			case ColorChannel.BLUE:
 				col = col & 0xFF;
-			case 3:
+			case ColorChannel.ALPHA:
 				col = 0xFF;
 		}
 		return col;
 	}
-	public function getColorHex(_index:Int, _pal:Int = 0):Int {
-		if (_index != -1) {
-			return 0xFF << 24 | palettes[_pal][_index];
-		} else {
-			return 0x00000000;
+	public function getColorHex(_index:Int, _mode:ColorMode, _pal:Int = 0):Int {
+		switch (_mode) {
+			case RGB :
+				if (_index == -1) return 0x000000;
+				else return palettes[_pal][_index];
+			case ARGB :
+				if (_index == -1) return 0x00000000;
+				else return 0xFF << 24 | palettes[_pal][_index];
 		}
 	}
 	public function toString():String {
