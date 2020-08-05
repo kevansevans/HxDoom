@@ -1,0 +1,7 @@
+-cp src
+-D lua_vanilla
+--library lovr
+--library hxdoom
+-main Main
+-dce full
+-lua bin/lua/Main.lua
