@@ -1,4 +1,5 @@
 package hxdoom.core;
+
 import hxdoom.enums.data.CVarType;
 
 /**
@@ -45,7 +46,7 @@ class CVarCore
 			name : _name,
 			type : _type,
 			value : _value,
-			onSet : _onSet
+			onSet : _onSet == null ? doNothingOnSet : _onSet
 		}
 		if (_onSet != null && _callAfterSet) _onSet();
 	}
@@ -62,10 +63,11 @@ class CVarCore
 			name : _name,
 			type : _type,
 			value : _value,
-			onSet : _onSet
+			onSet : _onSet == null ? doNothingOnSet : _onSet
 		}
 		if (_onSet != null && _callAfterSet) _onSet();
 	}
+	public static function doNothingOnSet() {}
 	/**
 	 * Change the value of an existing CVar
 	 * @param	_name Name of CVar to set
