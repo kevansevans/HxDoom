@@ -274,7 +274,7 @@ class Main extends Application
 	
 	function launchGame(_wadbytes:Bytes) {
 		hxdoom = new Engine();
-		hxdoom.addWad(_wadbytes, "DOOM1.WAD");
+		hxdoom.addWadBytes(_wadbytes, "DOOM1.WAD");
 		hxdoom.loadMap("E1M1");
 	}
 	
