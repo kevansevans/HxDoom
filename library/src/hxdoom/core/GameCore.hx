@@ -1,6 +1,6 @@
 package hxdoom.core;
 
-import haxe.Timer;
+//import haxe.Timer;
 import hxdoom.utils.extensions.Camera;
 import hxdoom.utils.extensions.CameraPoint;
 
@@ -23,7 +23,7 @@ class GameCore
 	
 	public var ticrate:Int = 35;
 	
-	var timer:Timer;
+	//var timer:Timer;
 	
 	public function new() 
 	{
@@ -31,12 +31,12 @@ class GameCore
 	}
 	
 	public function start() {
-		timer = new Timer(Std.int(1000 / ticrate));
-		timer.run = tick;
+		//timer = new Timer(Std.int(1000 / ticrate));
+		//timer.run = tick;
 	}
 	
 	public function stop() {
-		if (timer != null) timer.stop();
+		//if (timer != null) timer.stop();
 	}
 	
 	public function tick() {

@@ -1,7 +1,6 @@
 package hxdoom;
 
 import haxe.PosInfos;
-import haxe.Timer;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.enums.data.CVarType;
