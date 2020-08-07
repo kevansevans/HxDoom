@@ -1,6 +1,5 @@
 package hxdoom.core;
 
-//import haxe.Timer;
 import hxdoom.utils.extensions.Camera;
 import hxdoom.utils.extensions.CameraPoint;
 
@@ -23,22 +22,20 @@ class GameCore
 	
 	public var ticrate:Int = 35;
 	
-	//var timer:Timer;
-	
 	public function new() 
 	{
 		STATE = IN_GAME;
 	}
 	
 	public function start() {
-		//timer = new Timer(Std.int(1000 / ticrate));
-		//timer.run = tick;
+		
 	}
 	
 	public function stop() {
-		//if (timer != null) timer.stop();
+		
 	}
 	
+	//This needs to be moved out!
 	public function tick() {
 		
 		var camera:Camera = Engine.ACTIVEMAP.camera;
