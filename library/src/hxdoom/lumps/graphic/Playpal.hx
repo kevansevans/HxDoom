@@ -55,6 +55,9 @@ class Playpal
 			case ARGB :
 				if (_index == -1) return 0x00000000;
 				else return 0xFF << 24 | palettes[_pal][_index];
+			case RGBA :
+				if (_index == -1) return 0x00000000;
+				else return (palettes[_pal][_index] << 8) | 0xFF;
 		}
 	}
 	public function toString():String {
