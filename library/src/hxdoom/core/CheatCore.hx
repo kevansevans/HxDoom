@@ -5,8 +5,6 @@ import haxe.ds.Vector;
 import haxe.Json;
 import haxe.macro.Context;
 import haxe.Resource;
-import sys.FileSystem;
-import sys.io.File;
 #end
 
 import hxdoom.common.GameActions;
