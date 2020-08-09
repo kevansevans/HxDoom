@@ -4,6 +4,7 @@ import haxe.ds.Vector;
 import hxdoom.enums.eng.DataLump;
 import hxdoom.enums.eng.KeyLump;
 import hxdoom.lumps.Directory;
+import hxdoom.lumps.graphic.PNames;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Node;
@@ -179,6 +180,14 @@ class Reader
 			getTwoBytes(_data, _offset + 22),
 			getTwoBytes(_data, _offset + 24)
 		]);
+	}
+	public static inline function readPNames(_data:Array<Int>, _offset:Int, _size:Int):PNames {
+		var pname = new PNames();
+		trace(_offset);
+		for (a in 0...Std.int(_size / 8)) {
+			pname.addPatchName(getStringFromRange(_data, _offset + (a * 8), _offset + (a * 8) + 8));
+		}
+		return pname;
 	}
 	/**
 	 * Read data and return a patch from given location

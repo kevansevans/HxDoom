@@ -28,6 +28,7 @@ class WadCore
 	var wad_data_map:Map<String, Array<Int>>;
 	
 	public var playpal:Playpal;
+	public var patches:PNames;
 	
 	public function new() 
 	{
@@ -190,6 +191,19 @@ class WadCore
 			}
 		}
 		
+	}
+	
+	public function preProcessPatches() {
+		var dir:Directory;
+		if (directory_name_map["PNAMES"] != null) {
+			dir = directory_name_map["PNAMES"][0];
+		} else {
+			trace("pnames not found!");
+			return;
+		}
+		//													why is this 4 bytes off from what's read? wtf?
+		patches = Reader.readPNames(wad_data_map[dir.wad], dir.dataOffset + 4, dir.size);
+		trace(patches);
 	}
 	
 	public function loadMap(_mapMarker:String):Bool {
