@@ -15,9 +15,9 @@ class Actor
 {
 	public static var CONSTRUCTOR:() -> Actor = Actor.new;
 	
-	public var xpos(get, null):Float = 0.0;
-	public var ypos(get, null):Float = 0.0;
-	public var zpos(get, null):Float = 0.0;
+	public var xpos(get, default):Float = 0.0;
+	public var ypos(get, default):Float = 0.0;
+	public var zpos(get, default):Float = 0.0;
 	public var zpos_flight:Float;
 	public var zpos_eyeheight:Float;
 	public var zpos_view(get, null):Float;
