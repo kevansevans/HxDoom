@@ -201,9 +201,7 @@ class WadCore
 			trace("pnames not found!");
 			return;
 		}
-		//													why is this 4 bytes off from what's read? wtf?
-		patches = Reader.readPNames(wad_data_map[dir.wad], dir.dataOffset + 4, dir.size);
-		trace(patches);
+		patches = Reader.readPNames(wad_data_map[dir.wad], dir.dataOffset);
 	}
 	
 	public function loadMap(_mapMarker:String):Bool {

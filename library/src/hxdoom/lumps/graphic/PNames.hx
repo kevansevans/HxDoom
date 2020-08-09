@@ -6,8 +6,10 @@ package hxdoom.lumps.graphic;
  */
 class PNames 
 {
+	public static var CONSTRUCTOR:(Array<Any>) -> PNames = PNames.new;
+	
 	public var names:Array<String>;
-	public function new() 
+	public function new(_args:Array<Any>) 
 	{
 		names = new Array();
 	}

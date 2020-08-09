@@ -181,11 +181,19 @@ class Reader
 			getTwoBytes(_data, _offset + 24)
 		]);
 	}
-	public static inline function readPNames(_data:Array<Int>, _offset:Int, _size:Int):PNames {
-		var pname = new PNames();
-		trace(_offset);
-		for (a in 0...Std.int(_size / 8)) {
-			pname.addPatchName(getStringFromRange(_data, _offset + (a * 8), _offset + (a * 8) + 8));
+	/**
+	 * Read lump as PName
+	 * @param	_data
+	 * @param	_offset
+	 * @param	_size
+	 * @return
+	 */
+	public static inline function readPNames(_data:Array<Int>, _offset:Int):PNames {
+		var pname = PNames.CONSTRUCTOR([]);
+		var numPatches = getFourBytes(_data, _offset);
+		var offset = _offset + 4;
+		for (a in 0...numPatches) {
+			pname.addPatchName(getStringFromRange(_data, offset + (a * 8), offset + ((a + 1) * 8));
 		}
 		return pname;
 	}
