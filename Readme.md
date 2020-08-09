@@ -56,12 +56,18 @@ More info can be found by reading the API docs: https://kevansevans.github.io/Hx
 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-//Confirmed specific targets HxDoom has been compiled to and ran on
+//Confirmed targets HxDoom has been compiled to and ran on (Please help with this list!)
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ```
-* C++ (Widows, Manjaro)
-* Hashlink JIT
-* HTML5
+* With Lime https://lime.software/
+  * C++ (Widows, Manjaro)
+  * Hashlink https://hashlink.haxe.org/
+  * HTML5 w/WebGL
+* With Heaps
+  * Targeting Hashlink
+  * Targeting Hashlink C
+* Other
+  * LOVR (Lua) https://lovr.org/
 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
