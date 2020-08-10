@@ -10,6 +10,7 @@ import hxdoom.core.Reader;
 class Patch 
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Patch = Patch.new;
+	
 	public var width:Int;
 	public var height:Int;
 	public var offset_x:Int;

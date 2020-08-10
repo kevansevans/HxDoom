@@ -6,6 +6,7 @@ import hxdoom.enums.eng.KeyLump;
 import hxdoom.lumps.Directory;
 import hxdoom.lumps.graphic.PNames;
 import hxdoom.lumps.graphic.Patch;
+import hxdoom.lumps.graphic.XTexture;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Sector;
@@ -193,9 +194,47 @@ class Reader
 		var numPatches = getFourBytes(_data, _offset);
 		var offset = _offset + 4;
 		for (a in 0...numPatches) {
-			pname.addPatchName(getStringFromRange(_data, offset + (a * 8), offset + ((a + 1) * 8));
+			pname.addPatchName(getStringFromRange(_data, offset + (a * 8), offset + ((a + 1) * 8)));
 		}
 		return pname;
+	}
+	public static inline function readXTextures(_data:Array<Int>, _offset:Int) {
+		
+		var numTextures = getFourBytes(_data, _offset);
+		var offset = _offset + 4;
+		var offsets:Array<Int> = new Array();
+		for (a in 0...numTextures) {
+			offsets.push(getFourBytes(_data, offset + (a * 4)));
+		}
+		
+		var textureSet = XTexture.CONSTRUCTOR([
+			numTextures,
+			offsets
+		]);
+		
+		for (texOffset in textureSet.offsets) {
+			var textureData:TextureData = {
+				textureName : getStringFromRange(_data, _offset + texOffset, _offset + texOffset + 8),
+				width : getTwoBytes(_data, _offset + texOffset + 0x0C),
+				height : getTwoBytes(_data, _offset + texOffset + 0x0E),
+				numPatches : getTwoBytes(_data, _offset + texOffset + 0x14),
+				layout : getPatchLayoutList(_data, _offset + texOffset + 0x16)
+			}
+			textureSet.addTextureData(textureData);
+		}
+		return textureSet;
+	}
+	public static inline function getPatchLayoutList(_data:Array<Int>, _offset:Int):Array<PatchLayout> {
+		var patchlist:Array<PatchLayout> = new Array();
+		for (p in 0...getTwoBytes(_data, _offset - 0x16)) {
+			var layout:PatchLayout = {
+				offset_x : getTwoBytes(_data, _offset),
+				offset_y : getTwoBytes(_data, _offset + 2),
+				patchIndex : getTwoBytes(_data, _offset + 4)
+			}
+			patchlist.push(layout);
+		}
+		return patchlist;
 	}
 	/**
 	 * Read data and return a patch from given location

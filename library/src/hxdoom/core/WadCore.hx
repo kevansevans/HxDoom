@@ -29,6 +29,8 @@ class WadCore
 	
 	public var playpal:Playpal;
 	public var patches:PNames;
+	public var xTexture:Array<XTexture>;
+	public var textureMap:Map<String, Array<PatchTexture>>;
 	
 	public function new() 
 	{
@@ -193,7 +195,28 @@ class WadCore
 		
 	}
 	
-	public function preProcessPatches() {
+	public function parseTextures() {
+		
+		xTexture = new Array();
+		
+		var tex_x:Int = 1;
+		
+		while (wadContains(["TEXTURE" + tex_x])) {
+			var dir = directory_name_map["TEXTURE" + tex_x][0];
+			
+			var xText = Reader.readXTextures(wad_data_map[dir.wad], dir.dataOffset);
+			
+			xTexture.push(xText);
+			
+			++tex_x;
+		}
+		
+		for (TextLump in xTexture) {
+			
+		}
+	}
+	
+	public function loadPNames() {
 		var dir:Directory;
 		if (directory_name_map["PNAMES"] != null) {
 			dir = directory_name_map["PNAMES"][0];
