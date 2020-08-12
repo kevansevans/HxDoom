@@ -25,7 +25,7 @@ import hxdoom.utils.geom.Angle;
 import hxdoom.utils.extensions.Camera;
 import hxdoom.utils.extensions.CameraPoint;
 import hxdoom.actors.Actor;
-import hxdoom.lumps.graphic.Patch;
+import hxdoom.lumps.graphic.Texture;
 
 /**
  * ...
@@ -35,7 +35,7 @@ typedef TexData = {
 	var name : String;
 	var glIndex : Int;
 	var limeImage : Image;
-	var patch : Patch;
+	var texture : Texture;
 }
 
 class GLMapGeometry 

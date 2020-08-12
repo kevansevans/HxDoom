@@ -40,7 +40,9 @@ class GLHandler extends RenderCore
 		window = _window;
 		context = _context;
 		
-		Engine.WADDATA.loadPlaypal();
+		Engine.TEXTURES.loadPlaypal();
+		Engine.TEXTURES.parsePatchNames();
+		Engine.TEXTURES.parseTextures();
 		
 		programAutoMap = new GLAutoMap(gl);
 		programMapGeometry = new GLMapGeometry(gl);

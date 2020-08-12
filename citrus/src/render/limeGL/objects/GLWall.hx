@@ -1,10 +1,12 @@
 package render.limeGL.objects;
 
 import haxe.PosInfos;
+import hxdoom.lumps.graphic.Texture;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Sector;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.graphic.Patch;
+import hxdoom.lumps.graphic.Texture;
 import hxdoom.enums.eng.SideType;
 import hxdoom.core.Reader;
 import hxdoom.Engine;
@@ -32,7 +34,7 @@ class GLWall
 	var segment:Segment;
 	var type:SideType;
 	var texturename:String;
-	var patch:Patch;
+	var wadtexture:Texture;
 	
 	var texture:GLTexture;
 	var textureAttribute:Int;
@@ -177,109 +179,12 @@ class GLWall
 				texturename = segment.lineDef.backSideDef.upper_texture;
 		}
 		
-		if (texturename == "-") return;
-		
-		//This switch block is a placeholder and only used for testing
-		//mostly to see how much impact loading in arbitrary textures has on the engine
-		//these aren't the actual textures needed, the original engine stiches several together to save on memory
-		//testing is very positive.
-		switch(texturename) {
-			case "AASTINKY" :
-				texturename = "-";
-			case "BIGDOOR2" :
-				texturename = "DOOR2_4";
-			case "STARGR1" :
-				texturename = "SW11_1";
-			case "LITE3" :
-				texturename = "WLITB0";
-			case "COMPUTE2" :
-				texturename = "COMP02_7";
-			case "COMPSPAN" :
-				texturename = "COMP03_4";
-			case "COMPTALL" :
-				texturename = "COMP04_5";
-			case "STARTAN3" :
-				texturename = "SW19_1";
-			case "STEP6" :
-				texturename = "STEP03";
-			case "DOORTRAK" :
-				texturename = "DOORTRAK";
-			case "SUPPORT2" :
-				texturename = "SUPPORT2";
-			case "STEP1" :
-				texturename = "STEP04";
-			case "COMPTILE" :
-				texturename = "COMP03_1";
-			case "PLANET1" :
-				texturename = "TSCRN2";
-			case "BROWN144" :
-				texturename = "WALL04_7";
-			case "DOORSTOP" :
-				texturename = "TTALL1_2";
-			case "BROWN1" :
-				texturename = "WALL05_2";
-			case "SLADWALL" :
-				texturename = "WLA128_1";
-			case "STARG3" :
-				texturename = "SW12_2";
-			case "TEKWALL4" :
-				texturename = "W94_1";
-			case "TEKWALL1" :
-				texturename = "W17_1";
-			case "BROWNGRN" :
-				texturename = "WALL62_2";
-			case "NUKE24" :
-				texturename = "NUKEDGE";
-			case "DOOR3" :
-				texturename = "DOOR2_5";
-			case "BROWN96" :
-				texturename = "WALL62_1";
-			case "BRNBIGL" :
-				texturename = "W113_2";
-			case "BRNBIGR" :
-				texturename = "W113_3";
-			case "BRNBIGC" :
-				texturename = "W113_1";
-			case "BIGDOOR4" :
-				texturename = "DOOR9_1";
-			case "STARTAN1" :
-				texturename = "SW12_4";
-			case "EXITSIGN" :
-				texturename = "EXIT1";
-			case "EXITDOOR" :
-				texturename = "DOOR3_6";
-			case "SW1STRTN" :
-				texturename = "SW1S0";
-			case "COMPSTA1" :
-				texturename = "COMP02_6";
-			case "GRAYTALL" :
-				texturename = "W31_1";
-			case "COMPSTA2" :
-				texturename = "COMP02_4";
-			case "STARTAN2" :
-				texturename = "SW17_6";
-			case "STEP5" :
-				texturename = "STEP09";
-			case "METAL1" :
-				texturename = "STFOUCH0";
-			case "STONE2" :
-				texturename = "W28_5";
-			case "STEP3" :
-				texturename = "STEP05";
-			case "STONE3" :
-				texturename = "W28_6";
-			case "TEKWALL2" :
-				texturename = "WALL24_1";
-			default :
-				trace(texturename);
-				texturename = "STFOUCH0";
-			
-		}
+		if (texturename == "-" || texturename == "AASTINKY") return;
 			
 		if (GLMapGeometry.textureCache[texturename] == null) {
 		
-			var _locPatch:Patch = Engine.WADDATA.getPatch(texturename);
-			var playpal = Engine.WADDATA.playpal;
+			var _locTexture:Texture = Engine.TEXTURES.getTexture(texturename);
+			var playpal = Engine.TEXTURES.playpal;
 			
 			var arr:Array<Int> = new Array();
 			
@@ -287,33 +192,33 @@ class GLWall
 			var h:Int = 0;
 			
 			while (true) {
-				arr.push(playpal.getColorChannelInt(_locPatch.pixels[w][h], 0));
-				arr.push(playpal.getColorChannelInt(_locPatch.pixels[w][h], 1));
-				arr.push(playpal.getColorChannelInt(_locPatch.pixels[w][h], 2));
-				arr.push(playpal.getColorChannelInt(_locPatch.pixels[w][h], 3));
+				arr.push(playpal.getColorChannelInt(_locTexture.pixels[w][h], 0));
+				arr.push(playpal.getColorChannelInt(_locTexture.pixels[w][h], 1));
+				arr.push(playpal.getColorChannelInt(_locTexture.pixels[w][h], 2));
+				arr.push(playpal.getColorChannelInt(_locTexture.pixels[w][h], 3));
 				
 				++w;
-				if (w >= _locPatch.width) {
+				if (w >= _locTexture.width) {
 					w = 0;
 					++h;
-					if (h >= _locPatch.height) break;
+					if (h >= _locTexture.height) break;
 				}
 			}
 			var image:Image = new Image(
 				new ImageBuffer(
 					new UInt8Array(arr), 
-					_locPatch.width, 
-					_locPatch.height, 
+					_locTexture.width, 
+					_locTexture.height, 
 					32, 
 					PixelFormat.RGBA32)
 				);
 			image.buffer.transparent = true;
 			
-				var tex:TexData = {
+			var tex:TexData = {
 				name : texturename,
 				glIndex : GLMapGeometry.glTextureIndex,
 				limeImage : image,
-				patch : _locPatch
+				texture : _locTexture
 			};
 			
 			GLMapGeometry.textureCache[texturename] = tex;
@@ -321,29 +226,29 @@ class GLWall
 			++GLMapGeometry.glTextureIndex;
 		}
 		
-		uv_ratio_y = Math.sqrt(Math.pow(segment.end.xpos - segment.start.xpos, 2) + Math.pow(segment.end.ypos - segment.start.ypos, 2)) / GLMapGeometry.textureCache[texturename].patch.width;
+		uv_ratio_y = Math.sqrt(Math.pow(segment.end.xpos - segment.start.xpos, 2) + Math.pow(segment.end.ypos - segment.start.ypos, 2)) / GLMapGeometry.textureCache[texturename].texture.width;
 		switch (type) {
 			case SOLID :
-				uv_ratio_x = (segment.sector.ceilingHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].patch.height;
+				uv_ratio_x = (segment.sector.ceilingHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].texture.height;
 			case FRONT_TOP:
-				uv_ratio_x = (segment.sector.ceilingHeight - segment.lineDef.backSideDef.sector.ceilingHeight) / GLMapGeometry.textureCache[texturename].patch.height;
+				uv_ratio_x = (segment.sector.ceilingHeight - segment.lineDef.backSideDef.sector.ceilingHeight) / GLMapGeometry.textureCache[texturename].texture.height;
 			case FRONT_MIDDLE:
-				uv_ratio_x = (segment.lineDef.backSideDef.sector.ceilingHeight - segment.lineDef.backSideDef.sector.floorHeight) / GLMapGeometry.textureCache[texturename].patch.height;
+				uv_ratio_x = (segment.lineDef.backSideDef.sector.ceilingHeight - segment.lineDef.backSideDef.sector.floorHeight) / GLMapGeometry.textureCache[texturename].texture.height;
 			case FRONT_BOTTOM :
-				uv_ratio_x = (segment.lineDef.backSideDef.sector.floorHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].patch.height;
+				uv_ratio_x = (segment.lineDef.backSideDef.sector.floorHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].texture.height;
 			case BACK_TOP :
-				uv_ratio_x = (segment.lineDef.frontSideDef.sector.floorHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].patch.height;
+				uv_ratio_x = (segment.lineDef.frontSideDef.sector.floorHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].texture.height;
 			case BACK_BOTTOM :
-				uv_ratio_x = (segment.lineDef.backSideDef.sector.floorHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].patch.height;
+				uv_ratio_x = (segment.lineDef.backSideDef.sector.floorHeight - segment.sector.floorHeight) / GLMapGeometry.textureCache[texturename].texture.height;
 			default :
-				uv_ratio_x = (segment.lineDef.frontSideDef.sector.ceilingHeight - segment.lineDef.frontSideDef.sector.ceilingHeight) / GLMapGeometry.textureCache[texturename].patch.height;
+				uv_ratio_x = (segment.lineDef.frontSideDef.sector.ceilingHeight - segment.lineDef.frontSideDef.sector.ceilingHeight) / GLMapGeometry.textureCache[texturename].texture.height;
 		}
 		
-		px_ratio_x = (1 / GLMapGeometry.textureCache[texturename].patch.width) * uv_ratio_x;
-		px_ratio_y = (1 / GLMapGeometry.textureCache[texturename].patch.height) * uv_ratio_y;
+		px_ratio_x = (1 / GLMapGeometry.textureCache[texturename].texture.width) * uv_ratio_x;
+		px_ratio_y = (1 / GLMapGeometry.textureCache[texturename].texture.height) * uv_ratio_y;
 		
-		px_offset_y = px_ratio_x * GLMapGeometry.textureCache[texturename].patch.offset_x;
-		px_offset_x = px_ratio_y * GLMapGeometry.textureCache[texturename].patch.offset_y;
+		px_offset_y = 0;
+		px_offset_x = 0;
 		
 		switch (type) {
 			case SOLID | FRONT_BOTTOM | FRONT_MIDDLE | FRONT_TOP :
