@@ -119,7 +119,7 @@ class WadCore
 	}
 	
 	public function getGeneralDir(_name:String, _index:Int = 0) {
-		return directory_name_map[_name][_index];
+		return directory_name_map[_name.toUpperCase()][_index];
 	}
 	
 	public function getWadSpecificDir(_wad:String, _index:Int) {
@@ -133,7 +133,7 @@ class WadCore
 	public function wadContains(_lumps:Array<String>):Bool {
 		var verified:Bool = true;
 		for (name in _lumps) {
-			if (directory_name_map[name] == null) {
+			if (directory_name_map[name.toUpperCase()] == null) {
 				Engine.log('Lump $name does not exist');
 				verified = false;
 			}

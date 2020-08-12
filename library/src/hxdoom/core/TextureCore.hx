@@ -80,10 +80,10 @@ class TextureCore
 	}
 	
 	public function getTexture(_name:String):Texture {
-		if (textures[_name] != null) return textures[_name];
+		if (textures[_name.toUpperCase()] != null) return textures[_name.toUpperCase()];
 		else {
-			var text = Texture.CONSTRUCTOR([textureData[_name]]);
-			textures[_name] = text;
+			var text = Texture.CONSTRUCTOR([textureData[_name.toUpperCase()]]);
+			textures[_name.toUpperCase()] = text;
 			return text;
 		}
 	}

@@ -24,6 +24,8 @@ class Texture
 	{
 		data = _args[0];
 		
+		//trace(data);
+		
 		width = data.width;
 		height = data.height;
 		
@@ -45,7 +47,9 @@ class Texture
 					var posx = w + data.layout[num].offset_x;
 					var posy = h + data.layout[num].offset_y;
 					
-					if (posx >= width || posy >= height || posx < 0 || posy < 0) continue;
+					if (pixels[posx] == null) {
+						pixels[posx] = new Array();
+					}
 					
 					pixels[posx][posy] = patch.pixels[w][h];
 				}

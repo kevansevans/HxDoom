@@ -213,7 +213,7 @@ class Reader
 		
 		for (texOffset in textureSet.offsets) {
 			var textureData:TextureData = {
-				textureName : getStringFromRange(_data, _offset + texOffset, _offset + texOffset + 8),
+				textureName : getStringFromRange(_data, _offset + texOffset, _offset + texOffset + 8).toUpperCase(),
 				width : getTwoBytes(_data, _offset + texOffset + 0x0C),
 				height : getTwoBytes(_data, _offset + texOffset + 0x0E),
 				numPatches : getTwoBytes(_data, _offset + texOffset + 0x14),
@@ -225,11 +225,11 @@ class Reader
 	}
 	public static inline function getPatchLayoutList(_data:Array<Int>, _offset:Int):Array<PatchLayout> {
 		var patchlist:Array<PatchLayout> = new Array();
-		for (p in 0...getTwoBytes(_data, _offset - 0x16)) {
+		for (p in 0...getTwoBytes(_data, _offset - 2)) {
 			var layout:PatchLayout = {
-				offset_x : getTwoBytes(_data, _offset),
-				offset_y : getTwoBytes(_data, _offset + 2),
-				patchIndex : getTwoBytes(_data, _offset + 4)
+				offset_x : getTwoBytes(_data, _offset + (p * 10)),
+				offset_y : getTwoBytes(_data, _offset + (p * 10) + 2),
+				patchIndex : getTwoBytes(_data, _offset + (p * 10) + 4)
 			}
 			patchlist.push(layout);
 		}
