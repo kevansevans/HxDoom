@@ -7,9 +7,9 @@ package hxdoom.lumps.graphic;
  * Not to be confused with Texture.hx, this is to handle the TEXTUREX lump format
  * 
  */
-class XTexture 
+class TextureInfo 
 {
-	public static var CONSTRUCTOR:(Array<Any>) -> XTexture = XTexture.new;
+	public static var CONSTRUCTOR:(Array<Any>) -> TextureInfo = TextureInfo.new;
 	
 	public var num_textures:Int;
 	public var offsets:Array<Int>;
@@ -27,10 +27,6 @@ class XTexture
 		textures[_texture.textureName] = _texture;
 	}
 	
-	public function assembleTexture() {
-		
-	}
-	
 	public function toString():String {
 		return([
 			"Number of textures: {" + num_textures + "}",
@@ -41,12 +37,9 @@ class XTexture
 
 typedef TextureData = {
 	var textureName:String;
-	
 	var width:Int;
 	var height:Int;
-	
 	var numPatches:Int;
-	
 	var layout:Array<PatchLayout>;
 }
 typedef PatchLayout = {

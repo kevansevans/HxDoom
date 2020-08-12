@@ -2,7 +2,7 @@ package hxdoom.lumps.map;
 
 import hxdoom.Engine;
 
-import hxdoom.lumps.graphic.Patch;
+import hxdoom.lumps.graphic.Texture;
 
 import hxdoom.enums.eng.SideType;
 
@@ -39,22 +39,22 @@ class LineDef
 		backSideDefID = 	_args[6];
 	}
 	
-	public function getPatch(_side:SideType):Patch {
+	public function getTexture(_side:SideType):Texture {
 		switch(_side) {
 			case SOLID :
-				return Engine.WADDATA.getPatch(frontSideDef.middle_texture);
+				return Engine.TEXTURES.getTexture(frontSideDef.middle_texture);
 			case FRONT_TOP :
-				return Engine.WADDATA.getPatch(frontSideDef.upper_texture);
+				return Engine.TEXTURES.getTexture(frontSideDef.upper_texture);
 			case FRONT_MIDDLE :
-				return Engine.WADDATA.getPatch(frontSideDef.middle_texture);
+				return Engine.TEXTURES.getTexture(frontSideDef.middle_texture);
 			case FRONT_BOTTOM :
-				return Engine.WADDATA.getPatch(frontSideDef.lower_texture);
+				return Engine.TEXTURES.getTexture(frontSideDef.lower_texture);
 			case BACK_TOP :
-				return Engine.WADDATA.getPatch(backSideDef.upper_texture);
+				return Engine.TEXTURES.getTexture(backSideDef.upper_texture);
 			case BACK_MIDDLE :
-				return Engine.WADDATA.getPatch(backSideDef.middle_texture);
+				return Engine.TEXTURES.getTexture(backSideDef.middle_texture);
 			case BACK_BOTTOM :
-				return Engine.WADDATA.getPatch(backSideDef.lower_texture);
+				return Engine.TEXTURES.getTexture(backSideDef.lower_texture);
 		}
 	}
 	

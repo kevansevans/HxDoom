@@ -27,11 +27,6 @@ class WadCore
 	//Raw per wad data as integers
 	var wad_data_map:Map<String, Array<Int>>;
 	
-	public var playpal:Playpal;
-	public var patches:PNames;
-	public var xTexture:Array<XTexture>;
-	public var textureMap:Map<String, Array<PatchTexture>>;
-	
 	public function new() 
 	{
 		directory_name_map = new Map();
@@ -135,30 +130,6 @@ class WadCore
 		return wad_data_map[_name];
 	}
 	
-	public function getPatch(_patchName:String):Patch {
-		
-		if (directory_name_map[_patchName] != null) {
-			var dir = directory_name_map[_patchName][0];
-			if (Reader.getLumpType(dir) == DataLump.GRAPHIC) {
-				var patch = Reader.readPatch(wad_data_map[dir.wad], dir.dataOffset);
-				return patch;
-			} else {
-				dir = directory_name_map["STFOUCH4"][0];
-				var patch = Reader.readPatch(wad_data_map[dir.wad], dir.dataOffset);
-				return patch;
-			}
-		} else {
-			var patch = Patch.CONSTRUCTOR([16, 16, 16, 16]);
-			for (a in 0...16) {
-				patch.pixels[a] = new Vector(16);
-				for (b in 0...16) {
-					patch.pixels[a][b] = Std.int(Math.min(a * b, 255));
-				}
-			}
-			return patch;
-		}
-	}
-	
 	public function wadContains(_lumps:Array<String>):Bool {
 		var verified:Bool = true;
 		for (name in _lumps) {
@@ -168,63 +139,6 @@ class WadCore
 			}
 		}
 		return(verified);
-	}
-	
-	public function loadPlaypal() {
-		
-		var directory = directory_name_map[KeyLump.PLAYPAL][0];
-		
-		playpal = Playpal.CONSTRUCTOR([]);
-		
-		var numPals:Int = Std.int(directory.size / 768);
-		var offset:Int = 0;
-		for (pal in 0...numPals) {
-			for (sw in 0...256) {
-				
-				var red:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.dataOffset + offset);
-				var green:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.dataOffset + (offset += 1));
-				var blue:Int = Reader.getOneByte(wad_data_map[directory.wad], directory.dataOffset + (offset += 1));
-				
-				var _color:Int = (red << 16) | (green << 8) | blue;
-				
-				playpal.addSwatch(pal, _color);
-				
-				offset += 1;
-			}
-		}
-		
-	}
-	
-	public function parseTextures() {
-		
-		xTexture = new Array();
-		
-		var tex_x:Int = 1;
-		
-		while (wadContains(["TEXTURE" + tex_x])) {
-			var dir = directory_name_map["TEXTURE" + tex_x][0];
-			
-			var xText = Reader.readXTextures(wad_data_map[dir.wad], dir.dataOffset);
-			
-			xTexture.push(xText);
-			
-			++tex_x;
-		}
-		
-		for (TextLump in xTexture) {
-			
-		}
-	}
-	
-	public function loadPNames() {
-		var dir:Directory;
-		if (directory_name_map["PNAMES"] != null) {
-			dir = directory_name_map["PNAMES"][0];
-		} else {
-			trace("pnames not found!");
-			return;
-		}
-		patches = Reader.readPNames(wad_data_map[dir.wad], dir.dataOffset);
 	}
 	
 	public function loadMap(_mapMarker:String):Bool {

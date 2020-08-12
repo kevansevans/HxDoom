@@ -4,11 +4,12 @@ package hxdoom.lumps.graphic;
  * ...
  * @author Kaelan
  */
-class PNames 
+class PatchNames 
 {
-	public static var CONSTRUCTOR:(Array<Any>) -> PNames = PNames.new;
+	public static var CONSTRUCTOR:(Array<Any>) -> PatchNames = PatchNames.new;
 	
 	public var names:Array<String>;
+	
 	public function new(_args:Array<Any>) 
 	{
 		names = new Array();
@@ -19,6 +20,9 @@ class PNames
 	public function checkPatch(_name:String) {
 		if (names.contains(_name)) return true;
 		return false;
+	}
+	public function getPatchName(_index:Int):String {
+		return names[_index];
 	}
 	public function toString():String {
 		var str:String = "";

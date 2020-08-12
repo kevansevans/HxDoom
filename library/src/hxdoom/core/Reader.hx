@@ -4,9 +4,9 @@ import haxe.ds.Vector;
 import hxdoom.enums.eng.DataLump;
 import hxdoom.enums.eng.KeyLump;
 import hxdoom.lumps.Directory;
-import hxdoom.lumps.graphic.PNames;
+import hxdoom.lumps.graphic.PatchNames;
 import hxdoom.lumps.graphic.Patch;
-import hxdoom.lumps.graphic.XTexture;
+import hxdoom.lumps.graphic.TextureInfo;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Sector;
@@ -15,6 +15,7 @@ import hxdoom.lumps.map.SideDef;
 import hxdoom.lumps.map.SubSector;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
+import hxdoom.typedefs.graphics.PatchLayout;
 
 /**
  * ...
@@ -189,25 +190,23 @@ class Reader
 	 * @param	_size
 	 * @return
 	 */
-	public static inline function readPNames(_data:Array<Int>, _offset:Int):PNames {
-		var pname = PNames.CONSTRUCTOR([]);
+	public static inline function readPatchNames(_data:Array<Int>, _offset:Int):PatchNames {
+		var pname = PatchNames.CONSTRUCTOR([]);
 		var numPatches = getFourBytes(_data, _offset);
-		var offset = _offset + 4;
 		for (a in 0...numPatches) {
-			pname.addPatchName(getStringFromRange(_data, offset + (a * 8), offset + ((a + 1) * 8)));
+			pname.addPatchName(getStringFromRange(_data, (_offset + 4) + (a * 8), (_offset + 4) + ((a + 1) * 8)));
 		}
 		return pname;
 	}
-	public static inline function readXTextures(_data:Array<Int>, _offset:Int) {
+	public static inline function readTextureInfo(_data:Array<Int>, _offset:Int) {
 		
 		var numTextures = getFourBytes(_data, _offset);
-		var offset = _offset + 4;
 		var offsets:Array<Int> = new Array();
 		for (a in 0...numTextures) {
-			offsets.push(getFourBytes(_data, offset + (a * 4)));
+			offsets.push(getFourBytes(_data, (_offset + 4) + (a * 4)));
 		}
 		
-		var textureSet = XTexture.CONSTRUCTOR([
+		var textureSet = TextureInfo.CONSTRUCTOR([
 			numTextures,
 			offsets
 		]);
