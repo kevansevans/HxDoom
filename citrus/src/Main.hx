@@ -3,6 +3,7 @@ package;
 import haxe.Http;
 import haxe.io.Bytes;
 import haxe.Json;
+import haxe.Timer;
 import haxe.zip.Uncompress;
 import haxe.zip.Entry;
 import haxe.zip.Reader;
@@ -43,6 +44,7 @@ class Main extends Application
 {
 	var hxdoom:Engine;
 	var env_path:Null<String>;
+	var timer:Timer;
 	
 	#if sys
 	var pathlist:Map<String, String>;
@@ -276,6 +278,9 @@ class Main extends Application
 		hxdoom = new Engine();
 		hxdoom.addWadBytes(_wadbytes, "DOOM1.WAD");
 		hxdoom.loadMap("E1M1");
+		
+		timer = new Timer(Std.int(1000 / 35));
+		timer.run = Engine.GAME.tick;
 	}
 	
 	override public function onWindowResize(width:Int, height:Int):Void 
