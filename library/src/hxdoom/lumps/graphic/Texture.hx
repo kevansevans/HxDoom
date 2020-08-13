@@ -24,8 +24,6 @@ class Texture
 	{
 		data = _args[0];
 		
-		//trace(data);
-		
 		width = data.width;
 		height = data.height;
 		
@@ -51,7 +49,8 @@ class Texture
 						pixels[posx] = new Array();
 					}
 					
-					pixels[posx][posy] = patch.pixels[w][h];
+					if (patch.pixels[w][h] == -1) continue;
+					else pixels[posx][posy] = patch.pixels[w][h];
 				}
 			}
 		}
