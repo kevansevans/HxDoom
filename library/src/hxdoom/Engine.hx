@@ -23,10 +23,6 @@ import hxdoom.enums.EnumTool;
 class Engine 
 {
 	/**
-	 * Handles cheat code processing
-	 **/
-	public static var CHEATS(get, null):CheatCore;
-	/**
 	 * Handles wad loading and parsing
 	 **/
 	public static var WADDATA(get, null):WadCore;
@@ -71,7 +67,6 @@ class Engine
 		GAME = new GameCore();
 		IO = new IOCore();
 		RENDER = new RenderCore();
-		CHEATS = new CheatCore();
 		SOUND = new SoundCore();
 		PROFILE = new ProfileCore();
 		TEXTURES = new TextureCore();
@@ -81,19 +76,6 @@ class Engine
 		
 		Reader.keyLumpList = EnumTool.toStringArray(KeyLump);
 		Reader.dataLumpList = EnumTool.toStringArray(DataLump);
-	}
-	/**
-	 * Setter to override CheatCore behavior. Changes CVar flag when overriden. Optional.
-	 * @param	_cheats Providing 'null' will reset to default core
-	 */
-	public function setcore_cheats(?_cheats:CheatCore) {
-		if (_cheats == null) {
-			CHEATS = new CheatCore();
-			CVarCore.setCVar(Defaults.OVERRIDE_CHEATS, false);
-		} else {
-			CHEATS = _cheats;
-			CVarCore.setCVar(Defaults.OVERRIDE_CHEATS, true);
-		}
 	}
 	/**
 	 * Setter to override GameCore behavior. Changes CVar flag when overriden. Optional.
@@ -230,11 +212,6 @@ class Engine
 	 */
 	public static inline function log(_msg:String, ?_pos:PosInfos) {
 		trace(_pos, _msg);
-	}
-	
-	static function get_CHEATS():CheatCore 
-	{
-		return CHEATS;
 	}
 	
 	static function get_WADDATA():WadCore 
