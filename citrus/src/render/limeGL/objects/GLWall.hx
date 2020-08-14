@@ -247,16 +247,13 @@ class GLWall
 		px_ratio_x = (1 / GLMapGeometry.textureCache[texturename].texture.width) * uv_ratio_x;
 		px_ratio_y = (1 / GLMapGeometry.textureCache[texturename].texture.height) * uv_ratio_y;
 		
-		px_offset_y = 0;
-		px_offset_x = 0;
-		
 		switch (type) {
 			case SOLID | FRONT_BOTTOM | FRONT_MIDDLE | FRONT_TOP :
-				px_offset_x += (px_ratio_x *  segment.lineDef.frontSideDef.xoffset);
-				px_offset_y += (px_ratio_y *  segment.lineDef.frontSideDef.yoffset);
+				px_offset_x += (px_ratio_x * segment.lineDef.frontSideDef.xoffset);
+				px_offset_y += (px_ratio_y * segment.lineDef.frontSideDef.yoffset);
 			case BACK_BOTTOM | BACK_MIDDLE | BACK_TOP :
-				px_offset_x += (px_ratio_x *  segment.lineDef.backSideDef.xoffset);
-				px_offset_y += (px_ratio_y *  segment.lineDef.backSideDef.yoffset);
+				px_offset_x += (px_ratio_x * segment.lineDef.backSideDef.xoffset);
+				px_offset_y += (px_ratio_y * segment.lineDef.backSideDef.yoffset);
 		}
 		
 		var index = 0;

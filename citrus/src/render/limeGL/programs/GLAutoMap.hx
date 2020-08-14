@@ -92,8 +92,8 @@ class GLAutoMap
 		
 		var mapzoom:Float = CVarCore.getCvar(Defaults.AUTOMAP_ZOOM);
 			
-		automapMatrix4.appendTranslation( -Engine.ACTIVEMAP.actors_players[0].xpos, -Engine.ACTIVEMAP.actors_players[0].ypos, 0);
-		automapMatrix4.appendRotation(Engine.ACTIVEMAP.actors_players[0].yaw - 90, new Vector4(0, 0, -1, 1));
+		automapMatrix4.appendTranslation( -Engine.LEVELS.currentMap.actors_players[0].xpos, -Engine.LEVELS.currentMap.actors_players[0].ypos, 0);
+		automapMatrix4.appendRotation(Engine.LEVELS.currentMap.actors_players[0].yaw - 90, new Vector4(0, 0, -1, 1));
 		automapMatrix4.appendScale(mapzoom, (mapzoom * (_winWidth / _winHeight)), 1);
 		
 		gl.uniformMatrix4fv(gl.getUniformLocation(program, "M4_POSITION"), false, automapFloat32);
@@ -103,7 +103,7 @@ class GLAutoMap
 	}
 	
 	function rebuildMapArray() {
-		var loadedsegs = Engine.ACTIVEMAP.segments;
+		var loadedsegs = Engine.LEVELS.currentMap.segments;
 		var numSegs = ((loadedsegs.length -1) * 12);
 		map_lineverts.resize(numSegs);
 		var itemCount:Int = 0;

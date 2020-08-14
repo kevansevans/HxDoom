@@ -256,7 +256,7 @@ class Main extends Application
 			//Desktop, Android, and HTML5 with WebGL support
 			case OPENGL, OPENGLES, WEBGL:
 				
-				if (Engine.ACTIVEMAP != null) Engine.RENDER.setVisibleSegments();
+				if (Engine.LEVELS.currentMap != null) Engine.RENDER.setVisibleSegments();
 				Engine.RENDER.render_scene();
 				
 			//HTML5 without WebGL support
@@ -277,7 +277,8 @@ class Main extends Application
 	function launchGame(_wadbytes:Bytes) {
 		hxdoom = new Engine();
 		hxdoom.addWadBytes(_wadbytes, "DOOM1.WAD");
-		hxdoom.loadMap("E1M1");
+		
+		Engine.LEVELS.loadMap("E1M1");
 		
 		timer = new Timer(Std.int(1000 / 35));
 		timer.run = Engine.GAME.tick;

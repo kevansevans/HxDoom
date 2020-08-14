@@ -96,7 +96,7 @@ class GLMapGeometry
 		midwalls = new Map();
 		flats = new Map();
 		
-		var mapSegments = Engine.ACTIVEMAP.segments;	
+		var mapSegments = Engine.LEVELS.currentMap.segments;	
 		for (seg in mapSegments) {
 			
 			if (seg.lineDef.solid) {
@@ -147,8 +147,8 @@ class GLMapGeometry
 		var viewArray = new Float32Array(16);
 		var projArray = new Float32Array(16);
 		
-		var camera:Camera = Engine.ACTIVEMAP.camera;
-		var focus:CameraPoint = Engine.ACTIVEMAP.focus;
+		var camera:Camera = Engine.LEVELS.currentMap.camera;
+		var focus:CameraPoint = Engine.LEVELS.currentMap.focus;
 		
 		Mat4Tools.identity(worldArray);
 		Mat4Tools.lookAt(	[camera.xpos, camera.ypos, camera.zpos], 
