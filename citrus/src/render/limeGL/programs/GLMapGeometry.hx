@@ -139,6 +139,11 @@ class GLMapGeometry
 	
 	public function render(_winWidth:Int, _winHeight:Int) {
 		
+		if (Engine.LEVELS.needToRebuild) {
+			safeToRender = false;
+			buildMapGeometry();
+		}
+		
 		if (!safeToRender) return;
 		
 		gl.useProgram(program);

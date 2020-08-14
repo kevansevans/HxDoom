@@ -1,5 +1,6 @@
 package;
 
+import game.profiles.doom.DoomShareware;
 import haxe.Http;
 import haxe.io.Bytes;
 import haxe.Json;
@@ -278,7 +279,9 @@ class Main extends Application
 		hxdoom = new Engine();
 		hxdoom.addWadBytes(_wadbytes, "DOOM1.WAD");
 		
-		Engine.LEVELS.loadMap("E1M1");
+		hxdoom.setcore_profile(new DoomShareware());
+		
+		Engine.LEVELS.startEpisode(0);
 		
 		timer = new Timer(Std.int(1000 / 35));
 		timer.run = Engine.GAME.tick;
