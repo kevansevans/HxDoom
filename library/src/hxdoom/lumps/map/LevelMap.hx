@@ -1,4 +1,4 @@
-package hxdoom.core;
+package hxdoom.lumps.map;
 
 import haxe.ds.Vector;
 
@@ -16,7 +16,7 @@ import hxdoom.utils.geom.Angle;
  * ...
  * @author Kaelan
  */
-class BSPMap 
+class LevelMap 
 {
 	public var name:String;
 	
@@ -106,8 +106,8 @@ class BSPMap
 		return (((dx *  nodes[_nodeID].changeYPartition) - (dy * nodes[_nodeID].changeXPartition)) <= 0);
 	}
 	
-	public function copy():BSPMap {
-		var _bsp:BSPMap = new BSPMap();
+	public function copy():LevelMap {
+		var _bsp:LevelMap = new LevelMap();
 		
 		_bsp.linedefs = linedefs.copy();
 		_bsp.name = name;

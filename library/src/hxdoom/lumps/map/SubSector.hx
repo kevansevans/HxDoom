@@ -22,14 +22,14 @@ class SubSector
 	
 	function get_sector():Sector 
 	{
-		return Engine.ACTIVEMAP.segments[firstSegID].sector;
+		return Engine.LEVELS.currentMap.segments[firstSegID].sector;
 	}
 	
 	function get_segments():Array<Segment> 
 	{
 		var t_segments = new Array();
 		for (_seg in firstSegID...(firstSegID + count)) {
-			t_segments.push(Engine.ACTIVEMAP.segments[_seg]);
+			t_segments.push(Engine.LEVELS.currentMap.segments[_seg]);
 		}
 		return(t_segments);
 	}

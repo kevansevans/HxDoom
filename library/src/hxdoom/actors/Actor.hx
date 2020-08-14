@@ -76,7 +76,7 @@ class Actor
 	
 	public function get_zpos():Float
 	{
-		return Engine.ACTIVEMAP.getActorSubsector(this).sector.floorHeight;
+		return Engine.LEVELS.currentMap.getActorSubsector(this).sector.floorHeight;
 	}
 	
 	public function get_pitch():Angle 

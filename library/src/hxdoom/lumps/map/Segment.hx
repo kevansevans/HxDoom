@@ -30,12 +30,12 @@ class Segment
 	
 	function get_start():Vertex 
 	{
-		return Engine.ACTIVEMAP.linedefs[lineID].start;
+		return Engine.LEVELS.currentMap.linedefs[lineID].start;
 	}
 	
 	function get_end():Vertex 
 	{
-		return Engine.ACTIVEMAP.linedefs[lineID].end;
+		return Engine.LEVELS.currentMap.linedefs[lineID].end;
 	}
 	
 	function get_sector():Sector 
@@ -49,7 +49,7 @@ class Segment
 	
 	function get_lineDef():LineDef 
 	{
-		return Engine.ACTIVEMAP.linedefs[lineID];
+		return Engine.LEVELS.currentMap.linedefs[lineID];
 	}
 	
 	public function toString():String {

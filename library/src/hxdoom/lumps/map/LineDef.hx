@@ -66,22 +66,22 @@ class LineDef
 	
 	function get_frontSideDef():SideDef 
 	{
-		return Engine.ACTIVEMAP.sidedefs[frontSideDefID];
+		return Engine.LEVELS.currentMap.sidedefs[frontSideDefID];
 	}
 	
 	function get_backSideDef():SideDef 
 	{
-		return Engine.ACTIVEMAP.sidedefs[backSideDefID];
+		return Engine.LEVELS.currentMap.sidedefs[backSideDefID];
 	}
 	
 	function get_start():Vertex 
 	{
-		return Engine.ACTIVEMAP.vertexes[startVertexID];
+		return Engine.LEVELS.currentMap.vertexes[startVertexID];
 	}
 	
 	function get_end():Vertex 
 	{
-		return Engine.ACTIVEMAP.vertexes[endVertexID];
+		return Engine.LEVELS.currentMap.vertexes[endVertexID];
 	}
 	
 	public function toString() {

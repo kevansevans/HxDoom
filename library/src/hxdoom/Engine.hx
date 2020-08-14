@@ -4,6 +4,7 @@ import haxe.PosInfos;
 import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.enums.data.CVarType;
+import hxdoom.lumps.map.LevelMap;
 
 import hxdoom.enums.data.Defaults;
 import hxdoom.core.*;
@@ -26,10 +27,6 @@ class Engine
 	 * Handles wad loading and parsing
 	 **/
 	public static var WADDATA(get, null):WadCore;
-	/**
-	 * Stores an instance of the currently running map
-	 **/
-	public static var ACTIVEMAP:BSPMap;
 	/**
 	 * Sets behavior based on the first IWAD provided
 	 **/
@@ -55,6 +52,10 @@ class Engine
 	 **/
 	public static var TEXTURES(get, null):TextureCore;
 	/**
+	 * Handles general map related behaviors
+	 */
+	public static var LEVELS(get, null):LevelCore;
+	/**
 	 * Function to call when loading a map. Can be overriden to change behavior.
 	 **/
 	public static var LOADMAP:String -> Void;
@@ -70,6 +71,7 @@ class Engine
 		SOUND = new SoundCore();
 		PROFILE = new ProfileCore();
 		TEXTURES = new TextureCore();
+		LEVELS = new LevelCore();
 		LOADMAP = loadMap;
 		
 		setDefaultCVARS();
@@ -142,6 +144,15 @@ class Engine
 			CVarCore.setCVar(Defaults.OVERRIDE_TEXTURES, true);
 		}
 	}
+	public function setcore_levels(?_levels:LevelCore) {
+		if (_levels == null) {
+			LEVELS = new LevelCore();
+			CVarCore.setCVar(Defaults.OVERRIDE_LEVELS, false);
+		} else {
+			LEVELS = _levels;
+			CVarCore.setCVar(Defaults.OVERRIDE_LEVELS, true);
+		}
+	}
 	/**
 	 * Default function to load a map that's set to Engine.LOADMAP()
 	 * @param	_mapMarker String denoting map marker directory
@@ -149,9 +160,9 @@ class Engine
 	public function loadMap(_mapMarker:String) {
 		GAME.stop();
 		
-		var mapLoaded = WADDATA.loadMap(_mapMarker);
+		var mapLoaded = LEVELS.loadMap(_mapMarker);
 		if (mapLoaded) {
-			Engine.ACTIVEMAP.build();
+			Engine.LEVELS.currentMap.build();
 			if (RENDER != null) {
 				RENDER.initScene();
 			}
@@ -191,6 +202,7 @@ class Engine
 		CVarCore.setNewCVar(Defaults.OVERRIDE_RENDER, 				CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_SOUND, 				CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_TEXTURES,				CVarType.CBool, 	false);
+		CVarCore.setNewCVar(Defaults.OVERRIDE_LEVELS,				CVarType.CBool, 	false);
 		
 		CVarCore.setNewCVar(Defaults.PLAYER_FOV, 					CVarType.CInt, 		90);
 		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_FORWARD, 		CVarType.CBool, 	false);
@@ -242,6 +254,11 @@ class Engine
 	static function get_PROFILE():ProfileCore 
 	{
 		return PROFILE;
+	}
+	
+	static function get_LEVELS():LevelCore
+	{
+		return LEVELS;
 	}
 	
 	static function get_TEXTURES():TextureCore 

@@ -38,23 +38,23 @@ class GameCore
 	//This needs to be moved out!
 	public function tick() {
 		
-		var camera:Camera = Engine.ACTIVEMAP.camera;
-		var focus:CameraPoint = Engine.ACTIVEMAP.focus;
+		var camera:Camera = Engine.LEVELS.currentMap.camera;
+		var focus:CameraPoint = Engine.LEVELS.currentMap.focus;
 		
 		switch (STATE) {
 			
 			case IN_GAME:
 				if (CVarCore.getCvar(Defaults.PLAYER_MOVING_FORWARD)) {
-					Engine.ACTIVEMAP.actors_players[0].move(8);
+					Engine.LEVELS.currentMap.actors_players[0].move(8);
 				}
 				if (CVarCore.getCvar(Defaults.PLAYER_MOVING_BACKWARD)) {
-					Engine.ACTIVEMAP.actors_players[0].move(-8);
+					Engine.LEVELS.currentMap.actors_players[0].move(-8);
 				}
 				if (CVarCore.getCvar(Defaults.PLAYER_TURNING_LEFT)) {
-					Engine.ACTIVEMAP.actors_players[0].yaw += 2;
+					Engine.LEVELS.currentMap.actors_players[0].yaw += 2;
 				}
 				if (CVarCore.getCvar(Defaults.PLAYER_TURNING_RIGHT)) {
-					Engine.ACTIVEMAP.actors_players[0].yaw -= 2;
+					Engine.LEVELS.currentMap.actors_players[0].yaw -= 2;
 				}
 				
 				focus.x = camera.xpos + 5 * Math.cos(camera.actorToFollow.yaw.toRadians());

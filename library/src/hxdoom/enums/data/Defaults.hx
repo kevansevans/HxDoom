@@ -26,7 +26,6 @@ enum abstract Defaults(String) from String {
 	 * Float, default 0.001. Zoom level of automap.
 	 */
 	var AUTOMAP_ZOOM:String;
-	
 	/**
 	 * Bool, default false.
 	 */
@@ -68,6 +67,10 @@ enum abstract Defaults(String) from String {
 	 * Bool, default false. Has this core been overriden?
 	 */
 	var OVERRIDE_TEXTURES:String;
+	/**
+	 * Bool, default false. Has this core been overriden?
+	 */
+	var OVERRIDE_LEVELS:String;
 	
 	/**
 	 * Int, default 90.

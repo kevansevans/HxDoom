@@ -1,6 +1,7 @@
 package hxdoom.core;
 
 import haxe.ds.Map;
+import hxdoom.lumps.map.LevelMap;
 
 import hxdoom.Engine;
 import hxdoom.lumps.map.Node;
@@ -20,7 +21,6 @@ class RenderCore
 	public var vis_segments:Array<Segment>;
 	public var vis_subsecs:Array<SubSector>;
 	public var vis_floors:Array<Segment>;
-	public var map(get, never):BSPMap;
 	public var screen_width(default, set):Int = 320;
 	public var spanlimit:Int = 180;
 	public var scanning:Bool = false;
@@ -35,6 +35,9 @@ class RenderCore
 	public function resize(_width:Int, _height:Int) {}
 	
 	public function setVisibleSegments(?_subsec:Int) {
+		
+		var map = Engine.LEVELS.currentMap;
+		
 		scanning = true;
 		if (_subsec == null) {
 			virtual_screen = new Map();
@@ -47,6 +50,8 @@ class RenderCore
 	}
 	
 	public function recursiveNodeTraversalVisibility(_nodeIndex:Int) {
+		
+		var map = Engine.LEVELS.currentMap;
 		
 		if (_nodeIndex & Node.SUBSECTORIDENTIFIER > 0) {
 			subsectorVisibilityCheck(_nodeIndex & (~Node.SUBSECTORIDENTIFIER));
@@ -66,6 +71,8 @@ class RenderCore
 	}
 	
 	public function subsectorVisibilityCheck(_subsector:Int) {
+		
+		var map = Engine.LEVELS.currentMap;
 		
 		var camera:Camera = map.camera;
 		var subsector = map.subsectors[_subsector];
@@ -167,10 +174,6 @@ class RenderCore
 			x += CVarCore.getCvar(Defaults.SCREEN_DISTANCE_FROM_VIEWER);
 		}
 		return x;
-	}
-	
-	function get_map():BSPMap {
-		return Engine.ACTIVEMAP;
 	}
 	
 	function set_screen_width(value:Int):Int 

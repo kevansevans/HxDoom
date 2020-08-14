@@ -29,7 +29,7 @@ class SideDef
 	
 	function get_sector():Sector
 	{
-		return Engine.ACTIVEMAP.sectors[sectorID];
+		return Engine.LEVELS.currentMap.sectors[sectorID];
 	}
 	
 	public function toString():String {
