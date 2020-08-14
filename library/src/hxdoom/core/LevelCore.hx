@@ -15,6 +15,10 @@ class LevelCore
 	public var levelData:Array<MapProperties>;
 	public var episodeData:Array<EpisodeProperties>;
 	public var currentMap:LevelMap;
+	public var currentMapData:MapProperties;
+	public var currentEpisodeData:EpisodeProperties;
+	
+	public var needToRebuild:Bool = true;
 	
 	public function new() 
 	{
@@ -30,12 +34,30 @@ class LevelCore
 	}
 	
 	public function startMap(_index:Int) {
-		if (episodeData == null) {
+		if (levelData == null) {
 			trace("Level data undefined!");
 			return;
 		}
 		loadMap(levelData[_index].internalName);
+		currentMapData = levelData[_index];
 	}
+	public function exitMapNormal() {
+		if (levelData == null) {
+			trace("Level data undefined!");
+			return;
+		}
+		currentMapData = levelData[currentMapData.nextMap];
+		loadMap(currentMapData.internalName);
+	}
+	public function exitMapSecret() {
+		if (levelData == null) {
+			trace("Level data undefined!");
+			return;
+		}
+		currentMapData = levelData[currentMapData.nextMapSecret];
+		loadMap(currentMapData.internalName);
+	}
+	
 	
 	public function loadMap(_mapMarker:String):Bool {
 		
@@ -161,6 +183,8 @@ class LevelCore
 		currentMap.parseThings();
 		currentMap.setOffset();
 		currentMap.build();
+		
+		needToRebuild = true;
 		
 		return true;
 	}

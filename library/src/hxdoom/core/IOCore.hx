@@ -46,34 +46,14 @@ class IOCore
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
 						CVarCore.setCVar(Defaults.PLAYER_TURNING_RIGHT, true);
 						
-					case HXDKeyCode.ONE :
-						Engine.LOADMAP("E1M1");
+					case HXDKeyCode.UP_ARROW :
+						Engine.LEVELS.exitMapNormal();
+					case HXDKeyCode.DOWN_ARROW :
+						Engine.LEVELS.exitMapSecret();
 						
-					case HXDKeyCode.TWO :
-						Engine.LOADMAP("E1M2");
-						
-					case HXDKeyCode.THREE :
-						Engine.LOADMAP("E1M3");
-						
-					case HXDKeyCode.FOUR :
-						Engine.LOADMAP("E1M4");
-						
-					case HXDKeyCode.FIVE :
-						Engine.LOADMAP("E1M5");
-						
-					case HXDKeyCode.SIX :
-						Engine.LOADMAP("E1M6");
-						
-					case HXDKeyCode.SEVEN :
-						Engine.LOADMAP("E1M7");
-						
-					case HXDKeyCode.EIGHT :
-						Engine.LOADMAP("E1M8");
-						
-					case HXDKeyCode.NINE :
-						Engine.LOADMAP("E1M9");
+					default :
+						trace(_keyCode);
 				}
-				
 			default :
 				
 		}

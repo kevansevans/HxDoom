@@ -105,4 +105,7 @@ enum abstract HXDKeyCode(Int) from Int {
 	var CLOSE_BRACE:Int;
 	var TILDE:Int;
 	var DEL:Int;
+	
+	var DOWN_ARROW:Int = 1073741905;
+	var UP_ARROW:Int =	 1073741906;
 }

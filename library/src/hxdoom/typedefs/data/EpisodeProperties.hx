@@ -5,7 +5,7 @@ package hxdoom.typedefs.data;
  */
 typedef EpisodeProperties =
 {
-	@:optional index:Int;
-	@:optional name:String;
-	@:optional firstLevel:Int;
+	@:optional var index:Int;
+	@:optional var name:String;
+	@:optional var firstLevel:Int;
 }

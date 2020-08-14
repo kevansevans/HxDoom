@@ -21,10 +21,4 @@ class ProfileCore
 	public function getNextMap(_currentMap:String):String {
 		return "";
 	}
-	
-	public static function getGameProfile():ProfileCore {
-		
-		return new UnknownGame();
-		
-	}
 }
