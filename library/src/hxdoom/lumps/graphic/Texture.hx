@@ -45,6 +45,11 @@ class Texture
 					var posx = w + data.layout[num].offset_x;
 					var posy = h + data.layout[num].offset_y;
 					
+					if (posx < 0) posx += width;
+					else if (posx >= width) posx -= width;
+					if (posy < 0) posy += height;
+					else if (posy >= height) posy -= height;
+					
 					if (pixels[posx] == null) {
 						pixels[posx] = new Array();
 					}

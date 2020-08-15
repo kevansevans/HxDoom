@@ -220,6 +220,7 @@ class Reader
 				layout : getPatchLayoutList(_data, _offset + texOffset + 0x16)
 			}
 			textureSet.addTextureData(textureData);
+			if (textureData.textureName == "BROWN144") trace(StringTools.hex(_offset + texOffset));
 		}
 		return textureSet;
 	}
@@ -227,8 +228,8 @@ class Reader
 		var patchlist:Array<PatchLayout> = new Array();
 		for (p in 0...getTwoBytes(_data, _offset - 2)) {
 			var layout:PatchLayout = {
-				offset_x : getTwoBytes(_data, _offset + (p * 10)),
-				offset_y : getTwoBytes(_data, _offset + (p * 10) + 2),
+				offset_x : getTwoBytes(_data, _offset + (p * 10), true),
+				offset_y : getTwoBytes(_data, _offset + (p * 10) + 2, true),
 				patchIndex : getTwoBytes(_data, _offset + (p * 10) + 4)
 			}
 			patchlist.push(layout);
