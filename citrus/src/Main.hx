@@ -16,9 +16,6 @@ import lime.ui.KeyModifier;
 import lime.ui.MouseWheelMode;
 import lime.ui.WindowAttributes;
 
-import openfl.net.URLRequest;
-import openfl.utils.ByteArray;
-
 import render.limeGL.GLHandler;
 
 import hxdoom.Engine;

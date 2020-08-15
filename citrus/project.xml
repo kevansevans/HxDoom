@@ -9,7 +9,6 @@
 	
 	<window width="0" height="0" if="html5" />
 	
-	<haxelib name="openfl" />
 	<haxelib name="lime" />
 	<haxelib name="hxdoom" />
 	<haxelib name="haxe-gl-matrix" />
