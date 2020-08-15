@@ -133,6 +133,7 @@ class GLMapGeometry
 			//flat[1].buildShells();
 		}
 		
+		Engine.LEVELS.needToRebuild = false;
 		safeToRender = true;
 	}
 	
