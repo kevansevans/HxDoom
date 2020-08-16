@@ -220,7 +220,6 @@ class Reader
 				layout : getPatchLayoutList(_data, _offset + texOffset + 0x16)
 			}
 			textureSet.addTextureData(textureData);
-			if (textureData.textureName == "BROWN144") trace(StringTools.hex(_offset + texOffset));
 		}
 		return textureSet;
 	}
