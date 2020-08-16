@@ -1,12 +1,12 @@
 package render.limeGL.objects;
 
 import haxe.PosInfos;
-import hxdoom.lumps.graphic.Texture;
+import hxdoom.component.Texture;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.lumps.map.Sector;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.graphic.Patch;
-import hxdoom.lumps.graphic.Texture;
+import hxdoom.component.Texture;
 import hxdoom.enums.eng.SideType;
 import hxdoom.core.Reader;
 import hxdoom.Engine;
@@ -72,6 +72,12 @@ class GLWall
 		if (_program == null) return;
 		
 		if (texturename == "-") return;
+		
+		if (type == FRONT_TOP || type == BACK_TOP) {
+			if (segment.lineDef.backSideDef.sector.ceilingTexture == "F_SKY1") {
+				return;
+			}
+		}
 		
 		if (GLMapGeometry.textureCache[texturename] == null) return;
 		
@@ -248,9 +254,15 @@ class GLWall
 		px_ratio_y = (1 / GLMapGeometry.textureCache[texturename].texture.height) * uv_ratio_y;
 		
 		switch (type) {
-			case SOLID | FRONT_BOTTOM | FRONT_MIDDLE | FRONT_TOP :
+			case SOLID | FRONT_TOP :
 				px_offset_x += (px_ratio_x * segment.lineDef.frontSideDef.xoffset);
-				px_offset_y += (px_ratio_y * segment.lineDef.frontSideDef.yoffset);
+				px_offset_y += (px_ratio_y * segment.lineDef.frontSideDef.yoffset) + (px_ratio_y * segment.lineDef.frontSideDef.sector.ceilingHeight);
+			case FRONT_MIDDLE :
+				px_offset_x += (px_ratio_x * segment.lineDef.frontSideDef.xoffset);
+				px_offset_y += (px_ratio_y * segment.lineDef.frontSideDef.yoffset) + (px_ratio_y * segment.lineDef.backSideDef.sector.ceilingHeight);
+			case FRONT_BOTTOM :
+				px_offset_x += (px_ratio_x * segment.lineDef.frontSideDef.xoffset);
+				px_offset_y += (px_ratio_y * segment.lineDef.frontSideDef.yoffset) + (px_ratio_y * segment.lineDef.backSideDef.sector.floorHeight);
 			case BACK_BOTTOM | BACK_MIDDLE | BACK_TOP :
 				px_offset_x += (px_ratio_x * segment.lineDef.backSideDef.xoffset);
 				px_offset_y += (px_ratio_y * segment.lineDef.backSideDef.yoffset);
