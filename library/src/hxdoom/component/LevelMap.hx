@@ -9,8 +9,8 @@ import hxdoom.enums.game.SharedID;
 
 import hxdoom.lumps.map.*;
 
-import hxdoom.utils.extensions.Camera;
-import hxdoom.utils.extensions.CameraPoint;
+import hxdoom.component.Camera;
+import hxdoom.component.CameraPoint;
 import hxdoom.utils.geom.Angle;
 /**
  * ...
