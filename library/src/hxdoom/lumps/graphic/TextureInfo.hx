@@ -1,5 +1,7 @@
 package hxdoom.lumps.graphic;
 
+import hxdoom.lumps.LumpBase;
+
 /**
  * ...
  * @author Kaelan
@@ -7,7 +9,7 @@ package hxdoom.lumps.graphic;
  * Not to be confused with Texture.hx, this is to handle the TEXTUREX lump format
  * 
  */
-class TextureInfo 
+class TextureInfo extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> TextureInfo = TextureInfo.new;
 	
@@ -17,6 +19,8 @@ class TextureInfo
 	
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		num_textures = _args[0];
 		offsets = _args[1];
 		

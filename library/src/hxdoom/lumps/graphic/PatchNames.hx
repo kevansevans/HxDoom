@@ -1,10 +1,11 @@
 package hxdoom.lumps.graphic;
+import hxdoom.lumps.LumpBase;
 
 /**
  * ...
  * @author Kaelan
  */
-class PatchNames 
+class PatchNames extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> PatchNames = PatchNames.new;
 	
@@ -12,6 +13,8 @@ class PatchNames
 	
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		names = new Array();
 	}
 	public function addPatchName(_name:String) {

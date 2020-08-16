@@ -1,10 +1,12 @@
 package hxdoom.lumps.map;
 
+import hxdoom.lumps.LumpBase;
+
 /**
  * ...
  * @author Kaelan
  */
-class SubSector 
+class SubSector extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> SubSector = SubSector.new;
 	
@@ -16,6 +18,8 @@ class SubSector
 	
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		count = 		_args[0];
 		firstSegID = 	_args[1];
 	}

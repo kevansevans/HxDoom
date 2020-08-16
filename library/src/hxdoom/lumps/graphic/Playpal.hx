@@ -2,6 +2,7 @@ package hxdoom.lumps.graphic;
 
 import hxdoom.enums.eng.ColorChannel;
 import hxdoom.enums.eng.ColorMode;
+import hxdoom.lumps.LumpBase;
 
 /*
  * The idea is to keep the doom side of things separate from the API side of things
@@ -13,13 +14,15 @@ import hxdoom.enums.eng.ColorMode;
  * ...
  * @author Kaelan
  */
-class Playpal 
+class Playpal extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Playpal = Playpal.new;
 	
 	public var palettes:Array<Array<Int>>;
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		palettes = new Array();
 	}
 	public function addSwatch(_index:Int, _color:Int) {

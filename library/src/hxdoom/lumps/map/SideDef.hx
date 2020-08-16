@@ -1,10 +1,12 @@
 package hxdoom.lumps.map;
 
+import hxdoom.lumps.LumpBase;
+
 /**
  * ...
  * @author Kaelan
  */
-class SideDef 
+class SideDef extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> SideDef = SideDef.new;
 	
@@ -19,6 +21,8 @@ class SideDef
 	
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		xoffset = 			_args[0];
 		yoffset = 			_args[1];
 		upper_texture = 	_args[2];

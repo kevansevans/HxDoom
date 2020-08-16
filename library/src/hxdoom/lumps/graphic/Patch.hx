@@ -2,12 +2,13 @@ package hxdoom.lumps.graphic;
 
 import haxe.ds.Vector;
 import hxdoom.core.Reader;
+import hxdoom.lumps.LumpBase;
 
 /**
  * ...
  * @author Kaelan
  */
-class Patch 
+class Patch extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Patch = Patch.new;
 	
@@ -18,6 +19,8 @@ class Patch
 	public var pixels:Vector<Vector<Int>>;
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		width = 	_args[0];
 		height = 	_args[1];
 		offset_x = 	_args[2];

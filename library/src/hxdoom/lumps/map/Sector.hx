@@ -1,10 +1,11 @@
 package hxdoom.lumps.map;
+import hxdoom.lumps.LumpBase;
 
 /**
  * ...
  * @author Kaelan
  */
-class Sector 
+class Sector extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Sector = Sector.new;
 	
@@ -17,6 +18,8 @@ class Sector
 	public var tag:Int;
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		floorHeight = 		_args[0];
 		ceilingHeight = 	_args[1];
 		floorTexture = 		_args[2];

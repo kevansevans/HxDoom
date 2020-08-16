@@ -1,10 +1,11 @@
 package hxdoom.lumps.map;
+import hxdoom.lumps.LumpBase;
 
 /**
  * ...
  * @author Kaelan
  */
-class Node 
+class Node extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Node = Node.new;
 	
@@ -30,6 +31,8 @@ class Node
 	
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		xPartition = 			_args[0];
 		yPartition = 			_args[1];
 		changeXPartition = 		_args[2];

@@ -1,8 +1,9 @@
 package hxdoom.lumps.map;
 
 import hxdoom.Engine;
+import hxdoom.lumps.LumpBase;
 
-import hxdoom.lumps.graphic.Texture;
+import hxdoom.component.Texture;
 
 import hxdoom.enums.eng.SideType;
 
@@ -10,7 +11,7 @@ import hxdoom.enums.eng.SideType;
  * ...
  * @author Kaelan
  */
-class LineDef 
+class LineDef extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> LineDef = LineDef.new;
 	
@@ -30,6 +31,8 @@ class LineDef
 	
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		startVertexID = 	_args[0];
 		endVertexID = 		_args[1];
 		flags = 			_args[2];

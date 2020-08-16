@@ -1,12 +1,13 @@
 package hxdoom.lumps.map;
 
 import hxdoom.Engine;
+import hxdoom.lumps.LumpBase;
 
 /**
  * ...
  * @author Kaelan
  */
-class Segment 
+class Segment extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Segment = Segment.new;
 	
@@ -22,6 +23,8 @@ class Segment
 	
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		angle = 	_args[0];
 		lineID = 	_args[1];
 		side = 		_args[2];
