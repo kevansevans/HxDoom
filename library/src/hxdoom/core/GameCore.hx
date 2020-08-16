@@ -1,7 +1,7 @@
 package hxdoom.core;
 
-import hxdoom.utils.extensions.Camera;
-import hxdoom.utils.extensions.CameraPoint;
+import hxdoom.component.Camera;
+import hxdoom.component.CameraPoint;
 
 import hxdoom.Engine;
 import hxdoom.enums.data.Defaults;

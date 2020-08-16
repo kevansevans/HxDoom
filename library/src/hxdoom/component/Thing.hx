@@ -1,4 +1,4 @@
-package hxdoom.lumps.map;
+package hxdoom.component;
 
 import hxdoom.enums.eng.Direction.CardInt;
 import hxdoom.enums.eng.Direction.CardString;
@@ -7,7 +7,7 @@ import hxdoom.enums.eng.Direction.CardString;
  * ...
  * @author Kaelan
  */
-class Thing 
+class Thing
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Thing = Thing.new;
 	

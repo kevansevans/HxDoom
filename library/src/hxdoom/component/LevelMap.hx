@@ -1,4 +1,4 @@
-package hxdoom.lumps.map;
+package hxdoom.component;
 
 import haxe.ds.Vector;
 
@@ -16,7 +16,7 @@ import hxdoom.utils.geom.Angle;
  * ...
  * @author Kaelan
  */
-class LevelMap 
+class LevelMap //DOES NOT EXTEND LUMPBASE
 {
 	public var name:String;
 	

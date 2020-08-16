@@ -2,7 +2,7 @@ package hxdoom.core;
 
 import hxdoom.Engine;
 import hxdoom.lumps.Directory;
-import hxdoom.lumps.map.LevelMap;
+import hxdoom.component.LevelMap;
 import hxdoom.typedefs.data.EpisodeProperties;
 import hxdoom.typedefs.data.MapProperties;
 

@@ -5,7 +5,7 @@ import hxdoom.core.Reader;
 import hxdoom.lumps.Directory;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.graphic.Patch;
-import hxdoom.lumps.graphic.Texture;
+import hxdoom.component.Texture;
 import hxdoom.typedefs.graphics.TextureData;
 import hxdoom.typedefs.graphics.PatchLayout;
 

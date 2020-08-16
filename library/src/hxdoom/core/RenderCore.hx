@@ -1,7 +1,7 @@
 package hxdoom.core;
 
 import haxe.ds.Map;
-import hxdoom.lumps.map.LevelMap;
+import hxdoom.component.LevelMap;
 
 import hxdoom.Engine;
 import hxdoom.lumps.map.Node;

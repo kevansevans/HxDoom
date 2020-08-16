@@ -13,7 +13,7 @@ import hxdoom.lumps.map.Sector;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.map.SideDef;
 import hxdoom.lumps.map.SubSector;
-import hxdoom.lumps.map.Thing;
+import hxdoom.component.Thing;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.typedefs.graphics.PatchLayout;
 

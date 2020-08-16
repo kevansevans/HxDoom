@@ -1,4 +1,4 @@
-package hxdoom.lumps.graphic;
+package hxdoom.component;
 
 import haxe.ds.Vector;
 
