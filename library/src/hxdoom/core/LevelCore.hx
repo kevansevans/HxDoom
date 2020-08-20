@@ -6,6 +6,7 @@ import hxdoom.component.LevelMap;
 import hxdoom.typedefs.data.EpisodeProperties;
 import hxdoom.typedefs.data.MapProperties;
 import hxdoom.lumps.map.*;
+import hxdoom.enums.eng.KeyLump;
 
 /**
  * ...
@@ -76,7 +77,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load things
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 1).name != hxdoom.enums.eng.KeyLump.THINGS) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 1).name != KeyLump.THINGS) {
 			Engine.log("Map data corrupt: Expected Things, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 1).name);
 			return false;
 		}
@@ -89,7 +90,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load linedefs
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 2).name != hxdoom.enums.eng.KeyLump.LINEDEFS) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 2).name != KeyLump.LINEDEFS) {
 			Engine.log("Map data corrupt: Expected Linedefss, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 2).name);
 			return false;
 		}
@@ -102,7 +103,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load sidedefs
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 3).name != hxdoom.enums.eng.KeyLump.SIDEDEFS) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 3).name != KeyLump.SIDEDEFS) {
 			Engine.log("Map data corrupt: Expected Sidedefs, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 3).name);
 			return false;
 		}
@@ -115,7 +116,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load vertexes
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 4).name != hxdoom.enums.eng.KeyLump.VERTEXES) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 4).name != KeyLump.VERTEXES) {
 			Engine.log("Map data corrupt: Expected Vertexes, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 4).name);
 			return false;
 		}
@@ -128,7 +129,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load segments
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 5).name != hxdoom.enums.eng.KeyLump.SEGS) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 5).name != KeyLump.SEGS) {
 			Engine.log("Map data corrupt: Expected Segments, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 5).name);
 			return false;
 		}
@@ -141,7 +142,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load Subsectors
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 6).name != hxdoom.enums.eng.KeyLump.SSECTORS) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 6).name != KeyLump.SSECTORS) {
 			Engine.log("Map data corrupt: Expected Subsectors, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 6).name);
 			return false;
 		}
@@ -154,7 +155,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load nodes
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 7).name != hxdoom.enums.eng.KeyLump.NODES) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 7).name != KeyLump.NODES) {
 			Engine.log("Map data corrupt: Expected Nodes, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 7).name);
 			return false;
 		}
@@ -167,7 +168,7 @@ class LevelCore
 		////////////////////////////////////////////////////////////////////////////////////////////////////
 		//Load sectors
 		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 8).name != hxdoom.enums.eng.KeyLump.SECTORS) {
+		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 8).name != KeyLump.SECTORS) {
 			Engine.log("Map data corrupt: Expected Sectors, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 8).name);
 			return false;
 		}
