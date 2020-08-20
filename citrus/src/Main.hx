@@ -5,9 +5,6 @@ import haxe.Http;
 import haxe.io.Bytes;
 import haxe.Json;
 import haxe.Timer;
-import haxe.zip.Uncompress;
-import haxe.zip.Entry;
-import haxe.zip.Reader;
 
 import lime.graphics.RenderContext;
 import lime.net.HTTPRequest;
@@ -109,7 +106,6 @@ class Main extends Application
 		#end
 	}
 	
-	#if sys
 	function verify_iwad(read:FileInput, _name:String):Bool
 	{
 		var file = read;
@@ -122,121 +118,6 @@ class Main extends Application
 		if (header == "IWAD") return true;
 		else return false;
 	}
-	
-	var pendingdownload:Int = 0;
-	
-	function download_wads() {
-		
-		var env = Sys.environment();
-		if (env_path == null) {
-			env_path = Sys.programPath() + "/wads";
-		}
-		
-		if (!FileSystem.isDirectory(env_path + "/downloads/")) FileSystem.createDirectory(env_path + "/downloads/");
-		
-		var freedoom_github = new Http("https://api.github.com/repos/freedoom/freedoom/releases/latest");
-		//haxe you fucking crybaby
-		freedoom_github.onData = function(_packet:String) {
-			var data:Dynamic = Json.parse(_packet);
-			for (index in 0...(Std.int(data.assets.length - 1))) {
-				download_file(data.assets[index].browser_download_url, env_path + "/downloads/", data.assets[index].name);
-			}
-		}
-		freedoom_github.onError = function(_packet:String) {
-			return null;
-		}
-		freedoom_github.onStatus = function(_packet:Int) {
-			trace(_packet);
-		}
-		freedoom_github.setHeader('User-Agent', 'CitrusDoom');
-		freedoom_github.request();
-		
-		download_file('http://distro.ibiblio.org/pub/linux/distributions/slitaz/sources/packages/d/doom1.wad', env_path, "DOOM1.WAD");
-	}
-	
-	function download_file(_url:String, _path:String, _name:String) {
-		
-		++pendingdownload;
-		
-		var file = File.write(_path + "/" + _name);
-		var httpfile = new HTTPRequest<Bytes>(_url);
-		httpfile.followRedirects = true;
-		httpfile.load().onError(function (_msg) 
-		{
-			trace(_msg);
-			--pendingdownload;
-			checkifstilldownloading();
-		}).onProgress(function(loaded, total)
-		{
-		}).onComplete(function (bytes:Bytes) {
-			file.write(bytes);
-			file.close();
-			--pendingdownload;
-			checkifstilldownloading();
-		});
-	}
-	
-	function checkifstilldownloading() {
-		if (pendingdownload == 0) {
-			process_downloads();
-		}
-	}
-	
-	function process_downloads() 
-	{
-		var downloads = FileSystem.readDirectory(env_path + "/downloads/");
-		for (item in downloads) {
-			if (item.indexOf(".zip", item.length - 4) != -1) {
-				var zip = File.read(env_path + "/downloads/" + item);
-				var entries = Reader.readZip(zip);
-				var redist_path:String = "";
-				for (entry in entries) {
-					var path = env_path;
-					if (entry.fileName.indexOf("/", entry.fileName.length - 1) != -1) {
-						redist_path = entry.fileName;
-					}
-					else if (entry.fileName.indexOf(".wad") != -1 || entry.fileName.indexOf(".WAD") != -1) {
-						if (FileSystem.exists(path + "/" + entry.fileName)) FileSystem.deleteFile(path + "/" + entry.fileName);
-						var itemname = entry.fileName;
-						itemname = itemname.substring(itemname.indexOf("/") + 1, itemname.length);
-						var fileout = File.write(path + "/" + itemname);
-						fileout.write(cust_unzip(entry));
-						fileout.close();
-					}
-					else {
-						path = env_path + "/redist/";
-						if (!FileSystem.isDirectory(path + redist_path)) FileSystem.createDirectory(path + redist_path);
-						if (FileSystem.exists(path + redist_path + entry.fileName)) FileSystem.deleteFile(path + redist_path + entry.fileName);
-						var fileout = File.write(path + entry.fileName);
-						fileout.write(cust_unzip(entry));
-						fileout.close();
-					}
-				}
-				zip.close();
-			}
-			FileSystem.deleteFile(env_path + "/downloads/" + item);
-		}
-		FileSystem.deleteDirectory(env_path + "/downloads");
-		getwads();
-	}
-	
-	function cust_unzip(f:Entry) {
-		//Lime override's Haxe's normal reader function, this is just a copy and paste of it
-		if (!f.compressed)
-			return f.data;
-		var c = new haxe.zip.Uncompress(-15);
-		var s = haxe.io.Bytes.alloc(f.fileSize);
-		var r = c.execute(f.data, 0, s, 0);
-		c.close();
-		if (!r.done || r.read != f.data.length || r.write != f.fileSize)
-			throw "Invalid compressed data for " + f.fileName;
-		f.compressed = false;
-		f.dataSize = f.fileSize;
-		f.data = s;
-		return f.data;
-	}
-	
-	#end
 	
 	override public function render(context:RenderContext):Void 
 	{
