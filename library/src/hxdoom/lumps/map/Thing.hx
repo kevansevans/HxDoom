@@ -1,15 +1,18 @@
-package hxdoom.component;
+package hxdoom.lumps.map;
 
 import hxdoom.enums.eng.Direction.CardInt;
 import hxdoom.enums.eng.Direction.CardString;
+import hxdoom.lumps.LumpBase;
 
 /**
  * ...
  * @author Kaelan
  */
-class Thing
+class Thing extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Thing = Thing.new;
+	
+	public static inline var BYTE_SIZE:Int = 10;
 	
 	public var xpos:Int;
 	public var ypos:Int;
@@ -18,6 +21,8 @@ class Thing
 	public var flags:Int;
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		xpos = 	_args[0];
 		ypos = 	_args[1];
 		angle = _args[2];

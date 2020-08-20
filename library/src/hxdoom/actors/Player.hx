@@ -1,6 +1,6 @@
 package hxdoom.actors;
 
-import hxdoom.component.Thing;
+import hxdoom.lumps.map.Thing;
 
 /**
  * ...
