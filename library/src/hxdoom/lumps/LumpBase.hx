@@ -14,9 +14,9 @@ class LumpBase
 		
 	}
 	
-	public function toDataBytes()
+	public function toDataBytes():Bytes
 	{
-		
+		return Bytes.alloc(0);
 	}
 	public function toStringBytes()
 	{
