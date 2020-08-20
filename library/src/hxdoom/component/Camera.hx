@@ -2,7 +2,7 @@ package hxdoom.component;
 
 import hxdoom.actors.Actor;
 import hxdoom.component.CameraPoint;
-import hxdoom.component.Thing;
+import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.utils.geom.Angle;
 
