@@ -3,9 +3,9 @@
   "url" : "https://github.com/kevansevans/HxDoom",
   "license": "GPL",
   "tags": ["cross", "alpha", "game"],
-  "description": "Haxelib adaption of id Tech 1, aka HxDoom. Does not come with rendering or IO.",
-  "version": "0.0.5-alpha",
+  "description": "Haxelib adaption of id Tech 1",
+  "version": "0.0.6-alpha",
   "classPath": "src/",
-  "releasenote": "alpha 5 release",
+  "releasenote": "alpha 6 release",
   "contributors": ["kevansevans"]
 }
