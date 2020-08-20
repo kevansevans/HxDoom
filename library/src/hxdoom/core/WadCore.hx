@@ -86,8 +86,6 @@ class WadCore
 		var directory_count = Reader.getFourBytes(wad_data_map[_wadName], 0x04);
 		var directory_offset = Reader.getFourBytes(wad_data_map[_wadName], 0x08);
 		
-		trace(StringTools.hex(directory_offset));
-		
 		for (index in 0...directory_count) {
 			
 			var dir = Reader.readDirectory(wad_data_map[_wadName], directory_offset + index * 16, _wadName, index);
