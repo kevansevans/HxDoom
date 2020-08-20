@@ -11,6 +11,8 @@ class Segment extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Segment = Segment.new;
 	
+	public static inline var BYTE_SIZE:Int = 12;
+	
 	public var angle:Int;
 	public var lineID:Int;
 	public var side:Int;

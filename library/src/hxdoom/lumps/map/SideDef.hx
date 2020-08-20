@@ -10,6 +10,8 @@ class SideDef extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> SideDef = SideDef.new;
 	
+	public static inline var BYTE_SIZE:Int = 30;
+	
 	public var xoffset:Int;
 	public var yoffset:Int;
 	public var upper_texture:String;

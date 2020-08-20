@@ -9,6 +9,7 @@ class Node extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Node = Node.new;
 	
+	public static inline var BYTE_SIZE:Int = 28;
 	public static var SUBSECTORIDENTIFIER:Int = 0x8000;
 	
 	public var xPartition:Int;

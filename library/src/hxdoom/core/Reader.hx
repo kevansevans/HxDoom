@@ -1,9 +1,12 @@
 package hxdoom.core;
 
 import haxe.ds.Vector;
+import haxe.io.Bytes;
+import haxe.io.BytesBuffer;
 import hxdoom.enums.eng.DataLump;
 import hxdoom.enums.eng.KeyLump;
 import hxdoom.lumps.Directory;
+import hxdoom.lumps.audio.SoundEffect;
 import hxdoom.lumps.graphic.PatchNames;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.graphic.TextureInfo;
@@ -13,7 +16,7 @@ import hxdoom.lumps.map.Sector;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.map.SideDef;
 import hxdoom.lumps.map.SubSector;
-import hxdoom.component.Thing;
+import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.typedefs.graphics.PatchLayout;
 
@@ -23,15 +26,6 @@ import hxdoom.typedefs.graphics.PatchLayout;
  */
 class Reader 
 {
-	public static inline var VERTEX_LUMP_SIZE:Int = 4;
-	public static inline var LINEDEF_LUMP_SIZE:Int = 14;
-	public static inline var THING_LUMP_SIZE:Int = 10;
-	public static inline var NODE_LUMP_SIZE:Int = 28;
-	public static inline var SSECTOR_LUMP_SIZE:Int = 4;
-	public static inline var SEG_LUMP_SIZE:Int = 12;
-	public static inline var SIDEDEF_LUMP_SIZE:Int = 30;
-	public static inline var SECTOR_LUMP_SIZE:Int = 26;
-	
 	public static var keyLumpList:Array<String>;
 	public static var dataLumpList:Array<String>;
 	
@@ -93,7 +87,6 @@ class Reader
 	 * @return
 	 */
 	public static inline function readVertex(_data:Array<Int>, _offset:Int):Vertex {
-		
 		return Vertex.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true), 
 			getTwoBytes(_data, _offset + 2, true)
@@ -284,6 +277,23 @@ class Reader
 		}
 		
 		return patch;
+	}
+	public static function readSound(_data:Array<Int>, _offset:Int):SoundEffect
+	{
+		var samplerate = getTwoBytes(_data, _offset + 2);
+		var numsamples = getTwoBytes(_data, _offset + 4);
+		
+		var sampleBytes:BytesBuffer = new BytesBuffer();
+		
+		for (samplepos in 0...numsamples) {
+			sampleBytes.addByte(getOneByte(_data, _offset + 8 + samplepos));
+		}
+		
+		return SoundEffect.CONSTRUCTOR([
+			samplerate,
+			numsamples,
+			sampleBytes.getBytes()
+		]);
 	}
 	public static function getLumpType(_dir:Directory, _returnAsLump:Bool = false):Dynamic
 	{

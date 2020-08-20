@@ -10,6 +10,8 @@ class SubSector extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> SubSector = SubSector.new;
 	
+	public static inline var BYTE_SIZE:Int = 4;
+	
 	public var count:Int;
 	public var firstSegID:Int;
 	

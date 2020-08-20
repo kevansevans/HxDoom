@@ -9,6 +9,8 @@ class Sector extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Sector = Sector.new;
 	
+	public static inline var BYTE_SIZE:Int = 26;
+	
 	public var floorHeight:Int;
 	public var ceilingHeight:Int;
 	public var floorTexture:String;
