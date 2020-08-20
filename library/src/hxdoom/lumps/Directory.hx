@@ -5,7 +5,7 @@ import haxe.io.Bytes;
  * ...
  * @author Kaelan
  */
-class Directory 
+class Directory extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Directory = Directory.new;
 	
@@ -16,6 +16,8 @@ class Directory
 	public var index:Int;
 	public function new(_args:Array<Any>) 
 	{
+		super();
+		
 		dataOffset = 	_args[0];
 		size = 			_args[1];
 		name = 			_args[2];
