@@ -13,6 +13,8 @@ class Segment extends LumpBase
 	
 	public static inline var BYTE_SIZE:Int = 12;
 	
+	public var startID:Int;
+	public var endID:Int;
 	public var angle:Int;
 	public var lineID:Int;
 	public var side:Int;
@@ -27,15 +29,17 @@ class Segment extends LumpBase
 	{
 		super();
 		
-		angle = 	_args[0];
-		lineID = 	_args[1];
-		side = 		_args[2];
-		offset = 	_args[3];
+		startID = 	_args[0];
+		endID = 	_args[1];
+		angle = 	_args[2];
+		lineID = 	_args[3];
+		side = 		_args[4];
+		offset = 	_args[5];
 	}
 	
 	function get_start():Vertex 
 	{
-		return Engine.LEVELS.currentMap.linedefs[lineID].start;
+		return Engine.LEVELS.currentMap.;
 	}
 	
 	function get_end():Vertex 

@@ -101,6 +101,8 @@ class Reader
 	 */
 	public static inline function readSegment(_data:Array<Int>, _offset:Int):Segment {
 		return Segment.CONSTRUCTOR([
+			getTwoBytes(_data, _offset, true),
+			getTwoBytes(_data, _offset + 2, true),
 			getTwoBytes(_data, _offset + 4, true),
 			getTwoBytes(_data, _offset + 6),
 			getTwoBytes(_data, _offset + 8),
