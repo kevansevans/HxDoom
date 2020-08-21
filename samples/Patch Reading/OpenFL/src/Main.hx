@@ -8,6 +8,7 @@ import openfl.Assets;
 
 import hxdoom.Engine;
 import hxdoom.lumps.graphic.Patch;
+import hxdoom.enums.eng.ColorMode;
 
 /**
  * ...
@@ -31,25 +32,25 @@ class Main extends Sprite
 		super();
 		
 		hxd = new Engine();
-		hxd.addWad(Assets.getBytes("wad/DOOM1.WAD"), "DOOM1.WAD");
-		Engine.WADDATA.loadPlaypal();
+		hxd.addWadBytes(Assets.getBytes("wad/DOOM1.WAD"), "DOOM1.WAD");
+		Engine.TEXTURES.loadPlaypal();
 		
 		/*
-		 * Engine.WADDATA.getPatch() expects a string and returns a hxdoom.lump.graphic.Patch
+		 * Engine.TEXTURES.getPatch() expects a string and returns a hxdoom.lump.graphic.Patch
 		 * Here we use openFL to convert a Patch into a Bitmap.
 		 * HxDoom is not an OpenFL exclusive library.
 		 */
 		
-		baron_attack_a = new PatchBitmap(Engine.WADDATA.getPatch("BOSSE1"));
+		baron_attack_a = new PatchBitmap(Engine.TEXTURES.getPatch("BOSSE1"));
 		addChild(baron_attack_a);
 		baron_attack_a.x = baron_attack_a.y = 10;
 		
-		baron_attack_b = new PatchBitmap(Engine.WADDATA.getPatch("BOSSF1"));
+		baron_attack_b = new PatchBitmap(Engine.TEXTURES.getPatch("BOSSF1"));
 		addChild(baron_attack_b);
 		baron_attack_b.x = baron_attack_a.x + baron_attack_a.width;
 		baron_attack_b.y = 10;
 		
-		baron_attack_c = new PatchBitmap(Engine.WADDATA.getPatch("BOSSG1"));
+		baron_attack_c = new PatchBitmap(Engine.TEXTURES.getPatch("BOSSG1"));
 		addChild(baron_attack_c);
 		baron_attack_c.x = baron_attack_b.x + baron_attack_b.width;
 		baron_attack_c.y = 10;
@@ -60,7 +61,7 @@ class Main extends Sprite
 class PatchBitmap extends Bitmap
 {
 	var patch:Patch;
-	var pallete = Engine.WADDATA.playpal;
+	var pallete = Engine.TEXTURES.playpal;
 	
 	public function new(_patch:Patch) {
 		
@@ -78,9 +79,7 @@ class PatchBitmap extends Bitmap
 		
 		for (width in 0...patch.width) for (height in 0...patch.height) {
 			
-			trace(patch.pixels[width][height]);
-			
-			var color = pallete.getColorHex(patch.pixels[width][height], 0);
+			var color = pallete.getColorHex(patch.pixels[width][height], ColorMode.ARGB);
 			data.setPixel32(width, height, color);
 		}
 		
