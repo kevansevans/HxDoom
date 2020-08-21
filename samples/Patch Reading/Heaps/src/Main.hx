@@ -10,6 +10,7 @@ import h3d.mat.Texture;
 import h2d.Bitmap;
 import hxd.File;
 import hxdoom.Engine;
+import hxdoom.enums.eng.ColorMode;
 class Main extends hxd.App
 {
 	var hxd:Engine;
@@ -21,24 +22,24 @@ class Main extends hxd.App
 	override function init()
 	{
 		hxd = new Engine();
-		hxd.addWad(File.getBytes("assets/WAD/DOOM1.WAD"),"DOOM1.WAD");
-		Engine.WADDATA.loadPlaypal();
+		hxd.addWadBytes(File.getBytes("assets/WAD/DOOM1.WAD"),"DOOM1.WAD");
+		Engine.TEXTURES.loadPlaypal();
 
 		// creates a new object and put it at the center of the sceen
 		obj = new h2d.Object(s2d);
 		obj.x = Std.int(s2d.width / 2);
 		obj.y = Std.int(s2d.height / 2);
 
-		baron_attack_a = new PatchBitmap(Engine.WADDATA.getPatch("BOSSE1"));
+		baron_attack_a = new PatchBitmap(Engine.TEXTURES.getPatch("BOSSE1"));
 		obj.addChild(baron_attack_a);
 		baron_attack_a.x = baron_attack_a.y = 10;
 		
-		baron_attack_b = new PatchBitmap(Engine.WADDATA.getPatch("BOSSF1"));
+		baron_attack_b = new PatchBitmap(Engine.TEXTURES.getPatch("BOSSF1"));
 		obj.addChild(baron_attack_b);
 		baron_attack_b.x = baron_attack_a.x + baron_attack_a.width;
 		baron_attack_b.y = 10;
 		
-		baron_attack_c = new PatchBitmap(Engine.WADDATA.getPatch("BOSSG1"));
+		baron_attack_c = new PatchBitmap(Engine.TEXTURES.getPatch("BOSSG1"));
 		obj.addChild(baron_attack_c);
 		baron_attack_c.x = baron_attack_b.x + baron_attack_b.width;
 		baron_attack_c.y = 10;
@@ -56,17 +57,17 @@ class Main extends hxd.App
 }
 class PatchBitmap extends Bitmap
 {
-	var pallete = Engine.WADDATA.playpal;
+	var pallete = Engine.TEXTURES.playpal;
 	public function new(patch:Patch)
 	{
 		var texture = new Texture(patch.width,patch.height,[TextureFlags.Target]);
-		var pallete = Engine.WADDATA.playpal;
+		var pallete = Engine.TEXTURES.playpal;
 		var pixels = Pixels.alloc(patch.width,patch.height,PixelFormat.ARGB);
 		for (x in 0...patch.width)
 		{
 			for (y in 0...patch.height)
 			{
-				var color = pallete.getColorHex(patch.pixels[x][y],0);
+				var color = pallete.getColorHex(patch.pixels[x][y], ColorMode.ARGB);
 				pixels.setPixel(x,y,color);
 			}
 		}

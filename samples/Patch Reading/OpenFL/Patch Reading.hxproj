@@ -16,20 +16,58 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
-    <class path="C:\HaxeToolkit\haxe\lib\openfl\8,9,6\src" />
-    <class path="C:\HaxeToolkit\haxe\lib\lime\7,7,0\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\lib" />
+    <class path="C:\HaxeToolkit\haxe\lib\lime\7,8,0\src" />
     <class path="F:\HxDoom\library\src" />
     <class path="src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\application\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\assets\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\bitmapdata\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\displayobject\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\errors\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\eventdispatcher\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\externalinterface\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\filereference\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\filters\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\geom\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\graphics\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\input\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\loader\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\movieclip\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\printing\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\renderer-cairo\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\renderer-canvas\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\renderer-core\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\renderer-dom\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\renderer-flash\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\renderer-stage3d\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\security\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\sensors\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\shader\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\sharedobject\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\socket\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\sound\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\stage\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\stage3d\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\system\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\telemetry\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\textfield\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\tilemap\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\urlloader\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\urlrequest\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\urlstream\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\utils\src" />
+    <class path="C:\HaxeToolkit\haxe\lib\openfl\9,0,2\packages\video\src" />
     <class path="bin\windows\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="openfl=8.9.6&#xA;lime=7.7.0&#xA;hxdoom=0.0.5-alpha&#xA;lime-openal&#xA;ANDROID_SETUP=false&#xA;ANDROID_NDK_ROOT=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk\ndk\20.1.5948944&#xA;EMSCRIPTEN_SDK=C:\emscripten\emsdk&#xA;native&#xA;lime-curl&#xA;openfl-native&#xA;lime-harfbuzz&#xA;tools=7.7.0&#xA;ANDROID_SDK=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk&#xA;lime-cairo&#xA;lime-opengl&#xA;no-compilation&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;fdb&#xA;windows&#xA;desktop" />
+    <option directives="openfl=9.0.2&#xA;lime=7.8.0&#xA;hxdoom=0.0.0&#xA;lime-openal&#xA;ANDROID_SETUP=false&#xA;ANDROID_NDK_ROOT=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk\ndk\20.1.5948944&#xA;EMSCRIPTEN_SDK=C:\emscripten\emsdk&#xA;native&#xA;lime-curl&#xA;openfl-native&#xA;lime-harfbuzz&#xA;tools=7.8.0&#xA;ANDROID_SDK=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk&#xA;lime-cairo&#xA;lime-opengl&#xA;no-compilation&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;fdb&#xA;windows&#xA;desktop" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="--macro openfl._internal.macros.ExtraParams.include()&#xA;--macro lime._internal.macros.DefineMacro.run()&#xA;--remap flash:openfl" />
+    <option additional="--macro openfl._internal.ExtraParams.include()&#xA;--macro lime._internal.macros.DefineMacro.run()&#xA;--remap flash:openfl" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
