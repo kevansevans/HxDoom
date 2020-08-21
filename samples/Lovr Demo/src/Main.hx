@@ -45,10 +45,10 @@ class Main
 			hxdoom = new Engine();
 			wadstring = Filesystem.read("DOOM1.WAD", -1);
 			hxdoom.addWadString(wadstring, "DOOM1.WAD");
-			Engine.WADDATA.loadPlaypal();
-			var palette = Engine.WADDATA.playpal;
+			Engine.TEXTURES.loadPlaypal();
+			var palette = Engine.TEXTURES.playpal;
 			
-			baron_a = Engine.WADDATA.getPatch("BOSSE1");
+			baron_a = Engine.TEXTURES.getPatch("BOSSE1");
 			spriteData_a = Data.newTextureData(baron_a.width, baron_a.height, TextureFormat.Rgba);
 			for (w in 0...baron_a.width) for (h in 0...baron_a.height) {
 				spriteData_a.setPixel(w, h, palette.getColorChannelFloat(baron_a.pixels[w][h], 0),
@@ -59,7 +59,7 @@ class Main
 			sprite_a = Graphics.newTexture(spriteData_a);
 			spriteMate_a = Graphics.newMaterial(sprite_a, 1, 1, 1, 1);
 			
-			baron_b = Engine.WADDATA.getPatch("BOSSF1");
+			baron_b = Engine.TEXTURES.getPatch("BOSSF1");
 			spriteData_b = Data.newTextureData(baron_b.width, baron_b.height, TextureFormat.Rgba);
 			for (w in 0...baron_b.width) for (h in 0...baron_b.height) {
 				spriteData_b.setPixel(w, h, palette.getColorChannelFloat(baron_b.pixels[w][h], 0),
@@ -70,7 +70,7 @@ class Main
 			sprite_b = Graphics.newTexture(spriteData_b);
 			spriteMate_b = Graphics.newMaterial(sprite_b, 1, 1, 1, 1);
 			
-			baron_c = Engine.WADDATA.getPatch("BOSSG1");
+			baron_c = Engine.TEXTURES.getPatch("BOSSG1");
 			spriteData_c = Data.newTextureData(baron_c.width, baron_c.height, TextureFormat.Rgba);
 			for (w in 0...baron_c.width) for (h in 0...baron_c.height) {
 				spriteData_c.setPixel(w, h, palette.getColorChannelFloat(baron_c.pixels[w][h], 0),
