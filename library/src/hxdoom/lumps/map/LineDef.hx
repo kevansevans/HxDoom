@@ -20,10 +20,10 @@ class LineDef extends LumpBase
 	public var flags:Int;
 	public var lineType:Int;
 	public var sectorTag:Int;
-	var frontSideDefID:Int;
-	var backSideDefID:Int;
-	var startVertexID:Int;
-	var endVertexID:Int;
+	public var frontSideDefID:Int;
+	public var backSideDefID:Int;
+	public var startVertexID:Int;
+	public var endVertexID:Int;
 	public var solid(get, null):Bool;
 	
 	public var frontSideDef(get, null):SideDef;
