@@ -1,5 +1,6 @@
 package hxdoom.lumps.map;
 
+import haxe.io.Bytes;
 import hxdoom.Engine;
 import hxdoom.lumps.LumpBase;
 
@@ -39,12 +40,12 @@ class Segment extends LumpBase
 	
 	function get_start():Vertex 
 	{
-		return Engine.LEVELS.currentMap.;
+		return Engine.LEVELS.currentMap.vertexes[startID];
 	}
 	
 	function get_end():Vertex 
 	{
-		return Engine.LEVELS.currentMap.linedefs[lineID].end;
+		return Engine.LEVELS.currentMap.vertexes[endID];
 	}
 	
 	function get_sector():Sector 
@@ -68,5 +69,17 @@ class Segment extends LumpBase
 			'Offset: {' + offset + '}, ',
 			'Sector: {' + sector + '}, '
 		].join(""));
+	}
+	
+	override public function toDataBytes():Bytes 
+	{
+		var bytes = Bytes.alloc(BYTE_SIZE);
+		bytes.setUInt16(0, startID);
+		bytes.setUInt16(2, endID);
+		bytes.setUInt16(4, angle);
+		bytes.setUInt16(6, lineID);
+		bytes.setUInt16(8, side);
+		bytes.setUInt16(10, offset);
+		return bytes;
 	}
 }

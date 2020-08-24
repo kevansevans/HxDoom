@@ -1,5 +1,6 @@
 package hxdoom.lumps.map;
 
+import haxe.io.Bytes;
 import hxdoom.lumps.LumpBase;
 
 /**
@@ -45,5 +46,41 @@ class SideDef extends LumpBase
 			'Middle Texture: {' + middle_texture + '}, ',
 			'Lower Texture: {' + lower_texture + '}, '
 		].join(""));
+	}
+	
+	override public function toDataBytes():Bytes 
+	{
+		var str:String;
+		var bytes = Bytes.alloc(BYTE_SIZE);
+		bytes.setUInt16(0, xoffset);
+		bytes.setUInt16(2, yoffset);
+		
+		str = upper_texture;
+		while (str.length < 8) {
+			str += String.fromCharCode(0);
+		}
+		for (char in 0...str.length) {
+			bytes.set(4 + char, str.charCodeAt(char));
+		}
+		
+		str = lower_texture;
+		while (str.length < 8) {
+			str += String.fromCharCode(0);
+		}
+		for (char in 0...str.length) {
+			bytes.set(12 + char, str.charCodeAt(char));
+		}
+		
+		str = middle_texture;
+		while (str.length < 8) {
+			str += String.fromCharCode(0);
+		}
+		for (char in 0...str.length) {
+			bytes.set(20 + char, str.charCodeAt(char));
+		}
+		
+		bytes.setUInt16(28, sectorID);
+		
+		return bytes;
 	}
 }

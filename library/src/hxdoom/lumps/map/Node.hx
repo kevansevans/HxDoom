@@ -1,4 +1,5 @@
 package hxdoom.lumps.map;
+import haxe.io.Bytes;
 import hxdoom.lumps.LumpBase;
 
 /**
@@ -63,5 +64,27 @@ class Node extends LumpBase
 			'Children IDs: { Front: ' + frontChildID + ', Back: ' + backChildID + '}'
 			].join("")
 		);
+	}
+	
+	override public function toDataBytes():Bytes 
+	{
+		var bytes = Bytes.alloc(BYTE_SIZE);
+		
+		bytes.setUInt16(0, xPartition);
+		bytes.setUInt16(2, yPartition);
+		bytes.setUInt16(4, changeXPartition);
+		bytes.setUInt16(6, changeYPartition);
+		bytes.setUInt16(8, frontBoxTop);
+		bytes.setUInt16(10, frontBoxBottom);
+		bytes.setUInt16(12, frontBoxLeft);
+		bytes.setUInt16(14, frontBoxRight);
+		bytes.setUInt16(16, backBoxTop);
+		bytes.setUInt16(18, backBoxBottom);
+		bytes.setUInt16(20, backBoxLeft);
+		bytes.setUInt16(22, backBoxRight);
+		bytes.setUInt16(24, frontChildID);
+		bytes.setUInt16(26, backChildID);
+		
+		return bytes;
 	}
 }

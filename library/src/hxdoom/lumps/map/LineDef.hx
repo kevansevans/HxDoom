@@ -1,5 +1,6 @@
 package hxdoom.lumps.map;
 
+import haxe.io.Bytes;
 import hxdoom.Engine;
 import hxdoom.lumps.LumpBase;
 
@@ -17,13 +18,14 @@ class LineDef extends LumpBase
 	
 	public static inline var BYTE_SIZE:Int = 14;
 	
+	public var startVertexID:Int;
+	public var endVertexID:Int;
 	public var flags:Int;
 	public var lineType:Int;
 	public var sectorTag:Int;
-	public var frontSideDefID:Int;
 	public var backSideDefID:Int;
-	public var startVertexID:Int;
-	public var endVertexID:Int;
+	public var frontSideDefID:Int;
+	
 	public var solid(get, null):Bool;
 	
 	public var frontSideDef(get, null):SideDef;
@@ -100,5 +102,20 @@ class LineDef extends LumpBase
 			'Solid: {' + solid + '}'
 			].join("")
 		);
+	}
+	
+	override public function toDataBytes():Bytes 
+	{
+		var bytes = Bytes.alloc(BYTE_SIZE);
+		
+		bytes.setUInt16(0, startVertexID);
+		bytes.setUInt16(2, endVertexID);
+		bytes.setUInt16(4, flags);
+		bytes.setUInt16(6, lineType);
+		bytes.setUInt16(8, sectorTag);
+		bytes.setUInt16(10, frontSideDefID);
+		bytes.setUInt16(12, backSideDefID);
+		
+		return bytes;
 	}
 }

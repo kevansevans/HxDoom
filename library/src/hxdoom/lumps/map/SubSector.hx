@@ -1,5 +1,6 @@
 package hxdoom.lumps.map;
 
+import haxe.io.Bytes;
 import hxdoom.lumps.LumpBase;
 
 /**
@@ -44,5 +45,13 @@ class SubSector extends LumpBase
 		return([
 			'Num Segments: ' + segments.length
 		].join(""));
+	}
+	
+	override public function toDataBytes():Bytes 
+	{
+		var bytes = Bytes.alloc(BYTE_SIZE);
+		bytes.setUInt16(0, count);
+		bytes.setUInt16(2, firstSegID);
+		return bytes;
 	}
 }

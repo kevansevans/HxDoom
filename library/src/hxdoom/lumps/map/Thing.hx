@@ -1,5 +1,6 @@
 package hxdoom.lumps.map;
 
+import haxe.io.Bytes;
 import hxdoom.enums.eng.Direction.CardInt;
 import hxdoom.enums.eng.Direction.CardString;
 import hxdoom.lumps.LumpBase;
@@ -63,13 +64,15 @@ class Thing extends LumpBase
 		
 		return "Corrupt Direction, this should NEVER happen. This is only here so the compiler doesn't freak out, BUT STILL SHOULD NEVER HAPPEN: " + angle;
 	}
+	
+	override public function toDataBytes():Bytes 
+	{
+		var bytes = Bytes.alloc(BYTE_SIZE);
+		bytes.setUInt16(0, xpos);
+		bytes.setUInt16(2, ypos);
+		bytes.setUInt16(4, angle);
+		bytes.setUInt16(6, type);
+		bytes.setUInt16(8, flags);
+		return bytes;
+	}
 }
-/*
-typedef Thing = {
-	var xpos:Int;
-	var ypos:Int;
-	var angle:Int;
-	var type:Int;
-	var flags:Int;
-}
-*/

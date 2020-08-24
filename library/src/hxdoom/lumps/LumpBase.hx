@@ -16,7 +16,7 @@ class LumpBase
 	
 	public function toDataBytes():Bytes
 	{
-		return Bytes.alloc(0);
+		return Bytes.ofString("NO BYTES DEFINED - FIX ME");
 	}
 	public function toStringBytes()
 	{
