@@ -9,6 +9,8 @@ class Directory extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Directory = Directory.new;
 	
+	public static inline var BYTE_SIZE:Int = 16;
+	
 	public var dataOffset:Int;
 	public var size:Int;
 	public var name:String;

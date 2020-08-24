@@ -88,7 +88,7 @@ class WadCore
 		
 		for (index in 0...directory_count) {
 			
-			var dir = Reader.readDirectory(wad_data_map[_wadName], directory_offset + index * 16, _wadName, index);
+			var dir = Reader.readDirectory(wad_data_map[_wadName], directory_offset + index * Directory.BYTE_SIZE, _wadName, index);
 			
 			directory_index_map[_wadName][index] = dir;
 			
