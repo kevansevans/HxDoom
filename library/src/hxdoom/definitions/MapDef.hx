@@ -1,9 +1,11 @@
-package hxdoom.typedefs.data;
+package hxdoom.definitions;
+
+import haxe.ds.Either;
 
 /**
  * @author Kaelan
  */
-typedef MapProperties =
+typedef MapDef =
 {
 	@:optional var internalName:String;
 	@:optional var levelName:String;
@@ -11,4 +13,5 @@ typedef MapProperties =
 	@:optional var nextMap:Int;
 	@:optional var nextMapSecret:Int;
 	@:optional var episodeEnd:Bool;
+	@:optional var musicName:String;
 }

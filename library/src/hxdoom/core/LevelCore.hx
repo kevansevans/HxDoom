@@ -3,8 +3,8 @@ package hxdoom.core;
 import hxdoom.Engine;
 import hxdoom.lumps.Directory;
 import hxdoom.component.LevelMap;
-import hxdoom.typedefs.data.EpisodeProperties;
-import hxdoom.typedefs.data.MapProperties;
+import hxdoom.definitions.EpisodeDef;
+import hxdoom.definitions.MapDef;
 import hxdoom.lumps.map.*;
 import hxdoom.enums.eng.KeyLump;
 
@@ -14,11 +14,11 @@ import hxdoom.enums.eng.KeyLump;
  */
 class LevelCore 
 {
-	public var levelData:Array<MapProperties>;
-	public var episodeData:Array<EpisodeProperties>;
+	public var levelData:Array<MapDef>;
+	public var episodeData:Array<EpisodeDef>;
 	public var currentMap:LevelMap;
-	public var currentMapData:MapProperties;
-	public var currentEpisodeData:EpisodeProperties;
+	public var currentMapData:MapDef;
+	public var currentEpisodeData:EpisodeDef;
 	
 	public var needToRebuild:Bool = true;
 	

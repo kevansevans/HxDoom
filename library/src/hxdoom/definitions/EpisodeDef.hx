@@ -1,9 +1,9 @@
-package hxdoom.typedefs.data;
+package hxdoom.definitions;
 
 /**
  * @author Kaelan
  */
-typedef EpisodeProperties =
+typedef EpisodeDef =
 {
 	@:optional var index:Int;
 	@:optional var name:String;
