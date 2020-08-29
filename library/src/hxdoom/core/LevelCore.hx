@@ -74,111 +74,71 @@ class LevelCore
 		var mapmarker:Directory = Engine.WADDATA.getGeneralDir(_mapMarker);
 		var byteData = Engine.WADDATA.getWadByteArray(mapmarker.wad);
 		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load things
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 1).name != KeyLump.THINGS) {
-			Engine.log("Map data corrupt: Expected Things, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 1).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 1).size / Thing.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 1).dataOffset;
-		for (a in 0...numitems) {
-			_map.things[a] = Reader.readThing(byteData, place + a * Thing.BYTE_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load linedefs
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 2).name != KeyLump.LINEDEFS) {
-			Engine.log("Map data corrupt: Expected Linedefss, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 2).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 2).size / LineDef.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 2).dataOffset;
-		for (a in 0...numitems) {
-			_map.linedefs[a] = Reader.readLinedef(byteData, place + a * LineDef.BYTE_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load sidedefs
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 3).name != KeyLump.SIDEDEFS) {
-			Engine.log("Map data corrupt: Expected Sidedefs, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 3).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 3).size / SideDef.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 3).dataOffset;
-		for (a in 0...numitems) {
-			_map.sidedefs[a] = Reader.readSideDef(byteData, place + a * SideDef.BYTE_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load vertexes
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 4).name != KeyLump.VERTEXES) {
-			Engine.log("Map data corrupt: Expected Vertexes, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 4).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 4).size / Vertex.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 4).dataOffset;
-		for (a in 0...numitems) {
-			_map.vertexes[a] = Reader.readVertex(byteData, place + a * Vertex.BYTE_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load segments
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 5).name != KeyLump.SEGS) {
-			Engine.log("Map data corrupt: Expected Segments, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 5).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 5).size / Segment.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 5).dataOffset;
-		for (a in 0...numitems) {
-			_map.segments[a] = Reader.readSegment(byteData, place + a * Segment.BYTE_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load Subsectors
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 6).name != KeyLump.SSECTORS) {
-			Engine.log("Map data corrupt: Expected Subsectors, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 6).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 6).size / SubSector.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 6).dataOffset;
-		for (a in 0...numitems) {
-			_map.subsectors[a] = Reader.readSubSector(byteData, place + a * SubSector.BYTE_SIZE);
+		var lumpOffset:Int = 1;
+		var reg:EReg = new EReg("(E[0-9]+M[0-9]+)|(MAP[0-9]+)", "i");
+		while (true) {
+			
+			var mapDir = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + lumpOffset);
+			
+			//this could probably be replaced with a size check, iirc map markers posses 0 offset and 0 size. Please test this.
+			if  (reg.match(mapDir.name)) break;
+			
+			switch (mapDir.name) {
+				case KeyLump.THINGS :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Thing.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.things[a] = Reader.readThing(byteData, place + a * Thing.BYTE_SIZE);
+					}
+				case KeyLump.LINEDEFS :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / LineDef.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.linedefs[a] = Reader.readLinedef(byteData, place + a * LineDef.BYTE_SIZE);
+					}
+				case KeyLump.SIDEDEFS :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / SideDef.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.sidedefs[a] = Reader.readSideDef(byteData, place + a * SideDef.BYTE_SIZE);
+					}
+				case KeyLump.VERTEXES :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Vertex.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.vertexes[a] = Reader.readVertex(byteData, place + a * Vertex.BYTE_SIZE);
+					}
+				case KeyLump.SEGS :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Segment.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.segments[a] = Reader.readSegment(byteData, place + a * Segment.BYTE_SIZE);
+					}
+				case KeyLump.SSECTORS :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / SubSector.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.subsectors[a] = Reader.readSubSector(byteData, place + a * SubSector.BYTE_SIZE);
+					}
+				case KeyLump.NODES :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Node.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.nodes[a] = Reader.readNode(byteData, place + a * Node.BYTE_SIZE);
+					}
+				case KeyLump.SECTORS :
+					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Sector.BYTE_SIZE);
+					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					for (a in 0...numitems) {
+						_map.sectors[a] = Reader.readSector(byteData, place + a * Sector.BYTE_SIZE);
+					}
+				default :
+					Engine.log("Map directory unrecognized: " + mapDir.name);
+			}
+			
+			lumpOffset += 1;
 		}
 		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load nodes
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 7).name != KeyLump.NODES) {
-			Engine.log("Map data corrupt: Expected Nodes, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 7).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 7).size / Node.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 7).dataOffset;
-		for (a in 0...numitems) {
-			_map.nodes[a] = Reader.readNode(byteData, place + a * Node.BYTE_SIZE);
-		}
-		
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		//Load sectors
-		////////////////////////////////////////////////////////////////////////////////////////////////////
-		if (Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 8).name != KeyLump.SECTORS) {
-			Engine.log("Map data corrupt: Expected Sectors, found: " + Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 8).name);
-			return false;
-		}
-		numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 8).size / Sector.BYTE_SIZE);
-		place = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + 8).dataOffset;
-		for (a in 0...numitems) {
-			_map.sectors[a] = Reader.readSector(byteData, place + a * Sector.BYTE_SIZE);
-		}
-		
-		//Map name as stated in WAD, IE E#M#/MAP##
 		_map.name = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index).name;
 		
 		currentMap = _map;
