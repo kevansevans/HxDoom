@@ -133,7 +133,7 @@ class LevelCore
 						_map.sectors[a] = Reader.readSector(byteData, place + a * Sector.BYTE_SIZE);
 					}
 				default :
-					Engine.log("Map directory unrecognized: " + mapDir.name);
+					Engine.log(["Map directory unrecognized: " + mapDir.name]);
 			}
 			
 			lumpOffset += 1;

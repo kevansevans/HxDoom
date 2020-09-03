@@ -222,8 +222,11 @@ class Engine
 	 * Placeholder for future engine logging
 	 * @param	_msg
 	 */
-	public static inline function log(_msg:String, ?_pos:PosInfos) {
-		trace(_pos, _msg);
+	public static inline function log(_msg:Array<String>, ?_pos:PosInfos) {
+		trace("From: " + _pos);
+		for (msg in _msg) {
+			trace(msg);
+		}
 	}
 	
 	static function get_WADDATA():WadCore 

@@ -21,11 +21,11 @@ class WadCore
 	var lastKeyLumpMarkerRead:KeyLump;
 	
 	//Jump to a specific registered lump by lump name
-	var directory_name_map:Map<String, Array<Directory>>;
+	public var directory_name_map:Map<String, Array<Directory>>;
 	//Jump to a specific registered lump by wadname and directory index
-	var directory_index_map:Map<String, Array<Directory>>;
+	public var directory_index_map:Map<String, Array<Directory>>;
 	//Raw per wad data as integers
-	var wad_data_map:Map<String, Array<Int>>;
+	public var wad_data_map:Map<String, Array<Int>>;
 	
 	public function new() 
 	{
@@ -134,7 +134,7 @@ class WadCore
 		var verified:Bool = true;
 		for (name in _lumps) {
 			if (directory_name_map[name.toUpperCase()] == null) {
-				Engine.log('Lump $name does not exist');
+				Engine.log(['Lump $name does not exist']);
 				verified = false;
 			}
 		}

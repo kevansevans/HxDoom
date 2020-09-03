@@ -27,7 +27,7 @@ class CVarCore
 	 */
 	public static inline function setNewCVar(_name:String, _type:hxdoom.enums.data.CVarType, _value:Any, ?_onSet:Void -> Void, ?_callAfterSet:Bool = false) {
 		if (CVarMap[_name] != null) {
-			Engine.log('Cvar $_name is already set, use replaceCvar() instead if this is intentional');
+			Engine.log(['Cvar $_name is already set, use replaceCvar() instead if this is intentional']);
 			return;
 		}
 		CVarMap[_name] = {
@@ -63,26 +63,26 @@ class CVarCore
 	 * @param	_doNotCallFunction When set to true, the CVar's attached funtion will not be called
 	 */
 	public static function setCVar(_name:String, _value:Any, ?_doNotCallFunction:Bool = false) {
-		if (CVarMap[_name] == null) Engine.log('Set error: CVar Namespace "$_name" does not exist');
+		if (CVarMap[_name] == null) Engine.log(['Set error: CVar Namespace "$_name" does not exist']);
 		else {
 			switch (CVarMap[_name].type) {
 				case CInt :
 					if (Std.is(_value, Int)) CVarMap[_name].value = _value;
 					else if (Std.is(_value, Float)) CVarMap[_name].value = Std.int(_value);
 					else if (Std.is(_value, String)) {
-						if (Std.parseInt(_value) == null) Engine.log('Set error: CVar Namespace "$_name" expects an Integer');
+						if (Std.parseInt(_value) == null) Engine.log(['Set error: CVar Namespace "$_name" expects an Integer']);
 						else CVarMap[_name].value = Std.parseInt(_value);
 					}
-					else if (Std.is(_value, Bool)) Engine.log('Set error: CVar Namespace "$_name" expects an Integer');
+					else if (Std.is(_value, Bool)) Engine.log(['Set error: CVar Namespace "$_name" expects an Integer']);
 				case CFloat :
 					if (Std.is(_value, Int) || Std.is(_value, Float)) CVarMap[_name].value = _value;
 					else if (Std.is(_value, String)) {
-						if (Math.isNaN(Std.parseFloat(_value))) Engine.log('Set error: CVar Namespace "$_name" expects a Float');
+						if (Math.isNaN(Std.parseFloat(_value))) Engine.log(['Set error: CVar Namespace "$_name" expects a Float']);
 						else CVarMap[_name].value = Std.parseFloat(_value);
 					}
-					else if (Std.is(_value, Bool)) Engine.log('Set error: CVar Namespace "$_name" expects a Float');
+					else if (Std.is(_value, Bool)) Engine.log(['Set error: CVar Namespace "$_name" expects a Float']);
 				case CBool :
-					if (!Std.is(_value, Bool)) Engine.log('Set error: CVar Namespace "$_name" expects a Boolean');
+					if (!Std.is(_value, Bool)) Engine.log(['Set error: CVar Namespace "$_name" expects a Boolean']);
 					else CVarMap[_name].value = _value;
 				case CString :
 					CVarMap[_name].value = "" + _value;
@@ -97,7 +97,7 @@ class CVarCore
 	 */
 	public static function getCvar(_name:String):Dynamic {
 		if (CVarMap[_name] == null) {
-			Engine.log('Get error: CVar Namespace "$_name" does not exist');
+			Engine.log(['Get error: CVar Namespace "$_name" does not exist']);
 			return null;
 		} else {
 			switch (CVarMap[_name].type) {
