@@ -34,4 +34,8 @@ class Vertex extends LumpBase
 	public function toString():String {
 		return '{x: ' + xpos + ", y:" + ypos + '}'; 
 	}
+	
+	public static function distance(_b:Vertex, _a:Vertex):Float {
+		return Math.sqrt(Math.pow(_b.xpos - _a.xpos, 2) + Math.pow( _b.ypos - _a.ypos, 2));
+	}
 }
