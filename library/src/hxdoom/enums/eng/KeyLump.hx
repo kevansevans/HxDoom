@@ -17,6 +17,9 @@ enum abstract KeyLump(String) from String to String
 	var SECTORS:String;
 	var SSECTORS:String;
 	var THINGS:String;
+	var ENDMAP:String;
+	var ZNODES:String;
+	var TEXTMAP:String;
 	var VERTEXES:String;
 	var P_START:String;
 	var P1_START:String;
