@@ -71,14 +71,14 @@ class LevelCore
 		var numitems:Int = 0;
 		
 		var _map = new LevelMap();
-		var mapmarker:Directory = Engine.WADDATA.getGeneralDir(_mapMarker);
+		var mapmarker:Directory = Engine.WADDATA.getDirectory(_mapMarker);
 		var byteData = Engine.WADDATA.getWadByteArray(mapmarker.wad);
 		
 		var lumpOffset:Int = 1;
 		var reg:EReg = new EReg("(E[0-9]+M[0-9]+)|(MAP[0-9]+)", "i");
 		while (true) {
 			
-			var mapDir = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index + lumpOffset);
+			var mapDir = Engine.WADDATA.getIndexSpecificDir(mapmarker.wad, mapmarker.index + lumpOffset);
 			
 			//this could probably be replaced with a size check, iirc map markers posses 0 offset and 0 size. Please test this.
 			if  (reg.match(mapDir.name)) break;
@@ -131,7 +131,7 @@ class LevelCore
 			lumpOffset += 1;
 		}
 		
-		_map.name = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.index).name;
+		_map.name = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.name).name;
 		
 		currentMap = _map;
 		currentMap.parseThings();

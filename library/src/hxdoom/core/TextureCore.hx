@@ -28,7 +28,7 @@ class TextureCore
 		
 		playpal = Playpal.CONSTRUCTOR([]);
 		
-		var directory = Engine.WADDATA.getGeneralDir("PLAYPAL");
+		var directory = Engine.WADDATA.getDirectory("PLAYPAL");
 		var bytes = Engine.WADDATA.getWadByteArray(directory.wad);
 		
 		var numPals:Int = Std.int(directory.size / 768);
@@ -51,7 +51,7 @@ class TextureCore
 	}
 	public function parsePatchNames() {
 		
-		var pname_dir:Directory = Engine.WADDATA.getGeneralDir("PNAMES");
+		var pname_dir:Directory = Engine.WADDATA.getDirectory("PNAMES");
 		var data = Engine.WADDATA.getWadByteArray(pname_dir.wad);
 		
 		patches = Reader.readPatchNames(data, pname_dir.dataOffset).names;
@@ -66,7 +66,7 @@ class TextureCore
 		
 		while (Engine.WADDATA.wadContains(["TEXTURE" + textureLumpCount])) {
 			
-			var directory = Engine.WADDATA.getGeneralDir("TEXTURE" + textureLumpCount);
+			var directory = Engine.WADDATA.getDirectory("TEXTURE" + textureLumpCount);
 			var wad_bytes = Engine.WADDATA.getWadByteArray(directory.wad);
 			
 			var t_data = Reader.readTextureInfo(wad_bytes, directory.dataOffset);
@@ -92,7 +92,7 @@ class TextureCore
 		
 		if (Engine.WADDATA.wadContains([_patchName]) == true) {
 			
-			var directory = Engine.WADDATA.getGeneralDir(_patchName);
+			var directory = Engine.WADDATA.getDirectory(_patchName);
 			var wad_data = Engine.WADDATA.getWadByteArray(directory.wad);
 			
 			return Reader.readPatch(wad_data, directory.dataOffset);

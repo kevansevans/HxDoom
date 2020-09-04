@@ -20,18 +20,18 @@ class WadCore
 	
 	var lastKeyLumpMarkerRead:KeyLump;
 	
-	//Jump to a specific registered lump by lump name
-	public var directory_name_map:Map<String, Array<Directory>>;
-	//Jump to a specific registered lump by wadname and directory index
-	public var directory_index_map:Map<String, Array<Directory>>;
-	//Raw per wad data as integers
-	public var wad_data_map:Map<String, Array<Int>>;
+	
+	public var directoryList:Map<String, Array<Directory>>;
+	public var wadDirectoryName:Map<String, Map<String, Directory>>;
+	public var wadDirectoryIndex:Map<String, Array<Directory>>;
+	public var wadDataSet:Map<String, Array<Int>>;
 	
 	public function new() 
 	{
-		directory_name_map = new Map();
-		directory_index_map = new Map();
-		wad_data_map = new Map();
+		directoryList = new Map();
+		wadDirectoryName = new Map();
+		wadDirectoryIndex = new Map();
+		wadDataSet = new Map();
 	}
 	public function addWadFromString(_data:String, _wadName:String) {
 		
@@ -40,19 +40,23 @@ class WadCore
 		var isIwad:Bool = _data.substr(0, 4) == "IWAD";
 		if (isIwad) {
 			if (iwadLoaded) {
-				if (!CVarCore.getCvar(Defaults.ALLOW_MULTIPLE_IWADS)) return;
+				if (!CVarCore.getCvar(Defaults.ALLOW_MULTIPLE_IWADS)) {
+					Engine.log(['Multiple IWADS are not allowed, $_wadName was not loaded', 'Please set the cvar ' + Defaults.ALLOW_MULTIPLE_IWADS + ' to true']);
+					return;
+				}
 			} else {
 				iwadLoaded = true;
 			}
 		}
 		
-		directory_index_map[_wadName] = new Array();
+		wadDirectoryName[_wadName] = new Map();
+		wadDirectoryIndex[_wadName] = new Array();
 		
 		var data = new Array();
 		for (a in 0..._data.length) {
 			data.push(_data.charCodeAt(a));
 		}
-		wad_data_map[_wadName] = data;
+		wadDataSet[_wadName] = data;
 		
 		parseWad(_wadName);
 		
@@ -65,32 +69,37 @@ class WadCore
 		var isIwad:Bool = _data.getString(0, 4) == "IWAD";
 		if (isIwad) {
 			if (iwadLoaded) {
-				if (!CVarCore.getCvar(Defaults.ALLOW_MULTIPLE_IWADS)) return;
+				if (!CVarCore.getCvar(Defaults.ALLOW_MULTIPLE_IWADS)) {
+					Engine.log(['Multiple IWADS are not allowed, $_wadName was not loaded', 'Please set the cvar ' + Defaults.ALLOW_MULTIPLE_IWADS + ' to true']);
+					return;
+				}
 			} else {
 				iwadLoaded = true;
 			}
 		}
 		
-		directory_index_map[_wadName] = new Array();
+		wadDirectoryName[_wadName] = new Map();
+		wadDirectoryIndex[_wadName] = new Array();
 		
 		var data = new Array();
 		for (a in 0..._data.length) {
 			data.push(_data.get(a));
 		}
-		wad_data_map[_wadName] = data;
+		wadDataSet[_wadName] = data;
 		
 		parseWad(_wadName);
 	}
 	
 	public function parseWad(_wadName:String) {
-		var directory_count = Reader.getFourBytes(wad_data_map[_wadName], 0x04);
-		var directory_offset = Reader.getFourBytes(wad_data_map[_wadName], 0x08);
+		var directory_count = Reader.getFourBytes(wadDataSet[_wadName], 0x04);
+		var directory_offset = Reader.getFourBytes(wadDataSet[_wadName], 0x08);
 		
 		for (index in 0...directory_count) {
 			
-			var dir = Reader.readDirectory(wad_data_map[_wadName], directory_offset + index * Directory.BYTE_SIZE, _wadName, index);
+			var dir = Reader.readDirectory(wadDataSet[_wadName], directory_offset + index * Directory.BYTE_SIZE, _wadName, index);
 			
-			directory_index_map[_wadName][index] = dir;
+			wadDirectoryName[_wadName][dir.name] = dir;
+			wadDirectoryIndex[_wadName].push(dir);
 			
 			var lumpType = Reader.getLumpType(dir);
 			
@@ -110,30 +119,33 @@ class WadCore
 	}
 	
 	public function indexLump(_dir:Directory) {
-		if (directory_name_map[_dir.name] == null) {
-			directory_name_map[_dir.name] = new Array();
-			directory_name_map[_dir.name][0] = _dir;
+		if (directoryList[_dir.name] == null) {
+			directoryList[_dir.name] = new Array();
+			directoryList[_dir.name][0] = _dir;
 		} else {
-			directory_name_map[_dir.name].unshift(_dir);
+			directoryList[_dir.name].unshift(_dir);
 		}
 	}
 	
-	public function getGeneralDir(_name:String, _index:Int = 0) {
-		return directory_name_map[_name.toUpperCase()][_index];
+	public function getDirectory(_name:String, _index:Int = 0) {
+		return directoryList[_name.toUpperCase()][_index];
 	}
 	
-	public function getWadSpecificDir(_wad:String, _index:Int) {
-		return directory_index_map[_wad][_index];
+	public function getIndexSpecificDir(_wad:String, index:Int):Directory {
+		return wadDirectoryIndex[_wad][index];
+	}
+	public function getWadSpecificDir(_wad:String, _name:String):Directory {
+		return wadDirectoryName[_wad][_name];
 	}
 	
 	public function getWadByteArray(_name:String) {
-		return wad_data_map[_name];
+		return wadDataSet[_name];
 	}
 	
 	public function wadContains(_lumps:Array<String>):Bool {
 		var verified:Bool = true;
 		for (name in _lumps) {
-			if (directory_name_map[name.toUpperCase()] == null) {
+			if (directoryList[name.toUpperCase()] == null) {
 				Engine.log(['Lump $name does not exist']);
 				verified = false;
 			}
