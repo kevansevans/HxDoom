@@ -85,52 +85,44 @@ class LevelCore
 			
 			switch (mapDir.name) {
 				case KeyLump.THINGS :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Thing.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / Thing.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.things[a] = Reader.readThing(byteData, place + a * Thing.BYTE_SIZE);
+						_map.things[a] = Reader.readThing(byteData, mapDir.dataOffset + a * Thing.BYTE_SIZE);
 					}
 				case KeyLump.LINEDEFS :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / LineDef.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / LineDef.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.linedefs[a] = Reader.readLinedef(byteData, place + a * LineDef.BYTE_SIZE);
+						_map.linedefs[a] = Reader.readLinedef(byteData, mapDir.dataOffset + a * LineDef.BYTE_SIZE);
 					}
 				case KeyLump.SIDEDEFS :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / SideDef.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / SideDef.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.sidedefs[a] = Reader.readSideDef(byteData, place + a * SideDef.BYTE_SIZE);
+						_map.sidedefs[a] = Reader.readSideDef(byteData, mapDir.dataOffset + a * SideDef.BYTE_SIZE);
 					}
 				case KeyLump.VERTEXES :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Vertex.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / Vertex.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.vertexes[a] = Reader.readVertex(byteData, place + a * Vertex.BYTE_SIZE);
+						_map.vertexes[a] = Reader.readVertex(byteData, mapDir.dataOffset + a * Vertex.BYTE_SIZE);
 					}
 				case KeyLump.SEGS :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Segment.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / Segment.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.segments[a] = Reader.readSegment(byteData, place + a * Segment.BYTE_SIZE);
+						_map.segments[a] = Reader.readSegment(byteData, mapDir.dataOffset + a * Segment.BYTE_SIZE);
 					}
 				case KeyLump.SSECTORS :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / SubSector.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / SubSector.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.subsectors[a] = Reader.readSubSector(byteData, place + a * SubSector.BYTE_SIZE);
+						_map.subsectors[a] = Reader.readSubSector(byteData, mapDir.dataOffset + a * SubSector.BYTE_SIZE);
 					}
 				case KeyLump.NODES :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Node.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / Node.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.nodes[a] = Reader.readNode(byteData, place + a * Node.BYTE_SIZE);
+						_map.nodes[a] = Reader.readNode(byteData, mapDir.dataOffset + a * Node.BYTE_SIZE);
 					}
 				case KeyLump.SECTORS :
-					numitems = Std.int(Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).size / Sector.BYTE_SIZE);
-					place = Engine.WADDATA.getWadSpecificDir(mapDir.wad, mapDir.index).dataOffset;
+					numitems = Std.int(mapDir.size / Sector.BYTE_SIZE);
 					for (a in 0...numitems) {
-						_map.sectors[a] = Reader.readSector(byteData, place + a * Sector.BYTE_SIZE);
+						_map.sectors[a] = Reader.readSector(byteData, mapDir.dataOffset + a * Sector.BYTE_SIZE);
 					}
 				default :
 					Engine.log(["Map directory unrecognized: " + mapDir.name]);
