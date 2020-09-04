@@ -81,7 +81,7 @@ class LevelCore
 			var mapDir = Engine.WADDATA.getIndexSpecificDir(mapmarker.wad, mapmarker.index + lumpOffset);
 			
 			//this could probably be replaced with a size check, iirc map markers posses 0 offset and 0 size. Please test this.
-			if  (reg.match(mapDir.name)) break;
+			if  (reg.match(mapDir.name) || mapDir.name == KeyLump.ENDMAP) break;
 			
 			switch (mapDir.name) {
 				case KeyLump.THINGS :
