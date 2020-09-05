@@ -1,5 +1,6 @@
 package hxdoom.component;
 
+import hxdoom.lumps.map.SubSector;
 import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
@@ -21,6 +22,8 @@ class Actor
 	public var zpos_flight:Float;
 	public var zpos_eyeheight:Float;
 	public var zpos_view(get, null):Float;
+	
+	public var subsector(get, null):SubSector;
 	
 	public var pitch(get, default):Angle = 0.0;
 	public var yaw(get, default):Angle = 0.0;
@@ -80,6 +83,11 @@ class Actor
 	public function get_zpos():Float
 	{
 		return Engine.LEVELS.currentMap.getActorSubsector(this).sector.floorHeight;
+	}
+	
+	public function get_subsector():SubSector 
+	{
+		return Engine.LEVELS.currentMap.getActorSubsector(this);
 	}
 	
 	public function get_pitch():Angle 
