@@ -1,5 +1,5 @@
 package hxdoom.component;
-import hxdoom.actors.Actor;
+import hxdoom.component.Actor;
 
 /**
  * Acts as a location for a camera to point to. Can be set to follow an actor.

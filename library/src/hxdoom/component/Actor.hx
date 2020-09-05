@@ -1,4 +1,4 @@
-package hxdoom.actors;
+package hxdoom.component;
 
 import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Thing;
@@ -28,6 +28,9 @@ class Actor
 	
 	public var type:Int;
 	public var flags:Int;
+	
+	public var reactionTime:Int = 6;
+	public var target:Null<Actor>;
 	
 	public static function fromThing(_thing:Thing):Actor {
 		
@@ -94,4 +97,23 @@ class Actor
 		return roll;
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	//Behavior stuff
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public static var A_Chase:Actor -> Void = function(_actor:Actor) {
+		
+	}
+	
+	public static var A_Look:Actor -> Void = function(_actor:Actor) {
+		
+	}
+	
+	public static var A_FaceTarget:Actor -> Void = function(_actor:Actor) {
+		
+		if (_actor.target == null) return;
+		
+		
+		
+	}
 }

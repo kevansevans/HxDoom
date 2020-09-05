@@ -2,8 +2,8 @@ package hxdoom.component;
 
 import haxe.ds.Vector;
 
-import hxdoom.actors.Actor;
-import hxdoom.actors.Player;
+import hxdoom.component.Actor;
+import hxdoom.component.Player;
 
 import hxdoom.enums.game.SharedID;
 

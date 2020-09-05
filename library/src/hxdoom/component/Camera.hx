@@ -1,6 +1,6 @@
 package hxdoom.component;
 
-import hxdoom.actors.Actor;
+import hxdoom.component.Actor;
 import hxdoom.component.CameraPoint;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;

@@ -1,6 +1,6 @@
 package hxdoom.core;
 
-import hxdoom.actors.Actor;
+import hxdoom.component.Actor;
 import hxdoom.utils.geom.Angle;
 
 /**
