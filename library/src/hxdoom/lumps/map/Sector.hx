@@ -1,5 +1,7 @@
 package hxdoom.lumps.map;
 import haxe.io.Bytes;
+import hxdoom.component.Actor;
+import hxdoom.enums.eng.PlaneType;
 import hxdoom.lumps.LumpBase;
 
 /**
@@ -19,6 +21,13 @@ class Sector extends LumpBase
 	public var lightLevel:Int;
 	public var special:Int;
 	public var tag:Int;
+	
+	public var soundtraversed:Int = 0;
+	public var soundtarget:Actor;
+	
+	//todo: Get this shiz working
+	public var lines:Array<Int>;
+	
 	public function new(_args:Array<Any>) 
 	{
 		super();
@@ -72,5 +81,52 @@ class Sector extends LumpBase
 		bytes.setUInt16(24, tag);
 		
 		return bytes;
+	}
+	
+	/**
+	 * Helper function to calculate a GL compatible triangle model of a sector
+	 * @param	_sectorID
+	 * @return
+	 */
+	public static function getSectorGLTris(_sector:Sector, _mode:PlaneType):Array<Float> {
+		var tris:Array<Float> = new Array();
+		
+		var sector:Sector = _sector;
+		var mapSegs:Array<Segment> = Engine.LEVELS.currentMap.segments.copy();
+		var sectorSegs:Array<Segment> = new Array();
+		
+		for (seg in mapSegs) {
+			if (seg.sector == sector) sectorSegs.push(seg);
+		}
+		
+		var vertexArray:Array<Vertex> = new Array();
+		var anchor_seg:Segment = mapSegs.shift();
+		vertexArray.push(anchor_seg.start);
+		while (true) {
+			
+			var foundConnection:Bool = false;
+			
+			for (lookup_seg in mapSegs) {
+				if (anchor_seg.end.xpos == lookup_seg.start.xpos && anchor_seg.end.ypos == lookup_seg.start.ypos) {
+					foundConnection = true;
+					vertexArray.push(lookup_seg.start);
+					vertexArray.push(lookup_seg.end);
+					anchor_seg = lookup_seg;
+					mapSegs.remove(lookup_seg);
+				}
+			}
+			
+			if (!foundConnection) anchor_seg = mapSegs.shift();
+			
+			if (mapSegs.length == 0) {
+				break;
+			}
+			
+		}
+		
+		
+		//ear clip stuff
+		
+		return tris;
 	}
 }

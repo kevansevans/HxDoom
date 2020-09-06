@@ -9,6 +9,8 @@ import haxe.io.Bytes;
 class LumpBase 
 {
 
+	public var validcount:Int;
+	
 	public function new() 
 	{
 		

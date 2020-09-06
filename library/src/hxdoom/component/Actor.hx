@@ -35,6 +35,8 @@ class Actor
 	public var reactionTime:Int = 6;
 	public var target:Null<Actor>;
 	
+	public var justhit:Bool = false;
+	
 	public static function fromThing(_thing:Thing):Actor {
 		
 		var actor = Actor.CONSTRUCTOR();
