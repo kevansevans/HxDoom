@@ -44,6 +44,7 @@ abstract Angle(Float) to Float from Float from Int
 	}
 	@:dox(hide) @:op(++A)
 	public inline function preinc() {
+		if (this == 360) this = 0;
 		return this;
 	}
 	@:dox(hide) @:op(A++)
@@ -52,6 +53,7 @@ abstract Angle(Float) to Float from Float from Int
 	}
 	@:dox(hide) @:op(--A)
 	public inline function predec() {
+		if (this == 0) this = 360;
 		return this;
 	}
 	@:dox(hide) @:op(A--)
@@ -89,8 +91,8 @@ abstract Angle(Float) to Float from Float from Int
 		return (this * (Math.PI / 180));
 	}
 	@:dox(hide) public static inline function adjust(_v:Float):Float {
-		if (_v > 360) _v -= 360;
-		if (_v < 0) _v += 360;
+		if (_v > 360) while(_v > 360) _v -= 360;
+		if (_v < 0) while(_v < 0) _v += 360;
 		return _v;
 	}
 }
