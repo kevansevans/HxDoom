@@ -7,14 +7,14 @@ package hxdoom.enums.eng;
  */
 enum abstract Direction(Int) from Int
 {
-	var East:Int;
-	var NorthEast:Int;
-	var North:Int;
-	var NorthWest:Int;
-	var West:Int;
-	var SouthWest:Int;
-	var South:Int;
-	var SouthEast:Int;
+	var East:Int = 1;
+	var NorthEast:Int = 1 << 2;
+	var North:Int = 1 << 3;
+	var NorthWest:Int = 1 << 4;
+	var West:Int = 1 << 5;
+	var SouthWest:Int = 1 << 6;
+	var South:Int = 1 << 7;
+	var SouthEast:Int = 1 << 8;
 	var NoDirection:Int;
 	var NumDirs:Int;
 }
