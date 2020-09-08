@@ -26,4 +26,30 @@ abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
 			return Int64.fromFloat(C).low;
 		}
 	}
+	
+	@:op(A < B) public inline static function lessthan(A:Fixed, B:Fixed):Bool {
+		
+		var C:Int = A;
+		var D:Int = B;
+		
+		return C < D;
+	}
+	@:op(A <= B) public inline static function lessthaneq(A:Fixed, B:Fixed):Bool {
+		var C:Int = A;
+		var D:Int = B;
+		
+		return C <= D;
+	}
+	@:op(A > B) public inline static function greatthan(A:Fixed, B:Fixed):Bool {
+		var C:Int = A;
+		var D:Int = B;
+		
+		return C > D;
+	}
+	@:op(A >= B) public inline static function greatthaneq(A:Fixed, B:Fixed):Bool {
+		var C:Int = A;
+		var D:Int = B;
+		
+		return C >= D;
+	}
 }
