@@ -8,6 +8,8 @@ import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Sector;
 import hxdoom.component.Actor;
 
+import hxdoom.utils.math.Fixed;
+
 /**
  * ...
  * @author Kaelan
@@ -66,8 +68,10 @@ class Enemy //p_enemy.c
 		return false;
 	}
 	
-	public static var xspeed:Array<Int> = [Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000, 0, 47000];
-	public static var yspeed:Array<Int> = [0, 47000, Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000];
+	//47000 is the same as 1/sqrt(2) in fixed point.
+	
+	public static var xspeed:Array<Fixed> = [Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000, 0, 47000];
+	public static var yspeed:Array<Fixed> = [0, 47000, Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000];
 	
 	public static var Move:Actor -> Bool = function(_mob:Actor):Bool 
 	{
