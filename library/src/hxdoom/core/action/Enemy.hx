@@ -82,10 +82,9 @@ class Enemy //p_enemy.c
 	
 	public static var TryWalk:Actor -> Bool = function(_mob:Actor):Bool 
 	{
-		Engine.log(["Not finished here"]);
-		
 		if (!Move(_mob)) return false;
 		
+		_mob.movecount = Engine.GAME.p_random() & 15;
 		return true;
 	}
 	
