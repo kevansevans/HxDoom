@@ -18,7 +18,7 @@ class Player extends Actor
 		player.xpos = _thing.xpos;
 		player.ypos = _thing.ypos;
 		player.yaw = _thing.angle;
-		player.flags = _thing.flags;
+		player.info.flags = _thing.flags;
 		
 		return player;
 	}

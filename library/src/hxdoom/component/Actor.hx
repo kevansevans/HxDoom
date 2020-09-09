@@ -1,10 +1,12 @@
 package hxdoom.component;
 
 import hxdoom.lumps.map.SubSector;
+import hxdoom.typedefs.properties.ActorInfo;
 import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.Engine;
+import hxdoom.enums.eng.Direction;
 
 /**
  * ...
@@ -29,13 +31,14 @@ class Actor
 	public var yaw(get, default):Angle = 0.0;
 	public var roll(get, default):Angle = 0.0;
 	
-	public var type:Int;
-	public var flags:Int;
+	public var info:ActorInfo = {};
 	
-	public var reactionTime:Int = 6;
 	public var target:Null<Actor>;
 	
 	public var justhit:Bool = false;
+	
+	public var movedir:Direction;
+	public var movecount:Int = 0;
 	
 	public static function fromThing(_thing:Thing):Actor {
 		
@@ -44,7 +47,7 @@ class Actor
 		actor.xpos = _thing.xpos;
 		actor.ypos = _thing.ypos;
 		actor.yaw = _thing.angle;
-		actor.flags = _thing.flags;
+		actor.info.flags = _thing.flags;
 		
 		return actor;
 	}
