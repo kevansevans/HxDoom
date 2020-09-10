@@ -6,7 +6,9 @@ import hxdoom.Engine;
 
 /**
  * ...
- * @author Kaelan
+ * @author id Software, converted to Haxe by Kaelan
+ * 
+ * https://github.com/id-Software/DOOM/blob/77735c3ff0772609e9c8d29e3ce2ab42ff54d20b/linuxdoom-1.10/m_fixed.c
  */
 abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
     
@@ -17,7 +19,7 @@ abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
 	}
 	
 	@:op(A / B) public inline static function div(A:Fixed, B:Fixed):Fixed {
-		if (A >> 14 >= B >> 0) {
+		if (A >> 14 >= B) {
 			return (A ^ B) < 0 ?  Engine.MININT : Engine.MAXINT;
 		}
 		else {
@@ -27,6 +29,9 @@ abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
 		}
 	}
 	
+	//Haxe wouldn't allow me to compare two fixed numbers, so here they're
+	//converted to traditional Haxe Ints and compared.
+	//Will likely need to add Float support in the future.
 	@:op(A < B) public inline static function lessthan(A:Fixed, B:Fixed):Bool {
 		
 		var C:Int = A;
