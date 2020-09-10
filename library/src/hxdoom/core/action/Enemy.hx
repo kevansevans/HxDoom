@@ -1,7 +1,9 @@
 package hxdoom.core.action;
 
+import haxe.ds.Vector;
 import hxdoom.Engine;
 import hxdoom.component.Player;
+import hxdoom.enums.eng.Direction;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.utils.geom.Angle;
 
@@ -9,6 +11,7 @@ import hxdoom.lumps.map.Sector;
 import hxdoom.component.Actor;
 
 import hxdoom.utils.math.Fixed;
+import haxe.Int64;
 
 /**
  * ...
@@ -16,6 +19,9 @@ import hxdoom.utils.math.Fixed;
  */
 class Enemy //p_enemy.c
 {
+	public static var opposite:Array<Direction> = [Direction.West, Direction.SouthWest, Direction.South, Direction.SouthEast, Direction.East, Direction.NorthEast, Direction.North, Direction.NorthWest, Direction.NoDir];
+	public static var diags:Array<Direction> = [Direction.NorthWest, Direction.NorthEast, Direction.SouthWest, Direction.SouthEast];
+	
 	
 	public static var Fall:Actor -> Void = function(_mob:Actor)
 	{
@@ -75,6 +81,25 @@ class Enemy //p_enemy.c
 	
 	public static var Move:Actor -> Bool = function(_mob:Actor):Bool 
 	{
+		var tryx:Fixed; 
+		var tryy:Fixed;
+		
+		var ld:LineDef;
+		
+		var try_ok:Bool;
+		var good:Bool;
+		
+		//if actor doesn't have a move direction, return false
+		
+		tryx = Int64.fromFloat(_mob.info.speed * xspeed[_mob.movedir]).low;
+		tryy = Int64.fromFloat(_mob.info.speed * yspeed[_mob.movedir]).low;
+		
+		try_ok = false;
+		
+		if (!try_ok) {
+			
+		}
+		
 		Engine.log(["Not finished here"]);
 		
 		return false;
@@ -90,7 +115,56 @@ class Enemy //p_enemy.c
 	
 	public static var NewChaseDir:Actor -> Void = function(_mob:Actor)
 	{
-		Engine.log(["Not finished here"]);
+		var deltax:Fixed;
+		var deltay:Fixed;
+		var d:Vector<Direction> = new Vector(2);
+		var tdir:Int;
+		var olddir:Direction;
+		var turnaround:Direction;
+		
+		if (_mob.target == null) {
+			Engine.log(["NewChaseDir: called with no target"]);
+			return;
+		}
+		
+		olddir = _mob.movedir;
+		turnaround = opposite[olddir];
+		
+		deltax = Int64.fromFloat(_mob.target.xpos - _mob.xpos).low;
+		deltay = Int64.fromFloat(_mob.target.ypos - _mob.ypos).low;
+		
+		if (deltax > 10 * Engine.FRACUNIT) d[0] = Direction.East;
+		else if (deltax < -10 * Engine.FRACUNIT) d[0] = Direction.West;
+		else d[0] = Direction.NoDir;
+		
+		if (deltay < -10 * Engine.FRACUNIT) d[1] = Direction.South;
+		else if (deltay > 10 * Engine.FRACUNIT) d[1] = Direction.North;
+		else d[1] = Direction.NoDir;
+		
+		if (d[0] != Direction.NoDir && d[1] != Direction.NoDir) {
+			//Original source: actor->movedir = diags[((deltay < 0)<<1)+(deltax>0)];
+			_mob.movedir = diags[((deltay < 0 == true ? 1 : 0) << 1) + (deltax > 0 == true ? 1 : 0)];
+			if (_mob.movedir != turnaround && TryWalk(_mob)) {
+				return;
+			}
+		}
+		
+		if ((Engine.GAME.p_random() > 200) || Math.abs(deltay) > Math.abs(deltax)) {
+			tdir = d[0];
+			d[0] = d[1];
+			d[1] = tdir;
+		}
+		
+		if (d[0] == turnaround) {
+			d[0] != Direction.NoDir;
+			if (TryWalk(_mob)) {
+				return;
+			}
+		}
+		
+		if (d[1] != Direction.NoDir) {
+			actor.movedir = d[1];
+		}
 	}
 	
 	public static var LookForPlayers:(Actor, Bool) -> Bool = function(_mob:Actor, _allaround:Bool):Bool 
