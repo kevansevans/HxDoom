@@ -115,17 +115,19 @@ class Enemy //p_enemy.c
 	
 	public static var NewChaseDir:Actor -> Void = function(_mob:Actor)
 	{
+		Engine.log(["I need testing!"]);
+		
+		if (_mob.target == null) {
+			Engine.log(["NewChaseDir: called with no target"]);
+			return;
+		}
+		
 		var deltax:Fixed;
 		var deltay:Fixed;
 		var d:Vector<Direction> = new Vector(2);
 		var tdir:Int;
 		var olddir:Direction;
 		var turnaround:Direction;
-		
-		if (_mob.target == null) {
-			Engine.log(["NewChaseDir: called with no target"]);
-			return;
-		}
 		
 		olddir = _mob.movedir;
 		turnaround = opposite[olddir];
@@ -163,8 +165,37 @@ class Enemy //p_enemy.c
 		}
 		
 		if (d[1] != Direction.NoDir) {
-			actor.movedir = d[1];
+			_mob.movedir = d[1];
+			if (TryWalk(_mob)) return;
 		}
+		
+		if (olddir != Direction.NoDir) {
+			_mob.movedir = olddir;
+			if (TryWalk(_mob)) return;
+		}
+		
+		if (Engine.GAME.p_random() & 1 > 1) {
+			for (tdir in Direction.East...Direction.SouthEast) {
+				if (tdir != turnaround) {
+					_mob.movedir = tdir;
+					if (TryWalk(_mob)) return;
+				}
+			}
+		} else {
+			for (tdir in Direction.SouthEast...Direction.East) {
+				if (tdir != turnaround) {
+					_mob.movedir = tdir;
+					if (TryWalk(_mob)) return;
+				}
+			}
+		}
+		
+		if (turnaround != Direction.NoDir) {
+			_mob.movedir = turnaround;
+			if (TryWalk(_mob)) return;
+		}
+		
+		_mob.movedir = Direction.NoDir;
 	}
 	
 	public static var LookForPlayers:(Actor, Bool) -> Bool = function(_mob:Actor, _allaround:Bool):Bool 
