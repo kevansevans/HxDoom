@@ -23,7 +23,7 @@ class Enemy //p_enemy.c
 	public static var diags:Array<Direction> = [Direction.NorthWest, Direction.NorthEast, Direction.SouthWest, Direction.SouthEast];
 	
 	
-	public static var Fall:Actor -> Void = function(_mob:Actor)
+	public static var Fall:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
@@ -54,19 +54,19 @@ class Enemy //p_enemy.c
 		RecursiveSound(_emmiter.subsector.sector, 0);
 	}
 	
-	public static var CheckMeleeRange:Actor -> Bool = function(_mob:Actor):Bool 
+	public static var CheckMeleeRange:Actor -> Bool = function(_mobj:Actor):Bool 
 	{
 		
 		Engine.log(["Not finished here"]);
 		
-		if (_mob.target == null) return false;
+		if (_mobj.target == null) return false;
 		
-		var pl = _mob.target;
+		var pl = _mobj.target;
 		
 		return true;
 	}
 	
-	public static var CheckMissileRange:Actor -> Bool = function(_mob:Actor):Bool 
+	public static var CheckMissileRange:Actor -> Bool = function(_mobj:Actor):Bool 
 	{
 		
 		Engine.log(["Not finished here"]);
@@ -79,7 +79,7 @@ class Enemy //p_enemy.c
 	public static var xspeed:Array<Fixed> = [Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000, 0, 47000];
 	public static var yspeed:Array<Fixed> = [0, 47000, Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000];
 	
-	public static var Move:Actor -> Bool = function(_mob:Actor):Bool 
+	public static var Move:Actor -> Bool = function(_mobj:Actor):Bool 
 	{
 		var tryx:Fixed; 
 		var tryy:Fixed;
@@ -91,8 +91,8 @@ class Enemy //p_enemy.c
 		
 		//if actor doesn't have a move direction, return false
 		
-		tryx = Int64.fromFloat(_mob.info.speed * xspeed[_mob.movedir]).low;
-		tryy = Int64.fromFloat(_mob.info.speed * yspeed[_mob.movedir]).low;
+		tryx = Int64.fromFloat(_mobj.info.speed * xspeed[_mobj.movedir]).low;
+		tryy = Int64.fromFloat(_mobj.info.speed * yspeed[_mobj.movedir]).low;
 		
 		try_ok = false;
 		
@@ -105,19 +105,19 @@ class Enemy //p_enemy.c
 		return false;
 	}
 	
-	public static var TryWalk:Actor -> Bool = function(_mob:Actor):Bool 
+	public static var TryWalk:Actor -> Bool = function(_mobj:Actor):Bool 
 	{
-		if (!Move(_mob)) return false;
+		if (!Move(_mobj)) return false;
 		
-		_mob.movecount = Engine.GAME.p_random() & 15;
+		_mobj.movecount = Engine.GAME.p_random() & 15;
 		return true;
 	}
 	
-	public static var NewChaseDir:Actor -> Void = function(_mob:Actor)
+	public static var NewChaseDir:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["I need testing!"]);
 		
-		if (_mob.target == null) {
+		if (_mobj.target == null) {
 			Engine.log(["NewChaseDir: called with no target"]);
 			return;
 		}
@@ -129,11 +129,11 @@ class Enemy //p_enemy.c
 		var olddir:Direction;
 		var turnaround:Direction;
 		
-		olddir = _mob.movedir;
+		olddir = _mobj.movedir;
 		turnaround = opposite[olddir];
 		
-		deltax = Int64.fromFloat(_mob.target.xpos - _mob.xpos).low;
-		deltay = Int64.fromFloat(_mob.target.ypos - _mob.ypos).low;
+		deltax = Int64.fromFloat(_mobj.target.xpos - _mobj.xpos).low;
+		deltay = Int64.fromFloat(_mobj.target.ypos - _mobj.ypos).low;
 		
 		if (deltax > 10 * Engine.FRACUNIT) d[0] = Direction.East;
 		else if (deltax < -10 * Engine.FRACUNIT) d[0] = Direction.West;
@@ -145,8 +145,8 @@ class Enemy //p_enemy.c
 		
 		if (d[0] != Direction.NoDir && d[1] != Direction.NoDir) {
 			//Original source: actor->movedir = diags[((deltay < 0)<<1)+(deltax>0)];
-			_mob.movedir = diags[((deltay < 0 == true ? 1 : 0) << 1) + (deltax > 0 == true ? 1 : 0)];
-			if (_mob.movedir != turnaround && TryWalk(_mob)) {
+			_mobj.movedir = diags[((deltay < 0 == true ? 1 : 0) << 1) + (deltax > 0 == true ? 1 : 0)];
+			if (_mobj.movedir != turnaround && TryWalk(_mobj)) {
 				return;
 			}
 		}
@@ -159,91 +159,124 @@ class Enemy //p_enemy.c
 		
 		if (d[0] == turnaround) {
 			d[0] != Direction.NoDir;
-			if (TryWalk(_mob)) {
+			if (TryWalk(_mobj)) {
 				return;
 			}
 		}
 		
 		if (d[1] != Direction.NoDir) {
-			_mob.movedir = d[1];
-			if (TryWalk(_mob)) return;
+			_mobj.movedir = d[1];
+			if (TryWalk(_mobj)) return;
 		}
 		
 		if (olddir != Direction.NoDir) {
-			_mob.movedir = olddir;
-			if (TryWalk(_mob)) return;
+			_mobj.movedir = olddir;
+			if (TryWalk(_mobj)) return;
 		}
 		
 		if (Engine.GAME.p_random() & 1 > 1) {
 			for (tdir in Direction.East...Direction.SouthEast) {
 				if (tdir != turnaround) {
-					_mob.movedir = tdir;
-					if (TryWalk(_mob)) return;
+					_mobj.movedir = tdir;
+					if (TryWalk(_mobj)) return;
 				}
 			}
 		} else {
-			for (tdir in Direction.SouthEast...Direction.East) {
-				if (tdir != turnaround) {
-					_mob.movedir = tdir;
-					if (TryWalk(_mob)) return;
+			for (tdir in Direction.East...Direction.SouthEast) {
+				if (Direction.SouthEast - tdir != turnaround) {
+					_mobj.movedir = tdir;
+					if (TryWalk(_mobj)) return;
 				}
 			}
 		}
 		
 		if (turnaround != Direction.NoDir) {
-			_mob.movedir = turnaround;
-			if (TryWalk(_mob)) return;
+			_mobj.movedir = turnaround;
+			if (TryWalk(_mobj)) return;
 		}
 		
-		_mob.movedir = Direction.NoDir;
+		_mobj.movedir = Direction.NoDir;
 	}
 	
-	public static var LookForPlayers:(Actor, Bool) -> Bool = function(_mob:Actor, _allaround:Bool):Bool 
+	public static var LookForPlayers:(Actor, Bool) -> Bool = function(_mobj:Actor, _allaround:Bool):Bool 
 	{
 		Engine.log(["Not finished here"]);
+		
+		var c:Int;
+		var stop:Int;
+		var player:Player;
+		var sector:Sector;
+		var an:Angle;
+		var distance:Fixed;
+		
+		sector = _mobj.subsector.sector;
+		
+		c = 0;
+		stop = (_mobj.lastlook - 1) & 3;
+		
+		for (p_index in 0...3) {
+			_mobj.lastlook = p_index;
+			
+			if (Engine.LEVELS.currentMap.actors_players[_mobj.lastlook] == null) continue;
+			
+			if (c++ == 2 || _mobj.lastlook == stop) return false;
+			
+			player = Engine.LEVELS.currentMap.actors_players[_mobj.lastlook];
+			
+			if (player.health <= 0) continue;
+			
+			//check if out of sight here
+			
+			if (!_allaround) {
+				//maths stuffs here
+			}
+			
+			_mobj.target = player;
+			return true;
+		}
 		
 		return false;
 	}
 	
 	//tag 666 thingy
-	public static var KeenDie:Actor -> Void = function(_mob:Actor) 
+	public static var KeenDie:Actor -> Void = function(_mobj:Actor) 
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var Look:Actor -> Void = function(_mob:Actor)
+	public static var Look:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var Chase:Actor -> Void = function(_mob:Actor) 
+	public static var Chase:Actor -> Void = function(_mobj:Actor) 
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var FaceTarget:Actor -> Void = function(_mob:Actor)
+	public static var FaceTarget:Actor -> Void = function(_mobj:Actor)
 	{
-		if (_mob.target == null) return;
+		if (_mobj.target == null) return;
 		
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var PosAttack:Actor -> Void = function(_mob:Actor)
+	public static var PosAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		var angle:Int;
 		var damage:Int;
 		var slope:Int;
 		
-		if (_mob.target == null) return;
+		if (_mobj.target == null) return;
 		
-		FaceTarget(_mob);
+		FaceTarget(_mobj);
 		
-		angle = Std.int(_mob.yaw);
+		angle = Std.int(_mobj.yaw);
 		
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SPosAttack:Actor -> Void = function(_mob:Actor)
+	public static var SPosAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		var i:Int;
 		var angle:Int;
@@ -251,88 +284,88 @@ class Enemy //p_enemy.c
 		var damage:Int;
 		var slope:Int;
 		
-		if (_mob.target == null) return;
+		if (_mobj.target == null) return;
 		
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var CPosAttack:Actor -> Void = function(_mob:Actor)
+	public static var CPosAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		var angle:Int;
 		var bangle:Int;
 		var damage:Int;
 		var slope:Int;
 		
-		if (_mob.target == null) return;
+		if (_mobj.target == null) return;
 		
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var CPosRefire:Actor -> Void = function(_mob:Actor)
+	public static var CPosRefire:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 		
-		FaceTarget(_mob);
+		FaceTarget(_mobj);
 		
 		if (Engine.GAME.p_random() < 40) return;
 	}
 	
-	public static var SpidRefire:Actor -> Void = function(_mob:Actor)
+	public static var SpidRefire:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 		
-		FaceTarget(_mob);
+		FaceTarget(_mobj);
 		
 		if (Engine.GAME.p_random() < 10) return;
 	}
 	
-	public static var BspiAttack:Actor -> Void = function(_mob:Actor)
+	public static var BspiAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var TroopAttack:Actor -> Void = function(_mob:Actor)
+	public static var TroopAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SargAttack:Actor -> Void = function(_mob:Actor)
+	public static var SargAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var HeadAttack:Actor -> Void = function(_mob:Actor)
+	public static var HeadAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var CyberAttack:Actor -> Void = function(_mob:Actor)
+	public static var CyberAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BruisAttack:Actor -> Void = function(_mob:Actor)
+	public static var BruisAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SkelMissile:Actor -> Void = function(_mob:Actor)
+	public static var SkelMissile:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
 	public static var TRACEANGLE:Int = 0xC000000;
-	public static var Tracer:Actor -> Void = function(_mob:Actor)
+	public static var Tracer:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SkelWhoosh:Actor -> Void = function(_mob:Actor)
+	public static var SkelWhoosh:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SkelFist:Actor -> Void = function(_mob:Actor)
+	public static var SkelFist:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
@@ -344,129 +377,129 @@ class Enemy //p_enemy.c
 	 * fixed_t		viletryy;
 	 */
 	
-	public static var PIT_VileCheck:Actor -> Bool = function(_mob:Actor):Bool
+	public static var PIT_VileCheck:Actor -> Bool = function(_mobj:Actor):Bool
 	{
 		Engine.log(["Not finished here"]);
 		
 		return false;
 	}
 	
-	public static var VileChase:Actor -> Void = function(_mob:Actor)
+	public static var VileChase:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var VileStart:Actor -> Void = function(_mob:Actor)
+	public static var VileStart:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var Fire:Actor -> Void = function(_mob:Actor)
+	public static var Fire:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var StartFire:Actor -> Void = function(_mob:Actor)
+	public static var StartFire:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var FireCrackle:Actor -> Void = function(_mob:Actor)
+	public static var FireCrackle:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var VileTarget:Actor -> Void = function(_mob:Actor)
+	public static var VileTarget:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var VileAttack:Actor -> Void = function(_mob:Actor)
+	public static var VileAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var FatRaise:Actor -> Void = function(_mob:Actor)
+	public static var FatRaise:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var FatAttack1:Actor -> Void = function(_mob:Actor)
+	public static var FatAttack1:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var FatAttack2:Actor -> Void = function(_mob:Actor)
+	public static var FatAttack2:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var FatAttack3:Actor -> Void = function(_mob:Actor)
+	public static var FatAttack3:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SkullAttack:Actor -> Void = function(_mob:Actor)
+	public static var SkullAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var PainShootSkull:(Actor, Angle) -> Void = function(_mob:Actor, _angle:Angle)
+	public static var PainShootSkull:(Actor, Angle) -> Void = function(_mobj:Actor, _angle:Angle)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var PainAttack:Actor -> Void = function(_mob:Actor)
+	public static var PainAttack:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var PainDie:Actor -> Void = function(_mob:Actor)
+	public static var PainDie:Actor -> Void = function(_mobj:Actor)
 	{
-		Fall(_mob);
-		PainShootSkull(_mob, _mob.yaw + 90);
-		PainShootSkull(_mob, _mob.yaw + 180);
-		PainShootSkull(_mob, _mob.yaw + 270);
+		Fall(_mobj);
+		PainShootSkull(_mobj, _mobj.yaw + 90);
+		PainShootSkull(_mobj, _mobj.yaw + 180);
+		PainShootSkull(_mobj, _mobj.yaw + 270);
 		
 		Engine.log(["Not finished here, shit likely not accurate"]);
 	}
 	
-	public static var Scream:Actor -> Void = function(_mob:Actor)
+	public static var Scream:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var XScream:Actor -> Void = function(_mob:Actor)
+	public static var XScream:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var Pain:Actor -> Void = function(_mob:Actor)
+	public static var Pain:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var Explode:Actor -> Void = function(_mob:Actor)
+	public static var Explode:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BossDeath:Actor -> Void = function(_mob:Actor)
+	public static var BossDeath:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var Hoof:Actor -> Void = function(_mob:Actor)
+	public static var Hoof:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var Metal:Actor -> Void = function(_mob:Actor)
+	public static var Metal:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BabyMetal:Actor -> Void = function(_mob:Actor)
+	public static var BabyMetal:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
@@ -491,47 +524,47 @@ class Enemy //p_enemy.c
 		Engine.log(["Not finished here, double check argumebnts"]);
 	}
 	
-	public static var BrainAwake:Actor -> Void = function(_mob:Actor)
+	public static var BrainAwake:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BrainPain:Actor -> Void = function(_mob:Actor)
+	public static var BrainPain:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BrainScream:Actor -> Void = function(_mob:Actor)
+	public static var BrainScream:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BrainExplode:Actor -> Void = function(_mob:Actor)
+	public static var BrainExplode:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BrainDie:Actor -> Void = function(_mob:Actor)
+	public static var BrainDie:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var BrainSpit:Actor -> Void = function(_mob:Actor)
+	public static var BrainSpit:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SpawnFly:Actor -> Void = function(_mob:Actor)
+	public static var SpawnFly:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var SpawnSound:Actor -> Void = function(_mob:Actor)
+	public static var SpawnSound:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
 	
-	public static var PlayerScream:Actor -> Void = function(_mob:Actor)
+	public static var PlayerScream:Actor -> Void = function(_mobj:Actor)
 	{
 		Engine.log(["Not finished here"]);
 	}
