@@ -53,6 +53,8 @@ class RenderCore
 		
 		var map = Engine.LEVELS.currentMap;
 		
+		if (checkScreenFill()) return;
+		
 		if (_nodeIndex & Node.SUBSECTORIDENTIFIER > 0) {
 			subsectorVisibilityCheck(_nodeIndex & (~Node.SUBSECTORIDENTIFIER));
 			return;
@@ -115,9 +117,14 @@ class RenderCore
 				}
 				start = half_fov;
 			}
-			var end_moved:Angle = half_fov - Std.int(end);
+			var end_moved:Angle = half_fov;
+			end_moved -= end;
 				
 			if (end_moved >  p_fov) {
+				var end_angle:Angle = end_moved - p_fov;
+				if (end_angle >= spanlimit) {
+					continue;
+				}
 				end = -half_fov;
 			}
 				
@@ -135,9 +142,6 @@ class RenderCore
 		var x_start:Int = angleToScreen(_start, 90);
 		var x_end:Int = angleToScreen(_end, 90);
 				
-		x_start = Std.int(Math.max(0, x_start));
-		x_end = Std.int(Math.min(screen_width + 1, x_end));
-				
 		for (x in x_start...(x_end + 1)) {
 			if (virtual_screen[x] != null) {
 				continue;
@@ -154,10 +158,8 @@ class RenderCore
 	
 	function checkScreenFill():Bool
 	{
-		var pass:Int = 0;
-		var fail:Int = 0;
 		for (x in 0...(screen_width + 1)) {
-			if (virtual_screen[x] != null) {
+			if (virtual_screen[x] == null) {
 				return false;
 			}
 		}
