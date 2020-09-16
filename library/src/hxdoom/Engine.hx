@@ -11,8 +11,9 @@ import hxdoom.core.*;
 import hxdoom.lumps.map.SubSector;
 import hxdoom.enums.eng.KeyLump;
 import hxdoom.enums.eng.DataLump;
-
 import hxdoom.enums.EnumTool;
+
+import hxdoom.utils.math.Fixed;
 
 /**
  * Engine.hx acts as the hub class for accessing data. It contains "cores" that can be utilized for wad data manipulation.
@@ -280,4 +281,6 @@ class Engine
 	
 	public static var MAXINT:Int = 0x7fffffff;
 	public static var MININT:Int = 0x80000000;
+	
+	public static var MAXPLAYERS:Int = 4;
 }
