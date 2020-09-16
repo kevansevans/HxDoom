@@ -90,7 +90,7 @@ abstract Angle(Float) to Float from Float from Int
 	public inline function toRadians():Float {
 		return (this * (Math.PI / 180));
 	}
-	@:dox(hide) public static inline function adjust(_v:Float):Float {
+	@:dox(hide) static inline function adjust(_v:Float):Float {
 		if (_v > 360) while(_v > 360) _v -= 360;
 		if (_v < 0) while(_v < 0) _v += 360;
 		return _v;

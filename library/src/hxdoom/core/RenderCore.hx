@@ -21,7 +21,7 @@ class RenderCore
 	public var vis_segments:Array<Segment>;
 	public var vis_subsecs:Array<SubSector>;
 	public var vis_floors:Array<Segment>;
-	public var screen_width(default, set):Int = 320;
+	public var screen_width:Int = 320;
 	public var spanlimit:Int = 180;
 	public var scanning:Bool = false;
 	
@@ -95,7 +95,6 @@ class RenderCore
 			}
 			
 			var span:Angle = start - end;
-			span = Angle.adjust(span);
 			
 			if (span.asValue() > spanlimit) {
 				continue;
@@ -108,25 +107,26 @@ class RenderCore
 			var half_fov:Float = p_fov / 2;
 			
 			var start_moved:Angle = start + half_fov;
-			start_moved = Angle.adjust(start_moved);
 			
 			if (start_moved > p_fov) {
-				if (start_moved > span) {
+				var start_angle:Angle = start_moved - p_fov;
+				if (start_angle >= span) {
 					continue;
 				}
 				start = half_fov;
 			}
 			var end_moved:Angle = half_fov - Std.int(end);
-			end_moved = Angle.adjust(end_moved);
 				
 			if (end_moved >  p_fov) {
 				end = -half_fov;
 			}
 				
-			start += p_fov;
-			end += p_fov;
+			start += 90;
+			end += 90;
 				
 			registerSegToScreenWidth(segment, start, end);
+			
+			//if (checkScreenFill()) return;
 		}
 	}
 	
@@ -152,15 +152,16 @@ class RenderCore
 		}
 	}
 	
-	function checkScreenFill() 
+	function checkScreenFill():Bool
 	{
 		var pass:Int = 0;
 		var fail:Int = 0;
 		for (x in 0...(screen_width + 1)) {
 			if (virtual_screen[x] != null) {
-				return;
+				return false;
 			}
 		}
+		return true;
 	}
 	
 	public function angleToScreen(_angle:Angle, _fov:Int):Int {
