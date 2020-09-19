@@ -39,7 +39,7 @@ class Reader
 	 * @param	_index
 	 * @return
 	 */
-	public static inline function readDirectory(_data:Array<Int>, _offset:Int, _wadname:String = "", _index:Int = -1):Directory {
+	public static var readDirectory:(Array<Int>, Int, String, ?Int) -> Directory = function(_data:Array<Int>, _offset:Int, _wadname:String = "", _index:Int = -1):Directory {
 		return Directory.CONSTRUCTOR([
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
@@ -54,7 +54,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readThing(_data:Array<Int>, _offset:Int):Thing {
+	public static var readThing:(Array<Int>, Int) -> Thing = function(_data:Array<Int>, _offset:Int):Thing {
 		return Thing.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -69,7 +69,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readLinedef(_data:Array<Int>, _offset:Int):LineDef {
+	public static var readLinedef:(Array<Int>, Int) -> LineDef = function(_data:Array<Int>, _offset:Int):LineDef {
 		return LineDef.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
@@ -86,7 +86,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readVertex(_data:Array<Int>, _offset:Int):Vertex {
+	public static var readVertex:(Array<Int>, Int) -> Vertex = function(_data:Array<Int>, _offset:Int):Vertex {
 		return Vertex.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true), 
 			getTwoBytes(_data, _offset + 2, true)
@@ -99,7 +99,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readSegment(_data:Array<Int>, _offset:Int):Segment {
+	public static var readSegment:(Array<Int>, Int) -> Segment = function(_data:Array<Int>, _offset:Int):Segment {
 		return Segment.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -115,7 +115,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readSubSector(_data:Array<Int>, _offset:Int):SubSector {
+	public static var readSubSector:(Array<Int>, Int) -> SubSector = function(_data:Array<Int>, _offset:Int):SubSector {
 		return SubSector.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2)
@@ -127,7 +127,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readNode(_data:Array<Int>, _offset:Int):Node {
+	public static var readNode:(Array<Int>, Int) -> Node = function(_data:Array<Int>, _offset:Int):Node {
 		return Node.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -151,7 +151,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readSideDef(_data:Array<Int>, _offset:Int):SideDef {
+	public static var readSideDef:(Array<Int>, Int) -> SideDef = function(_data:Array<Int>, _offset:Int):SideDef {
 		return SideDef.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -167,7 +167,7 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static inline function readSector(_data:Array<Int>, _offset:Int):Sector {
+	public static var readSector:(Array<Int>, Int) -> Sector = function(_data:Array<Int>, _offset:Int):Sector {
 		return Sector.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -185,7 +185,7 @@ class Reader
 	 * @param	_size
 	 * @return
 	 */
-	public static inline function readPatchNames(_data:Array<Int>, _offset:Int):PatchNames {
+	public static var readPatchNames:(Array<Int>, Int) -> PatchNames = function(_data:Array<Int>, _offset:Int):PatchNames {
 		var pname = PatchNames.CONSTRUCTOR([]);
 		var numPatches = getFourBytes(_data, _offset);
 		for (a in 0...numPatches) {
@@ -193,7 +193,7 @@ class Reader
 		}
 		return pname;
 	}
-	public static inline function readTextureInfo(_data:Array<Int>, _offset:Int) {
+	public static var readTextureInfo:(Array<Int>, Int) -> TextureInfo = function(_data:Array<Int>, _offset:Int):TextureInfo {
 		
 		var numTextures = getFourBytes(_data, _offset);
 		var offsets:Array<Int> = new Array();
@@ -218,7 +218,7 @@ class Reader
 		}
 		return textureSet;
 	}
-	public static inline function getPatchLayoutList(_data:Array<Int>, _offset:Int):Array<PatchLayout> {
+	public static var getPatchLayoutList:(Array<Int>, Int) -> Array<PatchLayout> = function(_data:Array<Int>, _offset:Int):Array<PatchLayout> {
 		var patchlist:Array<PatchLayout> = new Array();
 		for (p in 0...getTwoBytes(_data, _offset - 2)) {
 			var layout:PatchLayout = {
@@ -236,7 +236,7 @@ class Reader
 	 * @param	_offset Location of patch
 	 * @return New patch with correct data values
 	 *///With thanks to Phantombeta for getting this to work
-	public static inline function readPatch(_data:Array<Int>, _offset:Int):Patch {
+	public static var readPatch:(Array<Int>, Int) -> Patch = function(_data:Array<Int>, _offset:Int):Patch {
 			
 		var patch = Patch.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
@@ -280,7 +280,7 @@ class Reader
 		
 		return patch;
 	}
-	public static function readSound(_data:Array<Int>, _offset:Int):SoundEffect
+	public static var readSound:(Array<Int>, Int) -> SoundEffect = function(_data:Array<Int>, _offset:Int):SoundEffect
 	{
 		var samplerate = getTwoBytes(_data, _offset + 2);
 		var numsamples = getTwoBytes(_data, _offset + 4);
@@ -353,7 +353,7 @@ class Reader
 	 * @param	_signed Is value a signed value?
 	 * @return Returns an integer from specified position
 	 */
-	public static inline function getOneByte(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int {
+	public static var getOneByte:(Array<Int>, Int, ?Bool) -> Int = function(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int {
 		var val = _data[_offset];
 		return(_signed == true && val > 127 ? val - 255 : val);
 	}
@@ -364,7 +364,7 @@ class Reader
 	 * @param	_signed
 	 * @return
 	 */
-	public static inline function getTwoBytes(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
+	public static var getTwoBytes:(Array<Int>, Int, ?Bool) -> Int = function(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
 	{
 		var val = (_data[_offset + 1] << 8) | _data[_offset];
 		return(_signed == true && val > 32768 ? val - 65536 : val);
@@ -375,7 +375,7 @@ class Reader
 	 * @param	_offset Position of data needed
 	 * @return Returns an integer from specified position
 	 */
-	public static inline function getFourBytes(_data:Array<Int>, _offset:Int):Int {
+	public static var getFourBytes:(Array<Int>, Int) -> Int = function(_data:Array<Int>, _offset:Int):Int {
 		return((_data[_offset + 3] << 24) | (_data[_offset + 2] << 16) | (_data[_offset + 1] << 8) | _data[_offset]);
 	}
 	/**
@@ -385,7 +385,7 @@ class Reader
 	 * @param	_end End position of string
 	 * @return	Returns a UTF8 compatible string. Automatically removes null and empty characters.
 	 */
-	public static inline function getStringFromRange(_data:Array<Int>, _start:Int, _end:Int):String {
+	public static var getStringFromRange:(Array<Int>, Int, Int) -> String = function(_data:Array<Int>, _start:Int, _end:Int):String {
 		var str:String = "";
 		for (a in _start..._end) {
 			if (_data[a] == 0) break;
