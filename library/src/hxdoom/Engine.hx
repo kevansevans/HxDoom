@@ -5,6 +5,8 @@ import haxe.io.Bytes;
 import haxe.ds.Map;
 import hxdoom.enums.data.CVarType;
 import hxdoom.component.LevelMap;
+import hxdoom.lumps.map.LineDef;
+import hxdoom.lumps.map.Thing;
 
 import hxdoom.enums.data.Defaults;
 import hxdoom.core.*;
@@ -196,6 +198,8 @@ class Engine
 		CVarCore.setNewCVar(Defaults.CHEAT_TRUEGOD, 				CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.CHEAT_NOCLIP, 					CVarType.CBool, 	false);
 		
+		CVarCore.setNewCVar(Defaults.HEXEN_FORMAT, 					CVarType.CBool, 	false, toggleHexenMapFormat);
+		
 		CVarCore.setNewCVar(Defaults.OVERRIDE_CHEATS, 				CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_GAME, 				CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.OVERRIDE_IO, 					CVarType.CBool, 	false);
@@ -217,6 +221,36 @@ class Engine
 		CVarCore.setNewCVar(Defaults.SCREEN_DISTANCE_FROM_VIEWER, 	CVarType.CInt, 		160);
 		
 		CVarCore.setNewCVar(Defaults.WADS_LOADED, 					CVarType.CBool, 	false);
+	}
+	
+	public function toggleHexenMapFormat() {
+		var hexen = CVarCore.getCvar(Defaults.HEXEN_FORMAT);
+		if (hexen) {
+			trace("Hexen maps on!");
+		} else {
+			trace("Hexen maps off!");
+			Reader.readLinedef = function(_data:Array<Int>, _offset:Int):LineDef {
+				return LineDef.CONSTRUCTOR([
+					Reader.getTwoBytes(_data, _offset),
+					Reader.getTwoBytes(_data, _offset + 2),
+					Reader.getTwoBytes(_data, _offset + 4),
+					Reader.getTwoBytes(_data, _offset + 6),
+					Reader.getTwoBytes(_data, _offset + 8),
+					Reader.getTwoBytes(_data, _offset + 10),
+					Reader.getTwoBytes(_data, _offset + 12)
+				]);
+			}
+			
+			Reader.readThing = function(_data:Array<Int>, _offset:Int):Thing {
+				return Thing.CONSTRUCTOR([
+					Reader.getTwoBytes(_data, _offset, true),
+					Reader.getTwoBytes(_data, _offset + 2, true),
+					Reader.getTwoBytes(_data, _offset + 4, true),
+					Reader.getTwoBytes(_data, _offset + 6, true),
+					Reader.getTwoBytes(_data, _offset + 8, true)
+				]);
+			}
+		}
 	}
 	
 	/**

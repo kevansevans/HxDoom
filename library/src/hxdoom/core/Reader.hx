@@ -91,7 +91,6 @@ class Reader
 			getTwoBytes(_data, _offset, true), 
 			getTwoBytes(_data, _offset + 2, true)
 		]);
-		
 	}
 	/**
 	 * Reads from provided data and returns a new Segment
