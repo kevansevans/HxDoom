@@ -60,12 +60,16 @@ class LevelCore
 		loadMap(currentMapData.internalName);
 	}
 	
+	public var expectedLumpsPerMap:Int = 10; //set this to 11 for Hexen
 	
 	public function loadMap(_mapMarker:String):Bool {
 		
 		if (!Engine.WADDATA.wadContains([_mapMarker])) {
 			return false;
 		}
+		
+		var loaded_lumps:Int = 0;
+		var iterated_lumps:Int = 0;
 		
 		var place:Int = 0;
 		var numitems:Int = 0;
@@ -81,7 +85,15 @@ class LevelCore
 			var mapDir = Engine.WADDATA.getIndexSpecificDir(mapmarker.wad, mapmarker.index + lumpOffset);
 			
 			//this could probably be replaced with a size check, iirc map markers posses 0 offset and 0 size. Please test this.
-			if  (reg.match(mapDir.name) || mapDir.name == KeyLump.ENDMAP) break;
+			if  (reg.match(mapDir.name) || mapDir.name == KeyLump.ENDMAP || loaded_lumps == expectedLumpsPerMap) {
+				break;
+			}
+			
+			++iterated_lumps;
+			
+			if (iterated_lumps > expectedLumpsPerMap) {
+				Engine.log(['Iterated lumps (' + iterated_lumps + ') greater than expected lumps (' + expectedLumpsPerMap + '), please investigate']);
+			}
 			
 			switch (mapDir.name) {
 				case KeyLump.THINGS :
@@ -89,41 +101,49 @@ class LevelCore
 					for (a in 0...numitems) {
 						_map.things[a] = Reader.readThing(byteData, mapDir.dataOffset + a * Thing.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				case KeyLump.LINEDEFS :
 					numitems = Std.int(mapDir.size / LineDef.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.linedefs[a] = Reader.readLinedef(byteData, mapDir.dataOffset + a * LineDef.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				case KeyLump.SIDEDEFS :
 					numitems = Std.int(mapDir.size / SideDef.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.sidedefs[a] = Reader.readSideDef(byteData, mapDir.dataOffset + a * SideDef.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				case KeyLump.VERTEXES :
 					numitems = Std.int(mapDir.size / Vertex.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.vertexes[a] = Reader.readVertex(byteData, mapDir.dataOffset + a * Vertex.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				case KeyLump.SEGS :
 					numitems = Std.int(mapDir.size / Segment.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.segments[a] = Reader.readSegment(byteData, mapDir.dataOffset + a * Segment.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				case KeyLump.SSECTORS :
 					numitems = Std.int(mapDir.size / SubSector.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.subsectors[a] = Reader.readSubSector(byteData, mapDir.dataOffset + a * SubSector.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				case KeyLump.NODES :
 					numitems = Std.int(mapDir.size / Node.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.nodes[a] = Reader.readNode(byteData, mapDir.dataOffset + a * Node.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				case KeyLump.SECTORS :
 					numitems = Std.int(mapDir.size / Sector.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.sectors[a] = Reader.readSector(byteData, mapDir.dataOffset + a * Sector.BYTE_SIZE);
 					}
+					++loaded_lumps;
 				default :
 					Engine.log(["Map directory unrecognized: " + mapDir.name]);
 			}
