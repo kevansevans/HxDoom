@@ -40,6 +40,11 @@ enum abstract Defaults(String) from String {
 	var CHEAT_TRUEGOD:String;
 	
 	/**
+	 * Bool, set to true to read map data in Hexen format.
+	 */
+	var HEXEN_FORMAT:String;
+	
+	/**
 	 * Bool, default false. Has this core been overriden?
 	 */
 	var OVERRIDE_CHEATS:String;
