@@ -31,6 +31,8 @@ class Actor
 	public var yaw(get, default):Angle = 0.0;
 	public var roll(get, default):Angle = 0.0;
 	
+	public var health:Int;
+	
 	public var info:ActorInfo = {};
 	
 	public var target:Null<Actor>;
@@ -39,6 +41,8 @@ class Actor
 	
 	public var movedir:Direction;
 	public var movecount:Int = 0;
+	
+	public var lastlook:Int = Engine.GAME.p_random() % Engine.MAXPLAYERS;
 	
 	public static function fromThing(_thing:Thing):Actor {
 		
@@ -61,7 +65,6 @@ class Actor
 		var vdx:Float = _vertex.xpos - this.xpos;
 		var vdy:Float = _vertex.ypos - this.ypos;
 		var angle:Angle = (Math.atan2(vdy, vdx) * 180 / Math.PI);
-		angle = Angle.adjust(angle);
 		return angle;
 	}
 	

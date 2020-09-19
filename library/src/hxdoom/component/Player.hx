@@ -28,6 +28,8 @@ class Player extends Actor
 		super();
 		
 		zpos_eyeheight = 41;
+		
+		health = 100;
 	}
 	
 }
