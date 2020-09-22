@@ -11,6 +11,7 @@ import hxdoom.lumps.graphic.PatchNames;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.graphic.TextureInfo;
 import hxdoom.lumps.map.LineDef;
+import hxdoom.lumps.map.LineDefHexen;
 import hxdoom.lumps.map.Node;
 import hxdoom.lumps.map.Sector;
 import hxdoom.lumps.map.Segment;
@@ -39,7 +40,8 @@ class Reader
 	 * @param	_index
 	 * @return
 	 */
-	public static var readDirectory:(Array<Int>, Int, String, ?Int) -> Directory = function(_data:Array<Int>, _offset:Int, _wadname:String = "", _index:Int = -1):Directory {
+	public static var readDirectory:(Array<Int>, Int, String, ?Int) -> Directory = readDirectoryDefault;
+	public static function readDirectoryDefault(_data:Array<Int>, _offset:Int, _wadname:String = "", _index:Int = -1):Directory {
 		return Directory.CONSTRUCTOR([
 			getFourBytes(_data, _offset),
 			getFourBytes(_data, _offset + 0x04),
@@ -54,7 +56,8 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readThing:(Array<Int>, Int) -> Thing = function(_data:Array<Int>, _offset:Int):Thing {
+	public static var readThing:(Array<Int>, Int) -> Thing = readThingDefault;
+	public static function readThingDefault(_data:Array<Int>, _offset:Int):Thing {
 		return Thing.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -64,12 +67,13 @@ class Reader
 		]);
 	}
 	/**
-	 * Reads from provided data and returns a new Linedef
+	 * Reads from provided data and returns a vanilla compatible Linedef
 	 * @param	_data
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readLinedef:(Array<Int>, Int) -> LineDef = function(_data:Array<Int>, _offset:Int):LineDef {
+	public static var readLinedef:(Array<Int>, Int) -> LineDef = readLinedefDefault;
+	public static function readLinedefDefault(_data:Array<Int>, _offset:Int):LineDef {
 		return LineDef.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2),
@@ -120,7 +124,8 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readSegment:(Array<Int>, Int) -> Segment = function(_data:Array<Int>, _offset:Int):Segment {
+	public static var readSegment:(Array<Int>, Int) -> Segment = readSegmentDefault;
+	public static function readSegmentDefault(_data:Array<Int>, _offset:Int):Segment {
 		return Segment.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -136,7 +141,8 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readSubSector:(Array<Int>, Int) -> SubSector = function(_data:Array<Int>, _offset:Int):SubSector {
+	public static var readSubSector:(Array<Int>, Int) -> SubSector = readSubSectorDefault;
+	public static function readSubSectorDefault(_data:Array<Int>, _offset:Int):SubSector {
 		return SubSector.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
 			getTwoBytes(_data, _offset + 2)
@@ -148,7 +154,8 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readNode:(Array<Int>, Int) -> Node = function(_data:Array<Int>, _offset:Int):Node {
+	public static var readNode:(Array<Int>, Int) -> Node = readNodeDefault;
+	public static function readNodeDefault(_data:Array<Int>, _offset:Int):Node {
 		return Node.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -172,7 +179,8 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readSideDef:(Array<Int>, Int) -> SideDef = function(_data:Array<Int>, _offset:Int):SideDef {
+	public static var readSideDef:(Array<Int>, Int) -> SideDef = readSideDefDefault;
+	public static function readSideDefDefault(_data:Array<Int>, _offset:Int):SideDef {
 		return SideDef.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -188,7 +196,8 @@ class Reader
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readSector:(Array<Int>, Int) -> Sector = function(_data:Array<Int>, _offset:Int):Sector {
+	public static var readSector:(Array<Int>, Int) -> Sector = readSectorDefault;
+	public static function readSectorDefault(_data:Array<Int>, _offset:Int):Sector {
 		return Sector.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true),
 			getTwoBytes(_data, _offset + 2, true),
@@ -206,7 +215,8 @@ class Reader
 	 * @param	_size
 	 * @return
 	 */
-	public static var readPatchNames:(Array<Int>, Int) -> PatchNames = function(_data:Array<Int>, _offset:Int):PatchNames {
+	public static var readPatchNames:(Array<Int>, Int) -> PatchNames = readPatchNamesDefault;
+	public static function readPatchNamesDefault(_data:Array<Int>, _offset:Int):PatchNames {
 		var pname = PatchNames.CONSTRUCTOR([]);
 		var numPatches = getFourBytes(_data, _offset);
 		for (a in 0...numPatches) {
@@ -214,7 +224,8 @@ class Reader
 		}
 		return pname;
 	}
-	public static var readTextureInfo:(Array<Int>, Int) -> TextureInfo = function(_data:Array<Int>, _offset:Int):TextureInfo {
+	public static var readTextureInfo:(Array<Int>, Int) -> TextureInfo = readTextureInfoDefault;
+	public static function readTextureInfoDefault(_data:Array<Int>, _offset:Int):TextureInfo {
 		
 		var numTextures = getFourBytes(_data, _offset);
 		var offsets:Array<Int> = new Array();
@@ -239,7 +250,8 @@ class Reader
 		}
 		return textureSet;
 	}
-	public static var getPatchLayoutList:(Array<Int>, Int) -> Array<PatchLayout> = function(_data:Array<Int>, _offset:Int):Array<PatchLayout> {
+	public static var getPatchLayoutList:(Array<Int>, Int) -> Array<PatchLayout> = getPatchLayoutListDefault;
+	public static function getPatchLayoutListDefault(_data:Array<Int>, _offset:Int):Array<PatchLayout> {
 		var patchlist:Array<PatchLayout> = new Array();
 		for (p in 0...getTwoBytes(_data, _offset - 2)) {
 			var layout:PatchLayout = {
@@ -257,7 +269,8 @@ class Reader
 	 * @param	_offset Location of patch
 	 * @return New patch with correct data values
 	 *///With thanks to Phantombeta for getting this to work
-	public static var readPatch:(Array<Int>, Int) -> Patch = function(_data:Array<Int>, _offset:Int):Patch {
+	public static var readPatch:(Array<Int>, Int) -> Patch = readPatchDefault;
+	public static function readPatchDefault(_data:Array<Int>, _offset:Int):Patch {
 			
 		var patch = Patch.CONSTRUCTOR([
 			getTwoBytes(_data, _offset),
@@ -374,7 +387,8 @@ class Reader
 	 * @param	_signed Is value a signed value?
 	 * @return Returns an integer from specified position
 	 */
-	public static var getOneByte:(Array<Int>, Int, ?Bool) -> Int = function(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int {
+	public static var getOneByte:(Array<Int>, Int, ?Bool) -> Int = getOneByteDefault;
+	public static function getOneByteDefault(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int {
 		var val = _data[_offset];
 		return(_signed == true && val > 127 ? val - 255 : val);
 	}
@@ -385,7 +399,8 @@ class Reader
 	 * @param	_signed
 	 * @return
 	 */
-	public static var getTwoBytes:(Array<Int>, Int, ?Bool) -> Int = function(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int //16 bits
+	public static var getTwoBytes:(Array<Int>, Int, ?Bool) -> Int = getTwoBytesDefault; //16 bits
+	public static function getTwoBytesDefault(_data:Array<Int>, _offset:Int, _signed:Bool = false):Int
 	{
 		var val = (_data[_offset + 1] << 8) | _data[_offset];
 		return(_signed == true && val > 32768 ? val - 65536 : val);
@@ -396,7 +411,8 @@ class Reader
 	 * @param	_offset Position of data needed
 	 * @return Returns an integer from specified position
 	 */
-	public static var getFourBytes:(Array<Int>, Int) -> Int = function(_data:Array<Int>, _offset:Int):Int {
+	public static var getFourBytes:(Array<Int>, Int) -> Int = getFourBytesDefault;
+	public static function getFourBytesDefault(_data:Array<Int>, _offset:Int):Int {
 		return((_data[_offset + 3] << 24) | (_data[_offset + 2] << 16) | (_data[_offset + 1] << 8) | _data[_offset]);
 	}
 	/**
@@ -406,7 +422,8 @@ class Reader
 	 * @param	_end End position of string
 	 * @return	Returns a UTF8 compatible string. Automatically removes null and empty characters.
 	 */
-	public static var getStringFromRange:(Array<Int>, Int, Int) -> String = function(_data:Array<Int>, _start:Int, _end:Int):String {
+	public static var getStringFromRange:(Array<Int>, Int, Int) -> String = getStringFromRangeDefault;
+	public static function getStringFromRangeDefault(_data:Array<Int>, _start:Int, _end:Int):String {
 		var str:String = "";
 		for (a in _start..._end) {
 			if (_data[a] == 0) break;
