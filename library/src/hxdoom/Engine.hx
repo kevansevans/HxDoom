@@ -230,21 +230,7 @@ class Engine
 			
 			LineDef.BYTE_SIZE = LineDefHexen.BYTE_SIZE;
 			
-			Reader.readLinedef = function(_data:Array<Int>, _offset:Int):LineDef {
-				return LineDefHexen.CONSTRUCTOR([
-					Reader.getTwoBytes(_data, _offset),
-					Reader.getTwoBytes(_data, _offset + 2),
-					Reader.getTwoBytes(_data, _offset + 4),
-					Reader.getOneByte(_data, _offset + 6),
-					Reader.getOneByte(_data, _offset + 7),
-					Reader.getOneByte(_data, _offset + 8),
-					Reader.getOneByte(_data, _offset + 9),
-					Reader.getOneByte(_data, _offset + 10),
-					Reader.getOneByte(_data, _offset + 11),
-					Reader.getTwoBytes(_data, _offset + 12),
-					Reader.getTwoBytes(_data, _offset + 14),
-				]);
-			}
+			Reader.readLinedef = Reader.readHexenLinedef;
 			
 		} else {
 			

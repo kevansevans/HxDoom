@@ -81,12 +81,34 @@ class Reader
 		]);
 	}
 	/**
+	 * Reads from provided data and returns a Hexen compatible Linedef
+	 * @param	_data
+	 * @param	_offset
+	 * @return 
+	 */
+	public static var readHexenLinedef:(Array<Int>, Int) -> LineDefHexen = function(_data:Array<Int>, _offset:Int):LineDefHexen {
+		return LineDefHexen.CONSTRUCTOR([
+			getTwoBytes(_data, _offset),
+			getTwoBytes(_data, _offset + 2),
+			getTwoBytes(_data, _offset + 4),
+			getOneByte(_data, _offset + 6),
+			getOneByte(_data, _offset + 7),
+			getOneByte(_data, _offset + 8),
+			getOneByte(_data, _offset + 9),
+			getOneByte(_data, _offset + 10),
+			getOneByte(_data, _offset + 11),
+			getTwoBytes(_data, _offset + 12),
+			getTwoBytes(_data, _offset + 14),
+		]);
+	}
+	/**
 	 * Reads from provided data and returns a new Vertex
 	 * @param	_data
 	 * @param	_offset
 	 * @return
 	 */
-	public static var readVertex:(Array<Int>, Int) -> Vertex = function(_data:Array<Int>, _offset:Int):Vertex {
+	public static var readVertex:(Array<Int>, Int) -> Vertex = readVertexDefault;
+	public static function readVertexDefault(_data:Array<Int>, _offset:Int):Vertex {
 		return Vertex.CONSTRUCTOR([
 			getTwoBytes(_data, _offset, true), 
 			getTwoBytes(_data, _offset + 2, true)
