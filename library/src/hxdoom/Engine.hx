@@ -268,7 +268,8 @@ class Engine
 	 * Placeholder for future engine logging
 	 * @param	_msg
 	 */
-	public static inline function log(_msg:Array<String>, ?_pos:PosInfos) {
+	public static var log:(Array<String>, ?PosInfos) -> Void = logDefault;
+	public static function logDefault(_msg:Array<String>, ?_pos:PosInfos) {
 		trace("From: " + _pos);
 		for (msg in _msg) {
 			trace(msg);
