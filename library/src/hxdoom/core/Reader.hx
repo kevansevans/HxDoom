@@ -426,7 +426,7 @@ class Reader
 	public static function getStringFromRangeDefault(_data:Array<Int>, _start:Int, _end:Int):String {
 		var str:String = "";
 		for (a in _start..._end) {
-			if (_data[a] == 0) break;
+			if (_data[a] == 0 || Math.isNaN(_data[a])) break;
 			str += String.fromCharCode(_data[a]);
 		}
 		return str;

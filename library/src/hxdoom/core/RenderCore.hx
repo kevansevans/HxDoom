@@ -36,6 +36,8 @@ class RenderCore
 	
 	public function setVisibleSegments(?_subsec:Int) {
 		
+		if (Engine.LEVELS.currentMap == null) return;
+		
 		var map = Engine.LEVELS.currentMap;
 		
 		scanning = true;
