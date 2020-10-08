@@ -60,7 +60,7 @@ class Engine
 	/**
 	 * Function to call when loading a map. Can be overriden to change behavior.
 	 **/
-	public static var LOADMAP:String -> Void;
+	public static var LOADMAP:String -> Bool;
 	
 	var mapindex:Int = 0;
 	
@@ -171,6 +171,8 @@ class Engine
 		}
 		
 		GAME.start();
+		
+		return mapLoaded;
 	}
 	/**
 	 * Adds and parses wad into memory.
