@@ -38,6 +38,8 @@ class GameCore
 	//This needs to be moved out!
 	public function tick() {
 		
+		if (Engine.LEVELS.currentMap == null) return;
+		
 		var camera:Camera = Engine.LEVELS.currentMap.camera;
 		var focus:CameraPoint = Engine.LEVELS.currentMap.focus;
 		
