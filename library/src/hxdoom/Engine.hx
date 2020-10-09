@@ -237,30 +237,10 @@ class Engine
 		} else {
 			
 			LineDef.BYTE_SIZE = 14;
-			
-			Reader.readLinedef = function(_data:Array<Int>, _offset:Int):LineDef {
-				return LineDef.CONSTRUCTOR([
-					Reader.getTwoBytes(_data, _offset),
-					Reader.getTwoBytes(_data, _offset + 2),
-					Reader.getTwoBytes(_data, _offset + 4),
-					Reader.getTwoBytes(_data, _offset + 6),
-					Reader.getTwoBytes(_data, _offset + 8),
-					Reader.getTwoBytes(_data, _offset + 10),
-					Reader.getTwoBytes(_data, _offset + 12)
-				]);
-			}
-			
 			Thing.BYTE_SIZE = 10;
 			
-			Reader.readThing = function(_data:Array<Int>, _offset:Int):Thing {
-				return Thing.CONSTRUCTOR([
-					Reader.getTwoBytes(_data, _offset, true),
-					Reader.getTwoBytes(_data, _offset + 2, true),
-					Reader.getTwoBytes(_data, _offset + 4, true),
-					Reader.getTwoBytes(_data, _offset + 6, true),
-					Reader.getTwoBytes(_data, _offset + 8, true)
-				]);
-			}
+			Reader.readLinedef = Reader.readLinedefDefault;
+			Reader.readThing = Reader.readThingDefault;
 		}
 	}
 	
