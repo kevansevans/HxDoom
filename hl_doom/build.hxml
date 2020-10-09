@@ -1,0 +1,16 @@
+-cp src
+
+-dce full
+-main Main
+
+--each
+-lib hxdoom
+-lib heaps
+-lib hlsdl
+-lib hlopenal
+-hl bin/c/main.c
+
+--next
+-lib hxdoom
+-lib heaps
+-js bin/js/hldoom.js
