@@ -16,7 +16,7 @@ class LineDef extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> LineDef = LineDef.new;
 	
-	public static inline var BYTE_SIZE:Int = 14;
+	public static var BYTE_SIZE:Int = 14;
 	
 	public var startVertexID:Int;
 	public var endVertexID:Int;

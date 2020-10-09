@@ -11,7 +11,7 @@ class Thing extends LumpBase
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Thing = Thing.new;
 	
-	public static inline var BYTE_SIZE:Int = 10;
+	public static var BYTE_SIZE:Int = 10;
 	
 	public var xpos:Int;
 	public var ypos:Int;
