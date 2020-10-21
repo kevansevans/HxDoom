@@ -1,5 +1,6 @@
 package scene.geometry;
 
+import haxe.PosInfos;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.graphic.Playpal;
 import hxsl.Shader;
@@ -9,9 +10,6 @@ import h3d.mat.Data.Filter;
 
 import hxsl.Types.Vec;
 import hxsl.Types.Sampler2D;
-import hxsl.Types.Sampler2DArray;
-import hxdoom.enums.eng.ColorMode;
-import h3d.mat.Data.TextureFlags;
 import hxdoom.enums.eng.ColorChannel;
 import h3d.mat.Data.Wrap;
 
@@ -26,10 +24,8 @@ class PlaypalShader extends Shader
 		
 		@:import h3d.shader.Texture;
 		
-		@param @const var NumSwatches:Int;
 		@param var palette:Array<Vec4, 255>;
 		@param var texture:Sampler2D;
-		@param var activeSheet:Int;
 		
 		function vertex() {
 			calculatedUV = input.uv;
@@ -43,30 +39,49 @@ class PlaypalShader extends Shader
 		
     };
 	
-	public function new(_playpal:Playpal, _asset:hxdoom.component.Texture ) {
+	public function new(_playpal:Playpal, _asset:hxdoom.component.Texture) {
 		
 		super();
 		
-		this.NumSwatches = 255;
+		setPalette(_playpal);
 		
-		var pal:Sampler2D = new Sampler2D(16, 16, null, PixelFormat.RGBA);
-		var swatches:Array<Vec> = new Array();
+		setTexture(_asset);
+		
+		setSheet();
+		
+	}
+	
+	public var sheets:Array<Array<Vec>>;
+	
+	public function setPalette(_playpal:Playpal) {
+		
+		sheets = new Array();
 			
 		for (pal in 0..._playpal.palettes.length) {
-			for (sw in 0..._playpal.palettes[pal].length) {
+			
+			var swatches:Array<Vec> = new Array();
+			
+			for (swatch in 0..._playpal.palettes[pal].length) {
 				
 				var color:Vec = new Vec();
 				
 				color.a = 0xFF;
-				color.r = _playpal.getColorChannelFloat(sw, ColorChannel.RED);
-				color.g = _playpal.getColorChannelFloat(sw, ColorChannel.GREEN);
-				color.b = _playpal.getColorChannelFloat(sw, ColorChannel.BLUE);
+				color.r = _playpal.getColorChannelFloat(swatch, ColorChannel.RED, pal);
+				color.g = _playpal.getColorChannelFloat(swatch, ColorChannel.GREEN, pal);
+				color.b = _playpal.getColorChannelFloat(swatch, ColorChannel.BLUE, pal);
 				
 				swatches.push(color);
 			}
+			
+			sheets[pal] = swatches;
 		}
-		
-		this.palette = swatches;
+	}
+	
+	public function setSheet(_sheet:Int = 0, ?_pos:PosInfos) {
+		this.palette = sheets[_sheet];
+	}
+	
+	public function setTexture(_asset:hxdoom.component.Texture) {
 		
 		var work_text:Sampler2D = new Sampler2D(_asset.width, _asset.height, null, PixelFormat.RGBA);
 		var tex_pixels:Pixels = Pixels.alloc(_asset.width, _asset.height, PixelFormat.RGBA);
@@ -86,10 +101,8 @@ class PlaypalShader extends Shader
 		work_text.uploadPixels(tex_pixels);
 		work_text.filter = Filter.Nearest;
 		work_text.wrap = Wrap.Repeat;
+		
 		this.texture = work_text;
-		
-		this.activeSheet = 1;
-		
 	}
 	
 }
