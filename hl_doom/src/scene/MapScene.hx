@@ -74,7 +74,7 @@ class MapScene
 			} else {
 					
 					if (line.frontSideDef.upper_texture != "-" && line.frontSideDef.upper_texture != "AASTINKY") {
-						if (line.backSideDef.sector.ceilingTexture != "F_SKY") {
+						if (line.backSideDef.sector.ceilingTexture != "F_SKY1") {
 							var top_front:QuadWall = new QuadWall(seg, SideType.FRONT_TOP);
 							var tf_mesh = new Mesh(top_front, top_front.material, s3d);
 							tf_mesh.visible = false;
@@ -123,7 +123,6 @@ class MapScene
 			for (mesh in meshes) {
 				mesh.material.color.load(color);
 			}
-			
 		}
 	}
 	
@@ -149,6 +148,7 @@ class MapScene
 				if (m_walls[seg] == null) continue;
 				
 				for (mesh in m_walls[seg]) {
+					
 					mesh.visible = true;
 				}
 				vis_list.push(seg);
