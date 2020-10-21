@@ -36,17 +36,17 @@ class Playpal extends LumpBase
 		
 		if (_index == -1) return 0;
 		
-		var col:Int = palettes[_pal][_index];
-		var val:Float = 0;
+		var col:Int = getColorHex(_index, ColorMode.ARGB, _pal);
 		switch (_channel) {
 			case ColorChannel.RED:
-				col = col >> 16;
+				col = col >> 16 & 0xFF;
 			case ColorChannel.GREEN:
 				col = (col >> 8) & 0xFF;
 			case ColorChannel.BLUE:
 				col = col & 0xFF;
 			case ColorChannel.ALPHA:
-				col = 0xFF;
+				if (_index == -1) return 0;
+				else return 0xFF;
 		}
 		return col;
 	}
