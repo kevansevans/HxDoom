@@ -60,7 +60,7 @@ class LevelCore
 		loadMap(currentMapData.internalName);
 	}
 	
-	public var expectedLumpsPerMap:Int = 10; //set this to 11 for Hexen
+	public var expectedLumpsPerMap:Int = 8; //set this to 10 when blockmap and reject are supported, 11 for hexen
 	
 	public function loadMap(_mapMarker:String):Bool {
 		
