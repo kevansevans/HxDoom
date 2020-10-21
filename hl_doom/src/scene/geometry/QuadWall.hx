@@ -1,9 +1,11 @@
 package scene.geometry;
 
+import h2d.Bitmap;
 import h3d.mat.Material;
 import h3d.mat.Texture;
 import h3d.prim.Quads;
 import h3d.col.Point;
+import h3d.shader.AlphaChannel;
 import haxe.ds.Map;
 import hxd.Pixels;
 import hxdoom.enums.eng.SideType;
@@ -155,17 +157,8 @@ class QuadWall extends Quads
 			material = MatMap[texturename];
 		} else {
 			
-			var pixels = Pixels.alloc(d_texture.width, d_texture.height, PixelFormat.ARGB);
-			for (x in 0...d_texture.width) for (y in 0...d_texture.height) {
-				var color = palette.getColorHex(d_texture.pixels[x][(d_texture.height - 1) - y], ColorMode.ARGB);
-				pixels.setPixel(x, y, color);
-			}
-			
-			var texture = new Texture(d_texture.width, d_texture.height, [TextureFlags.Target]);
-			texture.uploadPixels(pixels);
-			texture.wrap = Wrap.Repeat;
-			texture.filter = Filter.Nearest;
-			material = Material.create(texture);
+			material = Material.create();
+			material.mainPass.addShader(new PlaypalShader(Engine.TEXTURES.playpal, d_texture));
 			switch (_type) {
 				case BACK_MIDDLE | FRONT_MIDDLE :
 					material.blendMode = BlendMode.Alpha;
