@@ -1,6 +1,7 @@
 package hxdoom.component;
 
 import haxe.ds.Vector;
+import hxdoom.lumps.graphic.Patch;
 
 import hxdoom.typedefs.graphics.TextureData;
 import hxdoom.typedefs.graphics.PatchLayout;
@@ -10,26 +11,24 @@ import hxdoom.Engine;
  * ...
  * @author Kaelan
  */
-class Texture 
+class Texture extends Patch
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Texture = Texture.new;
 	
 	public var data:TextureData;
-	public var width:Int;
-	public var height:Int;
-	
-	public var pixels:Array<Array<Int>>;
 	
 	public function new(_args:Array<Any>) 
 	{
+		super([]);
+		
 		data = _args[0];
 		
 		width = data.width;
 		height = data.height;
 		
-		pixels = new Array();
+		pixels = new Vector(width);
 		for (w in 0...width) {
-			pixels[w] = new Array();
+			pixels[w] = new Vector(height);
 			for (h in 0...height) {
 				pixels[w][h] = -1;
 			}
@@ -51,7 +50,7 @@ class Texture
 					else if (posy >= height) posy -= height;
 					
 					if (pixels[posx] == null) {
-						pixels[posx] = new Array();
+						pixels[posx] = new Vector(height);
 					}
 					
 					if (patch.pixels[w][h] == -1) continue;
