@@ -90,13 +90,8 @@ class RenderCore
 			var start:Angle;
 			var end:Angle;
 			
-			if (segment.side == 0) {
-				start = camera.angleToVertex(segment.start);
-				end = camera.angleToVertex(segment.end);
-			} else {
-				start = camera.angleToVertex(segment.end);
-				end = camera.angleToVertex(segment.start);
-			}
+			start = camera.angleToVertex(segment.start);
+			end = camera.angleToVertex(segment.end);
 			
 			var span:Angle = start - end;
 			
