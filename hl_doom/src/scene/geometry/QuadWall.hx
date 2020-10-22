@@ -1,21 +1,14 @@
 package scene.geometry;
 
-import h2d.Bitmap;
 import h3d.mat.Material;
-import h3d.mat.Texture;
 import h3d.prim.Quads;
 import h3d.col.Point;
-import h3d.shader.AlphaChannel;
+import h3d.shader.Shadow;
 import haxe.ds.Map;
-import hxd.Pixels;
 import hxdoom.enums.eng.SideType;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.Segment;
 import hxdoom.Engine;
-import hxdoom.enums.eng.ColorMode;
-import hxd.PixelFormat;
-import h3d.mat.Data.TextureFlags;
-import h3d.mat.Data.Wrap;
 import h3d.prim.UV;
 import h3d.mat.Data.Filter;
 import h3d.mat.Pass;
@@ -24,6 +17,7 @@ import h3d.mat.Data.Face;
 import h3d.mat.BlendMode;
 import hxdoom.lumps.map.Vertex;
 import scene.shader.AssetShader;
+import hxd.Res;
 
 /**
  * ...
@@ -39,12 +33,16 @@ class QuadWall extends Quads
 	
 	public var palette:Playpal = Engine.TEXTURES.playpal;
 	public var lumpTexture:hxdoom.component.Texture;
-	public var playpalShader:AssetShader;
+	public var assetShader:AssetShader;
+	
+	public var type:SideType;
 	
 	public function new(_seg:Segment, _type:SideType) 
 	{
 		
 		segment = _seg;
+		
+		type = _type;
 		
 		var line = segment.lineDef;
 		
@@ -55,7 +53,8 @@ class QuadWall extends Quads
 				super([	new Point(line.start.xpos * -1, line.start.ypos, segment.sector.ceilingHeight),
 						new Point(line.end.xpos * -1, line.end.ypos, segment.sector.ceilingHeight),
 						new Point(line.start.xpos * -1, line.start.ypos, segment.sector.floorHeight),
-						new Point(line.end.xpos * -1, line.end.ypos, segment.sector.floorHeight)	]);
+						new Point(line.end.xpos * -1, line.end.ypos, segment.sector.floorHeight)
+					]);
 						
 				texturename = line.frontSideDef.middle_texture;
 				
@@ -64,7 +63,8 @@ class QuadWall extends Quads
 				super([	new Point(line.start.xpos * -1, line.start.ypos, line.frontSideDef.sector.ceilingHeight),
 						new Point(line.end.xpos * -1, line.end.ypos, line.frontSideDef.sector.ceilingHeight),
 						new Point(line.start.xpos * -1, line.start.ypos, line.backSideDef.sector.ceilingHeight),
-						new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.ceilingHeight)	]);
+						new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.ceilingHeight)
+					]);
 							
 				texturename = line.frontSideDef.upper_texture;
 				
@@ -73,7 +73,8 @@ class QuadWall extends Quads
 				super([	new Point(line.start.xpos * -1, line.start.ypos, line.backSideDef.sector.ceilingHeight),
 						new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.ceilingHeight),
 						new Point(line.start.xpos * -1, line.start.ypos, line.backSideDef.sector.floorHeight),
-						new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.floorHeight)	]);
+						new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.floorHeight)
+					]);
 							
 				texturename = line.frontSideDef.middle_texture;
 				
@@ -82,7 +83,8 @@ class QuadWall extends Quads
 				super([	new Point(line.start.xpos * -1, line.start.ypos, line.backSideDef.sector.floorHeight),
 						new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.floorHeight),
 						new Point(line.start.xpos * -1, line.start.ypos, line.frontSideDef.sector.floorHeight),
-						new Point(line.end.xpos * -1, line.end.ypos, line.frontSideDef.sector.floorHeight)	]);
+						new Point(line.end.xpos * -1, line.end.ypos, line.frontSideDef.sector.floorHeight)
+					]);
 							
 				texturename = line.frontSideDef.lower_texture;
 				
@@ -91,7 +93,8 @@ class QuadWall extends Quads
 				super([	new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.ceilingHeight),
 						new Point(line.start.xpos * -1, line.start.ypos, line.backSideDef.sector.ceilingHeight),
 						new Point(line.end.xpos * -1, line.end.ypos, line.frontSideDef.sector.ceilingHeight),
-						new Point(line.start.xpos * -1, line.start.ypos, line.frontSideDef.sector.ceilingHeight)	]);
+						new Point(line.start.xpos * -1, line.start.ypos, line.frontSideDef.sector.ceilingHeight)
+					]);
 							
 				texturename = line.backSideDef.upper_texture;
 				
@@ -100,16 +103,18 @@ class QuadWall extends Quads
 				super([	new Point(line.start.xpos * -1, line.end.ypos, line.backSideDef.sector.ceilingHeight),
 						new Point(line.end.xpos * -1, line.start.ypos, line.backSideDef.sector.ceilingHeight),
 						new Point(line.start.xpos * -1, line.end.ypos, line.backSideDef.sector.floorHeight),
-						new Point(line.end.xpos * -1, line.start.ypos, line.backSideDef.sector.floorHeight)	]);
+						new Point(line.end.xpos * -1, line.start.ypos, line.backSideDef.sector.floorHeight)	
+					]);
 							
 				texturename = line.backSideDef.middle_texture;
 				
 			case BACK_BOTTOM :
 					
 				super([	new Point(line.end.xpos * -1, line.end.ypos, line.frontSideDef.sector.floorHeight),
-							new Point(line.start.xpos * -1, line.start.ypos, line.frontSideDef.sector.floorHeight),
-							new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.floorHeight),
-							new Point(line.start.xpos * -1, line.start.ypos, line.backSideDef.sector.floorHeight)	]);
+						new Point(line.start.xpos * -1, line.start.ypos, line.frontSideDef.sector.floorHeight),
+						new Point(line.end.xpos * -1, line.end.ypos, line.backSideDef.sector.floorHeight),
+						new Point(line.start.xpos * -1, line.start.ypos, line.backSideDef.sector.floorHeight)	
+					]);
 							
 				texturename = line.backSideDef.lower_texture;
 				
@@ -130,7 +135,7 @@ class QuadWall extends Quads
 				
 			case BACK_TOP | BACK_MIDDLE | BACK_BOTTOM :
 				offset_x = line.backSideDef.xoffset * pix_ratio_x;
-				offset_y = (line.backSideDef.yoffset * pix_ratio_y) - pix_ratio_y;
+				offset_y = line.backSideDef.yoffset * pix_ratio_y;
 		}
 		
 		var width_ratio = Vertex.distance(line.end, line.start) * pix_ratio_x;
@@ -166,13 +171,13 @@ class QuadWall extends Quads
 			material = Material.create();
 			
 			if (palette != null) {
-				playpalShader = new AssetShader(palette, lumpTexture);
-				material.mainPass.addShader(playpalShader);
+				assetShader = new AssetShader(palette, lumpTexture);
+				material.mainPass.addShader(assetShader);
 			}
 			
 			switch (_type) {
-				case BACK_MIDDLE | FRONT_MIDDLE :
-					material.blendMode = BlendMode.Alpha;
+				case FRONT_MIDDLE | BACK_MIDDLE:
+					material.mainPass.setPassName("alpha");
 				default :
 					
 			}
@@ -181,11 +186,11 @@ class QuadWall extends Quads
 	}
 	
 	public function updateTexture(_asset:hxdoom.component.Texture) {
-		playpalShader.setTexture(_asset);
+		assetShader.setTexture(_asset);
 	}
 	
 	public function updatePalette(_playpal:Playpal) {
-		playpalShader.setPalette(_playpal);
+		assetShader.setPalette(_playpal);
 	}
 	
 	public function updateGeneral() {

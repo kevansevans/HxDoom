@@ -31,13 +31,21 @@ class AssetShader extends Shader
 		@param var palette:Array<Vec4, 255>;
 		@param var texture:Sampler2D;
 		
+		@param var width:Int;
+		@param var height:Int;
+		@param var scrollX:Int = 8;
+		@param var scrollY:Int = 0;
+		
 		function vertex() {
 			calculatedUV = input.uv;
 		}
 		
 		function fragment() {
 			
-			pixelColor = palette[int(texture.get(calculatedUV).r * 255)];
+			var uvOffset:Vec2 = calculatedUV;
+			
+			pixelColor = palette[int(texture.get(uvOffset).r * 255)];
+			if (texture.get(calculatedUV).g == 0) discard;
 			
 		}
 		
@@ -97,7 +105,7 @@ class AssetShader extends Shader
 			if (swatch == -1) {
 				tex_pixels.setPixel(x, y, 0x00 << 24 | swatch << 16 | 0 << 8 | 0);
 			} else {
-				tex_pixels.setPixel(x, y, 0xFF << 24 | swatch << 16 | 0 << 8 | 0);
+				tex_pixels.setPixel(x, y, 0xFF << 24 | swatch << 16 | 0xFF << 8 | 0);
 			}
 			
 		}
@@ -107,6 +115,8 @@ class AssetShader extends Shader
 		work_text.wrap = Wrap.Repeat;
 		
 		this.texture = work_text;
+		this.height = work_text.height;
+		this.width = work_text.width;
 	}
 	
 }
