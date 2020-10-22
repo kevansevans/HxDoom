@@ -9,6 +9,7 @@ import h3d.shader.AlphaChannel;
 import haxe.ds.Map;
 import hxd.Pixels;
 import hxdoom.enums.eng.SideType;
+import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.Segment;
 import hxdoom.Engine;
 import hxdoom.enums.eng.ColorMode;
@@ -22,6 +23,7 @@ import h3d.mat.Data.Blend;
 import h3d.mat.Data.Face;
 import h3d.mat.BlendMode;
 import hxdoom.lumps.map.Vertex;
+import scene.shader.AssetShader;
 
 /**
  * ...
@@ -34,6 +36,11 @@ class QuadWall extends Quads
 	public var segment:Segment;
 	public var material:Material;
 	public var texturename:String = "-";
+	
+	public var palette:Playpal = Engine.TEXTURES.playpal;
+	public var lumpTexture:hxdoom.component.Texture;
+	public var playpalShader:AssetShader;
+	
 	public function new(_seg:Segment, _type:SideType) 
 	{
 		
@@ -108,11 +115,10 @@ class QuadWall extends Quads
 				
 		}
 		
-		var d_texture = Engine.TEXTURES.getTexture(texturename);
-		var palette = Engine.TEXTURES.playpal;
+		lumpTexture = Engine.TEXTURES.getTexture(texturename);
 		
-		var pix_ratio_x = 1 / d_texture.width;
-		var pix_ratio_y = 1 / d_texture.height;
+		var pix_ratio_x = 1 / lumpTexture.width;
+		var pix_ratio_y = 1 / lumpTexture.height;
 		
 		var offset_x:Float;
 		var offset_y:Float;
@@ -158,7 +164,12 @@ class QuadWall extends Quads
 		} else {
 			
 			material = Material.create();
-			material.mainPass.addShader(new PlaypalShader(Engine.TEXTURES.playpal, d_texture));
+			
+			if (palette != null) {
+				playpalShader = new AssetShader(palette, lumpTexture);
+				material.mainPass.addShader(playpalShader);
+			}
+			
 			switch (_type) {
 				case BACK_MIDDLE | FRONT_MIDDLE :
 					material.blendMode = BlendMode.Alpha;
@@ -167,6 +178,18 @@ class QuadWall extends Quads
 			}
 			MatMap[texturename] = material;
 		}
+	}
+	
+	public function updateTexture(_asset:hxdoom.component.Texture) {
+		playpalShader.setTexture(_asset);
+	}
+	
+	public function updatePalette(_playpal:Playpal) {
+		playpalShader.setPalette(_playpal);
+	}
+	
+	public function updateGeneral() {
+		
 	}
 	
 }

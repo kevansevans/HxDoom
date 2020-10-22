@@ -1,4 +1,4 @@
-package scene.geometry;
+package scene.shader;
 
 import haxe.PosInfos;
 import hxdoom.lumps.graphic.Patch;
@@ -17,12 +17,16 @@ import h3d.mat.Data.Wrap;
  * ...
  * @author Kaelan
  */
-class PlaypalShader extends Shader 
+class AssetShader extends Shader 
 {
 
 	static var SRC = {
 		
 		@:import h3d.shader.Texture;
+		
+		@global var global : {
+			var time : Float;
+		};
 		
 		@param var palette:Array<Vec4, 255>;
 		@param var texture:Sampler2D;
@@ -39,7 +43,7 @@ class PlaypalShader extends Shader
 		
     };
 	
-	public function new(_playpal:Playpal, _asset:hxdoom.component.Texture) {
+	public function new(_playpal:Playpal, _asset:Patch) {
 		
 		super();
 		
@@ -77,11 +81,11 @@ class PlaypalShader extends Shader
 		}
 	}
 	
-	public function setSheet(_sheet:Int = 0, ?_pos:PosInfos) {
+	public function setSheet(_sheet:Int = 0) {
 		this.palette = sheets[_sheet];
 	}
 	
-	public function setTexture(_asset:hxdoom.component.Texture) {
+	public function setTexture(_asset:Patch) {
 		
 		var work_text:Sampler2D = new Sampler2D(_asset.width, _asset.height, null, PixelFormat.RGBA);
 		var tex_pixels:Pixels = Pixels.alloc(_asset.width, _asset.height, PixelFormat.RGBA);
@@ -91,9 +95,9 @@ class PlaypalShader extends Shader
 			var swatch = _asset.pixels[x][(_asset.height - 1) - y];
 			
 			if (swatch == -1) {
-				tex_pixels.setPixel(x, y, 0x00 << 24 | swatch << 16 | swatch << 8 | swatch);
+				tex_pixels.setPixel(x, y, 0x00 << 24 | swatch << 16 | 0 << 8 | 0);
 			} else {
-				tex_pixels.setPixel(x, y, 0xFF << 24 | swatch << 16 | swatch << 8 | swatch);
+				tex_pixels.setPixel(x, y, 0xFF << 24 | swatch << 16 | 0 << 8 | 0);
 			}
 			
 		}
