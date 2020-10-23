@@ -54,6 +54,7 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 	public function build() {
 		parseThings();
 		setOffset();
+		buildPointers();
 		
 		camera = new Camera(actors_players[0]);
 		focus = new CameraPoint();
@@ -104,6 +105,21 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 		var dy = _y - nodes[_nodeID].yPartition;
 		
 		return (((dx *  nodes[_nodeID].changeYPartition) - (dy * nodes[_nodeID].changeXPartition)) <= 0);
+	}
+	
+	public function buildPointers() 
+	{
+		//for data that can't be extrapolated until all map data is parsed
+		for (line in linedefs) {
+			if (line.frontSideDef != null) {
+				if (sectors[line.frontSideDef.sectorID].lines == null) sectors[line.frontSideDef.sectorID].lines = new Array();
+				if (sectors[line.frontSideDef.sectorID].lines.indexOf(line.lineID) == -1) sectors[line.frontSideDef.sectorID].lines.push(line.lineID);
+			}
+			if (line.backSideDef != null) {
+				if (sectors[line.backSideDef.sectorID].lines == null) sectors[line.backSideDef.sectorID].lines = new Array();
+				if (sectors[line.backSideDef.sectorID].lines.indexOf(line.lineID) == -1) sectors[line.backSideDef.sectorID].lines.push(line.lineID);
+			}
+		}
 	}
 	
 	public function copy():LevelMap {

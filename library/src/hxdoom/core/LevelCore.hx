@@ -106,6 +106,7 @@ class LevelCore
 					numitems = Std.int(mapDir.size / LineDef.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.linedefs[a] = Reader.readLinedef(byteData, mapDir.dataOffset + a * LineDef.BYTE_SIZE);
+						_map.linedefs[a].lineID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.SIDEDEFS :
