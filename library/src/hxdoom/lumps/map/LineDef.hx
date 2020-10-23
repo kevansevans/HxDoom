@@ -33,6 +33,8 @@ class LineDef extends LumpBase
 	public var start(get, null):Vertex;
 	public var end(get, null):Vertex;
 	
+	public var doubleSided(get, set):Bool;
+	
 	public function new(_args:Array<Any>) 
 	{
 		super();
@@ -117,5 +119,16 @@ class LineDef extends LumpBase
 		bytes.setUInt16(12, backSideDefID);
 		
 		return bytes;
+	}
+	
+	function get_doubleSided():Bool 
+	{
+		return (flags & 0x0004) > 0; 
+	}
+	
+	function set_doubleSided(value:Bool):Bool 
+	{
+		value == true ? (flags |= 0x0004) : (flags &= ~(0x0004));
+		return value;
 	}
 }
