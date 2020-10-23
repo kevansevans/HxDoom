@@ -24,7 +24,7 @@ import hxdoom.lumps.map.Sector;
 import hxdoom.utils.geom.Angle;
 import hxdoom.component.Camera;
 import hxdoom.component.CameraPoint;
-import hxdoom.actors.Actor;
+import hxdoom.component.Actor;
 import hxdoom.component.Texture;
 
 /**

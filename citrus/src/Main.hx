@@ -5,6 +5,8 @@ import haxe.Http;
 import haxe.io.Bytes;
 import haxe.Json;
 import haxe.Timer;
+import hxdoom.builder.Writer;
+import hxdoom.utils.math.Fixed;
 
 import lime.graphics.RenderContext;
 import lime.net.HTTPRequest;
@@ -18,6 +20,10 @@ import render.limeGL.GLHandler;
 import hxdoom.Engine;
 import hxdoom.core.CVarCore;
 import hxdoom.enums.data.Defaults;
+import hxdoom.lumps.map.Sector;
+
+import hxdoom.core.action.Enemy;
+import hxdoom.lumps.map.SideDef;
 
 #if sys
 import sys.FileSystem;
@@ -93,30 +99,7 @@ class Main extends Application
 		
 		return;
 		
-		for (wad in templist) {
-			var name = wad.toUpperCase();
-			if (name.lastIndexOf(".WAD") != -1) {
-				var iwad:Bool = verify_iwad(File.read(env_path + "/" + wad, true), wad);
-				if (iwad) {
-					pathlist[wad] = env_path + "/" + wad;
-				}
-			}
-		}
-		
 		#end
-	}
-	
-	function verify_iwad(read:FileInput, _name:String):Bool
-	{
-		var file = read;
-		var header:Null<String>;
-		try {
-			header = file.readString(4);
-		} catch (_msg:String) {
-			return false;
-		}
-		if (header == "IWAD") return true;
-		else return false;
 	}
 	
 	override public function render(context:RenderContext):Void 
