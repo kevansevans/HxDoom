@@ -113,11 +113,11 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 		for (line in linedefs) {
 			if (line.frontSideDef != null) {
 				if (sectors[line.frontSideDef.sectorID].lines == null) sectors[line.frontSideDef.sectorID].lines = new Array();
-				if (sectors[line.frontSideDef.sectorID].lines.indexOf(line.lineID) == -1) sectors[line.frontSideDef.sectorID].lines.push(line.lineID);
+				if (sectors[line.frontSideDef.sectorID].lines.indexOf(line) == -1) sectors[line.frontSideDef.sectorID].lines.push(line);
 			}
 			if (line.backSideDef != null) {
 				if (sectors[line.backSideDef.sectorID].lines == null) sectors[line.backSideDef.sectorID].lines = new Array();
-				if (sectors[line.backSideDef.sectorID].lines.indexOf(line.lineID) == -1) sectors[line.backSideDef.sectorID].lines.push(line.lineID);
+				if (sectors[line.backSideDef.sectorID].lines.indexOf(line) == -1) sectors[line.backSideDef.sectorID].lines.push(line);
 			}
 		}
 	}

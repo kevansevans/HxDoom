@@ -26,7 +26,7 @@ class Sector extends LumpBase
 	public var soundtarget:Actor;
 	
 	//todo: Get this shiz working
-	public var lines:Array<Int>;
+	public var lines:Array<LineDef>;
 	
 	public function new(_args:Array<Any>) 
 	{
