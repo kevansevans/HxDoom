@@ -7,6 +7,7 @@ import hxdoom.enums.eng.DataLump;
 import hxdoom.enums.eng.KeyLump;
 import hxdoom.lumps.Directory;
 import hxdoom.lumps.audio.SoundEffect;
+import hxdoom.lumps.graphic.Flat;
 import hxdoom.lumps.graphic.PatchNames;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.graphic.TextureInfo;
@@ -313,6 +314,15 @@ class Reader
 		}
 		
 		return patch;
+	}
+	public static var readFlat:(Array<Int>, Int) -> Flat = readFlatDefault;
+	public static function readFlatDefault(_data:Array<Int>, _offset:Int):Flat
+	{
+		var pixels:Array<Int> = new Array();
+		for (place in 0...4096) {
+			pixels.push(getOneByte(_data, place + _offset));
+		}
+		return Flat.CONSTRUCTOR([pixels]);
 	}
 	public static var readSound:(Array<Int>, Int) -> SoundEffect = function(_data:Array<Int>, _offset:Int):SoundEffect
 	{

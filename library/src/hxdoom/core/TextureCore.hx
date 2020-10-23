@@ -3,6 +3,7 @@ package hxdoom.core;
 import haxe.ds.Vector;
 import hxdoom.core.Reader;
 import hxdoom.lumps.Directory;
+import hxdoom.lumps.graphic.Flat;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.graphic.Patch;
 import hxdoom.component.Texture;
@@ -105,5 +106,11 @@ class TextureCore
 			}
 		}
 		return patch;
+	}
+	public function getFlat(_flatName:String):Flat {
+		var directory = Engine.WADDATA.getDirectory(_flatName);
+		var wad_data = Engine.WADDATA.getWadByteArray(directory.wad);
+		
+		return Reader.readFlat(wad_data, directory.dataOffset);
 	}
 }
