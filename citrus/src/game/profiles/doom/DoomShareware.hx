@@ -2,8 +2,8 @@ package game.profiles.doom;
 
 import hxdoom.Engine;
 import hxdoom.core.ProfileCore;
-import hxdoom.typedefs.data.EpisodeProperties;
-import hxdoom.typedefs.data.MapProperties;
+import hxdoom.definitions.EpisodeDef;
+import hxdoom.definitions.MapDef;
 
 /**
  * ...
@@ -11,7 +11,7 @@ import hxdoom.typedefs.data.MapProperties;
  */
 class DoomShareware extends ProfileCore
 {
-	public var episodes:Array<EpisodeProperties> =
+	public var episodes:Array<EpisodeDef> =
 	[
 		{
 			index : 0,
@@ -19,7 +19,7 @@ class DoomShareware extends ProfileCore
 			firstLevel : 0
 		}
 	];
-	public var maps:Array<MapProperties> = [
+	public var maps:Array<MapDef> = [
 		{
 			internalName : "E1M1",
 			levelName : "Hangar",
