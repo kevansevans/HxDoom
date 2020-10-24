@@ -17,7 +17,7 @@ import h3d.mat.Data.Wrap;
  * ...
  * @author Kaelan
  */
-class AssetShader extends Shader 
+class WallShader extends Shader 
 {
 
 	static var SRC = {
@@ -44,7 +44,9 @@ class AssetShader extends Shader
 			
 			var uvOffset:Vec2 = calculatedUV;
 			
-			pixelColor = palette[int(texture.get(uvOffset).r * 255)];
+			var swatch:Int = int(texture.get(uvOffset).r * 255);
+			
+			pixelColor = palette[swatch];
 			if (texture.get(calculatedUV).g == 0) discard;
 			
 		}

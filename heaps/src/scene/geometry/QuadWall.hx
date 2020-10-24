@@ -1,23 +1,21 @@
 package scene.geometry;
 
+import haxe.ds.Map;
+
+import hxd.Res;
 import h3d.mat.Material;
+import h3d.mat.PbrMaterial;
 import h3d.prim.Quads;
 import h3d.col.Point;
-import h3d.shader.Shadow;
-import haxe.ds.Map;
+import h3d.prim.UV;
+
 import hxdoom.enums.eng.SideType;
 import hxdoom.lumps.graphic.Playpal;
 import hxdoom.lumps.map.Segment;
-import hxdoom.Engine;
-import h3d.prim.UV;
-import h3d.mat.Data.Filter;
-import h3d.mat.Pass;
-import h3d.mat.Data.Blend;
-import h3d.mat.Data.Face;
-import h3d.mat.BlendMode;
 import hxdoom.lumps.map.Vertex;
-import scene.shader.AssetShader;
-import hxd.Res;
+import hxdoom.Engine;
+
+import scene.shader.WallShader;
 
 /**
  * ...
@@ -25,15 +23,13 @@ import hxd.Res;
  */
 class QuadWall extends Quads
 {
-	public static var MatMap:Map<String, Material> = new Map();
-	
 	public var segment:Segment;
 	public var material:Material;
 	public var texturename:String = "-";
 	
 	public var palette:Playpal = Engine.TEXTURES.playpal;
 	public var lumpTexture:hxdoom.component.Texture;
-	public var assetShader:AssetShader;
+	public var assetShader:WallShader;
 	
 	public var type:SideType;
 	
@@ -164,16 +160,14 @@ class QuadWall extends Quads
 					new UV(offset_x, offset_y),
 					new UV(offset_x + width_ratio, offset_y)];
 		
-		if (MatMap[texturename] != null) {
-			material = MatMap[texturename];
+		if (MapScene.MatMap[texturename] != null) {
+			material = MapScene.MatMap[texturename];
 		} else {
 			
 			material = Material.create();
 			
-			if (palette != null) {
-				assetShader = new AssetShader(palette, lumpTexture);
-				material.mainPass.addShader(assetShader);
-			}
+			assetShader = new WallShader(palette, lumpTexture);
+			material.mainPass.addShader(assetShader);
 			
 			switch (_type) {
 				case FRONT_MIDDLE | BACK_MIDDLE:
@@ -181,7 +175,7 @@ class QuadWall extends Quads
 				default :
 					
 			}
-			MatMap[texturename] = material;
+			MapScene.MatMap[texturename] = material;
 		}
 	}
 	

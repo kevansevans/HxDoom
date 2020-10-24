@@ -48,18 +48,11 @@ class Main extends App
 		
 		hxdoom = new Engine();
 		
-		#if hl
-		var arg2:ConsoleArgDesc = {	t : AString, 
-									opt : false, 
-									name : "id Tech 1 compatible wad (Not Hexen!)" };
-		con.addCommand("loadWad", "loadWAD [Wad Name], Loads a wad with provided name", [arg2], loadWad);
-		#else
 		Res.initEmbed();
 		hxdoom.addWadBytes(Res.shareware.DOOM1.entry.getBytes(), "DOOM1.WAD");
 		Engine.TEXTURES.loadPlaypal();
 		scene3D = new MapScene(s3d);
 		loadMap("E1M1");
-		#end
 		
 		screen = hxd.Window.getInstance();
 		screen.addEventTarget(onEventkey);
@@ -78,7 +71,7 @@ class Main extends App
 		var arg1:ConsoleArgDesc = {	t : AString, 
 									opt : false, 
 									name : "Map Marker" };
-		con.addCommand("loadMap", "loadMap [map marker name], loads map from given marker name", [arg1], loadMap);
+		con.addCommand("map", "map [map marker name], loads map from given marker name", [arg1], loadMap);
 		
 	}
 	
@@ -144,15 +137,17 @@ class Main extends App
 		if (scene3D != null) scene3D.update();
 		
 		if (!con_vis) {
-		
+			
 			acc_delta += dt;
-		
+			
 			if (acc_delta >= 1 / 35) {
 				acc_delta = 0;
 				
 				if (scene3D != null) Engine.GAME.tick();
 			}
+			
 		}
+		
 	}
     static function main() {
         new Main();

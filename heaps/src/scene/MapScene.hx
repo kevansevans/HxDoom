@@ -3,21 +3,19 @@ package scene;
 import h3d.Camera;
 import h3d.Matrix;
 import h3d.Vector;
-import h3d.prim.Grid;
-import h3d.prim.*;
-import h3d.scene.Graphics;
 import h3d.scene.Mesh;
 import h3d.scene.Scene;
-import h3d.col.Point;
-import h3d.scene.pbr.PointLight;
 import haxe.ds.Map;
-import hxdoom.lumps.graphic.Playpal;
+import h3d.mat.Material;
 
 import hxdoom.Engine;
 import hxdoom.lumps.map.Segment;
+import hxdoom.lumps.map.Sector;
 import hxdoom.enums.eng.SideType;
+import hxdoom.enums.eng.PlaneType;
 
 import scene.geometry.QuadWall;
+import scene.geometry.SectorFlat;
 
 /**
  * ...
@@ -26,7 +24,11 @@ import scene.geometry.QuadWall;
 class MapScene 
 {
 	var s3d:Scene;
-	public var quad_walls:Map<Segment, QuadWall>;
+	
+	public static var MatMap:Map<String, Material> = new Map();
+	
+	public var quad_walls:Map<Segment, Array<QuadWall>>;
+	public var poly_flats:Map<Sector, SectorFlat>;
 	var m_walls:Map<Segment, Array<Mesh>>;
 	var vis_list:Array<Segment>;
 	
@@ -37,6 +39,7 @@ class MapScene
 		s3d = _s3d;
 		
 		quad_walls = new Map();
+		poly_flats = new Map();
 		m_walls = new Map();
 		vis_list = new Array();
 		
@@ -55,6 +58,7 @@ class MapScene
 			
 			var meshes:Array<Mesh> = new Array();
 			m_walls[seg] = meshes;
+			quad_walls[seg] = new Array();
 			
 			var matrix = new Matrix();
 			matrix.colorLightness(seg.sector.lightLevel / 255);
@@ -71,7 +75,7 @@ class MapScene
 						
 						mesh.visible = false;
 						meshes.push(mesh);
-						quad_walls[seg] = solid_wall;
+						quad_walls[seg].push(solid_wall);
 						
 					}
 					
@@ -85,7 +89,7 @@ class MapScene
 							
 							tf_mesh.visible = false;
 							meshes.push(tf_mesh);
-							quad_walls[seg] = top_front;
+							quad_walls[seg].push(top_front);
 							
 						}
 					}
@@ -97,7 +101,7 @@ class MapScene
 						
 						mf_mesh.visible = false;
 						meshes.push(mf_mesh);
-						quad_walls[seg] = mid_front;
+						quad_walls[seg].push(mid_front);
 						
 					}
 					
@@ -108,7 +112,7 @@ class MapScene
 						
 						lf_mesh.visible = false;
 						meshes.push(lf_mesh);
-						quad_walls[seg] = low_front;
+						quad_walls[seg].push(low_front);
 					}
 					
 					if (line.backSideDef.upper_texture != "-" && line.backSideDef.upper_texture != "AASTINKY") {
@@ -118,7 +122,7 @@ class MapScene
 						
 						tb_mesh.visible = false;
 						meshes.push(tb_mesh);
-						quad_walls[seg] = top_back;
+						quad_walls[seg].push(top_back);
 						
 					}
 					
@@ -129,7 +133,7 @@ class MapScene
 						
 						mb_mesh.visible = false;
 						meshes.push(mb_mesh);
-						quad_walls[seg] = mid_back;
+						quad_walls[seg].push(mid_back);
 					}
 					
 					if (line.backSideDef.lower_texture == "-" && line.backSideDef.lower_texture == "AASTINKY") {
@@ -139,7 +143,7 @@ class MapScene
 						
 						lb_mesh.visible = false;
 						meshes.push(lb_mesh);
-						quad_walls[seg] = low_back;
+						quad_walls[seg].push(low_back);
 					}
 					
 			}
@@ -147,6 +151,13 @@ class MapScene
 			for (mesh in meshes) {
 				mesh.material.color.load(color);
 			}
+		}
+		
+		for (sector in Engine.LEVELS.currentMap.sectors) {
+			var floor:SectorFlat = new SectorFlat(sector, PlaneType.FLOOR);
+			var testmesh:Mesh = new Mesh(floor, floor.material);
+			poly_flats[sector] = floor;
+			s3d.addChild(testmesh);
 		}
 	}
 	
@@ -172,9 +183,10 @@ class MapScene
 				if (m_walls[seg] == null) continue;
 				
 				for (mesh in m_walls[seg]) {
-					
 					mesh.visible = true;
-					
+				}
+				for (quad in quad_walls[seg]) {
+					quad.updateGeneral();
 				}
 				vis_list.push(seg);
 			}
