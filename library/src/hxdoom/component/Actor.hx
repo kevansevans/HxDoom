@@ -34,6 +34,7 @@ class Actor
 	public var health:Int;
 	
 	public var info:ActorInfo = {};
+	public var flags:Int = 0;
 	
 	public var target:Null<Actor>;
 	
