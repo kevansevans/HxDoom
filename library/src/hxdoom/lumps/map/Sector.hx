@@ -83,50 +83,140 @@ class Sector extends LumpBase
 		return bytes;
 	}
 	
-	/**
-	 * Helper function to calculate a GL compatible triangle model of a sector
-	 * @param	_sectorID
-	 * @return
-	 */
-	public static function getSectorGLTris(_sector:Sector, _mode:PlaneType):Array<Float> {
-		var tris:Array<Float> = new Array();
+	public static function getSortedVerticies(_sector:Sector):Array<Vertex> {
 		
-		var sector:Sector = _sector;
-		var mapSegs:Array<Segment> = Engine.LEVELS.currentMap.segments.copy();
-		var sectorSegs:Array<Segment> = new Array();
+		var sector = _sector;
 		
-		for (seg in mapSegs) {
-			if (seg.sector == sector) sectorSegs.push(seg);
+		var worklines:Array<LineDef> = _sector.lines.copy();
+		var rings:Array<Array<LineDef>> = new Array();
+		var currentLine = worklines[0];
+		var startLine = worklines[0];
+		var sortedLines:Array<LineDef> = new Array();
+		var dumpLines:Array<LineDef> = new Array();
+		
+		sortedLines.push(startLine);
+		worklines.remove(startLine);
+		
+		var parsing:Bool = true;
+		
+		if (_sector.lines.length == 3) 
+		{
+			
+			for (line in _sector.lines) sortedLines.push(line);
+			
+		} else {
+			
+			var ignoreVert:Vertex = null;
+			
+			while (parsing) {
+				
+				var vert_a:Vertex = currentLine.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(_sector) ? currentLine.start : currentLine.end;
+				
+				var connected:Bool = false;
+				
+				dumpLines = new Array();
+				
+				for (line in worklines) {
+					
+					dumpLines.push(line);
+					
+					var vert_b:Vertex = line.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(_sector) ? line.end : line.start;
+					
+					if (vert_b == ignoreVert) vert_b = vert_b == line.end ? line.start : line.end;
+					
+					if (vert_a == vert_b) {
+						
+						connected = true;
+						
+						sortedLines.push(line);
+						worklines.remove(line);
+						currentLine = line;
+						
+						ignoreVert = vert_b;
+						
+						if (worklines.length == 0) parsing = false;
+						
+						//get opposite verts
+						var vert_c:Vertex = vert_b == line.start ? line.end : line.start;
+						var vert_d:Vertex = vert_a == startLine.start ? startLine.start : startLine.end;
+						
+						if (vert_c == vert_d) {
+							if (worklines.length == 0) {
+								parsing = false;
+							}
+							else {
+								
+								rings.push(sortedLines.copy());
+								
+								currentLine = worklines[0];
+								startLine = worklines[0];
+								sortedLines = new Array();
+								
+								sortedLines.push(startLine);
+								worklines.remove(startLine);
+								
+							}
+						}
+						
+					}
+					
+				}
+				
+				//dead end check
+				if (!connected) {
+					for (line in dumpLines) worklines.remove(line);
+				}
+				
+				if (worklines.length == 0) {
+					parsing = false;
+				}
+			}
 		}
 		
-		var vertexArray:Array<Vertex> = new Array();
-		var anchor_seg:Segment = mapSegs.shift();
-		vertexArray.push(anchor_seg.start);
-		while (true) {
+		
+		rings.reverse();
+		
+		sortedLines.push(sortedLines[0]);
+		
+		while (rings.length > 0) {
 			
-			var foundConnection:Bool = false;
+			var indexLine:LineDef = null;
+			var shortest:Float = Math.POSITIVE_INFINITY;
 			
-			for (lookup_seg in mapSegs) {
-				if (anchor_seg.end.xpos == lookup_seg.start.xpos && anchor_seg.end.ypos == lookup_seg.start.ypos) {
-					foundConnection = true;
-					vertexArray.push(lookup_seg.start);
-					vertexArray.push(lookup_seg.end);
-					anchor_seg = lookup_seg;
-					mapSegs.remove(lookup_seg);
+			for (line_a in sortedLines) for (line_b in rings[0]) {
+				
+				var dist_a = Vertex.distance(line_a.start, line_b.start);
+				var dist_b = Vertex.distance(line_a.start, line_b.end);
+				var dist_c = Vertex.distance(line_a.end, line_b.end);
+				
+				if (dist_a < shortest || dist_b < shortest || dist_c < shortest) {
+					indexLine = line_a;
+				} else {
+					continue;
 				}
 			}
 			
-			if (!foundConnection) anchor_seg = mapSegs.shift();
-			
-			if (mapSegs.length == 0) {
-				break;
+			if (indexLine == null) trace("Problem!");
+			else {
+				for (line in rings[0]) {
+					sortedLines.insert(sortedLines.indexOf(indexLine), line);
+				}
+				sortedLines.insert(sortedLines.indexOf(indexLine), rings[0][0]);
+				rings.shift();
 			}
 			
 		}
 		
+		var verts:Array<Vertex> = new Array();
 		
-		//ear clip stuff
+		for (line in sortedLines) {
+			if (line.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(sector)) {
+				verts.push(line.start);
+			} else {
+				verts.push(line.end);
+			}
+		}
 		
-		return tris;
+		return verts;
 	}
 }
