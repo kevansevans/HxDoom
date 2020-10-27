@@ -309,4 +309,6 @@ class Engine
 	public static var MININT:Int = 0x80000000;
 	
 	public static var MAXPLAYERS:Int = 4;
+	
+	public static var MELEERANGE:Fixed = 64 * FRACUNIT;
 }
