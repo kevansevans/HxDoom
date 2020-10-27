@@ -4,6 +4,7 @@ import haxe.ds.Vector;
 import hxdoom.Engine;
 import hxdoom.component.Player;
 import hxdoom.enums.eng.Direction;
+import hxdoom.enums.game.ActorFlags;
 import hxdoom.lumps.map.LineDef;
 import hxdoom.typedefs.internal.PlayerSprite;
 import hxdoom.utils.geom.Angle;
@@ -26,7 +27,7 @@ class Enemy //p_enemy.c
 	public static var Fall:Actor -> Void = A_Fall;
 	public static function A_Fall(_mobj:Actor)
 	{
-		Engine.log(["Not finished here"]);
+		_mobj.flags &= ~ActorFlags.SOLID;
 	}
 
 	public static var soundTarget:Actor;
