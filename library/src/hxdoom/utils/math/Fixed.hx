@@ -57,4 +57,18 @@ abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
 		
 		return C >= D;
 	}
+	@:op(A >> B) public inline static function bitshiftright(A:Fixed, B:Fixed):Fixed {
+		var C:Int = A;
+		var D:Int = B;
+		
+		var E:Fixed = C >> D;
+		return E;
+	}
+	@:op(A << B) public inline static function bitshiftleft(A:Fixed, B:Fixed):Fixed {
+		var C:Int = A;
+		var D:Int = B;
+		
+		var E:Fixed = C << D;
+		return E;
+	}
 }
