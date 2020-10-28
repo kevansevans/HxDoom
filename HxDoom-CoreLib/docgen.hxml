@@ -1,0 +1,5 @@
+-cp src
+-D doc-gen
+--macro include('hxdoom')
+--no-output
+-xml doc/doc.xml

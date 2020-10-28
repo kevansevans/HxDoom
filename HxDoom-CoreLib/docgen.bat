@@ -1,0 +1,2 @@
+haxe docgen.hxml
+haxelib run dox -i doc -o api --title "HxDoom API" -D version "0.0.6-Alpha" -D logo "https://raw.githubusercontent.com/kevansevans/HxDoom/master/citrus/assets/icon.png" -D themeColor 0xcf302a -D textColor 0x9BF1FB -D description "A Haxelib adaption of id Tech 1 that plays Doom!" -D source-path https://github.com/kevansevans/HxDoom/tree/master/library/src -ex std --toplevel-package hxdoom
