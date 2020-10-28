@@ -17,7 +17,7 @@ import hxdoom.utils.math.Fixed;
 import haxe.Int64;
 
 #if hxdgamelib
-import hxdgamelib.objects.DoomID;
+import hxdgamelib.enums.doom.DoomType;
 #end
 
 /**
@@ -97,7 +97,7 @@ class Enemy //p_enemy.c
 		if (_actor.target == null) return false;
 		
 		var pl = _actor.target;
-		var dist:Fixed = MapUtils.AproxDistance(pl.x - actor.x, pl.y - actor.y);
+		var dist:Fixed = MapUtils.AproxDistance(pl.xpos - _actor.xpos, pl.ypos - _actor.ypos);
 		
 		if (dist >= Engine.MELEERANGE - 20 * Engine.FRACUNIT + pl.info.radius) return false;
 		
@@ -109,8 +109,7 @@ class Enemy //p_enemy.c
 	public static var CheckMissileRange:Actor -> Bool = P_CheckMissileRange;
 	public static function P_CheckMissileRange(_actor:Actor):Bool 
 	{
-		
-		Engine.log(["Not finished here"]);
+		Engine.log(["Needs testing"]);
 		
 		var dist:Fixed;
 		
@@ -127,16 +126,36 @@ class Enemy //p_enemy.c
 		
 		dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Engine.FRACUNIT);
 		
-		if (!_actor.info.meleestate > 0) dist -= 128 * Engine.FRACUNIT;
-		
-		#if hxdgamelib
-		if (_actor.type == DoomID.
-		#end
-		
+		if (_actor.info.meleestate > 0) dist -= 128 * Engine.FRACUNIT;
 		
 		dist >> 16;
 		
-		return false;
+		#if hxdgamelib
+		if (_actor.type == DoomType.VILE) 
+		{
+			if (dist > 14 * 64) return false;
+		}
+		
+		if (_actor.type == DoomType.UNDEAD) 
+		{
+			if (dist < 196) return false;
+			dist >>= 1;
+		}
+		if (_actor.type == DoomType.CYBORG || _actor.type == DoomType.SPIDER || _actor.type == DoomType.SKULL)
+		{
+			dist >>= 1;
+		}
+		#end
+		
+		if (dist > 200) dist = 200;
+		
+		#if hxdgamelib
+		if (_actor.type == DoomType.CYBORG && dist > 160) dist = 160;
+		#end
+		
+		if (Engine.GAME.p_random() < dist) return false;
+		
+		return true;
 	}
 	
 	//47000 is the same as 1/sqrt(2) in fixed point.
