@@ -18,7 +18,7 @@ class MapUtils //p_matutl.c
 		var dx = Math.abs(_dx);
 		var dy = Math.abs(_dy);
 		
-		if (dx < dy) return (var d:Fixed = dx + dy - (dx >> 1));
-		else return (var d:Fixed = dx + dy - (dy >> 1));
+		if (dx < dy) return (dx + dy - (Std.int(dx) >> 1));
+		else return (dx + dy - (Std.int(dy) >> 1));
 	}
 }

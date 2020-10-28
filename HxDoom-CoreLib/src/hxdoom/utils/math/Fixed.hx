@@ -12,6 +12,17 @@ import hxdoom.Engine;
  */
 abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
     
+	@:from
+	static public function fromFloat(_float:Float):Fixed {
+		return Math.round(_float * ( 1 << 5 ));
+	}
+	
+	@:to
+	static function toFloat(_fixed:Fixed):Float {
+		var a:Float = 0.0 + _fixed;
+		return (a / (1 << 5));
+	}
+	
 	@:op(A * B) public inline static function mult(A:Fixed, B:Fixed):Fixed {
 		var C:Int64 = Int64.ofInt(A);
 		var D:Int64 = Int64.ofInt(B);
