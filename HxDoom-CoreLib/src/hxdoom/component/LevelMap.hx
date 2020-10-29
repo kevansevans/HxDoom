@@ -5,7 +5,7 @@ import haxe.ds.Vector;
 import hxdoom.component.Actor;
 import hxdoom.component.Player;
 
-import hxdoom.enums.game.SharedID;
+import hxdoom.enums.game.SharedEdNum;
 
 import hxdoom.lumps.map.*;
 
@@ -65,7 +65,7 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 		for (thing in things) {
 			actors.push(Actor.fromThing(thing));
 			switch (thing.type) {
-				case SharedID.PLAYER_1 | SharedID.PLAYER_2 | SharedID.PLAYER_3 | SharedID.PLAYER_4:
+				case SharedEdNum.PLAYER_1 | SharedEdNum.PLAYER_2 | SharedEdNum.PLAYER_3 | SharedEdNum.PLAYER_4:
 					actors_players.push(Player.fromThing(thing));
 			}
 		}
