@@ -163,8 +163,23 @@ class Enemy //p_enemy.c
 			if (_actor.flags & ActorFlags.FLOAT > 0 /*&& floatok ...?*/)
 			{
 				if (_actor.zpos < Extern.tmfloorz) {
-					
+					_actor.zpos += Extern.FLOATSPEED;
+				} else {
+					_actor.zpos -= Extern.FLOATSPEED;
 				}
+				
+				_actor.flags |= ActorFlags.INFLOAT;
+			}
+			
+			//really wish haxe allowed bit comparing...
+			if (Extern.numspechit == 0) return false;
+			
+			_actor.movedir = Direction.NoDir;
+			good = false;
+			
+			while ((Extern.numspechit--) > 0) {
+				ld = Extern.spechit[Extern.numspechit];
+				
 			}
 		}
 		

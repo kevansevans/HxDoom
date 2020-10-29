@@ -9,5 +9,6 @@ package hxdoom.enums.game;
 enum abstract LineFlags(Int) from Int 
 {
 	var TWOSIDED:Int = 4;
+	var SECRET:Int = 32;
 	var SOUNDBLOCK:Int = 64;
 }
