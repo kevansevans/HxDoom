@@ -34,7 +34,7 @@ abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
 			return (A ^ B) < 0 ?  Engine.MININT : Engine.MAXINT;
 		}
 		else {
-			var C:Float = ((0.0 + A) / (0.0 + B)) * Engine.FRACUNIT;
+			var C:Float = ((0.0 + A) / (0.0 + B)) * Local.FRACUNIT;
 			if (C >= 2147483648.0 || C < -2147483648.0) throw "Div by zero";
 			return Int64.fromFloat(C).low;
 		}

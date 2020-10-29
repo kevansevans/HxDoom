@@ -13,7 +13,6 @@ import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Sector;
 import hxdoom.component.Actor;
 
-import hxdoom.utils.math.Fixed;
 import haxe.Int64;
 
 #if hxdgamelib
@@ -99,7 +98,7 @@ class Enemy //p_enemy.c
 		var pl = _actor.target;
 		var dist:Fixed = MapUtils.AproxDistance(pl.xpos - _actor.xpos, pl.ypos - _actor.ypos);
 		
-		if (dist >= Engine.MELEERANGE - 20 * Engine.FRACUNIT + pl.info.radius) return false;
+		if (dist >= Local.MELEERANGE - 20 * Local.FRACUNIT + pl.info.radius) return false;
 		
 		if (!Sight.CheckSight(_actor, _actor.target)) return false;
 		
@@ -124,9 +123,9 @@ class Enemy //p_enemy.c
 		
 		if (_actor.reactiontime > 0) return false;
 		
-		dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Engine.FRACUNIT);
+		dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Local.FRACUNIT);
 		
-		if (_actor.info.meleestate > 0) dist -= 128 * Engine.FRACUNIT;
+		if (_actor.info.meleestate > 0) dist -= 128 * Local.FRACUNIT;
 		
 		dist >> 16;
 		
@@ -139,8 +138,8 @@ class Enemy //p_enemy.c
 	
 	//47000 is the same as 1/sqrt(2) in fixed point.
 	
-	public static var xspeed:Array<Fixed> = [Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000, 0, 47000];
-	public static var yspeed:Array<Fixed> = [0, 47000, Engine.FRACUNIT, 47000, 0, -47000, -Engine.FRACUNIT, -47000];
+	public static var xspeed:Array<Fixed> = [Local.FRACUNIT, 47000, 0, -47000, -Local.FRACUNIT, -47000, 0, 47000];
+	public static var yspeed:Array<Fixed> = [0, 47000, Local.FRACUNIT, 47000, 0, -47000, -Local.FRACUNIT, -47000];
 	
 	public static var Move:Actor -> Bool = P_Move;
 	public static function P_Move(_actor:Actor):Bool 
@@ -158,10 +157,15 @@ class Enemy //p_enemy.c
 		tryx = Int64.fromFloat(_actor.info.speed * xspeed[_actor.movedir]).low;
 		tryy = Int64.fromFloat(_actor.info.speed * yspeed[_actor.movedir]).low;
 		
-		try_ok = false;
+		try_ok = Map.TryMove(_actor, tryx, tryy);
 		
 		if (!try_ok) {
-			
+			if (_actor.flags & ActorFlags.FLOAT > 0 /*&& floatok ...?*/)
+			{
+				if (_actor.zpos < Local.tmfloorz) {
+					
+				}
+			}
 		}
 		
 		Engine.log(["Not finished here"]);
@@ -201,12 +205,12 @@ class Enemy //p_enemy.c
 		deltax = Int64.fromFloat(_actor.target.xpos - _actor.xpos).low;
 		deltay = Int64.fromFloat(_actor.target.ypos - _actor.ypos).low;
 		
-		if (deltax > 10 * Engine.FRACUNIT) d[0] = Direction.East;
-		else if (deltax < -10 * Engine.FRACUNIT) d[0] = Direction.West;
+		if (deltax > 10 * Local.FRACUNIT) d[0] = Direction.East;
+		else if (deltax < -10 * Local.FRACUNIT) d[0] = Direction.West;
 		else d[0] = Direction.NoDir;
 		
-		if (deltay < -10 * Engine.FRACUNIT) d[1] = Direction.South;
-		else if (deltay > 10 * Engine.FRACUNIT) d[1] = Direction.North;
+		if (deltay < -10 * Local.FRACUNIT) d[1] = Direction.South;
+		else if (deltay > 10 * Local.FRACUNIT) d[1] = Direction.North;
 		else d[1] = Direction.NoDir;
 		
 		if (d[0] != Direction.NoDir && d[1] != Direction.NoDir) {

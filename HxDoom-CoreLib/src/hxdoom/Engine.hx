@@ -302,15 +302,10 @@ class Engine
 	
 	public static var validcount:Int = 1;
 	
-	public static var FRACBITS:Int = 16;
-	public static var FRACUNIT:Fixed = 1 << FRACBITS;
-	
 	public static var MAXINT:Int = 0x7fffffff;
 	public static var MININT:Int = 0x80000000;
 	
 	public static var MAXPLAYERS:Int = 4;
-	
-	public static var MELEERANGE:Fixed = 64 * FRACUNIT;
 	
 	public static var SECTORS:Sector;
 }
