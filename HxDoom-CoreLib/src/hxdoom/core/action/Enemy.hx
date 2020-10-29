@@ -109,7 +109,7 @@ class Enemy //p_enemy.c
 	public static var CheckMissileRange:Actor -> Bool = P_CheckMissileRange;
 	public static function P_CheckMissileRange(_actor:Actor):Bool 
 	{
-		Engine.log(["Needs testing"]);
+		Engine.log(["I need testing!"]);
 		
 		var dist:Fixed;
 		
@@ -130,28 +130,7 @@ class Enemy //p_enemy.c
 		
 		dist >> 16;
 		
-		#if hxdgamelib
-		if (_actor.type == DoomType.VILE) 
-		{
-			if (dist > 14 * 64) return false;
-		}
-		
-		if (_actor.type == DoomType.UNDEAD) 
-		{
-			if (dist < 196) return false;
-			dist >>= 1;
-		}
-		if (_actor.type == DoomType.CYBORG || _actor.type == DoomType.SPIDER || _actor.type == DoomType.SKULL)
-		{
-			dist >>= 1;
-		}
-		#end
-		
 		if (dist > 200) dist = 200;
-		
-		#if hxdgamelib
-		if (_actor.type == DoomType.CYBORG && dist > 160) dist = 160;
-		#end
 		
 		if (Engine.GAME.p_random() < dist) return false;
 		
