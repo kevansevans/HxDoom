@@ -9,8 +9,11 @@ Read the wiki on how to use HxDoom: https://github.com/kevansevans/HxDoom/wiki
 
 ## Principles of HxDoom
 **Do it the Haxe way:** All Haxe targets must be supported and avoid any platform specific code. Yes, that includes Flash and PHP.
+
 **Dependency injection where possible:** Developers shouldn't have to fork a library to make small changes or to add support for custom formats.
+
 **Modding at the source level:** Developers should have the ability to create custom content at the source code level.
+
 **K.I.S.S.:** Keep it simple, stupid.
 
 ## Licensing
