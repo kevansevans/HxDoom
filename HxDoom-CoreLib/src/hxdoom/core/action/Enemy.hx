@@ -46,10 +46,10 @@ class Enemy //p_enemy.c
 		
 		var sides = Engine.LEVELS.currentMap.sidedefs;
 		
-		if (_sector.validcount == Engine.validcount 
+		if (_sector.validcount == Extern.validcount 
 			&& _sector.soundtraversed <= _soundblocks + 1) return;
 			
-		_sector.validcount = Engine.validcount;
+		_sector.validcount = Extern.validcount;
 		_sector.soundtraversed = _soundblocks + 1;
 		_sector.soundtarget = soundTarget;
 		
@@ -83,7 +83,7 @@ class Enemy //p_enemy.c
 	public static function P_NoiseAlert(_target:Actor, _emmiter:Actor) 
 	{
 		soundTarget = _target;
-		Engine.validcount++;
+		Extern.validcount++;
 		RecursiveSound(_emmiter.subsector.sector, 0);
 	}
 	
@@ -98,7 +98,7 @@ class Enemy //p_enemy.c
 		var pl = _actor.target;
 		var dist:Fixed = MapUtils.AproxDistance(pl.xpos - _actor.xpos, pl.ypos - _actor.ypos);
 		
-		if (dist >= Local.MELEERANGE - 20 * Local.FRACUNIT + pl.info.radius) return false;
+		if (dist >= Extern.MELEERANGE - 20 * Extern.FRACUNIT + pl.info.radius) return false;
 		
 		if (!Sight.CheckSight(_actor, _actor.target)) return false;
 		
@@ -123,9 +123,9 @@ class Enemy //p_enemy.c
 		
 		if (_actor.reactiontime > 0) return false;
 		
-		dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Local.FRACUNIT);
+		dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Extern.FRACUNIT);
 		
-		if (_actor.info.meleestate > 0) dist -= 128 * Local.FRACUNIT;
+		if (_actor.info.meleestate > 0) dist -= 128 * Extern.FRACUNIT;
 		
 		dist >> 16;
 		
@@ -138,8 +138,8 @@ class Enemy //p_enemy.c
 	
 	//47000 is the same as 1/sqrt(2) in fixed point.
 	
-	public static var xspeed:Array<Fixed> = [Local.FRACUNIT, 47000, 0, -47000, -Local.FRACUNIT, -47000, 0, 47000];
-	public static var yspeed:Array<Fixed> = [0, 47000, Local.FRACUNIT, 47000, 0, -47000, -Local.FRACUNIT, -47000];
+	public static var xspeed:Array<Fixed> = [Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000, 0, 47000];
+	public static var yspeed:Array<Fixed> = [0, 47000, Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000];
 	
 	public static var Move:Actor -> Bool = P_Move;
 	public static function P_Move(_actor:Actor):Bool 
@@ -162,7 +162,7 @@ class Enemy //p_enemy.c
 		if (!try_ok) {
 			if (_actor.flags & ActorFlags.FLOAT > 0 /*&& floatok ...?*/)
 			{
-				if (_actor.zpos < Local.tmfloorz) {
+				if (_actor.zpos < Extern.tmfloorz) {
 					
 				}
 			}
@@ -205,12 +205,12 @@ class Enemy //p_enemy.c
 		deltax = Int64.fromFloat(_actor.target.xpos - _actor.xpos).low;
 		deltay = Int64.fromFloat(_actor.target.ypos - _actor.ypos).low;
 		
-		if (deltax > 10 * Local.FRACUNIT) d[0] = Direction.East;
-		else if (deltax < -10 * Local.FRACUNIT) d[0] = Direction.West;
+		if (deltax > 10 * Extern.FRACUNIT) d[0] = Direction.East;
+		else if (deltax < -10 * Extern.FRACUNIT) d[0] = Direction.West;
 		else d[0] = Direction.NoDir;
 		
-		if (deltay < -10 * Local.FRACUNIT) d[1] = Direction.South;
-		else if (deltay > 10 * Local.FRACUNIT) d[1] = Direction.North;
+		if (deltay < -10 * Extern.FRACUNIT) d[1] = Direction.South;
+		else if (deltay > 10 * Extern.FRACUNIT) d[1] = Direction.North;
 		else d[1] = Direction.NoDir;
 		
 		if (d[0] != Direction.NoDir && d[1] != Direction.NoDir) {

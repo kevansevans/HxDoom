@@ -31,10 +31,10 @@ abstract Fixed(Int32) from Int32 to Int32 from Int to Int {
 	
 	@:op(A / B) public inline static function div(A:Fixed, B:Fixed):Fixed {
 		if (A >> 14 >= B) {
-			return (A ^ B) < 0 ?  Engine.MININT : Engine.MAXINT;
+			return (A ^ B) < 0 ?  Extern.MININT : Extern.MAXINT;
 		}
 		else {
-			var C:Float = ((0.0 + A) / (0.0 + B)) * Local.FRACUNIT;
+			var C:Float = ((0.0 + A) / (0.0 + B)) * Extern.FRACUNIT;
 			if (C >= 2147483648.0 || C < -2147483648.0) throw "Div by zero";
 			return Int64.fromFloat(C).low;
 		}

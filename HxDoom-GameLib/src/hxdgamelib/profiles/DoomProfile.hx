@@ -155,9 +155,9 @@ class DoomProfile extends ProfileCore
 			
 			if (_actor.reactiontime > 0) return false;
 			
-			dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Local.FRACUNIT);
+			dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Extern.FRACUNIT);
 			
-			if (_actor.info.meleestate > 0) dist -= 128 * Local.FRACUNIT;
+			if (_actor.info.meleestate > 0) dist -= 128 * Extern.FRACUNIT;
 			
 			dist >> 16;
 			

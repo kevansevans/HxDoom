@@ -47,7 +47,7 @@ class Actor
 	
 	public var reactiontime:Int = 8;
 	
-	public var lastlook:Int = Engine.GAME.p_random() % Engine.MAXPLAYERS;
+	public var lastlook:Int = Engine.GAME.p_random() % Extern.MAXPLAYERS;
 	
 	public static function fromThing(_thing:Thing):Actor {
 		

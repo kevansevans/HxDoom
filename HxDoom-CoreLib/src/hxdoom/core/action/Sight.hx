@@ -22,8 +22,8 @@ class Sight //p_sight.c
 		var bytenum:Int;
 		var bitnum:Int;
 		
-		s1 = Engine.LEVELS.currentMap.sectors.indexOf(_t1.get_subsector().sector) - Engine.LEVELS.currentMap.sectors.indexOf(Engine.SECTORS);
-		s2 = Engine.LEVELS.currentMap.sectors.indexOf(_t2.get_subsector().sector) - Engine.LEVELS.currentMap.sectors.indexOf(Engine.SECTORS);
+		s1 = Engine.LEVELS.currentMap.sectors.indexOf(_t1.get_subsector().sector) - Engine.LEVELS.currentMap.sectors.indexOf(Extern.SECTORS);
+		s2 = Engine.LEVELS.currentMap.sectors.indexOf(_t2.get_subsector().sector) - Engine.LEVELS.currentMap.sectors.indexOf(Extern.SECTORS);
 		pnum = s1 * Engine.LEVELS.currentMap.sectors.length + s2;
 		bytenum = pnum >> 3;
 		bitnum = 1 << (pnum & 7);
