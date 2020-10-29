@@ -20,3 +20,7 @@ library/api/
 library/docgen.bat
 
 DOOM-master/
+
+HxDoom-CoreLib/api/
+
+HxDoom-CoreLib/doc/
