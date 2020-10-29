@@ -1,25 +1,25 @@
 package scene.shader;
 
-import hxd.Pixels;
-import hxsl.Shader;
-import hxsl.Types.Sampler2D;
-import hxd.PixelFormat;
-import hxsl.Types.Vec;
-import h3d.mat.Data.Filter;
-import h3d.mat.Data.Wrap;
-
-import hxdoom.lumps.graphic.Flat;
+import hxdoom.lumps.graphic.Patch;
 import hxdoom.lumps.graphic.Playpal;
+import hxsl.Shader;
+import hxd.Pixels;
+import hxd.PixelFormat;
+import h3d.mat.Data.Filter;
+
+import hxsl.Types.Vec;
+import hxsl.Types.Sampler2D;
 import hxdoom.enums.eng.ColorChannel;
+import h3d.mat.Data.Wrap;
 
 /**
  * ...
  * @author Kaelan
  */
-class PlaneShader extends Shader 
+class PaletteShader extends Shader 
 {
 
-	public static var SRC = {
+	static var SRC = {
 		
 		@:import h3d.shader.Texture;
 		
@@ -50,42 +50,18 @@ class PlaneShader extends Shader
 			
 		}
 		
-	}
+    };
 	
-	public function new(_playpal:Playpal, _flat:Flat) 
-	{
+	public function new(_playpal:Playpal, _asset:Patch) {
+		
 		super();
 		
 		setPalette(_playpal);
 		
-		setFlat(_flat);
+		setTexture(_asset);
 		
 		setSheet();
-	}
-	
-	public function setFlat(_flat:Flat) 
-	{
-		var work:Sampler2D = new Sampler2D(64, 64, null, PixelFormat.RGBA);
-		var pixels:Pixels = Pixels.alloc(64, 64, PixelFormat.RGBA);
 		
-		var index:Int = 0;
-		for (x in 0...64) {
-			for (y in 0...64) {
-				var swatch = _flat.pixels[index];
-				pixels.setPixel(63 - y, 63 - x, 0xFF << 24 | swatch << 16 | 0xFF << 8 | 0);
-				++index;
-			}
-		}
-		
-		work.uploadPixels(pixels);
-		work.wrap = Wrap.Repeat;
-		work.filter = Filter.Nearest;
-		
-		this.texture = work;
-	}
-	
-	public function setSheet(_sheet:Int = 0) {
-		this.palette = sheets[_sheet];
 	}
 	
 	public var sheets:Array<Array<Vec>>;
@@ -112,6 +88,36 @@ class PlaneShader extends Shader
 			
 			sheets[pal] = swatches;
 		}
+	}
+	
+	public function setSheet(_sheet:Int = 0) {
+		this.palette = sheets[_sheet];
+	}
+	
+	public function setTexture(_asset:Patch) {
+		
+		var work_text:Sampler2D = new Sampler2D(_asset.width, _asset.height, null, PixelFormat.RGBA);
+		var tex_pixels:Pixels = Pixels.alloc(_asset.width, _asset.height, PixelFormat.RGBA);
+		
+		for (x in 0..._asset.width) for (y in 0..._asset.height) {
+			
+			var swatch = _asset.pixels[x][(_asset.height - 1) - y];
+			
+			if (swatch == -1) {
+				tex_pixels.setPixel(x, y, 0x00 << 24 | swatch << 16 | 0 << 8 | 0);
+			} else {
+				tex_pixels.setPixel(x, y, 0xFF << 24 | swatch << 16 | 0xFF << 8 | 0);
+			}
+			
+		}
+		
+		work_text.uploadPixels(tex_pixels);
+		work_text.filter = Filter.Nearest;
+		work_text.wrap = Wrap.Repeat;
+		
+		this.texture = work_text;
+		this.height = work_text.height;
+		this.width = work_text.width;
 	}
 	
 }
