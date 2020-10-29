@@ -1,22 +1,21 @@
 package hxdoom.lumps.graphic;
 
-import hxdoom.lumps.LumpBase;
+import haxe.ds.Vector;
+import hxdoom.lumps.graphic.Patch;
 
 /**
  * ...
  * @author Kaelan
  */
-class Flat extends LumpBase 
+class Flat extends Patch
 {
 	public static var CONSTRUCTOR:(Array<Any>) -> Flat = Flat.new;
 	
-	public var pixels:Array<Int>;
-	
 	public function new(_args:Array<Any>) 
 	{
-		super();
+		super([64, 64, 0, 0]);
 		
-		pixels = _args[0];
+		pixels = new Vector(64);
 	}
 	
 }

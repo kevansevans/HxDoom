@@ -318,11 +318,14 @@ class Reader
 	public static var readFlat:(Array<Int>, Int) -> Flat = readFlatDefault;
 	public static function readFlatDefault(_data:Array<Int>, _offset:Int):Flat
 	{
-		var pixels:Array<Int> = new Array();
-		for (place in 0...4096) {
-			pixels.push(getOneByte(_data, place + _offset));
+		var flat:Flat = Flat.CONSTRUCTOR([]);
+		var place:Int = 0;
+		for (x in 0...64) for (y in 0...64) {
+			if (flat.pixels[x] == null) flat.pixels[x] = new Vector(64);
+			flat.pixels[x][y] = getOneByte(_data, place + _offset);
+			++place;
 		}
-		return Flat.CONSTRUCTOR([pixels]);
+		return flat;
 	}
 	public static var readSound:(Array<Int>, Int) -> SoundEffect = function(_data:Array<Int>, _offset:Int):SoundEffect
 	{
