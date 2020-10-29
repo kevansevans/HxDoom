@@ -1,4 +1,4 @@
-package hxdoom.core.action;
+package hxdoom.core;
 /**
  * ...
  * @author Kaelan
