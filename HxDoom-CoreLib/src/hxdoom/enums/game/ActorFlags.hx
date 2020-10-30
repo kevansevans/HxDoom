@@ -21,15 +21,16 @@ enum abstract ActorFlags(Int) from Int //p_mobj.h
 	var NOCLIP:Int = 1 << 13;
 	var SLIDE:Int = 1 << 14;
 	var FLOAT:Int = 1 << 15;
-	var MISSILE:Int = 1 << 16;
-	var DROPPED:Int = 1 << 17;
-	var SHADOW:Int = 1 << 18;
-	var NOBLOOD:Int = 1 << 19;
-	var CORPSE:Int = 1 << 20;
-	var INFLOAT:Int = 1 << 21;
-	var COUNTKILL:Int = 1 << 22;
-	var COUNTITEM:Int = 1 << 23;
-	var SKULLFLY:Int = 1 << 24;
-	var NOTDMATCH:Int = 1 << 25;
+	var TELEPORT:Int = 1 << 16;
+	var MISSILE:Int = 1 << 17;
+	var DROPPED:Int = 1 << 18;
+	var SHADOW:Int = 1 << 19;
+	var NOBLOOD:Int = 1 << 20;
+	var CORPSE:Int = 1 << 21;
+	var INFLOAT:Int = 1 << 22;
+	var COUNTKILL:Int = 1 << 23;
+	var COUNTITEM:Int = 1 << 24;
+	var SKULLFLY:Int = 1 << 25;
+	var NOTDMATCH:Int = 1 << 26;
 	var TRANSLATION:Int = 0xc000000;
 }
