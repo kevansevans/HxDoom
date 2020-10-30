@@ -59,7 +59,7 @@ class Enemy //p_enemy.c
 			
 			MapUtils.LineOpening(line);
 			
-			if (Extern.openrange <= 0) continue
+			if (Extern.openrange <= 0) continue;
 			
 			if (sides[line.frontSideDefID].sector == _sector) {
 				other = sides[line.backSideDefID].sector;
@@ -148,15 +148,15 @@ class Enemy //p_enemy.c
 		var try_ok:Bool;
 		var good:Bool;
 		
-		//if actor doesn't have a move direction, return false
+		if (_actor.movedir == Direction.NoDir) return false;
 		
-		tryx = Int64.fromFloat(_actor.info.speed * xspeed[_actor.movedir]).low;
-		tryy = Int64.fromFloat(_actor.info.speed * yspeed[_actor.movedir]).low;
+		tryx = _actor.info.speed * xspeed[_actor.movedir];
+		tryy =_actor.info.speed * yspeed[_actor.movedir];
 		
 		try_ok = Map.TryMove(_actor, tryx, tryy);
 		
 		if (!try_ok) {
-			if (_actor.flags & ActorFlags.FLOAT > 0 /*&& floatok ...?*/)
+			if (_actor.flags & ActorFlags.FLOAT > 0 && Extern.floatok)
 			{
 				if (_actor.zpos < Extern.tmfloorz) {
 					_actor.zpos += Extern.FLOATSPEED;
@@ -176,12 +176,24 @@ class Enemy //p_enemy.c
 			while ((Extern.numspechit--) > 0) {
 				ld = Extern.spechit[Extern.numspechit];
 				
+				if (Switch.UseSpecialLine(_actor, ld, 0)) good = true;
+				
 			}
+			
+			return good;
+			
+		} else {
+			_actor.flags &= ~ActorFlags.FLOAT;
+		}
+		
+		if (_actor.flags & ActorFlags.FLOAT == 0) {
+			trace("Actor needs a floorz getter");
+			_actor.zpos = _actor.subsector.sector.floorHeight;
 		}
 		
 		Engine.log(["Not finished here"]);
 		
-		return false;
+		return true;
 	}
 	
 	public static var TryWalk:Actor -> Bool = P_TryWalk;

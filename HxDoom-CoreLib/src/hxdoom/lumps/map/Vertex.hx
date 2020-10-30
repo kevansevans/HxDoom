@@ -27,8 +27,8 @@ class Vertex extends LumpBase
 	override public function toDataBytes():Bytes 
 	{
 		var bytes:Bytes = Bytes.alloc(BYTE_SIZE);
-		bytes.setUInt16(0, xpos);
-		bytes.setUInt16(2, ypos);
+		bytes.setUInt16(0, Std.int(xpos));
+		bytes.setUInt16(2, Std.int(ypos));
 		return bytes;
 	}
 	public function toString():String {

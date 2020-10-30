@@ -56,8 +56,8 @@ class Sector extends LumpBase
 		var str:String;
 		var bytes = Bytes.alloc(BYTE_SIZE);
 		
-		bytes.setUInt16(0, floorHeight);
-		bytes.setUInt16(2, ceilingHeight);
+		bytes.setUInt16(0, Std.int(floorHeight));
+		bytes.setUInt16(2, Std.int(ceilingHeight));
 		
 		str = floorTexture;
 		while (str.length < 8) {
