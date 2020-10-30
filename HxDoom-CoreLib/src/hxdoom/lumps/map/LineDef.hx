@@ -28,6 +28,9 @@ class LineDef extends LumpBase
 	public var backSideDefID:Int;
 	public var frontSideDefID:Int;
 	
+	public var dx(get, null):Float;
+	public var dy(get, null):Float;
+	
 	public var solid(get, null):Bool;
 	
 	public var frontSideDef(get, null):SideDef;
@@ -126,6 +129,16 @@ class LineDef extends LumpBase
 	function get_doubleSided():Bool 
 	{
 		return (flags & 0x0004) > 0; 
+	}
+	
+	function get_dy():Float 
+	{
+		return Math.abs(end.ypos - start.ypos);
+	}
+	
+	function get_dx():Float 
+	{
+		return Math.abs(end.xpos - start.xpos);
 	}
 	
 	function set_doubleSided(value:Bool):Bool 
