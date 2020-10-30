@@ -16,7 +16,6 @@ class Map
 	{
 		Engine.log(["Not finished here"]);
 		
-		
 		var oldx:Float;
 		
 		return false;

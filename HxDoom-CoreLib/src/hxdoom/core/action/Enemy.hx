@@ -98,7 +98,7 @@ class Enemy //p_enemy.c
 		var pl = _actor.target;
 		var dist:Float = MapUtils.AproxDistance(pl.xpos - _actor.xpos, pl.ypos - _actor.ypos);
 		
-		if (dist >= Extern.MELEERANGE - 20 * Extern.FRACUNIT + pl.info.radius) return false;
+		if (dist >= Extern.MELEERANGE - 20 + pl.info.radius) return false;
 		
 		if (!Sight.CheckSight(_actor, _actor.target)) return false;
 		
@@ -123,9 +123,9 @@ class Enemy //p_enemy.c
 		
 		if (_actor.reactiontime > 0) return false;
 		
-		dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - (64 * Extern.FRACUNIT);
+		dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - 64;
 		
-		if (_actor.info.meleestate > 0) dist -= 128 * Extern.FRACUNIT;
+		if (_actor.info.meleestate > 0) dist -= 128;
 		
 		if (dist > 200) dist = 200;
 		
@@ -136,8 +136,8 @@ class Enemy //p_enemy.c
 	
 	//47000 is the same as 1/sqrt(2) in Float point.
 	
-	public static var xspeed:Array<Float> = [Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000, 0, 47000];
-	public static var yspeed:Array<Float> = [0, 47000, Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000];
+	public static var xspeed:Array<Float> = [1, Math.sqrt(2), 0, -Math.sqrt(2), 1, -Math.sqrt(2), 0, Math.sqrt(2)];
+	public static var yspeed:Array<Float> = [0, Math.sqrt(2), 1, Math.sqrt(2), 0, -Math.sqrt(2), 1, -Math.sqrt(2)];
 	
 	public static var Move:Actor -> Bool = P_Move;
 	public static function P_Move(_actor:Actor):Bool 
@@ -215,15 +215,15 @@ class Enemy //p_enemy.c
 		olddir = _actor.movedir;
 		turnaround = opposite[olddir];
 		
-		deltax = Int64.fromFloat(_actor.target.xpos - _actor.xpos).low;
-		deltay = Int64.fromFloat(_actor.target.ypos - _actor.ypos).low;
+		deltax = _actor.target.xpos - _actor.xpos;
+		deltay = _actor.target.ypos - _actor.ypos;
 		
-		if (deltax > 10 * Extern.FRACUNIT) d[0] = Direction.East;
-		else if (deltax < -10 * Extern.FRACUNIT) d[0] = Direction.West;
+		if (deltax > 10) d[0] = Direction.East;
+		else if (deltax < -10) d[0] = Direction.West;
 		else d[0] = Direction.NoDir;
 		
-		if (deltay < -10 * Extern.FRACUNIT) d[1] = Direction.South;
-		else if (deltay > 10 * Extern.FRACUNIT) d[1] = Direction.North;
+		if (deltay < -10 ) d[1] = Direction.South;
+		else if (deltay > 10) d[1] = Direction.North;
 		else d[1] = Direction.NoDir;
 		
 		if (d[0] != Direction.NoDir && d[1] != Direction.NoDir) {
