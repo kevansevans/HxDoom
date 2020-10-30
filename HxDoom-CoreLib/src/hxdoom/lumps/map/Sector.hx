@@ -1,7 +1,6 @@
 package hxdoom.lumps.map;
 import haxe.io.Bytes;
 import hxdoom.component.Actor;
-import hxdoom.enums.eng.PlaneType;
 import hxdoom.lumps.LumpBase;
 
 /**
@@ -14,8 +13,8 @@ class Sector extends LumpBase
 	
 	public static inline var BYTE_SIZE:Int = 26;
 	
-	public var floorHeight:Int;
-	public var ceilingHeight:Int;
+	public var floorHeight:Float;
+	public var ceilingHeight:Float;
 	public var floorTexture:String;
 	public var ceilingTexture:String;
 	public var lightLevel:Int;

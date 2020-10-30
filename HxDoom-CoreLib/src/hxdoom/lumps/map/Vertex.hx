@@ -15,8 +15,8 @@ class Vertex extends LumpBase
 	
 	public static inline var BYTE_SIZE:Int = 4;
 	
-	public var xpos:Int;
-	public var ypos:Int;
+	public var xpos:Float;
+	public var ypos:Float;
 	public function new(_args:Array<Any>) 
 	{
 		super();
