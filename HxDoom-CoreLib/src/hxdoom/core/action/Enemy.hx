@@ -57,9 +57,9 @@ class Enemy //p_enemy.c
 			
 			if (line.flags & LineFlags.TWOSIDED > 0) continue;
 			
-			//P_LineOpening(line);
+			MapUtils.LineOpening(line);
 			
-			//if (openrange <= 0) continue
+			if (Extern.openrange <= 0) continue
 			
 			if (sides[line.frontSideDefID].sector == _sector) {
 				other = sides[line.backSideDefID].sector;
@@ -75,8 +75,6 @@ class Enemy //p_enemy.c
 				P_RecursiveSound(other, _soundblocks);
 			}
 		}
-		
-		Engine.log(["Not finished here"]);
 	}
 	
 	public static var NoiseAlert:(Actor, Actor) -> Void = P_NoiseAlert;

@@ -15,6 +15,8 @@ class Extern
 {
 	public static var FLOATSPEED:Float = 4;
 	
+	public static var lowfloor:Float;
+	
 	public static var MAXHEALTH = 100;
 	public static var MAXINT:Int = 0x7fffffff;
 	public static var MAXPLAYERS:Int = 4;
@@ -24,7 +26,9 @@ class Extern
 	
 	public static var numspechit:Int;
 	
+	public static var openbottom:Float;
 	public static var openrange:Int;
+	public static var opentop:Float;
 	
 	public static var SECTORS:Sector;
 	public static var spechit:Vector<LineDef> = new Vector(8);
