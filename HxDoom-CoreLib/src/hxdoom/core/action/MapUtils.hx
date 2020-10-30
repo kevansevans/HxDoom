@@ -1,6 +1,7 @@
 package hxdoom.core.action;
 
-import hxdoom.utils.math.Fixed;
+import hxdoom.lumps.map.LineDef;
+import hxdoom.lumps.map.Sector;
 
 /**
  * ...
@@ -9,8 +10,8 @@ import hxdoom.utils.math.Fixed;
 class MapUtils //p_matutl.c
 {
 
-	public static var AproxDistance:(Fixed, Fixed) -> Fixed = P_AproxDistance;
-	public static function P_AproxDistance(_dx:Fixed, _dy:Fixed):Fixed 
+	public static var AproxDistance:(Float, Float) -> Float = P_AproxDistance;
+	public static function P_AproxDistance(_dx:Float, _dy:Float):Float 
 	{
 		
 		Engine.log(["Test me!"]);

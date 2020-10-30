@@ -96,7 +96,7 @@ class Enemy //p_enemy.c
 		if (_actor.target == null) return false;
 		
 		var pl = _actor.target;
-		var dist:Fixed = MapUtils.AproxDistance(pl.xpos - _actor.xpos, pl.ypos - _actor.ypos);
+		var dist:Float = MapUtils.AproxDistance(pl.xpos - _actor.xpos, pl.ypos - _actor.ypos);
 		
 		if (dist >= Extern.MELEERANGE - 20 * Extern.FRACUNIT + pl.info.radius) return false;
 		
@@ -110,7 +110,7 @@ class Enemy //p_enemy.c
 	{
 		Engine.log(["I need testing!"]);
 		
-		var dist:Fixed;
+		var dist:Float;
 		
 		if (!Sight.CheckSight(_actor, _actor.target))
 		return false;
@@ -127,8 +127,6 @@ class Enemy //p_enemy.c
 		
 		if (_actor.info.meleestate > 0) dist -= 128 * Extern.FRACUNIT;
 		
-		dist >> 16;
-		
 		if (dist > 200) dist = 200;
 		
 		if (Engine.GAME.p_random() < dist) return false;
@@ -136,16 +134,16 @@ class Enemy //p_enemy.c
 		return true;
 	}
 	
-	//47000 is the same as 1/sqrt(2) in fixed point.
+	//47000 is the same as 1/sqrt(2) in Float point.
 	
-	public static var xspeed:Array<Fixed> = [Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000, 0, 47000];
-	public static var yspeed:Array<Fixed> = [0, 47000, Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000];
+	public static var xspeed:Array<Float> = [Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000, 0, 47000];
+	public static var yspeed:Array<Float> = [0, 47000, Extern.FRACUNIT, 47000, 0, -47000, -Extern.FRACUNIT, -47000];
 	
 	public static var Move:Actor -> Bool = P_Move;
 	public static function P_Move(_actor:Actor):Bool 
 	{
-		var tryx:Fixed; 
-		var tryy:Fixed;
+		var tryx:Float; 
+		var tryy:Float;
 		
 		var ld:LineDef;
 		
@@ -207,8 +205,8 @@ class Enemy //p_enemy.c
 			return;
 		}
 		
-		var deltax:Fixed;
-		var deltay:Fixed;
+		var deltax:Float;
+		var deltay:Float;
 		var d:Vector<Direction> = new Vector(2);
 		var tdir:Int;
 		var olddir:Direction;
@@ -293,7 +291,7 @@ class Enemy //p_enemy.c
 		var player:Player;
 		var sector:Sector;
 		var an:Angle;
-		var distance:Fixed;
+		var distance:Float;
 		
 		sector = _actor.subsector.sector;
 		
@@ -480,8 +478,8 @@ class Enemy //p_enemy.c
 	/*
 	 * mobj_t*		corpsehit;
 	 * mobj_t*		vileobj;
-	 * fixed_t		viletryx;
-	 * fixed_t		viletryy;
+	 * Float_t		viletryx;
+	 * Float_t		viletryy;
 	 */
 	
 	public static var VileCheck:Actor -> Bool = PIT_VileCheck;

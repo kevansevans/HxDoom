@@ -14,22 +14,24 @@ import hxdoom.lumps.map.Sector;
 class Extern
 {
 	public static var FRACBITS:Int = 16;
-	public static var FRACUNIT:Fixed = 1 << FRACBITS;
-	public static var FLOATSPEED = (FRACUNIT * 4);
+	public static var FRACUNIT:Float = 1 << FRACBITS;
+	public static var FLOATSPEED:Float = (FRACUNIT * 4);
 	
 	public static var MAXHEALTH = 100;
 	public static var MAXINT:Int = 0x7fffffff;
 	public static var MAXPLAYERS:Int = 4;
 	public static var MAXSPECIALCROSS:Int = 8;
-	public static var MELEERANGE:Fixed = 64 * FRACUNIT;
+	public static var MELEERANGE:Float = 64 * FRACUNIT;
 	public static var MININT:Int = 0x80000000;
 	
 	public static var numspechit:Int;
 	
+	public static var openrange:Int;
+	
 	public static var SECTORS:Sector;
 	public static var spechit:Vector<LineDef> = new Vector(8);
 	
-	public static var tmfloorz:Fixed;
+	public static var tmfloorz:Float;
 	
 	public static var validcount:Int = 1;
 	public static var VIEWHEIGHT = (41 * FRACUNIT);

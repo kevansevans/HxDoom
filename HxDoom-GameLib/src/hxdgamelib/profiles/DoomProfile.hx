@@ -9,7 +9,6 @@ import hxdoom.definitions.EpisodeDef;
 import hxdoom.definitions.MapDef;
 import hxdoom.Engine;
 import hxdoom.enums.game.ActorFlags;
-import hxdoom.utils.math.Fixed;
 
 import hxdgamelib.enums.doom.DoomType;
 
@@ -142,7 +141,7 @@ class DoomProfile extends ProfileCore
 		{
 			Engine.log(["I need testing!"]);
 			
-			var dist:Fixed;
+			var dist:Float;
 			
 			if (!Sight.CheckSight(_actor, _actor.target))
 			return false;
@@ -159,8 +158,6 @@ class DoomProfile extends ProfileCore
 			
 			if (_actor.info.meleestate > 0) dist -= 128 * Extern.FRACUNIT;
 			
-			dist >> 16;
-			
 			if (_actor.type == DoomType.VILE) 
 			{
 				if (dist > 14 * 64) return false;
@@ -169,11 +166,11 @@ class DoomProfile extends ProfileCore
 			if (_actor.type == DoomType.UNDEAD) 
 			{
 				if (dist < 196) return false;
-				dist >>= 1;
+				dist /= 2;
 			}
 			if (_actor.type == DoomType.CYBORG || _actor.type == DoomType.SPIDER || _actor.type == DoomType.SKULL)
 			{
-				dist >>= 1;
+				dist /= 2;
 			}
 			
 			if (dist > 200) dist = 200;

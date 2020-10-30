@@ -14,8 +14,6 @@ import hxdoom.enums.eng.KeyLump;
 import hxdoom.enums.eng.DataLump;
 import hxdoom.enums.EnumTool;
 
-import hxdoom.utils.math.Fixed;
-
 /**
  * Engine.hx acts as the hub class for accessing data. It contains "cores" that can be utilized for wad data manipulation.
  * Cores can be overriden by the developers to modify behavior. Some of these cores are mandatory to change in order to use.
