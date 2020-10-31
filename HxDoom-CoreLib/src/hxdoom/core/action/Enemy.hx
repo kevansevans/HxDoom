@@ -177,7 +177,7 @@ class Enemy //p_enemy.c
 				ld = Extern.spechit[Extern.numspechit];
 				
 				if (Switch.UseSpecialLine(_actor, ld, 0)) good = true;
-				
+				good = true;
 			}
 			
 			return good;

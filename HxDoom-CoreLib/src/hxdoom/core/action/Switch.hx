@@ -2,7 +2,7 @@ package hxdoom.core.action;
 
 import hxdoom.component.Actor;
 import hxdoom.lumps.map.LineDef;
-import hxdoom.enums.game.SharedID;
+import hxdoom.enums.game.SharedEdNum;
 import hxdoom.component.Player;
 import hxdoom.enums.game.LineFlags;
 import hxdoom.enums.eng.StairType;
@@ -17,9 +17,10 @@ class Switch //p_switch.c
 	public static var UseSpecialLine:(Actor, LineDef, Int) -> Bool = P_UseSpecialLine;
 	public static function P_UseSpecialLine(_actor:Actor, _line:LineDef, _side:Int):Bool
 	{
-		Engine.log(["Not finished here"]);
+		Engine.log(["Not finished here, soooo not finished here"]);
+		
 		//Do I keep this...?
-		if (side == 1) {
+		if (_side == 1) {
 			switch (_line.lineType) {
 				case 124:
 					//sliding door unused code here, fun fact!
@@ -29,8 +30,8 @@ class Switch //p_switch.c
 		}
 		
 		//Double check that this works, a bool can easily be supstituted here if not
-		if (!Type.typeof(_actor) == Player) {
-			if (_line.flags & LineFlags.SECRET > 0) return false
+		if (!_actor.isPlayer) {
+			if (_line.flags & LineFlags.SECRET > 0) return false;
 			
 			switch (_line.lineType) {
 				case 1 | 32 | 33 | 34 :
@@ -153,6 +154,8 @@ class Switch //p_switch.c
 				Engine.log(["Switch line type not recognized, please verify: " + _line.lineType]);
 			
 		}
+		
+		return false;
 		
 	}
 	

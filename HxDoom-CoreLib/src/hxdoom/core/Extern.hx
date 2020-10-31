@@ -14,6 +14,7 @@ import hxdoom.lumps.map.Sector;
 class Extern
 {
 	public static var FLOATSPEED:Float = 4;
+	public static var floatok:Bool = false;
 	
 	public static var lowfloor:Float;
 	
@@ -27,13 +28,15 @@ class Extern
 	public static var numspechit:Int;
 	
 	public static var openbottom:Float;
-	public static var openrange:Int;
+	public static var openrange:Float;
 	public static var opentop:Float;
 	
 	public static var SECTORS:Sector;
 	public static var spechit:Vector<LineDef> = new Vector(8);
 	
 	public static var tmfloorz:Float;
+	public static var tmceilingz:Float;
+	public static var tmdropoffz:Float;
 	
 	public static var validcount:Int = 1;
 	public static var VIEWHEIGHT = 41;

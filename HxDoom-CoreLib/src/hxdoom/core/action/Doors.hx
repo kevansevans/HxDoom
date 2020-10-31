@@ -15,7 +15,7 @@ class Doors //p_doors.c
 	public static var VerticalDoor:(LineDef, Actor) -> Void = EV_VerticalDoor;
 	public static function EV_VerticalDoor(_line:LineDef, _actor:Actor):Void
 	{
-		var player:Player = _actor;
+		var player:Player = cast(_actor);
 		
 		Engine.log(["Not finished here"]);
 	}
