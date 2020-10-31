@@ -27,6 +27,9 @@ class Actor
 	public var zpos_eyeheight:Float;
 	public var zpos_view(get, null):Float;
 	
+	public var floorz:Float;
+	public var ceilingz:Float;
+	
 	public var subsector(get, null):SubSector;
 	
 	public var pitch(get, default):Angle = 0.0;
@@ -34,6 +37,7 @@ class Actor
 	public var roll(get, default):Angle = 0.0;
 	
 	public var health:Int;
+	public var height:Int;
 	
 	public var info:ActorInfo = {};
 	public var flags:Int = 0;
@@ -46,6 +50,8 @@ class Actor
 	public var movecount:Int = 0;
 	
 	public var reactiontime:Int = 8;
+	
+	public var isPlayer:Bool = false;
 	
 	public var lastlook:Int = Engine.GAME.p_random() % Extern.MAXPLAYERS;
 	
