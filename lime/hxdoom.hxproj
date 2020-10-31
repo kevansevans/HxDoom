@@ -17,15 +17,14 @@
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="C:\HaxeToolkit\haxe\lib\lime\7,8,0\src" />
-    <class path="C:\HaxeToolkit\haxe\lib\hscript\2,4,0" />
     <class path="F:\HxDoom\library\src" />
     <class path="C:\HaxeToolkit\haxe\lib\haxe-gl-matrix\1,0,1\src" />
     <class path="src" />
-    <class path="bin\windows\haxe" />
+    <class path="bin\html5\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="lime=7.8.0&#xA;hscript=2.4.0&#xA;hxdoom=0.0.0&#xA;haxe-gl-matrix=1.0.1&#xA;lime-openal&#xA;ANDROID_SETUP=false&#xA;ANDROID_NDK_ROOT=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk\ndk\20.1.5948944&#xA;EMSCRIPTEN_SDK=C:\emscripten\emsdk&#xA;native&#xA;lime-curl&#xA;lime-harfbuzz&#xA;hscriptPos&#xA;tools=7.8.0&#xA;ANDROID_SDK=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk&#xA;lime-cairo&#xA;lime-opengl&#xA;no-compilation&#xA;lime-native&#xA;lime-vorbis&#xA;lime-cffi&#xA;fdb&#xA;windows&#xA;desktop" />
+    <option directives="lime=7.8.0&#xA;hxdoom=0.0.0&#xA;haxe-gl-matrix=1.0.1&#xA;tools=7.8.0&#xA;ANDROID_SETUP=false&#xA;ANDROID_SDK=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk&#xA;lime-canvas&#xA;ANDROID_NDK_ROOT=C:\Users\Kaelan Evans\AppData\Local\Android\Sdk\ndk\20.1.5948944&#xA;howlerjs&#xA;no-compilation&#xA;EMSCRIPTEN_SDK=C:\emscripten\emsdk&#xA;lime-webgl&#xA;lime-dom&#xA;lime-howlerjs&#xA;lime-html5&#xA;fdb&#xA;html5&#xA;web&#xA;html5&#xA;html" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
