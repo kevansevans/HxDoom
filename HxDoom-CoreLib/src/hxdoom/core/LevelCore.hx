@@ -60,7 +60,7 @@ class LevelCore
 		loadMap(currentMapData.internalName);
 	}
 	
-	public var expectedLumpsPerMap:Int = 8; //set this to 10 when blockmap and reject are supported, 11 for hexen
+	public var expectedLumpsPerMap:Int = 9; //set this to 10 when blockmap and reject are supported, 11 for hexen
 	
 	public function loadMap(_mapMarker:String):Bool {
 		
@@ -144,6 +144,9 @@ class LevelCore
 					for (a in 0...numitems) {
 						_map.sectors[a] = Reader.readSector(byteData, mapDir.dataOffset + a * Sector.BYTE_SIZE);
 					}
+					++loaded_lumps;
+				case KeyLump.BLOCKMAP :
+					_map.blockmap = Reader.readBlockmap(byteData, mapDir.dataOffset);
 					++loaded_lumps;
 				default :
 					Engine.log(["Map directory unrecognized: " + mapDir.name]);

@@ -29,6 +29,7 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 	public var segments:Array<Segment>;
 	public var sidedefs:Array<SideDef>;
 	public var sectors:Array<Sector>;
+	public var blockmap:Blockmap;
 	
 	public var offset_x:Float;
 	public var offset_y:Float;

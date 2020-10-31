@@ -20,6 +20,7 @@ import hxdoom.lumps.map.SideDef;
 import hxdoom.lumps.map.SubSector;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
+import hxdoom.lumps.map.Blockmap;
 import hxdoom.typedefs.graphics.PatchLayout;
 
 /**
@@ -315,6 +316,7 @@ class Reader
 		
 		return patch;
 	}
+	
 	public static var readFlat:(Array<Int>, Int) -> Flat = readFlatDefault;
 	public static function readFlatDefault(_data:Array<Int>, _offset:Int):Flat
 	{
@@ -326,6 +328,42 @@ class Reader
 			++place;
 		}
 		return flat;
+	}
+	
+	public static var readBlockmap:(Array<Int>, Int) -> Blockmap = readBlockmapDefault;
+	public static function readBlockmapDefault(_data:Array<Int>, _offset:Int):Blockmap
+	{
+		var x = getTwoBytes(_data, _offset, true);
+		var y = getTwoBytes(_data, _offset + 2, true);
+		var columns = getTwoBytes(_data, _offset + 4);
+		var rows = getTwoBytes(_data, _offset + 6);
+		var blocks:Vector<Array<Int>> = new Vector(columns * rows);
+		
+		var highestnum = Math.NEGATIVE_INFINITY;
+		
+		for (b in 0...(columns * rows)) {
+			if (blocks[b] == null) blocks[b] = new Array();
+			
+			var blockoffset = getTwoBytes(_data, _offset + 8 + (2 * b));
+			
+			var lineOffset:Int = 2;
+			
+			while (true) {
+				var num = getTwoBytes(_data, _offset + (blockoffset * 2) + lineOffset);
+				
+				//trace(num, blockoffset * 2);
+				
+				if (num == 0xFFFF) break;
+				
+				if (num > highestnum) highestnum = num;
+				
+				blocks[b].push(num);
+				
+				lineOffset += 2;
+			}
+		}
+		
+		return Blockmap.CONSTRUCTOR([x, y, columns, rows, blocks]);
 	}
 	public static var readSound:(Array<Int>, Int) -> SoundEffect = function(_data:Array<Int>, _offset:Int):SoundEffect
 	{
