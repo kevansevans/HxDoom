@@ -79,13 +79,11 @@ class LevelCore
 		var byteData = Engine.WADDATA.getWadByteArray(mapmarker.wad);
 		
 		var lumpOffset:Int = 1;
-		var reg:EReg = new EReg("(E[0-9]+M[0-9]+)|(MAP[0-9]+)", "i");
 		while (true) {
 			
 			var mapDir = Engine.WADDATA.getIndexSpecificDir(mapmarker.wad, mapmarker.index + lumpOffset);
 			
-			//this could probably be replaced with a size check, iirc map markers posses 0 offset and 0 size. Please test this.
-			if  (reg.match(mapDir.name) || mapDir.name == KeyLump.ENDMAP || loaded_lumps == expectedLumpsPerMap) {
+			if  (mapDir.size == 0) {
 				break;
 			}
 			
