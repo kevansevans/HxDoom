@@ -1,6 +1,5 @@
 package hxdgamelib.levelstruct;
 
-import haxe.PosInfos;
 import hxdoom.component.LevelMap;
 
 import hxdgamelib.enums.doom.DoomEdNum;
@@ -17,7 +16,6 @@ class DoomLevel extends LevelMap
 	public function new() 
 	{
 		super();
-		
 	}
 	
 	override public function parseThings() 
