@@ -36,9 +36,9 @@ class Blockmap extends LumpBase
 	
 	public function linkLines() {
 		
-		blocks = indexedBlocks.length;
+		blocks = new Vector(indexedBlocks.length);
 		
-		for (block in 0...pre_blocks.length) {
+		for (block in 0...indexedBlocks.length) {
 			if (blocks[block] == null) blocks[block] = new Array();
 			
 			for (index in indexedBlocks[block]) {
