@@ -5,6 +5,7 @@ import haxe.io.Bytes;
 import hxd.Res;
 import hxd.Window;
 import hxd.res.DefaultFont;
+import hxdgamelib.profiles.DoomProfile;
 import hxdoom.Engine;
 import hxd.App;
 import hxd.File;
@@ -47,6 +48,8 @@ class Main extends App
 		h3d.mat.MaterialSetup.current = new h3d.mat.PbrMaterialSetup();
 		
 		hxdoom = new Engine();
+		
+		hxdoom.setcore_profile(new DoomProfile());
 		
 		Res.initEmbed();
 		hxdoom.addWadBytes(Res.shareware.DOOM1.entry.getBytes(), "DOOM1.WAD");
