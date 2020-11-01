@@ -8,7 +8,9 @@ import hxdoom.core.ProfileCore;
 import hxdoom.definitions.EpisodeDef;
 import hxdoom.definitions.MapDef;
 import hxdoom.Engine;
+import hxdoom.component.LevelMap;
 import hxdoom.enums.game.ActorFlags;
+import hxdgamelib.levelstruct.DoomLevel;
 
 import hxdgamelib.enums.doom.DoomType;
 
@@ -25,6 +27,8 @@ class DoomProfile extends ProfileCore
 	public function new(_shareware:Bool = true) 
 	{
 		super();
+		
+		LevelMap.CONSTRUCTOR = DoomLevel.new;
 		
 		episodes = new Array();
 		
