@@ -165,7 +165,6 @@ class Engine
 		
 		var mapLoaded = LEVELS.loadMap(_mapMarker);
 		if (mapLoaded) {
-			Engine.LEVELS.currentMap.build();
 			if (RENDER != null) {
 				RENDER.initScene();
 			}

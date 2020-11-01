@@ -18,6 +18,8 @@ import hxdoom.utils.geom.Angle;
  */
 class LevelMap //DOES NOT EXTEND LUMPBASE
 {
+	public static var CONSTRUCTOR:Void -> LevelMap = LevelMap.new;
+	
 	public var name:String;
 	
 	public var things:Array<Thing>;
@@ -73,7 +75,6 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 		}
 	}
 	
-	
 	public function getActorSubsector(_actor:Actor):SubSector {
 		var node:Int = nodes.length - 1;
 		while (true) {
@@ -125,7 +126,8 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 	}
 	
 	public function copy():LevelMap {
-		var _bsp:LevelMap = new LevelMap();
+		
+		var _bsp:LevelMap = LevelMap.CONSTRUCTOR();
 		
 		_bsp.linedefs = linedefs.copy();
 		_bsp.name = name;

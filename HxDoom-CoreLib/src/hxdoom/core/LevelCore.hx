@@ -74,7 +74,8 @@ class LevelCore
 		var place:Int = 0;
 		var numitems:Int = 0;
 		
-		var _map = new LevelMap();
+		var _map = LevelMap.CONSTRUCTOR();
+		
 		var mapmarker:Directory = Engine.WADDATA.getDirectory(_mapMarker);
 		var byteData = Engine.WADDATA.getWadByteArray(mapmarker.wad);
 		
@@ -156,8 +157,6 @@ class LevelCore
 		_map.name = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.name).name;
 		
 		currentMap = _map;
-		currentMap.parseThings();
-		currentMap.setOffset();
 		currentMap.build();
 		
 		needToRebuild = true;
