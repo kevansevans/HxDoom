@@ -1,4 +1,4 @@
-package hxdgamelib.enums;
+package hxdgamelib.enums.doom;
 
 /**
  * @author Kaelan
