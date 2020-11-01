@@ -64,12 +64,12 @@ class Main extends App
 	
 	function addConsoleCommands() 
 	{
-		Engine.log = function(_msg:Array<String>, ?_pos:PosInfos) {
+		/*Engine.log = function(_msg:Array<String>, ?_pos:PosInfos) {
 			for (message in _msg) {
 				con.log(message);
 				con.log([_pos.lineNumber + "", _pos.className, _pos.fileName].join(" "), 0xFF0000);
 			}
-		}
+		}*/
 		
 		var arg1:ConsoleArgDesc = {	t : AString, 
 									opt : false, 
