@@ -7,6 +7,7 @@ import hxdoom.definitions.EpisodeDef;
 import hxdoom.definitions.MapDef;
 import hxdoom.lumps.map.*;
 import hxdoom.enums.eng.KeyLump;
+import hxdoom.lumps.plaintext.Textmap;
 
 /**
  * ...
@@ -67,6 +68,8 @@ class LevelCore
 		if (!Engine.WADDATA.wadContains([_mapMarker])) {
 			return false;
 		}
+		
+		var isTextmap:Bool = false;
 		
 		var loaded_lumps:Int = 0;
 		var iterated_lumps:Int = 0;
@@ -147,6 +150,13 @@ class LevelCore
 				case KeyLump.BLOCKMAP :
 					_map.blockmap = Reader.readBlockmap(byteData, mapDir.dataOffset);
 					++loaded_lumps;
+				case KeyLump.TEXTMAP :
+					isTextmap = true;
+					var chunk:Array<Int> = new Array();
+					for (byte in 0...mapDir.size) {
+						chunk.push(Reader.getOneByte(byteData, mapDir.dataOffset + byte));
+					}
+					var textmap:Textmap = new Textmap([chunk]);
 				default :
 					Engine.log(["Map directory unrecognized: " + mapDir.name]);
 			}
@@ -156,7 +166,7 @@ class LevelCore
 		
 		_map.name = Engine.WADDATA.getWadSpecificDir(mapmarker.wad, mapmarker.name).name;
 		
-		currentMap = _map;
+		if (!isTextmap) currentMap = _map;
 		currentMap.build();
 		
 		needToRebuild = true;

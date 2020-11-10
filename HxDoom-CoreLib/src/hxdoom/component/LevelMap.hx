@@ -58,7 +58,7 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 		parseThings();
 		setOffset();
 		buildPointers();
-		blockmap.linkLines();
+		if (blockmap != null) blockmap.linkLines();
 		
 		camera = new Camera(actors_players[0]);
 		focus = new CameraPoint();
