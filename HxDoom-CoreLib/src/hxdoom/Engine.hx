@@ -2,20 +2,14 @@ package hxdoom;
 
 import haxe.PosInfos;
 import haxe.io.Bytes;
-import haxe.ds.Map;
-import haxe.macro.Expr;
 import hxdoom.enums.data.CVarType;
-import hxdoom.component.LevelMap;
 import hxdoom.lumps.map.*;
 
 import hxdoom.enums.data.Defaults;
 import hxdoom.core.*;
-import hxdoom.lumps.map.SubSector;
 import hxdoom.enums.eng.KeyLump;
 import hxdoom.enums.eng.DataLump;
 import hxdoom.enums.EnumTool;
-
-import haxe.Int64;
 
 /**
  * Engine.hx acts as the hub class for accessing data. It contains "cores" that can be utilized for wad data manipulation.
