@@ -15,7 +15,7 @@ import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.Engine;
 
-import scene.shader.WallShader;
+import scene.shader.PaletteShader;
 
 /**
  * ...
@@ -29,7 +29,7 @@ class QuadWall extends Quads
 	
 	public var palette:Playpal = Engine.TEXTURES.playpal;
 	public var lumpTexture:hxdoom.component.Texture;
-	public var assetShader:WallShader;
+	public var assetShader:PaletteShader;
 	
 	public var type:SideType;
 	
@@ -166,7 +166,7 @@ class QuadWall extends Quads
 			
 			material = Material.create();
 			
-			assetShader = new WallShader(palette, lumpTexture);
+			assetShader = new PaletteShader(palette, lumpTexture);
 			material.mainPass.addShader(assetShader);
 			
 			switch (_type) {

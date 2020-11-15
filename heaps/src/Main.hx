@@ -9,9 +9,12 @@ import hxdgamelib.profiles.DoomProfile;
 import hxdoom.Engine;
 import hxd.App;
 import hxd.File;
+import hxdoom.component.Actor;
 import scene.MapScene;
 import hxd.Event;
 import hxd.Key;
+
+import hxdoom.core.action.Enemy;
 
 import h2d.Console;
 
@@ -40,6 +43,8 @@ class Main extends App
 		UI.closeConsole();
 		#end
 		
+		Res.initEmbed();
+		
 		Console.HIDE_LOG_TIMEOUT = 60;
 		con = new Console(DefaultFont.get(), s2d);
 		con.hide();
@@ -51,11 +56,15 @@ class Main extends App
 		
 		hxdoom.setcore_profile(new DoomProfile());
 		
-		Res.initEmbed();
 		hxdoom.addWadBytes(Res.shareware.DOOM1.entry.getBytes(), "DOOM1.WAD");
+		//hxdoom.addWadBytes(Res.shareware.E1M1UDMF.entry.getBytes(), "E1M1UDMF.WAD");
+		
 		Engine.TEXTURES.loadPlaypal();
 		scene3D = new MapScene(s3d);
-		loadMap("E1M1");
+		
+		hxdoom.loadMap("E1M1");
+		
+		scene3D.buildMap();
 		
 		screen = hxd.Window.getInstance();
 		screen.addEventTarget(onEventkey);

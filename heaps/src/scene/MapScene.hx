@@ -3,10 +3,13 @@ package scene;
 import h3d.Camera;
 import h3d.Matrix;
 import h3d.Vector;
+import h3d.scene.Graphics;
 import h3d.scene.Mesh;
 import h3d.scene.Scene;
 import haxe.ds.Map;
 import h3d.mat.Material;
+import scene.geometry.DebugPlane;
+import scene.geometry.SectorFlat;
 
 import hxdoom.Engine;
 import hxdoom.lumps.map.Segment;
@@ -15,7 +18,9 @@ import hxdoom.enums.eng.SideType;
 import hxdoom.enums.eng.PlaneType;
 
 import scene.geometry.QuadWall;
-import scene.geometry.SectorFlat;
+//import scene.geometry.SectorFlat;
+import hxdoom.core.action.Enemy;
+import hxdoom.component.Actor;
 
 /**
  * ...
@@ -28,18 +33,20 @@ class MapScene
 	public static var MatMap:Map<String, Material> = new Map();
 	
 	public var quad_walls:Map<Segment, Array<QuadWall>>;
-	public var poly_flats:Map<Sector, SectorFlat>;
+	//public var poly_flats:Map<Sector, SectorFlat>;
 	var m_walls:Map<Segment, Array<Mesh>>;
 	var vis_list:Array<Segment>;
 	
 	public var camera:Camera;
+	
+	public var gfx:Graphics;
 	
 	public function new(_s3d:Scene) 
 	{
 		s3d = _s3d;
 		
 		quad_walls = new Map();
-		poly_flats = new Map();
+		//poly_flats = new Map();
 		m_walls = new Map();
 		vis_list = new Array();
 		
@@ -47,6 +54,8 @@ class MapScene
 		Engine.TEXTURES.parseTextures();
 		
 		camera = s3d.camera = new Camera(90, 2, 320 / 200);
+		
+		gfx = new Graphics(s3d);
 		
 	}
 	
@@ -136,7 +145,7 @@ class MapScene
 						quad_walls[seg].push(mid_back);
 					}
 					
-					if (line.backSideDef.lower_texture == "-" && line.backSideDef.lower_texture == "AASTINKY") {
+					if (line.backSideDef.lower_texture != "-" && line.backSideDef.lower_texture != "AASTINKY") {
 						
 						var low_back:QuadWall = new QuadWall(seg, SideType.BACK_BOTTOM);
 						var lb_mesh = new Mesh(low_back, low_back.material, s3d);
@@ -144,6 +153,7 @@ class MapScene
 						lb_mesh.visible = false;
 						meshes.push(lb_mesh);
 						quad_walls[seg].push(low_back);
+						
 					}
 					
 			}
@@ -154,10 +164,13 @@ class MapScene
 		}
 		
 		for (sector in Engine.LEVELS.currentMap.sectors) {
-			var floor:SectorFlat = new SectorFlat(sector, PlaneType.FLOOR);
-			var testmesh:Mesh = new Mesh(floor, floor.material);
-			poly_flats[sector] = floor;
-			s3d.addChild(testmesh);
+			gfx.lineStyle(2, Std.int(Math.random() * 0xFFFFFF));
+			for (line in sector.lines) {
+				gfx.moveTo(line.start.xpos * -1, line.start.ypos, sector.floorHeight);
+				gfx.lineTo(line.end.xpos * -1, line.end.ypos, sector.floorHeight);
+				gfx.moveTo(line.start.xpos * -1, line.start.ypos, sector.ceilingHeight);
+				gfx.lineTo(line.end.xpos * -1, line.end.ypos, sector.ceilingHeight);
+			}
 		}
 	}
 	
