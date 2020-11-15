@@ -13,8 +13,8 @@ class Thing extends LumpBase
 	
 	public static var BYTE_SIZE:Int = 10;
 	
-	public var xpos:Int;
-	public var ypos:Int;
+	public var xpos:Float;
+	public var ypos:Float;
 	public var angle:Int;
 	public var type:Int;
 	public var flags:Int;
@@ -41,8 +41,8 @@ class Thing extends LumpBase
 	override public function toDataBytes():Bytes 
 	{
 		var bytes = Bytes.alloc(BYTE_SIZE);
-		bytes.setUInt16(0, xpos);
-		bytes.setUInt16(2, ypos);
+		bytes.setUInt16(0, Std.int(xpos));
+		bytes.setUInt16(2, Std.int(ypos));
 		bytes.setUInt16(4, angle);
 		bytes.setUInt16(6, type);
 		bytes.setUInt16(8, flags);
