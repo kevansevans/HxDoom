@@ -2,26 +2,37 @@ package hxdoom.lumps.plaintext;
 
 import hxdoom.component.LevelMap;
 import hxdoom.lumps.LumpBase;
-import hxdoom.lumps.map.LineDef;
-import hxdoom.lumps.map.Sector;
-import hxdoom.lumps.map.SideDef;
-import hxdoom.lumps.map.Thing;
-import hxdoom.lumps.map.Vertex;
-import hxdoom.utils.geom.Angle;
 
 /**
  * ...
  * @author Kaelan
  */
+
 class Textmap extends LumpBase
 {
 	public static var CONSTRUCTOR:Array<Any> -> Textmap = Textmap.new;
+	
+	public static var GLOBAL:Map<String, String> = new Map();
 	
 	var data:Array<Int>;
 	var blocks:Array<BlockData>;
 	var lines:Array<StringBuf>;
 	
 	var map:LevelMap;
+	
+	var tempString:StringBuf = new StringBuf();
+	
+	var doubleSlashComment:Bool = false;
+	var slashAsteriskComment:Bool = false;
+	
+	var inBlock:Bool = false;
+	var expectingBlock:Bool = false;
+	var nameSpaceFound:Bool = false;
+	
+	var regKeyword:EReg = new EReg('[^{}();"' + '\'' + '\n\t ]+', "i");
+	var regFloat:EReg = new EReg("[+-]?[0-9]+'.'[0-9]*([eE][+-]?[0-9]+)?", "i");
+	
+	var lineNum:Int = 0;
 	
 	public function new(_args:Array<Any>) 
 	{
@@ -35,11 +46,6 @@ class Textmap extends LumpBase
 		//data sanitization here.
 		//Remove whitespaces and break up "chunks" into lines.
 		
-		var tempString:StringBuf = new StringBuf();
-		
-		var doubleSlashComment:Bool = false;
-		var slashAsteriskComment:Bool = false;
-		
 		for (index in 0...data.length) {
 			
 			switch(data[index]) {
@@ -49,8 +55,18 @@ class Textmap extends LumpBase
 					if (doubleSlashComment) doubleSlashComment = false;
 					if (slashAsteriskComment) continue;
 					
-					if (tempString.length != 0) lines.push(tempString);
-					tempString = new StringBuf();
+					if (tempString.length != 0) {
+						
+						if (checkLine(tempString.toString())) {
+							
+							tempString = new StringBuf();
+							lines.push(tempString);
+							
+							++lineNum;
+						} else {
+							//Some error throw here
+						}
+					}
 					continue;
 					
 				case "{".code | "}".code | ";".code :
@@ -58,9 +74,25 @@ class Textmap extends LumpBase
 					if (doubleSlashComment) continue;
 					if (slashAsteriskComment) continue;
 					
+					if (data[index] == "{".code && expectingBlock) {
+						expectingBlock = false;
+						inBlock = true;
+					} else {
+						//error! Opening brace expected
+					}
+					
+					if (data[index] == "}".code && inBlock) {
+						inBlock = false;
+					}
+					
 					tempString.addChar(data[index]);
-					lines.push(tempString);
-					tempString = new StringBuf();
+					
+					if (checkLine(tempString.toString())) {
+						lines.push(tempString);
+						tempString = new StringBuf();
+					} else {
+						//some error throw here
+					}
 					
 					continue;
 					
@@ -85,58 +117,55 @@ class Textmap extends LumpBase
 						continue;
 					}
 					
-				case " ".code : //eliminate whitespace
+				case " ".code | "\t".code : //eliminate whitespace
 					continue;
 				default :
 					
 					if (doubleSlashComment) continue;
 					if (slashAsteriskComment) continue;
+					if (expectingBlock) {
+						//error! We're expecting a '{'
+					}
 					
 					tempString.addChar(data[index]);
 					continue;
 			}
 		}
 		
-		var inBlock:Bool = false;
-		var tempLines:Array<String> = new Array();
-		var itemType:String = "";
-		var index:Int = 0;
-		for (line in lines) {
-			var str:String = line.toString();
-			if (!inBlock) {
-				if (str.charAt(0) == '{') {
-					
-					inBlock = true;
-					
-					tempLines = new Array();
-					itemType = lines[index - 1].toString();
-					continue;
-				}
-			} else {
-				if (str.charAt(0) == '}') {
-					inBlock = false;
-					var block:BlockData = {
-						lumpType : itemType,
-						lines : tempLines
-					}
-					blocks.push(block);
-				} else {
-					var newLine:String = line.toString();
-					newLine = newLine.substr(0, newLine.indexOf(";"));
-					tempLines.push(newLine);
-				}
-			}
-			++index;
-		}
-		
-		map = new LevelMap();
-		
-		//interpret code here
-		
 		Engine.LEVELS.currentMap = map;
 		
 	}
 	
+	function checkLine(_string:String):Bool
+	{
+		if (!inBlock) {
+			//namespace or keyword check
+			var split:Array<String> = tempString.toString().split("=");
+			if (split.length == 2) { //Global keyword
+				if (regKeyword.match(split[0])) {
+					if (split[1].lastIndexOf(";") == -1) { //does it terminate?
+						return false;
+					}
+					if (split[1].length <= 1) {
+						//Error! I'm undefined!
+					}
+					Textmap.GLOBAL[split[0]] = split[1];
+					return true;
+				} else {
+					//Error! Wtf did you type?
+					return false;
+				}
+			} else if (split.length == 1) { //Keyword
+				if (regKeyword.match(split[0])) {
+					expectingBlock = true; // we don't know if we're in a block or not just yet
+				}
+			}
+		} else {
+			//we're in a block, we HAVE to expect split to return an array of 2
+		}
+		
+		return false; //Make sure this NEVER gets reached, only here so Haxe doesn't throw a fit
+	}
 }
 
 typedef BlockData = {
