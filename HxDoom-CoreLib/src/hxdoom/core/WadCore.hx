@@ -5,9 +5,7 @@ import haxe.io.Bytes;
 
 import hxdoom.core.Reader;
 import hxdoom.lumps.Directory;
-import hxdoom.lumps.graphic.*;
 import hxdoom.enums.eng.KeyLump;
-import hxdoom.enums.eng.DataLump;
 import hxdoom.enums.data.Defaults;
 
 /**

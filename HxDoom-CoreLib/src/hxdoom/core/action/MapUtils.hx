@@ -14,9 +14,6 @@ class MapUtils //p_matutl.c
 	public static var AproxDistance:(Float, Float) -> Float = P_AproxDistance;
 	public static function P_AproxDistance(_dx:Float, _dy:Float):Float 
 	{
-		
-		Engine.log(["Test me!"]);
-		
 		var dx = Math.abs(_dx);
 		var dy = Math.abs(_dy);
 		
