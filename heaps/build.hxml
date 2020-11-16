@@ -5,6 +5,7 @@
 
 --each
 -lib hxdoom
+-lib hxdgamelib
 -lib heaps
 -lib hlsdl
 -lib hlopenal
@@ -12,5 +13,6 @@
 
 --next
 -lib hxdoom
+-lib hxdgamelib
 -lib heaps
 -js bin/js/hldoom.js

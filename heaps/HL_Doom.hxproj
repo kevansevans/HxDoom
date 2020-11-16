@@ -32,6 +32,7 @@
     <library name="hlsdl" />
     <library name="hlopenal" />
     <library name="hxdoom" />
+    <library name="hxdgamelib" />
   </haxelib>
   <!-- Class files to compile (other referenced classes will automatically be included) -->
   <compileTargets>
