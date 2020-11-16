@@ -27,6 +27,8 @@ class PaletteShader extends Shader
 			var time : Float;
 		};
 		
+		@param var index:Int = 0;
+		
 		@param var palette:Array<Vec4, 255>;
 		@param var texture:Sampler2D;
 		
@@ -43,10 +45,13 @@ class PaletteShader extends Shader
 			
 			var uvOffset:Vec2 = calculatedUV;
 			
-			var swatch:Int = int(texture.get(uvOffset).r * 255);
+			if (texture.get(uvOffset).g == 0) {
+				discard;
+				return;
+			}
 			
+			var swatch:Int = int(texture.get(uvOffset).r * 255);
 			pixelColor = palette[swatch];
-			if (texture.get(calculatedUV).g == 0) discard;
 			
 		}
 		
