@@ -17,7 +17,7 @@ Read the wiki on how to use HxDoom: https://github.com/kevansevans/HxDoom/wiki
 **K.I.S.S.:** Keep it simple, stupid.
 
 ## Licensing
-HxDoom falls under the GPL3 license as it borrows from several GPL sources. Any subsequent derivatives, under the premise they simply use this library and do not modify it, are not required to make their repositories or projects use the GPL3 license. Just don't forget to copy the current GPL3 license and provide it in your distribution if possible.
+HxDoom falls under the GPL3 license as it borrows from several GPL2 (and later) sources. Licensing is a bit fuzzy elsewhere and I am currently investigating licensing repurposing.
 
 ## Contributing
 Here's some things you can do to help this project out:
