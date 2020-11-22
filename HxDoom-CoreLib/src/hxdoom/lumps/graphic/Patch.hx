@@ -21,6 +21,8 @@ class Patch extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		width = 	_args[0];
 		height = 	_args[1];
 		offset_x = 	_args[2];

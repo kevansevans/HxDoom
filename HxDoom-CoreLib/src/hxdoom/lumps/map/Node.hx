@@ -35,6 +35,8 @@ class Node extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		xPartition = 			_args[0];
 		yPartition = 			_args[1];
 		changeXPartition = 		_args[2];

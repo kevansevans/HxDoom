@@ -31,6 +31,8 @@ class Segment extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		startID = 	_args[0];
 		endID = 	_args[1];
 		angle = 	_args[2];

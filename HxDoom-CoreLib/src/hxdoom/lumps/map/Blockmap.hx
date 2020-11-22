@@ -26,6 +26,8 @@ class Blockmap extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		originX = _args[0];
 		originY = _args[1];
 		numColumns = _args[2];

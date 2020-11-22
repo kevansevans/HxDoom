@@ -10,6 +10,7 @@ class LumpBase
 {
 
 	public var validcount:Int;
+	public var override_new:Bool = false; 
 	
 	public function new() 
 	{

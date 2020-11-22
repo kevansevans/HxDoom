@@ -15,6 +15,8 @@ class PatchNames extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		names = new Array();
 	}
 	public function addPatchName(_name:String) {

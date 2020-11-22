@@ -31,6 +31,8 @@ class Sector extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		floorHeight = 		_args[0];
 		ceilingHeight = 	_args[1];
 		floorTexture = 		_args[2];

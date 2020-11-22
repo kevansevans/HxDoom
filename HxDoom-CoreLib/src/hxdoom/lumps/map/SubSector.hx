@@ -23,6 +23,8 @@ class SubSector extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		count = 		_args[0];
 		firstSegID = 	_args[1];
 	}

@@ -21,6 +21,8 @@ class TextureInfo extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		num_textures = _args[0];
 		offsets = _args[1];
 		

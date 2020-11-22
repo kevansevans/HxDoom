@@ -44,6 +44,8 @@ class LineDef extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		startVertexID = 	_args[0];
 		endVertexID = 		_args[1];
 		flags = 			_args[2];

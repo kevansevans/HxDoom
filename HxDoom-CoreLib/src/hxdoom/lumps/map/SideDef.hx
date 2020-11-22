@@ -26,6 +26,8 @@ class SideDef extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		xoffset = 			_args[0];
 		yoffset = 			_args[1];
 		upper_texture = 	_args[2];

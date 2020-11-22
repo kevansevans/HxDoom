@@ -23,6 +23,8 @@ class Playpal extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		palettes = new Array();
 	}
 	public function addSwatch(_index:Int, _color:Int) {

@@ -22,6 +22,8 @@ class Thing extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		xpos = 	_args[0];
 		ypos = 	_args[1];
 		angle = _args[2];

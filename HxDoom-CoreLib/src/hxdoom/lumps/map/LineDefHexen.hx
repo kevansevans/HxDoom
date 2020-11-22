@@ -20,6 +20,8 @@ class LineDefHexen extends LineDef
 	{
 		super([_args[0], _args[1], _args[2], _args[3], 0, _args[9], _args[10]]);
 		
+		if (override_new) return;
+		
 		arg_1 = _args[4];
 		arg_2 = _args[5];
 		arg_3 = _args[6];

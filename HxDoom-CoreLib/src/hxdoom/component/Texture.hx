@@ -21,6 +21,8 @@ class Texture extends Patch
 	{
 		super([]);
 		
+		if (override_new) return;
+			
 		data = _args[0];
 		
 		width = data.width;

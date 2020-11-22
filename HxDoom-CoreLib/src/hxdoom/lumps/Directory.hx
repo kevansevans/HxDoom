@@ -20,6 +20,8 @@ class Directory extends LumpBase
 	{
 		super();
 		
+		if (override_new) return;
+		
 		dataOffset = 	_args[0];
 		size = 			_args[1];
 		name = 			_args[2];

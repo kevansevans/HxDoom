@@ -12,6 +12,8 @@ class ThingHexen extends Thing
 	{
 		super();
 		
+		if (override_new) return;
+		
 	}
 	
 }

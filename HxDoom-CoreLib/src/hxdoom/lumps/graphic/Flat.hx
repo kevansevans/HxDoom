@@ -15,6 +15,8 @@ class Flat extends Patch
 	{
 		super([64, 64, 0, 0]);
 		
+		if (override_new) return;
+		
 		pixels = new Vector(64);
 	}
 	
