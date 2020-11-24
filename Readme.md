@@ -1,3 +1,4 @@
+
 # HxDoom readme
 
 # What is HxDoom?
@@ -17,16 +18,18 @@ Read the wiki on how to use HxDoom: https://github.com/kevansevans/HxDoom/wiki
 **K.I.S.S.:** Keep it simple, stupid.
 
 ## Licensing
-HxDoom falls under the GPL3 license as it borrows from several GPL2 (and later) sources. Licensing is a bit fuzzy elsewhere and I am currently investigating licensing repurposing.
+HxDoom is MIT. You may use it for commercial purposes without the need to open source it, but I humbly request that you do if you plan on distributing your programs for free.
+
+HxDoom uses a blackbox approach for development. For anything that can not be easily found online through a wiki, through programs like Slade, hex editors, map editors, through general word of mouth, or however, HxDoom will borrow code from the 3D0 release of Doom found here: https://github.com/Olde-Skuul/doom3do
+
+Doom as an IP belongs to id Software, Zenimax, and Microsoft. The use of the name here is in name only and may not be used for commercial purposes without explicit permission or are otherwise known or assumed to be free to distribute. HxDoom shall not be used to distribute commercial products that the developer does not own the right to.
 
 ## Contributing
 Here's some things you can do to help this project out:
- * Help port over the original Doom engine from C to Haxe up to HxDoom's standards
- * Leading development for a currently untested target
- * Test and existing target to verify feature and behavior parity
- * Give as much feedback as possible! This is a huge project!
-
-
+ * Join DIYIDTECH and help us develop a blackbox Doom engine! https://discord.gg/a8n4Y2z
+ * Test deployment on currently unverified Haxe targets. (Simply transpiling won't do, show us that the code works as intended!)
+ * Further refine and test active working targets!
+ * 
 ```
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //Confirmed targets HxDoom has been compiled to and ran on (Please help with this list!)
@@ -36,7 +39,7 @@ Here's some things you can do to help this project out:
   * C++ (Widows, Manjaro)
   * Hashlink https://hashlink.haxe.org/
   * HTML5 w/WebGL
-* With Heaps
+* With Heaps https://heaps.io/
   * Targeting Hashlink
   * Targeting Hashlink C
   * JavaScript Deployment: https://kevansevans.github.io/HxDoom/demo/
