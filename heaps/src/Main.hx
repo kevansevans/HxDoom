@@ -14,8 +14,6 @@ import scene.MapScene;
 import hxd.Event;
 import hxd.Key;
 
-import hxdoom.core.action.Enemy;
-
 import h2d.Console;
 
 #if hl

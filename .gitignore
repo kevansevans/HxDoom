@@ -19,12 +19,10 @@ library/api/
 
 library/docgen.bat
 
-DOOM-master/
-
 HxDoom-CoreLib/api/
 
 HxDoom-CoreLib/doc/
 
 heaps/res/shareware/DOOM.WAD
 
-heaps/res/shareware/DOOM2.WAD
+heaps/phoenix_doom-master/

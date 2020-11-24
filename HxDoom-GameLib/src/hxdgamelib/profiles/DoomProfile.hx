@@ -1,18 +1,12 @@
 package hxdgamelib.profiles;
 
 import hxdoom.component.Actor;
-import hxdoom.core.action.Enemy;
-import hxdoom.core.action.Sight;
-import hxdoom.core.action.MapUtils;
 import hxdoom.core.ProfileCore;
 import hxdoom.definitions.EpisodeDef;
 import hxdoom.definitions.MapDef;
 import hxdoom.Engine;
 import hxdoom.component.LevelMap;
-import hxdoom.enums.game.ActorFlags;
 import hxdgamelib.levelstruct.DoomLevel;
-
-import hxdgamelib.enums.doom.DoomType;
 
 /**
  * ...
@@ -139,51 +133,6 @@ class DoomProfile extends ProfileCore
 					firstLevel : 29
 				});
 			}
-		}
-		
-		Enemy.CheckMissileRange = function(_actor:Actor):Bool 
-		{
-			Engine.log(["I need testing!"]);
-			
-			var dist:Float;
-			
-			if (!Sight.CheckSight(_actor, _actor.target))
-			return false;
-			
-			if (_actor.flags & ActorFlags.JUSTHIT > 0)
-			{
-				_actor.flags &= ~ActorFlags.JUSTHIT;
-				return true;
-			}
-			
-			if (_actor.reactiontime > 0) return false;
-			
-			dist = MapUtils.AproxDistance(_actor.xpos - _actor.target.xpos, _actor.ypos - _actor.target.ypos) - 64;
-			
-			if (_actor.info.meleestate > 0) dist -= 128;
-			
-			if (_actor.type == DoomType.VILE) 
-			{
-				if (dist > 14 * 64) return false;
-			}
-			
-			if (_actor.type == DoomType.UNDEAD) 
-			{
-				if (dist < 196) return false;
-				dist /= 2;
-			}
-			if (_actor.type == DoomType.CYBORG || _actor.type == DoomType.SPIDER || _actor.type == DoomType.SKULL)
-			{
-				dist /= 2;
-			}
-			
-			if (dist > 200) dist = 200;
-			
-			if (_actor.type == DoomType.CYBORG && dist > 160) dist = 160;
-			
-			if (Engine.GAME.p_random() < dist) return false;
-			
-			return true;
 		}
 		
 	}

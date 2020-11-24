@@ -19,7 +19,6 @@ import hxdoom.enums.eng.PlaneType;
 
 import scene.geometry.QuadWall;
 //import scene.geometry.SectorFlat;
-import hxdoom.core.action.Enemy;
 import hxdoom.component.Actor;
 
 /**
