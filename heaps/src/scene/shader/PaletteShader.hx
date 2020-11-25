@@ -30,7 +30,11 @@ class PaletteShader extends Shader
 		@param var index:Int = 0;
 		
 		@param var palette:Array<Vec4, 255>;
+		@param var colormap:Array<Vec4, 255>;
+		@param var useColormap:Int = 0;
 		@param var texture:Sampler2D;
+		@param var brightness:Int = 256;
+		@param var fullbright:Int = 1;
 		
 		@param var width:Int;
 		@param var height:Int;
@@ -51,7 +55,19 @@ class PaletteShader extends Shader
 			}
 			
 			var swatch:Int = int(texture.get(uvOffset).r * 255);
-			pixelColor = palette[swatch];
+			var alpha:Float = texture.get(uvOffset).g;
+			
+			if (fullbright == 1) {
+				pixelColor = palette[swatch];
+				pixelColor.a = alpha;
+				//return;
+			}
+			
+			if (useColormap == 1 && fullbright == 0) {
+				pixelColor = palette[swatch];
+			} else {
+				
+			}
 			
 		}
 		
