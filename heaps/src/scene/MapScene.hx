@@ -14,6 +14,7 @@ import scene.geometry.SectorFlat;
 import hxdoom.Engine;
 import hxdoom.lumps.map.Segment;
 import hxdoom.lumps.map.Sector;
+import hxdoom.lumps.map.Vertex;
 import hxdoom.enums.eng.SideType;
 import hxdoom.enums.eng.PlaneType;
 
@@ -59,6 +60,8 @@ class MapScene
 	}
 	
 	public function buildMap() {
+		
+		var verts = Engine.LEVELS.currentMap.vertexes;
 		
 		for (seg in Engine.LEVELS.currentMap.segments) {
 			
@@ -163,14 +166,24 @@ class MapScene
 		}
 		
 		for (sector in Engine.LEVELS.currentMap.sectors) {
-			gfx.lineStyle(2, Std.int(Math.random() * 0xFFFFFF));
-			for (line in sector.lines) {
-				gfx.moveTo(line.start.xpos * -1, line.start.ypos, sector.floorHeight);
-				gfx.lineTo(line.end.xpos * -1, line.end.ypos, sector.floorHeight);
-				gfx.moveTo(line.start.xpos * -1, line.start.ypos, sector.ceilingHeight);
-				gfx.lineTo(line.end.xpos * -1, line.end.ypos, sector.ceilingHeight);
+			var index = Engine.LEVELS.currentMap.sectors.indexOf(sector);
+			trace(index);
+			if (index == 7 || index == 11 || index == 24) continue;
+			
+			if (sector.floorTexture != "F_SKY1") {
+				var secFlatPolyFloor:SectorFlat = new SectorFlat(sector, PlaneType.FLOOR);
+				var floorMeshA:Mesh = new Mesh(secFlatPolyFloor, secFlatPolyFloor.material, s3d);
+			}
+			if (sector.ceilingTexture != "F_SKY1") {
+				var secFlatPolyCeil:SectorFlat = new SectorFlat(sector, PlaneType.CEILING);
+				var floorMeshB:Mesh = new Mesh(secFlatPolyCeil, secFlatPolyCeil.material, s3d);
 			}
 		}
+	}
+	
+	public function getDirection(_a:Vertex, _b:Vertex, _c:Vertex):Float
+	{
+		return ((_b.ypos - _a.ypos) * (_c.xpos - _b.xpos) - (_b.xpos - _a.xpos) * (_c.ypos - _b.ypos));
 	}
 	
 	public function disposeMap() {
