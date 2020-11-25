@@ -1,11 +1,11 @@
 {
   "name": "hxdoom",
   "url" : "https://github.com/kevansevans/HxDoom",
-  "license": "GPL",
+  "license": "MIT",
   "tags": ["cross", "alpha", "game"],
   "description": "Haxelib adaption of id Tech 1",
-  "version": "0.0.6-alpha",
+  "version": "0.0.7-alpha",
   "classPath": "src/",
-  "releasenote": "alpha 6 release",
+  "releasenote": "alpha 7 release, the MIT update",
   "contributors": ["kevansevans"]
 }

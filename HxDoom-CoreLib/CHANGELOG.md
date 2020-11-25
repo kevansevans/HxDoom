@@ -1,3 +1,27 @@
+### 24NOV2020
+
+* The Haxelib is now MIT!
+  * A sizeable chunk of the previous in-dev work had to be removed due to it being borrowed from GPL2 sources. This is counter to the goals of HxDoom. A substitute source has been found and will be used from now on.
+* Flat textures reading added.
+* Blockmap reading added.
+* Dependency injection for functions added to Reader.hx.
+* Vanilla maps can read out of order lumps.
+* Further fixes to wall visibly calculations.
+* Sector.hx
+  * Added 'lines' array that stores all linedefs that make up sector.
+  * Added 'getSortedVertices' static method that returns a correctly sorted array of vertices, meant for aiding with converting map geometry into GL-Esque friendly data.
+* General code cleanup
+
+### 16AUG2020 0.0.6
+
+* Significant organization of classes with clearer intent with their names and package paths
+* Significant improvements to documentation, friendly to Dox generation.
+* Significant overhaul to wad reading and core utilization. Way too much to list!
+* Per class dependency injection system utilizing var class:() -> Class = Class.new; Allows for easy behavior replacement of the library without having to rewrite the whole library.
+* String parsing for addWad via WadCore.addWadFromString. This is for Haxe targets that do not natively support "bytes" or their filesystem handlers returns strings when reading files.
+* Texture reading. Can now read TEXTUREX and PNAME lumps and assemble defined patches.
+* Addition of LevelCore.hx which more directly handles loaded maps
+
 ### 29MAY2020 Alpha 0.0.5
 * Improved Core overriding system
 * Cleaner map lumps
