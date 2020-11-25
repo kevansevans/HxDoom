@@ -10,7 +10,7 @@ class ThingHexen extends Thing
 	
 	public function new(_args:Array<Any>) 
 	{
-		super();
+		super(_args);
 		
 		if (override_new) return;
 		
