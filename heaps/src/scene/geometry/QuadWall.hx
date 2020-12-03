@@ -169,12 +169,6 @@ class QuadWall extends Quads
 			assetShader = new PaletteShader(palette, lumpTexture);
 			material.mainPass.addShader(assetShader);
 			
-			switch (_type) {
-				case FRONT_MIDDLE | BACK_MIDDLE:
-					material.mainPass.setPassName("alpha");
-				default :
-					
-			}
 			MapScene.MatMap[texturename] = material;
 		}
 	}
