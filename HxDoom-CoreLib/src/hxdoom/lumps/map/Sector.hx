@@ -98,12 +98,17 @@ class Sector extends LumpBase
 		sortedLines.push(startLine);
 		worklines.remove(startLine);
 		
+		var sectorindex = Engine.LEVELS.currentMap.sectors.indexOf(_sector);
+		
 		var parsing:Bool = true;
 		
 		if (_sector.lines.length == 3) 
 		{
+			sortedLines = new Array();
 			
 			for (line in _sector.lines) sortedLines.push(line);
+			
+			return toSortedVertices(sortedLines, sector);
 			
 		} else {
 			
@@ -174,44 +179,94 @@ class Sector extends LumpBase
 			}
 		}
 		
-		
-		rings.reverse();
-		
-		sortedLines.push(sortedLines[0]);
-		
-		while (rings.length > 0) {
+		if (rings.length > 0) {
 			
-			var indexLine:LineDef = null;
-			var shortest:Float = Math.POSITIVE_INFINITY;
+			var sector_index:Int = Engine.LEVELS.currentMap.sectors.indexOf(sector);
 			
-			for (line_a in sortedLines) for (line_b in rings[0]) {
+			var vertRings:Array<Array<Vertex>> = new Array();
+			
+			rings.push(sortedLines);
+			
+			for (ring in rings) {
+				var sortedVertRing:Array<Vertex> = toSortedVertices(ring, sector);
+				vertRings.push(sortedVertRing);
+			}
+			
+			var returnVerts:Array<Vertex> = new Array();
+			
+			while (vertRings.length > 0) {
 				
-				var dist_a = Vertex.distance(line_a.start, line_b.start);
-				var dist_b = Vertex.distance(line_a.start, line_b.end);
-				var dist_c = Vertex.distance(line_a.end, line_b.end);
+				var sharesIntersection:Bool = false;
 				
-				if (dist_a < shortest || dist_b < shortest || dist_c < shortest) {
-					indexLine = line_a;
+				if (returnVerts.length == 0) {
+					for (vert in vertRings[0]) {
+						returnVerts.push(vert);
+					}
+					vertRings.remove(vertRings[0]);
 				} else {
-					continue;
+					var shortest:Float = Math.POSITIVE_INFINITY;
+					var indexVertA:Vertex = null;
+					var indexVertB:Vertex = null;
+					
+					for (vertA in returnVerts) for (vertB in vertRings[0]) {
+						
+						if (Vertex.distance(vertA, vertB) == 0) {
+							sharesIntersection = true;
+							indexVertA = vertA;
+							indexVertB = vertB;
+							break;
+						} else if (Vertex.distance(vertB, vertA) < shortest) {
+							shortest = Vertex.distance(vertA, vertB);
+							indexVertA = vertA;
+							indexVertB = vertB;
+						}
+						
+					}
+					
+					while (returnVerts.indexOf(indexVertA) != 0) returnVerts.push(returnVerts.shift());
+					while (vertRings[0].indexOf(indexVertB) != 0) vertRings[0].push(vertRings[0].shift());
+					
+					if (!sharesIntersection) {
+						vertRings[0].push(indexVertB.copy());
+						returnVerts.push(indexVertA.copy());
+					}
+					
+					for (vert in vertRings[0]) {
+						returnVerts.push(vert);
+					}
+					
+					vertRings.remove(vertRings[0]);
+				}
+				
+			}
+			
+			var lowestVert:Vertex = null;
+			var lowset = Math.POSITIVE_INFINITY;
+			
+			for (vert in returnVerts) {
+				if (Engine.LEVELS.currentMap.vertexes.indexOf(vert) < lowset) {
+					lowestVert = vert;
+					lowset = Engine.LEVELS.currentMap.vertexes.indexOf(vert);
 				}
 			}
 			
-			if (indexLine == null) trace("Problem!");
-			else {
-				for (line in rings[0]) {
-					sortedLines.insert(sortedLines.indexOf(indexLine), line);
-				}
-				sortedLines.insert(sortedLines.indexOf(indexLine), rings[0][0]);
-				rings.shift();
-			}
+			while (returnVerts.indexOf(lowestVert) != 0) returnVerts.push(returnVerts.shift());
 			
+			return returnVerts;
+			
+		} else {
+			return toSortedVertices(sortedLines, sector);
 		}
 		
+		
+	}
+	
+	static function toSortedVertices(_lines:Array<LineDef>, _sector:Sector):Array<Vertex>
+	{
 		var verts:Array<Vertex> = new Array();
 		
-		for (line in sortedLines) {
-			if (line.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(sector)) {
+		for (line in _lines) {
+			if (line.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(_sector)) {
 				verts.push(line.start);
 			} else {
 				verts.push(line.end);
