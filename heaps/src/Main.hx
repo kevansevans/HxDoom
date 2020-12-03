@@ -116,8 +116,13 @@ class Main extends App
 	{
 		Engine.LOADMAP(_marker.toUpperCase());
 		scene3D.disposeMap();
+		scene3D = null;
+		scene3D = new MapScene(s3d);
 		scene3D.buildMap();
 		Engine.GAME.tick();
+		con_vis = false;
+	}
+	
 	function flatWire(_value:Int)
 	{
 		scene3D.setFlatWire(_value == 1 ? true : false);
