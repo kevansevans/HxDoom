@@ -83,6 +83,15 @@ class Main extends App
 									name : "Map Marker" };
 		con.addCommand("map", "map [map marker name], loads map from given marker name", [arg1], loadMap);
 		
+		var arg2:ConsoleArgDesc = { t : AInt,
+									opt : false,
+									name : "Wall Wireframe"	};
+		con.addCommand("wall_wireframe", "0/1 on off, toggle wall wireframe", [arg2], wallWire);
+									
+		var arg3:ConsoleArgDesc = { t : AInt,
+									opt : false,
+									name : "Flat Wireframe"	};
+		con.addCommand("flat_wireframe", "0/1 on off, toggle wall wireframe", [arg3], flatWire);
 	}
 	
 	#if hl
@@ -111,6 +120,16 @@ class Main extends App
 		scene3D.disposeMap();
 		scene3D.buildMap();
 		Engine.GAME.tick();
+	function flatWire(_value:Int)
+	{
+		scene3D.setFlatWire(_value == 1 ? true : false);
+		con_vis = false;
+	}
+	
+	function wallWire(_value:Int)
+	{
+		scene3D.setWallWire(_value == 1 ? true : false);
+		con_vis = false;
 	}
 	
 	public function onEventkey(e:Event):Void 
