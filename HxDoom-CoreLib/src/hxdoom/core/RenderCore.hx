@@ -19,7 +19,6 @@ class RenderCore
 {
 	public var virtual_screen:Map<Int, Segment>;
 	public var vis_segments:Array<Segment>;
-	public var vis_subsecs:Array<SubSector>;
 	public var vis_floors:Array<Segment>;
 	public var screen_width:Int = 320;
 	public var spanlimit:Int = 180;
@@ -44,7 +43,6 @@ class RenderCore
 		if (_subsec == null) {
 			virtual_screen = new Map();
 			vis_segments = new Array();
-			vis_subsecs = new Array();
 			recursiveNodeTraversalVisibility(map.nodes.length -1);
 		} else {
 			subsectorVisibilityCheck(_subsec);
