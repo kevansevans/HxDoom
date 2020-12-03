@@ -33,8 +33,10 @@ class MapScene
 	public static var MatMap:Map<String, Material> = new Map();
 	
 	public var quad_walls:Map<Segment, Array<QuadWall>>;
-	//public var poly_flats:Map<Sector, SectorFlat>;
+	public var poly_flats:Map<Sector, Int>;
+	
 	var m_walls:Map<Segment, Array<Mesh>>;
+	var m_flats:Map<Sector, Array<Mesh>>;
 	var vis_list:Array<Segment>;
 	
 	public var camera:Camera;
@@ -46,8 +48,9 @@ class MapScene
 		s3d = _s3d;
 		
 		quad_walls = new Map();
-		//poly_flats = new Map();
+		poly_flats = new Map();
 		m_walls = new Map();
+		m_flats = new Map();
 		vis_list = new Array();
 		
 		Engine.TEXTURES.parsePatchNames();
@@ -166,17 +169,39 @@ class MapScene
 		}
 		
 		for (sector in Engine.LEVELS.currentMap.sectors) {
-			var index = Engine.LEVELS.currentMap.sectors.indexOf(sector);
-			trace(index);
-			if (index == 7 || index == 11 || index == 24) continue;
+				
+			m_flats[sector] = new Array();
+			poly_flats[sector] = 0;
 			
 			if (sector.floorTexture != "F_SKY1") {
-				var secFlatPolyFloor:SectorFlat = new SectorFlat(sector, PlaneType.FLOOR);
-				var floorMeshA:Mesh = new Mesh(secFlatPolyFloor, secFlatPolyFloor.material, s3d);
+				var secFlatPolyFloor:SectorFlat = new SectorFlat(sector, PlaneType.FLOOR, true, 100);
+				if (secFlatPolyFloor.hxTriCount != 0) {
+					m_flats[sector][0] = new Mesh(secFlatPolyFloor, secFlatPolyFloor.material, s3d);
+					m_flats[sector][0].visible = false;
+				}
 			}
 			if (sector.ceilingTexture != "F_SKY1") {
-				var secFlatPolyCeil:SectorFlat = new SectorFlat(sector, PlaneType.CEILING);
-				var floorMeshB:Mesh = new Mesh(secFlatPolyCeil, secFlatPolyCeil.material, s3d);
+				var secFlatPolyCeil:SectorFlat = new SectorFlat(sector, PlaneType.CEILING, true, 100);
+				if (secFlatPolyCeil.hxTriCount != 0) {
+					m_flats[sector][1] = new Mesh(secFlatPolyCeil, secFlatPolyCeil.material, s3d);
+					m_flats[sector][1].visible = false;
+				}
+			}
+		}
+	}
+	
+	public function setWallWire(_value:Bool) {
+		for (segwall in m_walls) {
+			for (mesh in segwall) {
+				mesh.material.mainPass.wireframe = _value;
+			}
+		}
+	}
+	
+	public function setFlatWire(_value:Bool) {
+		for (polyflat in m_flats) {
+			for (mesh in polyflat) {
+				mesh.material.mainPass.wireframe = _value;
 			}
 		}
 	}
@@ -192,6 +217,11 @@ class MapScene
 				s3d.removeChild(segwall);
 			}
 		}
+		for (flat in m_walls) {
+			for (poly in flat) {
+				s3d.removeChild(poly);
+			}
+		}
 	}
 	
 	public function update() {
@@ -202,21 +232,6 @@ class MapScene
 		
 		if (vis_seg == null) return;
 		
-		for (seg in vis_seg) {
-			if (!vis_list.contains(seg)) {
-				
-				if (m_walls[seg] == null) continue;
-				
-				for (mesh in m_walls[seg]) {
-					mesh.visible = true;
-				}
-				for (quad in quad_walls[seg]) {
-					quad.updateGeneral();
-				}
-				vis_list.push(seg);
-			}
-		}
-		
 		for (seg in vis_list) {
 			if (!vis_seg.contains(seg)) {
 				
@@ -224,8 +239,32 @@ class MapScene
 				
 				for (mesh in m_walls[seg]) {
 					mesh.visible = false;
+					poly_flats[seg.sector]--;
+					if (poly_flats[seg.sector] < 0) poly_flats[seg.sector] = 0;
+					if (poly_flats[seg.sector] == 0) {
+						for (flat in m_flats[seg.sector]) flat.visible = false;
+					}
 				}
 				vis_list.remove(seg);
+			}
+		}
+		
+		for (seg in vis_seg) {
+			if (!vis_list.contains(seg)) {
+				
+				if (m_walls[seg] == null) continue;
+				
+				for (mesh in m_walls[seg]) {
+					mesh.visible = true;
+					poly_flats[seg.sector]++;
+					if (poly_flats[seg.sector] > 0) {
+						for (flat in m_flats[seg.sector]) flat.visible = true;
+					}
+				}
+				for (quad in quad_walls[seg]) {
+					quad.updateGeneral();
+				}
+				vis_list.push(seg);
 			}
 		}
 		

@@ -22,14 +22,23 @@ import scene.shader.PaletteShader;
 class SectorFlat extends Polygon
 {
 	var sector:Sector;
-	var verts:Array<Vertex>;
+	public var verts:Array<Vertex>;
+	public var problem:Vertex;
 	var lumpTexture:Flat;
 	public var material:Material;
 	var assetShader:PaletteShader;
 	
-	public function new(_sector:Sector, _plane:PlaneType) 
+	var triFails:Int = 0;
+	
+	public var hxTriCount:Int = 0;
+	public var failtri:Array<Vertex>;
+	public var mid:Vertex;
+	
+	public function new(_sector:Sector, _plane:PlaneType, ?_debug:Bool = false, ?_failLimit:Int = 0) 
 	{
 		sector = _sector;
+		
+		var sectorindex = Engine.LEVELS.currentMap.sectors.indexOf(_sector);
 		
 		var textureName:String = "-";
 		var planeHeight:Float = 0;
@@ -43,60 +52,109 @@ class SectorFlat extends Polygon
 				planeHeight = _sector.ceilingHeight;
 		}
 		
-		var verts = Sector.getSortedVerticies(_sector);
+		verts = Sector.getSortedVerticies(_sector).copy();
+		var originalVerts = verts.copy();
+		
+		var trilimit = verts.length - 2;
 		
 		verts.reverse();
 		
 		var tris:Array<Point> = new Array();
 		
-		var levverts = Engine.LEVELS.currentMap.vertexes;
-		
 		while (true) {
 			
-			if (verts.length == 3) {
-				
-				tris.push(new Point(verts[0].xpos * -1, verts[0].ypos, planeHeight));
-				tris.push(new Point(verts[1].xpos * -1, verts[1].ypos, planeHeight));
-				tris.push(new Point(verts[2].xpos * -1, verts[2].ypos, planeHeight));
+			if (_debug && triFails == _failLimit) {
 				
 				break;
 			}
+			
+			if (Std.int(tris.length / 3) == trilimit) break;
 			
 			var a:Vertex = verts[0];
 			var b:Vertex = verts[1];
 			var c:Vertex = verts[2];
 			
-			if (a == null || b == null || c == null) break;
-			
 			var dir = getDirection(a, b, c);
 			
-			//trace(dir, levverts.indexOf(a), levverts.indexOf(b), levverts.indexOf(c));
+			if (verts.length == 3) {
+				
+				if (dir > 0) {
+					tris.push(new Point(a.xpos * -1, a.ypos, planeHeight));
+					tris.push(new Point(b.xpos * -1, b.ypos, planeHeight));
+					tris.push(new Point(c.xpos * -1, c.ypos, planeHeight));
+				} else {
+					tris.push(new Point(a.xpos * -1, a.ypos, planeHeight));
+					tris.push(new Point(c.xpos * -1, c.ypos, planeHeight));
+					tris.push(new Point(b.xpos * -1, b.ypos, planeHeight));
+				}
+				
+				hxTriCount++;
+				
+				break;
+			}
+			
+			
 			
 			if (dir == 0) {
 				
-				//trace("line flat");
-				
 				verts.remove(b);
+				
+				trilimit -= 1;
+				
 				continue;
 				
 			} else {
 				
 				if (dir < 0) {
+					
+					if (_debug) {
+						
+						var a:Vertex = verts[0];
+						var b:Vertex = verts[1];
+						var c:Vertex = verts[2];
+						
+						failtri = new Array();
+						failtri.push(a);
+						failtri.push(b);
+						failtri.push(c);
+					}
+						
 					verts.push(verts.shift());
-					//trace("Not a inner tri");
+						
+					if (_debug) triFails++;
+					
 				} else {
 					
 					var valid:Bool = true;
 					
-					for (vert in verts) {
-						if (vert == a || vert == b || vert == c) continue;
-						else {
-							if (pointLiesInTri(a, b, c, vert)) {
-								valid = false;
+					for (vert in originalVerts) {
+						
+						if ((vert.xpos == a.xpos && vert.ypos == a.ypos) || (vert.xpos == b.xpos && vert.ypos == b.ypos) || (vert.xpos == c.xpos && vert.ypos == c.ypos)) continue;
+						
+						if (pointLiesInTri(a, b, c, vert)) {
+							
+							if (getDirection(a, b, vert) == 0 || getDirection(b, c, vert) == 0) {
 								verts.push(verts.shift());
-								//trace("tri intersects");
 								break;
 							}
+								
+							if (_debug) {
+								
+								var a:Vertex = verts[0];
+								var b:Vertex = verts[1];
+								var c:Vertex = verts[2];
+								
+								failtri = new Array();
+								failtri.push(a);
+								failtri.push(b);
+								failtri.push(c);
+							}
+							
+							valid = false;
+							problem = vert;
+							verts.push(verts.shift());
+							if (_debug) triFails++;
+							break;
 						}
 					}
 					
@@ -107,23 +165,11 @@ class SectorFlat extends Polygon
 						tris.push(new Point(c.xpos * -1, c.ypos, planeHeight));
 						
 						verts.remove(b);
-						verts.push(verts.shift());
-						verts.push(verts.shift());
 						
-						//trace("tri is kosher");
+						hxTriCount++;
+						triFails = 0;
 					}
-					
 				}
-				
-			}
-			
-			if (verts.length == 3) {
-				
-				tris.push(new Point(verts[0].xpos * -1, verts[0].ypos, planeHeight));
-				tris.push(new Point(verts[1].xpos * -1, verts[1].ypos, planeHeight));
-				tris.push(new Point(verts[2].xpos * -1, verts[2].ypos, planeHeight));
-				
-				break;
 			}
 		}
 		
@@ -143,6 +189,8 @@ class SectorFlat extends Polygon
 		if (_plane == PlaneType.CEILING) {
 			material.mainPass.culling = Face.Front;
 		}
+		
+		//material.mainPass.wireframe = true;
 		
 	}
 	
