@@ -38,6 +38,10 @@ class Vertex extends LumpBase
 	}
 	
 	public static function distance(_b:Vertex, _a:Vertex):Float {
-		return Math.sqrt(Math.pow(_b.xpos - _a.xpos, 2) + Math.pow( _b.ypos - _a.ypos, 2));
+		return Math.sqrt(Math.pow(_b.xpos - _a.xpos, 2) + Math.pow(_b.ypos - _a.ypos, 2));
+	}
+	
+	public function copy():Vertex {
+		return Vertex.CONSTRUCTOR([xpos, ypos]);
 	}
 }
