@@ -8,7 +8,6 @@ import h3d.scene.Mesh;
 import h3d.scene.Scene;
 import haxe.ds.Map;
 import h3d.mat.Material;
-import scene.geometry.DebugPlane;
 import scene.geometry.SectorFlat;
 
 import hxdoom.Engine;

@@ -55,7 +55,6 @@ class Main extends App
 		hxdoom.setcore_profile(new DoomProfile());
 		
 		hxdoom.addWadBytes(Res.shareware.DOOM1.entry.getBytes(), "DOOM1.WAD");
-		//hxdoom.addWadBytes(Res.shareware.E1M1UDMF.entry.getBytes(), "E1M1UDMF.WAD");
 		
 		Engine.TEXTURES.loadPlaypal();
 		scene3D = new MapScene(s3d);
@@ -66,7 +65,6 @@ class Main extends App
 		
 		screen = hxd.Window.getInstance();
 		screen.addEventTarget(onEventkey);
-		
     }
 	
 	function addConsoleCommands() 
