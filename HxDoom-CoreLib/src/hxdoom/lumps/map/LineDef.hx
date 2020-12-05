@@ -18,8 +18,6 @@ class LineDef extends LumpBase
 	
 	public static var BYTE_SIZE:Int = 14;
 	
-	public var lineID:Int;
-	
 	public var startVertexID:Int;
 	public var endVertexID:Int;
 	public var flags:Int;

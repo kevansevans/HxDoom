@@ -102,49 +102,56 @@ class LevelCore
 					numitems = Std.int(mapDir.size / Thing.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.things[a] = Reader.readThing(byteData, mapDir.dataOffset + a * Thing.BYTE_SIZE);
+						_map.things[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.LINEDEFS :
 					numitems = Std.int(mapDir.size / LineDef.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.linedefs[a] = Reader.readLinedef(byteData, mapDir.dataOffset + a * LineDef.BYTE_SIZE);
-						_map.linedefs[a].lineID = a;
+						_map.linedefs[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.SIDEDEFS :
 					numitems = Std.int(mapDir.size / SideDef.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.sidedefs[a] = Reader.readSideDef(byteData, mapDir.dataOffset + a * SideDef.BYTE_SIZE);
+						_map.sidedefs[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.VERTEXES :
 					numitems = Std.int(mapDir.size / Vertex.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.vertexes[a] = Reader.readVertex(byteData, mapDir.dataOffset + a * Vertex.BYTE_SIZE);
+						_map.vertexes[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.SEGS :
 					numitems = Std.int(mapDir.size / Segment.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.segments[a] = Reader.readSegment(byteData, mapDir.dataOffset + a * Segment.BYTE_SIZE);
+						_map.segments[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.SSECTORS :
 					numitems = Std.int(mapDir.size / SubSector.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.subsectors[a] = Reader.readSubSector(byteData, mapDir.dataOffset + a * SubSector.BYTE_SIZE);
+						_map.subsectors[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.NODES :
 					numitems = Std.int(mapDir.size / Node.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.nodes[a] = Reader.readNode(byteData, mapDir.dataOffset + a * Node.BYTE_SIZE);
+						_map.nodes[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.SECTORS :
 					numitems = Std.int(mapDir.size / Sector.BYTE_SIZE);
 					for (a in 0...numitems) {
 						_map.sectors[a] = Reader.readSector(byteData, mapDir.dataOffset + a * Sector.BYTE_SIZE);
+						_map.sectors[a].lumpID = a;
 					}
 					++loaded_lumps;
 				case KeyLump.BLOCKMAP :

@@ -98,8 +98,6 @@ class Sector extends LumpBase
 		sortedLines.push(startLine);
 		worklines.remove(startLine);
 		
-		var sectorindex = Engine.LEVELS.currentMap.sectors.indexOf(_sector);
-		
 		var parsing:Bool = true;
 		
 		if (_sector.lines.length == 3) 
@@ -116,7 +114,7 @@ class Sector extends LumpBase
 			
 			while (parsing) {
 				
-				var vert_a:Vertex = currentLine.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(_sector) ? currentLine.start : currentLine.end;
+				var vert_a:Vertex = currentLine.frontSideDef.sectorID == sector.lumpID ? currentLine.start : currentLine.end;
 				
 				var connected:Bool = false;
 				
@@ -126,7 +124,7 @@ class Sector extends LumpBase
 					
 					dumpLines.push(line);
 					
-					var vert_b:Vertex = line.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(_sector) ? line.end : line.start;
+					var vert_b:Vertex = line.frontSideDef.sectorID == sector.lumpID ? line.end : line.start;
 					
 					if (vert_b == ignoreVert) vert_b = vert_b == line.end ? line.start : line.end;
 					
@@ -180,8 +178,6 @@ class Sector extends LumpBase
 		}
 		
 		if (rings.length > 0) {
-			
-			var sector_index:Int = Engine.LEVELS.currentMap.sectors.indexOf(sector);
 			
 			var vertRings:Array<Array<Vertex>> = new Array();
 			
@@ -244,9 +240,9 @@ class Sector extends LumpBase
 			var lowset = Math.POSITIVE_INFINITY;
 			
 			for (vert in returnVerts) {
-				if (Engine.LEVELS.currentMap.vertexes.indexOf(vert) < lowset) {
+				if (vert.lumpID < lowset) {
 					lowestVert = vert;
-					lowset = Engine.LEVELS.currentMap.vertexes.indexOf(vert);
+					lowset = vert.lumpID;
 				}
 			}
 			
@@ -266,7 +262,7 @@ class Sector extends LumpBase
 		var verts:Array<Vertex> = new Array();
 		
 		for (line in _lines) {
-			if (line.frontSideDef.sectorID == Engine.LEVELS.currentMap.sectors.indexOf(_sector)) {
+			if (line.frontSideDef.sectorID == _sector.lumpID) {
 				verts.push(line.start);
 			} else {
 				verts.push(line.end);
