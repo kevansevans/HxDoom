@@ -31,11 +31,11 @@ class MapScene
 	
 	public static var MatMap:Map<String, Material> = new Map();
 	
-	public var quad_walls:Map<Segment, Array<QuadWall>>;
+	public var quad_walls:Map<Segment, Map<SideType, QuadWall>>;
 	public var poly_flats:Map<Sector, Int>;
 	
-	var m_walls:Map<Segment, Array<Mesh>>;
-	var m_flats:Map<Sector, Array<Mesh>>;
+	var m_walls:Map<Segment, Map<SideType, Mesh>>;
+	var m_flats:Map<Sector, Map<PlaneType, Mesh>>;
 	var vis_list:Array<Segment>;
 	
 	public var camera:Camera;
@@ -69,9 +69,8 @@ class MapScene
 			
 			var line = seg.lineDef;
 			
-			var meshes:Array<Mesh> = new Array();
-			m_walls[seg] = meshes;
-			quad_walls[seg] = new Array();
+			m_walls[seg] = new Map();
+			quad_walls[seg] = new Map();
 			
 			var matrix = new Matrix();
 			matrix.colorLightness(seg.sector.lightLevel / 255);
@@ -79,7 +78,7 @@ class MapScene
 			color.transform3x4(matrix);
 			color.setColor(color.toColor());
 			
-			if (line.solid) {
+			if (line.solid && line.backSideDef == null) {
 				
 					if (line.frontSideDef.middle_texture != "-" && line.frontSideDef.middle_texture != "AASTINKY") {
 						
@@ -87,8 +86,8 @@ class MapScene
 						var mesh = new Mesh(solid_wall, solid_wall.material, s3d);
 						
 						mesh.visible = false;
-						meshes.push(mesh);
-						quad_walls[seg].push(solid_wall);
+						m_walls[seg][SOLID] = mesh;
+						quad_walls[seg][SOLID] = solid_wall;
 						
 					}
 					
@@ -101,8 +100,8 @@ class MapScene
 							var tf_mesh = new Mesh(top_front, top_front.material, s3d);
 							
 							tf_mesh.visible = false;
-							meshes.push(tf_mesh);
-							quad_walls[seg].push(top_front);
+							m_walls[seg][FRONT_TOP] = tf_mesh;
+							quad_walls[seg][FRONT_TOP] = top_front;
 							
 						}
 					}
@@ -113,8 +112,8 @@ class MapScene
 						var mf_mesh = new Mesh(mid_front, mid_front.material, s3d);
 						
 						mf_mesh.visible = false;
-						meshes.push(mf_mesh);
-						quad_walls[seg].push(mid_front);
+						m_walls[seg][FRONT_MIDDLE] = mf_mesh;
+						quad_walls[seg][FRONT_MIDDLE] = mid_front;
 						
 					}
 					
@@ -124,8 +123,8 @@ class MapScene
 						var lf_mesh = new Mesh(low_front, low_front.material, s3d);
 						
 						lf_mesh.visible = false;
-						meshes.push(lf_mesh);
-						quad_walls[seg].push(low_front);
+						m_walls[seg][FRONT_BOTTOM] = lf_mesh;
+						quad_walls[seg][FRONT_BOTTOM] = low_front;
 					}
 					
 					if (line.backSideDef.upper_texture != "-" && line.backSideDef.upper_texture != "AASTINKY") {
@@ -134,8 +133,8 @@ class MapScene
 						var tb_mesh = new Mesh(top_back, top_back.material, s3d);
 						
 						tb_mesh.visible = false;
-						meshes.push(tb_mesh);
-						quad_walls[seg].push(top_back);
+						m_walls[seg][BACK_TOP] = tb_mesh;
+						quad_walls[seg][BACK_TOP] = top_back;
 						
 					}
 					
@@ -145,8 +144,8 @@ class MapScene
 						var mb_mesh = new Mesh(mid_back, mid_back.material, s3d);
 						
 						mb_mesh.visible = false;
-						meshes.push(mb_mesh);
-						quad_walls[seg].push(mid_back);
+						m_walls[seg][BACK_MIDDLE] = mb_mesh;
+						quad_walls[seg][BACK_MIDDLE] = mid_back;
 					}
 					
 					if (line.backSideDef.lower_texture != "-" && line.backSideDef.lower_texture != "AASTINKY") {
@@ -155,21 +154,17 @@ class MapScene
 						var lb_mesh = new Mesh(low_back, low_back.material, s3d);
 						
 						lb_mesh.visible = false;
-						meshes.push(lb_mesh);
-						quad_walls[seg].push(low_back);
+						m_walls[seg][BACK_BOTTOM] = lb_mesh;
+						quad_walls[seg][BACK_BOTTOM] = low_back;
 						
 					}
 					
-			}
-			
-			for (mesh in meshes) {
-				mesh.material.color.load(color);
 			}
 		}
 		
 		for (sector in Engine.LEVELS.currentMap.sectors) {
 				
-			m_flats[sector] = new Array();
+			m_flats[sector] = new Map();
 			poly_flats[sector] = 0;
 			
 			if (sector.floorTexture != "F_SKY1") {
@@ -253,8 +248,12 @@ class MapScene
 				
 				if (m_walls[seg] == null) continue;
 				
-				for (mesh in m_walls[seg]) {
-					mesh.visible = true;
+				for (side in m_walls[seg].keys()) {
+					
+					if (m_walls[seg][side] == null) continue;
+					
+					m_walls[seg][side].visible = quad_walls[seg][side].checkVisibility();
+					
 					poly_flats[seg.sector]++;
 					if (poly_flats[seg.sector] > 0) {
 						for (flat in m_flats[seg.sector]) flat.visible = true;
