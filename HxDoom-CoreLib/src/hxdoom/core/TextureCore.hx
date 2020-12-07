@@ -58,6 +58,7 @@ class TextureCore
 		patches = Reader.readPatchNames(data, pname_dir.dataOffset).names;
 		
 	}
+	
 	public function parseTextures() {
 		
 		textureData = new Map();
@@ -77,6 +78,12 @@ class TextureCore
 			}
 			
 			++textureLumpCount;
+		}
+	}
+	
+	public function buildTextures() {
+		for (tex in textureData) {
+			textures[tex.textureName] = Texture.CONSTRUCTOR([tex]);
 		}
 	}
 	
