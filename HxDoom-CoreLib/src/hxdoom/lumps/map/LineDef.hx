@@ -36,6 +36,8 @@ class LineDef extends LumpBase
 	public var start(get, null):Vertex;
 	public var end(get, null):Vertex;
 	
+	public var properties:LineDefProperties;
+	
 	public var doubleSided(get, set):Bool;
 	
 	public function new(_args:Array<Any>) 
