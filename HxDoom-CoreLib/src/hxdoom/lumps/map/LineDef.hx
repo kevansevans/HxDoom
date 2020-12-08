@@ -5,7 +5,7 @@ import hxdoom.Engine;
 import hxdoom.lumps.LumpBase;
 
 import hxdoom.component.Texture;
-
+import hxdoom.typedefs.properties.LineDefProperties;
 import hxdoom.enums.eng.SideType;
 
 /**
@@ -147,5 +147,20 @@ class LineDef extends LumpBase
 	{
 		value == true ? (flags |= 0x0004) : (flags &= ~(0x0004));
 		return value;
+	}
+	
+	override public function copy():LineDef
+	{
+		var line = LineDef.CONSTRUCTOR([
+			startVertexID,
+			endVertexID,
+			flags,
+			lineType,
+			sectorTag,
+			frontSideDefID,
+			backSideDefID
+		]);
+		line.properties = this.properties;
+		return line;
 	}
 }

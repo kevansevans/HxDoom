@@ -18,6 +18,11 @@ class LumpBase
 		
 	}
 	
+	@:noCompletion public function copy():LumpBase
+	{
+		return null;
+	}
+	
 	public function toDataBytes():Bytes
 	{
 		return Bytes.ofString("NO BYTES DEFINED - FIX ME");

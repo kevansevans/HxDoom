@@ -1,4 +1,5 @@
 package hxdoom.lumps.map;
+import hxdoom.lumps.map.LineDef;
 
 /**
  * ...
@@ -28,6 +29,20 @@ class LineDefHexen extends LineDef
 		arg_4 = _args[7];
 		arg_5 = _args[8];
 		
+	}
+	
+	override public function copy():LineDefHexen
+	{
+		var lineDefHexen = LineDefHexen.CONSTRUCTOR([
+			startVertexID,
+			endVertexID,
+			flags,
+			lineType,
+			0,
+			frontSideDefID,
+			backSideDefID
+		]);
+		return lineDefHexen;
 	}
 	
 }

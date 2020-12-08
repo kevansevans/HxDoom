@@ -89,4 +89,25 @@ class Node extends LumpBase
 		
 		return bytes;
 	}
+	
+	override public function copy():Node
+	{
+		var node = Node.CONSTRUCTOR([
+			xPartition,
+			yPartition,
+			changeXPartition,
+			changeYPartition,
+			frontBoxTop,
+			frontBoxBottom,
+			frontBoxLeft,
+			frontBoxRight,
+			backBoxTop,
+			backBoxBottom,
+			backBoxLeft,
+			backBoxRight,
+			frontChildID,
+			backChildID
+		]);
+		return node;
+	}
 }

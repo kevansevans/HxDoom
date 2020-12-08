@@ -42,6 +42,18 @@ class Segment extends LumpBase
 	}
 	
 	override public function copy():Segment
+	{
+		var segment = Segment.CONSTRUCTOR([
+			startID,
+			endID,
+			angle,
+			lineID,
+			side,
+			offset
+		]);
+		return segment;
+	}
+	
 	public function get_start():Vertex 
 	{
 		return Engine.LEVELS.currentMap.vertexes[startID];

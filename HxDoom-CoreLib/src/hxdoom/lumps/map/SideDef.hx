@@ -36,6 +36,19 @@ class SideDef extends LumpBase
 		sectorID = 			_args[5];
 	}
 	
+	override public function copy():SideDef
+	{
+		var sidedef = SideDef.CONSTRUCTOR([
+			xoffset,
+			yoffset,
+			upper_texture,
+			lower_texture,
+			middle_texture,
+			sectorID
+		]);
+		return sidedef;
+	}
+	
 	public function get_sector():Sector
 	{
 		return Engine.LEVELS.currentMap.sectors[sectorID];

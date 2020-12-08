@@ -31,6 +31,18 @@ class Thing extends LumpBase
 		flags = _args[4];
 	}
 	
+	override public function copy():Thing
+	{
+		var thing = Thing.CONSTRUCTOR([
+			xpos,
+			ypos,
+			angle,
+			type,
+			flags
+		]);
+		return thing;
+	}
+	
 	public function toString():String {
 		return([	'Position {x :' + xpos + ', y: ' + ypos + '}, ',
 					'Direction {Angle: ' + angle + '}, ',

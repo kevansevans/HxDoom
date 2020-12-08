@@ -29,6 +29,15 @@ class SubSector extends LumpBase
 		firstSegID = 	_args[1];
 	}
 	
+	override public function copy():SubSector
+	{
+		var subsector = SubSector.CONSTRUCTOR([
+			count,
+			firstSegID
+		]);
+		return subsector;
+	}
+	
 	public function get_sector():Sector 
 	{
 		return Engine.LEVELS.currentMap.segments[firstSegID].sector;

@@ -30,6 +30,18 @@ class Patch extends LumpBase
 		pixels = new Vector(width);
 	}
 	
+	override public function copy():Patch
+	{
+		var patch = Patch.CONSTRUCTOR([
+			width,
+			height,
+			offset_x,
+			offset_y
+		]);
+		patch.pixels = this.pixels.copy();
+		return patch;
+	}
+	
 	public function toString():String {
 		return ([
 			'Width: {$width}, ',

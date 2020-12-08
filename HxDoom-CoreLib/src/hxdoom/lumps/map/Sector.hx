@@ -84,6 +84,20 @@ class Sector extends LumpBase
 		return bytes;
 	}
 	
+	override public function copy():Sector
+	{
+		var sector = Sector.CONSTRUCTOR([
+			floorHeight,
+			ceilingHeight,
+			floorTexture,
+			ceilingTexture,
+			lightLevel,
+			special,
+			tag
+		]);
+		return sector;
+	}
+	
 	public static function getSortedVerticies(_sector:Sector):Array<Vertex> {
 		
 		var sector = _sector;

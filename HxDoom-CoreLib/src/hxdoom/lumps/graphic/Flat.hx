@@ -1,6 +1,7 @@
 package hxdoom.lumps.graphic;
 
 import haxe.ds.Vector;
+import hxdoom.lumps.LumpBase;
 import hxdoom.lumps.graphic.Patch;
 
 /**
@@ -20,4 +21,10 @@ class Flat extends Patch
 		pixels = new Vector(64);
 	}
 	
+	override public function copy():Flat
+	{
+		var flat = Flat.CONSTRUCTOR([]);
+		flat.pixels = this.pixels.copy();
+		return flat;
+	}
 }
