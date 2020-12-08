@@ -1,4 +1,4 @@
-package;
+package hxdoom.typedefs.properties;
 
 /**
  * @author Kaelan
