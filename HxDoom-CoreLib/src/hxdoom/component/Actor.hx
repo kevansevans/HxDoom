@@ -116,24 +116,4 @@ class Actor
 	{
 		return roll;
 	}
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	//Behavior stuff
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	public static var A_Chase:Actor -> Void = function(_actor:Actor) {
-		
-	}
-	
-	public static var A_Look:Actor -> Void = function(_actor:Actor) {
-		
-	}
-	
-	public static var A_FaceTarget:Actor -> Void = function(_actor:Actor) {
-		
-		if (_actor.target == null) return;
-		
-		
-		
-	}
 }
