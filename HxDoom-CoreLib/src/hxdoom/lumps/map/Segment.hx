@@ -41,17 +41,18 @@ class Segment extends LumpBase
 		offset = 	_args[5];
 	}
 	
-	function get_start():Vertex 
+	override public function copy():Segment
+	public function get_start():Vertex 
 	{
 		return Engine.LEVELS.currentMap.vertexes[startID];
 	}
 	
-	function get_end():Vertex 
+	public function get_end():Vertex 
 	{
 		return Engine.LEVELS.currentMap.vertexes[endID];
 	}
 	
-	function get_sector():Sector 
+	public function get_sector():Sector 
 	{
 		if (side == 0) {
 			return lineDef.frontSideDef.sector;
@@ -60,7 +61,7 @@ class Segment extends LumpBase
 		}
 	}
 	
-	function get_lineDef():LineDef 
+	public function get_lineDef():LineDef 
 	{
 		return Engine.LEVELS.currentMap.linedefs[lineID];
 	}
