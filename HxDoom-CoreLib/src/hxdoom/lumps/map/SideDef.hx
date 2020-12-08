@@ -36,7 +36,7 @@ class SideDef extends LumpBase
 		sectorID = 			_args[5];
 	}
 	
-	function get_sector():Sector
+	public function get_sector():Sector
 	{
 		return Engine.LEVELS.currentMap.sectors[sectorID];
 	}
