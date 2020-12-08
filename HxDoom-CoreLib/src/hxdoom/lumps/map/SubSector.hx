@@ -29,12 +29,12 @@ class SubSector extends LumpBase
 		firstSegID = 	_args[1];
 	}
 	
-	function get_sector():Sector 
+	public function get_sector():Sector 
 	{
 		return Engine.LEVELS.currentMap.segments[firstSegID].sector;
 	}
 	
-	function get_segments():Array<Segment> 
+	public function get_segments():Array<Segment> 
 	{
 		var t_segments = new Array();
 		for (_seg in firstSegID...(firstSegID + count)) {
