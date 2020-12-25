@@ -4,6 +4,7 @@ import hxdoom.lumps.map.SubSector;
 import hxdoom.utils.geom.Angle;
 import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
+import hxdoom.typedefs.properties.ActorFlags;
 import hxdoom.Engine;
 
 /**
@@ -37,7 +38,7 @@ class Actor
 	public var health:Int;
 	public var height:Int;
 	
-	public var flags:Int = 0;
+	public var flags:ActorFlags = {};
 	
 	public var target:Null<Actor>;
 	
