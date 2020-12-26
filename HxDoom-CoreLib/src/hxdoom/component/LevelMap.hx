@@ -1,7 +1,5 @@
 package hxdoom.component;
 
-import haxe.ds.Vector;
-
 import hxdoom.component.Actor;
 import hxdoom.component.Player;
 
@@ -11,7 +9,7 @@ import hxdoom.lumps.map.*;
 
 import hxdoom.component.Camera;
 import hxdoom.component.CameraPoint;
-import hxdoom.utils.geom.Angle;
+
 /**
  * ...
  * @author Kaelan

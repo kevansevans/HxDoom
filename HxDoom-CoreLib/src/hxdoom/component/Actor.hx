@@ -26,6 +26,12 @@ class Actor
 	public var zpos_eyeheight:Float;
 	public var zpos_view(get, null):Float;
 	
+	public var momx:Float = 0;
+	public var momy:Float = 0;
+	
+	public var slidex:Float;
+	public var slidey:Float;
+	
 	public var floorz:Float;
 	public var ceilingz:Float;
 	

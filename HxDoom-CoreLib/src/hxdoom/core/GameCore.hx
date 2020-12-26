@@ -2,6 +2,7 @@ package hxdoom.core;
 
 import hxdoom.component.Camera;
 import hxdoom.component.CameraPoint;
+import hxdoom.utils.math.TableRNG;
 
 import hxdoom.Engine;
 import hxdoom.enums.data.Defaults;
@@ -18,13 +19,22 @@ enum EngineState {
 }
 class GameCore
 {
+	public static var elapsedTime:Int;
+	public static var totalGameTicks:Int;
+	
 	public static var STATE:EngineState;
 	
 	public var ticrate:Int = 35;
 	
+	public  var random:TableRNG;
+	
 	public function new() 
 	{
 		STATE = IN_GAME;
+		
+		random = new TableRNG(256, 1);
+		
+		random.shuffle(256);
 	}
 	
 	public function start() {
@@ -46,6 +56,7 @@ class GameCore
 		switch (STATE) {
 			
 			case IN_GAME:
+				
 				if (CVarCore.getCvar(Defaults.PLAYER_MOVING_FORWARD)) {
 					Engine.LEVELS.currentMap.actors_players[0].move(8);
 				}
@@ -72,5 +83,8 @@ class GameCore
 			default :
 				
 		}
+		
+		++elapsedTime;
+		++totalGameTicks;
 	}
 }

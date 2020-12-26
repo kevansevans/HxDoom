@@ -23,6 +23,9 @@ class LevelCore
 	
 	public var needToRebuild:Bool = true;
 	
+	public var blockmapOriginX(get, null):Int;
+	public var blockmapOriginY(get, null):Int;
+	
 	public function new() 
 	{
 		
@@ -86,6 +89,8 @@ class LevelCore
 		while (true) {
 			
 			var mapDir = Engine.WADDATA.getIndexSpecificDir(mapmarker.wad, mapmarker.index + lumpOffset);
+			
+			if (mapDir == null) break;
 			
 			if  (mapDir.size == 0) {
 				break;
@@ -179,5 +184,15 @@ class LevelCore
 		needToRebuild = true;
 		
 		return true;
+	}
+	
+	public function get_blockmapOriginX():Int 
+	{
+		return currentMap.blockmap.originX;
+	}
+	
+	public function get_blockmapOriginY():Int 
+	{
+		return currentMap.blockmap.originY;
 	}
 }
