@@ -97,7 +97,6 @@ class TableRNG
 		
 		keys[_key] += 1;
 		if (keys[_key] == values.length) keys[_key] = 0;
-		trace(keys[_key], values[keys[_key]], values[keys[_key]] / limit);
 		return values[keys[_key]];
 	}
 	
@@ -106,13 +105,20 @@ class TableRNG
 		return getRandom(_key) / limit;
 	}
 	
+	//Reset indexed RNG calls back to zero
+	public function clearRandom() {
+		for (key in keys.keys()) {
+			keys[key] = 0;
+		}
+	}
+	
 	/* For when you need a table of very specific values.
 	 * A good example of this need is in Doom's source code: https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/m_random.c
 	 * It's a table of 256 values, but it does not contain every value between 0 and 255.
 	 */
-	public static function fromPredeterminedIntArray(_array:Array<Int>):Random
+	public static function fromPredeterminedIntArray(_array:Array<Int>):TableRNG
 	{
-		var rng = new Random();
+		var rng = new TableRNG();
 		rng.values = _array;
 		var high:Int = 0;
 		for (v in rng.values) {
