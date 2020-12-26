@@ -129,51 +129,50 @@ class QuadWall extends Quads
 		
 		switch (_type) {
 			case SOLID | FRONT_TOP | FRONT_MIDDLE | FRONT_BOTTOM :
-				offset_x = line.frontSideDef.xoffset * pix_ratio_x;
-				offset_y = line.frontSideDef.yoffset * pix_ratio_y;
+				offset_x = line.frontSideDef.xoffset;
+				offset_y = line.frontSideDef.yoffset;
 				
 			case BACK_TOP | BACK_MIDDLE | BACK_BOTTOM :
-				offset_x = line.backSideDef.xoffset * pix_ratio_x;
-				offset_y = line.backSideDef.yoffset * pix_ratio_y;
+				offset_x = line.backSideDef.xoffset;
+				offset_y = line.backSideDef.yoffset;
 		}
 		
-		var width_ratio = Vertex.distance(line.end, line.start) * pix_ratio_x;
+		var width_ratio = (Vertex.distance(line.end, line.start) * pix_ratio_x) + (pix_ratio_x * offset_x);
 		var height_ratio = 0.0;
 		
 		switch (_type) {
-			case SOLID | FRONT_MIDDLE :
-				height_ratio = (line.frontSideDef.sector.ceilingHeight - line.frontSideDef.sector.floorHeight) * pix_ratio_y;
+			case SOLID :
+				height_ratio = (line.frontSideDef.sector.ceilingHeight - line.frontSideDef.sector.floorHeight) * pix_ratio_y + (pix_ratio_y * offset_y);
 			case FRONT_BOTTOM :
-				height_ratio = (line.backSideDef.sector.floorHeight - line.frontSideDef.sector.floorHeight) * pix_ratio_y;
+				height_ratio = (line.backSideDef.sector.floorHeight - line.frontSideDef.sector.floorHeight) * pix_ratio_y + (pix_ratio_y * offset_y);
+			case FRONT_MIDDLE :
+				height_ratio = (line.backSideDef.sector.ceilingHeight - line.backSideDef.sector.floorHeight) * pix_ratio_y + (pix_ratio_y * offset_y);
 			case FRONT_TOP :
-				height_ratio = (line.frontSideDef.sector.ceilingHeight - line.backSideDef.sector.ceilingHeight) * pix_ratio_y;
+				height_ratio = (line.frontSideDef.sector.ceilingHeight - line.backSideDef.sector.ceilingHeight) * pix_ratio_y + (pix_ratio_y * offset_y);
 			case BACK_MIDDLE :
-				height_ratio = (line.backSideDef.sector.ceilingHeight - line.backSideDef.sector.floorHeight) * pix_ratio_y;
+				height_ratio = (line.backSideDef.sector.ceilingHeight - line.backSideDef.sector.floorHeight) * pix_ratio_y + (pix_ratio_y * offset_y);
 			case BACK_BOTTOM :
-				height_ratio = (line.frontSideDef.sector.floorHeight - line.backSideDef.sector.floorHeight) * pix_ratio_y;
+				height_ratio = (line.frontSideDef.sector.floorHeight - line.backSideDef.sector.floorHeight) * pix_ratio_y + (pix_ratio_y * offset_y);
 			case BACK_TOP :
-				height_ratio = (line.backSideDef.sector.ceilingHeight - line.frontSideDef.sector.ceilingHeight) * pix_ratio_y;
+				height_ratio = (line.backSideDef.sector.ceilingHeight - line.frontSideDef.sector.ceilingHeight) * pix_ratio_y + (pix_ratio_y * offset_y);
 			default :
 		}
 		
 		this.addNormals();
 		
-		this.uvs = [new UV(offset_x, offset_y + height_ratio), 
-					new UV(offset_x + width_ratio, offset_y + height_ratio),
-					new UV(offset_x, offset_y),
-					new UV(offset_x + width_ratio, offset_y)];
+		this.uvs = [new UV(0, height_ratio), 
+					new UV(width_ratio, height_ratio),
+					new UV(0, 0),
+					new UV(width_ratio, 0)];
 		
-		if (MapScene.MatMap[texturename] != null) {
-			material = MapScene.MatMap[texturename];
-		} else {
-			
-			material = Material.create();
-			
-			assetShader = new PaletteShader(palette, lumpTexture);
-			material.mainPass.addShader(assetShader);
-			
-			MapScene.MatMap[texturename] = material;
-		}
+		material = Material.create();
+		
+		assetShader = new PaletteShader(palette, lumpTexture);
+		material.mainPass.addShader(assetShader);
+		
+		material.mainPass.setPassName("alpha");
+		
+		MapScene.MatMap[texturename] = material;
 	}
 	
 	public function updateTexture(_asset:hxdoom.component.Texture) {

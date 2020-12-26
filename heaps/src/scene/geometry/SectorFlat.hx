@@ -38,8 +38,6 @@ class SectorFlat extends Polygon
 	{
 		sector = _sector;
 		
-		var sectorindex = Engine.LEVELS.currentMap.sectors.indexOf(_sector);
-		
 		var textureName:String = "-";
 		var planeHeight:Float = 0;
 		

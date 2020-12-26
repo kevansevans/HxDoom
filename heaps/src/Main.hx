@@ -1,6 +1,5 @@
 package;
 
-import haxe.PosInfos;
 import haxe.io.Bytes;
 import hxd.Res;
 import hxd.Window;
@@ -9,10 +8,8 @@ import hxdgamelib.profiles.DoomProfile;
 import hxdoom.Engine;
 import hxd.App;
 import hxd.File;
-import hxdoom.component.Actor;
 import scene.MapScene;
 import hxd.Event;
-import hxd.Key;
 
 import h2d.Console;
 
