@@ -3,7 +3,7 @@ package hxdoom.typedefs.properties;
 /**
  * @author Kaelan
  */
-typedef LineDefProperties =
+typedef LineDefFlags =
 {
 	@:optional var blocking:Bool;
 	@:optional var blockMonsters:Bool;

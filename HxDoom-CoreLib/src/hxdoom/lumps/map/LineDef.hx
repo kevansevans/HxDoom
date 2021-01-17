@@ -5,7 +5,7 @@ import hxdoom.Engine;
 import hxdoom.lumps.LumpBase;
 
 import hxdoom.component.Texture;
-import hxdoom.typedefs.properties.LineDefProperties;
+import hxdoom.typedefs.properties.LineDefFlags;
 import hxdoom.enums.eng.SideType;
 
 /**
@@ -20,7 +20,7 @@ class LineDef extends LumpBase
 	
 	public var startVertexID:Int;
 	public var endVertexID:Int;
-	public var flags:Int;
+	public var flags:LineDefFlags;
 	public var lineType:Int;
 	public var sectorTag:Int;
 	public var backSideDefID:Int;
@@ -36,10 +36,6 @@ class LineDef extends LumpBase
 	public var start(get, null):Vertex;
 	public var end(get, null):Vertex;
 	
-	public var properties:LineDefProperties;
-	
-	public var doubleSided(get, set):Bool;
-	
 	public function new(_args:Array<Any>) 
 	{
 		super();
@@ -48,11 +44,38 @@ class LineDef extends LumpBase
 		
 		startVertexID = 	_args[0];
 		endVertexID = 		_args[1];
-		flags = 			_args[2];
+		setFlags(			_args[2]);
 		lineType = 			_args[3];
 		sectorTag = 		_args[4];
 		frontSideDefID = 	_args[5];
 		backSideDefID = 	_args[6];
+	}
+	
+	public function setFlags(_bits:Int) {
+		flags = {};
+		flags.blocking = 		(_bits & 1) > 0;
+		flags.blockMonsters = 	(_bits & 2) > 0;
+		flags.twoSided = 		(_bits & 4) > 0;
+		flags.dontPegTop = 		(_bits & 8) > 0;
+		flags.dontPegBottom = 	(_bits & 16) > 0;
+		flags.secret = 			(_bits & 32) > 0;
+		flags.soundBlock = 		(_bits & 64) > 0;
+		flags.dontDraw = 		(_bits & 128) > 0;
+		flags.mapped = 			(_bits & 256) > 0;
+	}
+	
+	public function flagsToBits():Int {
+		var bits = 0;
+		if (flags.blocking) 		bits |= 1;
+		if (flags.blockMonsters)	bits |= 2;
+		if (flags.twoSided) 		bits |= 4;
+		if (flags.dontPegTop) 		bits |= 8;
+		if (flags.dontPegBottom) 	bits |= 16;
+		if (flags.secret) 			bits |= 32;
+		if (flags.soundBlock) 		bits |= 64;
+		if (flags.dontDraw) 		bits |= 128;
+		if (flags.mapped) 			bits |= 256;
+		return bits;
 	}
 	
 	public function getTexture(_side:SideType):Texture {
@@ -119,18 +142,13 @@ class LineDef extends LumpBase
 		
 		bytes.setUInt16(0, startVertexID);
 		bytes.setUInt16(2, endVertexID);
-		bytes.setUInt16(4, flags);
+		bytes.setUInt16(4, flagsToBits());
 		bytes.setUInt16(6, lineType);
 		bytes.setUInt16(8, sectorTag);
 		bytes.setUInt16(10, frontSideDefID);
 		bytes.setUInt16(12, backSideDefID);
 		
 		return bytes;
-	}
-	
-	function get_doubleSided():Bool 
-	{
-		return (flags & 0x0004) > 0; 
 	}
 	
 	function get_dy():Float 
@@ -143,24 +161,17 @@ class LineDef extends LumpBase
 		return Math.abs(end.xpos - start.xpos);
 	}
 	
-	function set_doubleSided(value:Bool):Bool 
-	{
-		value == true ? (flags |= 0x0004) : (flags &= ~(0x0004));
-		return value;
-	}
-	
 	override public function copy():LineDef
 	{
 		var line = LineDef.CONSTRUCTOR([
 			startVertexID,
 			endVertexID,
-			flags,
+			flagsToBits(),
 			lineType,
 			sectorTag,
 			frontSideDefID,
 			backSideDefID
 		]);
-		line.properties = this.properties;
 		return line;
 	}
 }
