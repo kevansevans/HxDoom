@@ -33,7 +33,7 @@ class PaletteShader extends Shader
 		@param var colormap:Array<Vec4, 255>;
 		@param var useColormap:Int = 0;
 		@param var texture:Sampler2D;
-		@param var brightness:Int = 256;
+		@param var brightness:Int = 255;
 		@param var fullbright:Int = 1;
 		
 		@param var width:Int;
