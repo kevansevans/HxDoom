@@ -21,7 +21,7 @@ class LineDef extends LumpBase
 	public var startVertexID:Int;
 	public var endVertexID:Int;
 	public var flags:LineDefFlags;
-	public var lineType:Int;
+	public var special:Int;
 	public var sectorTag:Int;
 	public var backSideDefID:Int;
 	public var frontSideDefID:Int;
@@ -45,7 +45,7 @@ class LineDef extends LumpBase
 		startVertexID = 	_args[0];
 		endVertexID = 		_args[1];
 		setFlags(			_args[2]);
-		lineType = 			_args[3];
+		special = 			_args[3];
 		sectorTag = 		_args[4];
 		frontSideDefID = 	_args[5];
 		backSideDefID = 	_args[6];
@@ -126,7 +126,7 @@ class LineDef extends LumpBase
 	public function toString() {
 		return(
 			['Start to End: {' + start.toString() +', ' + end.toString() + '}, ',
-			'Line type: {' + lineType + '}, ',
+			'Line type: {' + special + '}, ',
 			'Sector Tag: {' + sectorTag + '}, ',
 			'Flags: {' + flags + '}, ',
 			'Front Sidedef: {' + (frontSideDef != null ? 'Sidedef Tag: ' : 'No Front Sidedef') + '}, ',
@@ -143,7 +143,7 @@ class LineDef extends LumpBase
 		bytes.setUInt16(0, startVertexID);
 		bytes.setUInt16(2, endVertexID);
 		bytes.setUInt16(4, flagsToBits());
-		bytes.setUInt16(6, lineType);
+		bytes.setUInt16(6, special);
 		bytes.setUInt16(8, sectorTag);
 		bytes.setUInt16(10, frontSideDefID);
 		bytes.setUInt16(12, backSideDefID);
@@ -167,7 +167,7 @@ class LineDef extends LumpBase
 			startVertexID,
 			endVertexID,
 			flagsToBits(),
-			lineType,
+			special,
 			sectorTag,
 			frontSideDefID,
 			backSideDefID
