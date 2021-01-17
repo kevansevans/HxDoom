@@ -105,6 +105,11 @@ class TableRNG
 		return getRandom(_key) / limit;
 	}
 	
+	public function getDiceRoll(_sides:Int, _key:String = "random"):Int
+	{
+		return getRandom(_key) % _sides;
+	}
+	
 	//Reset indexed RNG calls back to zero
 	public function clearRandom() {
 		for (key in keys.keys()) {
