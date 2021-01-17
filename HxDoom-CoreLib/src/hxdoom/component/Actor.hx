@@ -6,6 +6,8 @@ import hxdoom.lumps.map.Thing;
 import hxdoom.lumps.map.Vertex;
 import hxdoom.typedefs.properties.ActorFlags;
 import hxdoom.Engine;
+import hxdoom.typedefs.properties.ActorInfo;
+import hxdoom.enums.eng.MoveDirection;
 
 /**
  * ...
@@ -26,6 +28,8 @@ class Actor
 	public var zpos_eyeheight:Float;
 	public var zpos_view(get, null):Float;
 	
+	public var movedir:MoveDirection = NO_DIRECTION;
+	
 	public var momx:Float = 0;
 	public var momy:Float = 0;
 	
@@ -45,14 +49,13 @@ class Actor
 	public var height:Int;
 	
 	public var flags:ActorFlags = {};
+	public var info:ActorInfo = {};
 	
 	public var target:Null<Actor>;
 	
 	public var justhit:Bool = false;
 	
 	public var movecount:Int = 0;
-	
-	public var reactiontime:Int = 8;
 	
 	public var isPlayer:Bool = false;
 	
