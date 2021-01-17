@@ -3,7 +3,7 @@ package hxdoom.core.action;
 import hxdoom.Engine;
 import hxdoom.core.Defines;
 import hxdoom.lumps.map.Sector;
-import hxdoom.utils.math.Map;
+import hxdoom.utils.math.Maputl;
 import hxdoom.component.Actor;
 import hxdoom.enums.eng.BBox;
 import hxdoom.lumps.map.LineDef;
@@ -99,7 +99,7 @@ class Slide
 		}
 		
 		for (bx in xl...(xh + 1)) for (by in xh...(yh + 1)) {
-			Map.BLockLinesIterator(bx, by, CheckLine);
+			Maputl.BLockLinesIterator(bx, by, CheckLine);
 		}
 		
 		if (blockfrac < 1) {

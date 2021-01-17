@@ -1,11 +1,11 @@
-package;
+package hxdoom.enums.eng;
 
 /**
  * @author Kaelan
  * 
  * As of 03DEC2020, this code was borrowed from https://github.com/Olde-Skuul/doom3do/blob/5713f6fd2a66338e0135d41e297de963652371af/source/doom.h#L161
  */
-enum abstract DirectionType(Int) from Int
+enum abstract MoveDirection(Int) from Int to Int
 {
 	var EAST:Int;
 	var NORTH_EAST:Int;

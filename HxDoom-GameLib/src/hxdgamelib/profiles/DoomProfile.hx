@@ -7,6 +7,9 @@ import hxdoom.definitions.MapDef;
 import hxdoom.Engine;
 import hxdoom.component.LevelMap;
 import hxdgamelib.levelstruct.DoomLevel;
+import hxdoom.utils.math.TableRNG;
+import hxdoom.core.action.Enemy;
+import hxdoom.core.action.Maputl;
 
 /**
  * ...
@@ -23,6 +26,14 @@ class DoomProfile extends ProfileCore
 		super();
 		
 		LevelMap.CONSTRUCTOR = DoomLevel.new;
+		
+		//Until I can get my hands on the original table that maintains license, this
+		//will have to go unused.
+		/*Engine.GAME.random = TableRNG.fromPredeterminedIntArray([
+			some code here that lets me use the original container, otherwise
+			the default table is all values from 0 - 255. Doom vanilla does not
+			posses every value in between, so it's behavior will not be identical.
+		])*/
 		
 		episodes = new Array();
 		
@@ -133,6 +144,34 @@ class DoomProfile extends ProfileCore
 					firstLevel : 29
 				});
 			}
+		}
+		
+		Enemy.checkMissileRange = function(_actor:Actor):Bool
+		{
+			if (!_actor.flags.seetarget) {
+				return false;
+			}
+			
+			if (_actor.flags.justhit) {
+				_actor.flags.justhit = false;
+				return  true;
+			}
+			
+			if (_actor.info.reactionTime > 0) return  false;
+			
+			var target = _actor.target;
+			var dist = (Maputl.getApproxDistance(target.xpos - _actor.xpos, target.ypos - _actor.ypos)) - 64;
+			
+			if (_actor.info.meleeState == null) dist -= 128;
+			
+			//if Actor isn't a lost skull
+			Engine.log(["Unfinished here"]);
+			
+			if (dist > 200) dist = 200;
+			
+			if (Engine.GAME.random.getRandom() < dist) return false;
+			
+			return true;
 		}
 		
 	}

@@ -1,4 +1,4 @@
-package hxdoom.utils.math;
+package hxdoom.core.action;
 
 import hxdoom.lumps.map.LineDef;
 
@@ -8,7 +8,7 @@ import hxdoom.lumps.map.LineDef;
  * 
  * from https://github.com/Olde-Skuul/doom3do/blob/5713f6fd2a66338e0135d41e297de963652371af/source/maputl.c
  */
-class Map 
+class Maputl 
 {
 
 	public static var getApproxDistance:(Float, Float) -> Float = getApproxDistanceDefault;
@@ -24,8 +24,8 @@ class Map
 		return dx;
 	}
 	
-	public static var BLockLinesIterator:(Int, Int, (LineDef -> Bool)) -> Bool = BLockLinesIteratorDefault;
-	public static function BLockLinesIteratorDefault(_x:Int, _y:Int, _checkLine:Bool -> Void):Bool
+	public static var BlockLinesIterator:(Int, Int, (LineDef -> Bool)) -> Bool = BlockLinesIteratorDefault;
+	public static function BlockLinesIteratorDefault(_x:Int, _y:Int, _checkLine:LineDef -> Bool):Bool
 	{
 		
 		

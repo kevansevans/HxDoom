@@ -28,7 +28,7 @@ class DoomLevel extends LevelMap
 				case DoomEdNum.PLAYERONE | DoomEdNum.PLAYERTWO | DoomEdNum.PLAYERTHREE | DoomEdNum.PLAYERFOUR :
 					actors_players.push(Player.fromThing(thing));
 				default :
-					trace("Thing type not established", thing.type);
+					//trace("Thing type not established", thing.type);
 			}
 		}
 	}

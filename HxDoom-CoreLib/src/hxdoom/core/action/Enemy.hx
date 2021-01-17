@@ -2,7 +2,11 @@ package hxdoom.core.action;
 import hxdoom.Engine;
 import hxdoom.component.Actor;
 import hxdoom.core.Defines;
-import hxdoom.utils.math.Map;
+import hxdoom.core.GameCore;
+import hxdoom.core.action.Maputl;
+import hxdoom.core.action.Move;
+import hxdoom.enums.eng.MoveDirection;
+import hxdoom.lumps.map.LineDef;
 
 /**
  * ...
@@ -34,7 +38,7 @@ class Enemy
 		}
 		
 		var distance:Float;
-		distance = Map.getApproxDistance(target.xpos - _actor.xpos, target.ypos - _actor.ypos);
+		distance = Maputl.getApproxDistance(target.xpos - _actor.xpos, target.ypos - _actor.ypos);
 		if (distance >= Defines.MELEERANGE) return false;
 		
 		return true;
@@ -55,17 +59,75 @@ class Enemy
 			return  true;
 		}
 		
-		if (_actor.reactiontime > 0) return  false;
+		if (_actor.info.reactionTime > 0) return  false;
 		
 		var target = _actor.target;
-		var dist = (Map.getApproxDistance(target.xpos - _actor.xpos, target.ypos - _actor.ypos)) - 64;
+		var dist = (Maputl.getApproxDistance(target.xpos - _actor.xpos, target.ypos - _actor.ypos)) - 64;
 		
-		/*if actor does not have melee state, subtract distance by 128*/
-		
-		/*If actor is a lost skull, divide by two. Will need to be delegated into Gamelib*/
+		if (_actor.info.meleeState == null) dist -= 128;
 		
 		if (dist > 200) dist = 200;
 		
+		if (Engine.GAME.random.getRandom() < dist) return false;
+		
+		return true;
 	}
 	
+	public static var xspeed:Array<Float> = [1, Math.sqrt(2), 0, -Math.sqrt(2), -1, -Math.sqrt(2), 0, Math.sqrt(2)];
+	public static var yspeed:Array<Float> = [0, Math.sqrt(2), 1, Math.sqrt(2), 0, -Math.sqrt(2), -1, -Math.sqrt(2)];
+	
+	public static var move:Actor -> Bool = moveDefault;
+	public static function moveDefault(_actor:Actor):Bool
+	{
+		var direction = _actor.movedir;
+		var blkline:LineDef;
+		
+		if (direction == NO_DIRECTION) return false;
+		
+		var speed = _actor.info.speed;
+		
+		var tryx:Float = _actor.xpos + (speed * xspeed[direction]);
+		var tryy:Float = _actor.ypos + (speed * yspeed[direction]);
+		
+		if (!Map.tryMove(_actor, tryx, tryy)) {
+			
+			if (_actor.flags.float && Defines.floatok) {
+				if (_actor.zpos < Move.tmfloorz) {
+					_actor.zpos += Defines.FLOATSPEED;
+				} else {
+					_actor.zpos -= Defines.FLOATSPEED;
+				}
+				_actor.flags.infloat = true;
+				return  true;
+			}
+			
+			blkline = Move.blockline;
+			if (blkline == null || blkline.lineType == 0) {
+				return false;
+			}
+			_actor.movedir = NO_DIRECTION;
+			
+			//use line if special, returns true
+			Engine.log(["Not finished here"]);
+			
+			return false;
+		}
+		
+		_actor.flags.infloat = false;
+		if (!_actor.flags.float) {
+			_actor.zpos = _actor.floorz;
+		}
+		
+		return true;
+	}
+	
+	public static var tryWalk:Actor -> Bool = tryWalkDefault;
+	public static function tryWalkDefault(_actor:Actor):Bool
+	{
+		if (!move(_actor)) {
+			return false;
+		}
+		_actor.movecount = Engine.GAME.random.getDiceRoll(15);
+		return true;
+	}
 }
