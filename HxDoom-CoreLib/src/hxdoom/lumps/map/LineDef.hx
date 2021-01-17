@@ -1,5 +1,6 @@
 package hxdoom.lumps.map;
 
+import haxe.Int64;
 import haxe.io.Bytes;
 import hxdoom.Engine;
 import hxdoom.lumps.LumpBase;
@@ -7,6 +8,8 @@ import hxdoom.lumps.LumpBase;
 import hxdoom.component.Texture;
 import hxdoom.typedefs.properties.LineDefFlags;
 import hxdoom.enums.eng.SideType;
+import hxdoom.enums.eng.SlopeType;
+import hxdoom.enums.eng.BBox;
 
 /**
  * ...
@@ -26,8 +29,8 @@ class LineDef extends LumpBase
 	public var backSideDefID:Int;
 	public var frontSideDefID:Int;
 	
-	public var dx(get, null):Float;
-	public var dy(get, null):Float;
+	public var distX(get, null):Float;
+	public var distY(get, null):Float;
 	
 	public var solid(get, null):Bool;
 	
@@ -35,6 +38,9 @@ class LineDef extends LumpBase
 	public var backSideDef(get, null):SideDef;
 	public var start(get, null):Vertex;
 	public var end(get, null):Vertex;
+	
+	public var slope:SlopeType;
+	public var bbox:Array<Float>;
 	
 	public function new(_args:Array<Any>) 
 	{
@@ -49,6 +55,41 @@ class LineDef extends LumpBase
 		sectorTag = 		_args[4];
 		frontSideDefID = 	_args[5];
 		backSideDefID = 	_args[6];
+	}
+	
+	public function setup() {
+		
+		var dx:Float = end.xpos - start.xpos;
+		var dy:Float = end.ypos - start.ypos;
+		
+		if (dx == 0) {
+			slope = VERTICAL;
+		} else if (dy == 0) {
+			slope = HORIZONTAL;
+		} else {
+			var dx64:Int64 = Int64.fromFloat(dx);
+			var dy64:Int64 = Int64.fromFloat(dy);
+			if (dy64 ^ dx64 >= 0) slope = POSITIVE;
+			else slope = NEGATIVE;
+		}
+		
+		bbox = new Array();
+		
+		if (dx >= 0) {
+			bbox[BOXLEFT] = start.xpos;
+			bbox[BOXright] = end.xpos;
+		} else {
+			bbox[BOXLEFT] = end.xpos;
+			bbox[BOXright] = start.xpos;
+		}
+		
+		if (dy >= 0) {
+			bbox[BOXBOTTOM] = start.ypos;
+			bbox[BOXTOP] = end.ypos;
+		} else {
+			bbox[BOXBOTTOM] = end.ypos;
+			bbox[BOXTOP] = start.ypos;
+		}
 	}
 	
 	public function setFlags(_bits:Int) {
@@ -151,12 +192,12 @@ class LineDef extends LumpBase
 		return bytes;
 	}
 	
-	function get_dy():Float 
+	function get_distY():Float 
 	{
 		return Math.abs(end.ypos - start.ypos);
 	}
 	
-	function get_dx():Float 
+	function get_distX():Float 
 	{
 		return Math.abs(end.xpos - start.xpos);
 	}
