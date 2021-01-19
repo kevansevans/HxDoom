@@ -15,8 +15,9 @@ class Map
 	public static var tmthing:Actor;
 	public static var checkposonly:Bool;
 	
-	public static var xspeed:Array<Float> = [1, Math.sqrt(2), 0, -Math.sqrt(2), -1, -Math.sqrt(2), 0, Math.sqrt(2)];
-	public static var yspeed:Array<Float> = [0, Math.sqrt(2), 1, Math.sqrt(2), 0, -Math.sqrt(2), -1, -Math.sqrt(2)];
+	public static var diagSpeed = Defines.divFracHelper(47000);
+	public static var xspeed:Array<Float> = [1, diagSpeed, 0, -diagSpeed, -1, -diagSpeed, 0, diagSpeed];
+	public static var yspeed:Array<Float> = [0, diagSpeed, 1, diagSpeed, 0, -diagSpeed, -1, -diagSpeed];
 
 	public static var tryMove:(Actor, Float, Float) -> Bool = tryMoveDefault;
 	public static function tryMoveDefault(_actor:Actor, _x:Float, _y:Float):Bool

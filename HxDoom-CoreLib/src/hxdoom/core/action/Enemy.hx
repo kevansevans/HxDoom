@@ -5,6 +5,7 @@ import hxdoom.core.Defines;
 import hxdoom.core.GameCore;
 import hxdoom.core.action.Maputl;
 import hxdoom.core.action.Move;
+import hxdoom.core.action.Switch;
 import hxdoom.enums.eng.MoveDirection;
 import hxdoom.lumps.map.LineDef;
 
@@ -73,8 +74,10 @@ class Enemy
 		return true;
 	}
 	
-	public static var xspeed:Array<Float> = [1, Math.sqrt(2), 0, -Math.sqrt(2), -1, -Math.sqrt(2), 0, Math.sqrt(2)];
-	public static var yspeed:Array<Float> = [0, Math.sqrt(2), 1, Math.sqrt(2), 0, -Math.sqrt(2), -1, -Math.sqrt(2)];
+	public static var diagSpeed = Defines.divFracHelper(47000);
+	
+	public static var xspeed:Array<Float> = [1, diagSpeed, 0, -diagSpeed, -1, -diagSpeed, 0, diagSpeed];
+	public static var yspeed:Array<Float> = [0, diagSpeed, 1, diagSpeed, 0, -diagSpeed, -1, -diagSpeed];
 	
 	public static var move:Actor -> Bool = moveDefault;
 	public static function moveDefault(_actor:Actor):Bool
@@ -102,13 +105,14 @@ class Enemy
 			}
 			
 			blkline = Move.blockline;
-			if (blkline == null || blkline.lineType == 0) {
+			if (blkline == null || blkline.special == 0) {
 				return false;
 			}
 			_actor.movedir = NO_DIRECTION;
 			
-			//use line if special, returns true
-			Engine.log(["Not finished here"]);
+			if (Switch.useSpecialLine(_actor, blkline)) {
+				return true;
+			}
 			
 			return false;
 		}
