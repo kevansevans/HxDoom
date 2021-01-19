@@ -111,7 +111,11 @@ class LevelMap //DOES NOT EXTEND LUMPBASE
 	public function buildPointers() 
 	{
 		//for data that can't be extrapolated until all map data is parsed
+		for (seg in segments) {
+			seg.lineDef.segmentID = seg.lumpID;
+		}
 		for (line in linedefs) {
+			line.setup();
 			if (line.frontSideDef != null) {
 				if (sectors[line.frontSideDef.sectorID].lines == null) sectors[line.frontSideDef.sectorID].lines = new Array();
 				if (sectors[line.frontSideDef.sectorID].lines.indexOf(line) == -1) sectors[line.frontSideDef.sectorID].lines.push(line);

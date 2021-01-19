@@ -37,7 +37,7 @@ class LineDefHexen extends LineDef
 			startVertexID,
 			endVertexID,
 			flags,
-			lineType,
+			special,
 			0,
 			frontSideDefID,
 			backSideDefID

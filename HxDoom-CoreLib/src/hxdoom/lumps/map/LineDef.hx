@@ -3,7 +3,9 @@ package hxdoom.lumps.map;
 import haxe.Int64;
 import haxe.io.Bytes;
 import hxdoom.Engine;
+import hxdoom.core.Defines;
 import hxdoom.lumps.LumpBase;
+import hxdoom.lumps.map.Segment;
 
 import hxdoom.component.Texture;
 import hxdoom.typedefs.properties.LineDefFlags;
@@ -28,6 +30,9 @@ class LineDef extends LumpBase
 	public var sectorTag:Int;
 	public var backSideDefID:Int;
 	public var frontSideDefID:Int;
+	public var segmentID:Int;
+	
+	public var fineangle:Int;
 	
 	public var distX(get, null):Float;
 	public var distY(get, null):Float;
@@ -38,6 +43,7 @@ class LineDef extends LumpBase
 	public var backSideDef(get, null):SideDef;
 	public var start(get, null):Vertex;
 	public var end(get, null):Vertex;
+	public var segment(get, null):Segment;
 	
 	public var slope:SlopeType;
 	public var bbox:Array<Float>;
@@ -77,10 +83,10 @@ class LineDef extends LumpBase
 		
 		if (dx >= 0) {
 			bbox[BOXLEFT] = start.xpos;
-			bbox[BOXright] = end.xpos;
+			bbox[BOXRIGHT] = end.xpos;
 		} else {
 			bbox[BOXLEFT] = end.xpos;
-			bbox[BOXright] = start.xpos;
+			bbox[BOXRIGHT] = start.xpos;
 		}
 		
 		if (dy >= 0) {
@@ -90,6 +96,8 @@ class LineDef extends LumpBase
 			bbox[BOXBOTTOM] = end.ypos;
 			bbox[BOXTOP] = start.ypos;
 		}
+		
+		fineangle = segment.angle >> Defines.ANGLETOFINESHIFT;
 	}
 	
 	public function setFlags(_bits:Int) {
@@ -162,6 +170,11 @@ class LineDef extends LumpBase
 	function get_end():Vertex 
 	{
 		return Engine.LEVELS.currentMap.vertexes[endVertexID];
+	}
+	
+	function get_segment():Segment 
+	{
+		return Engine.LEVELS.currentMap.segments[segmentID];
 	}
 	
 	public function toString() {
