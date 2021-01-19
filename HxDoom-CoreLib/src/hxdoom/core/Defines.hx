@@ -12,6 +12,9 @@ class Defines
 	public static inline var MAXMOVE:Int = 16;
 	public static inline var MELEERANGE:Int = 64; //3D0 source actually has this defined as 70, but common Doom knowledge says it's 64
 	public static inline var FLOATSPEED:Int = 8;
+	public static inline var GRAVITY:Int = 4;
+	
+	public static inline var VIEWHEIGHT:Int = 41;
 	
 	public static inline var ANGLETOFINESHIFT:Int = 19;
 	

@@ -27,11 +27,13 @@ class Actor
 	public var zpos_flight:Float;
 	public var zpos_eyeheight:Float;
 	public var zpos_view(get, null):Float;
+	public var deltaviewheight:Float;
 	
 	public var movedir:MoveDirection = NO_DIRECTION;
 	
 	public var momx:Float = 0;
 	public var momy:Float = 0;
+	public var momz:Float = 0;
 	
 	public var slidex:Float;
 	public var slidey:Float;
