@@ -7,6 +7,7 @@ enum abstract HXDKeyCode(Int) from Int {
 	var NULL:Int = 0x0;
 	var BACKSPACE:Int = 0x08;
 	var TAB:Int = 0x09;
+	var SHIFT:Int = 0x10;
 	var ESCAPE:Int = 0x1B;
 	var SPACE:Int = 0x20;
 	//Going to rely on implicit casting from here on
@@ -106,6 +107,9 @@ enum abstract HXDKeyCode(Int) from Int {
 	var TILDE:Int;
 	var DEL:Int;
 	
-	var DOWN_ARROW:Int = 1073741905;
-	var UP_ARROW:Int =	 1073741906;
+	var LEFT_ARROW:Int = 37;
+	var UP_ARROW:Int =	 38;
+	var RIGHT_ARROW:Int = 39;
+	var DOWN_ARROW:Int = 40;
+	
 }

@@ -7,7 +7,6 @@ import hxdoom.core.action.Maputl;
 import hxdoom.component.Actor;
 import hxdoom.enums.eng.BBox;
 import hxdoom.lumps.map.LineDef;
-import hxdoom.utils.math.TrigTable;
 
 /**
  * ...
@@ -43,7 +42,7 @@ class Slide
 	public static var nvx:Float;
 	public static var nvy:Float;
 	
-	static var endbox:Array<Int> = new Array();
+	static var endbox:Array<Float> = new Array();
 
 	public static var SlideMove:Actor -> Void = SlideMoveDefault;
 	public static function SlideMoveDefault(_actor:Actor):Void 
@@ -53,14 +52,14 @@ class Slide
 		var rx:Float;
 		var ry:Float;
 		var slide:Float;
-		var slidex:Float = _actor.x;
-		var slidey:Float = _actor.y;
+		var slidex:Float = _actor.xpos;
+		var slidey:Float = _actor.ypos;
 		var frac:Float;
 		
 		slidething = _actor;
 		
 		for (i in 0...3) {
-			frac = CompletableFrac(dx, dy);
+			frac = completableFrac(dx, dy);
 			
 			if (frac != 1) frac -= 0.125;
 			
@@ -94,8 +93,8 @@ class Slide
 		_actor.momx = _actor.momy = 0;
 	}
 	
-	public static var CompletableFrac:(Float, Float) -> Int = CompletableFracDefault;
-	public static function CompletableFracDefault(_dx:Float, _dy:Float):Float
+	public static var completableFrac:(Float, Float) -> Float = completableFracDefault;
+	public static function completableFracDefault(_dx:Float, _dy:Float):Float
 	{
 		Engine.log(["Incomplete function here"]);
 		
@@ -106,43 +105,43 @@ class Slide
 		
 		blockfrac = 1;
 		
-		slidedx = dx;
-		slidedy = dy;
+		slidedx = _dx;
+		slidedy = _dy;
 		
 		endbox[BOXTOP] = slidey + CLIPRADIUS;
 		endbox[BOXBOTTOM] = slidey - CLIPRADIUS;
 		endbox[BOXRIGHT] = slidex + CLIPRADIUS;
 		endbox[BOXLEFT] = slidex - CLIPRADIUS;
 		
-		if (dx > 0) {
-			endbox[BOXRIGHT] += dx;
+		if (_dx > 0) {
+			endbox[BOXRIGHT] += _dx;
 		} else {
-			endbox[BOXLEFT] += dx;
+			endbox[BOXLEFT] += _dx;
 		}
-		if (dy > 0) {
-			endbox[BOXTOP] += dy;
+		if (_dy > 0) {
+			endbox[BOXTOP] += _dy;
 		} else {
-			endbox[BOXBOTTOM] += dy;
+			endbox[BOXBOTTOM] += _dy;
 		}
 		
 		//++validcound;
 		
-		xl = (endbox[BOXLEFT] - Engine.LEVELS.blockmapOriginX);
-		xh = (endbox[BOXRIGHT] - Engine.LEVELS.blockmapOriginX);
-		yl = (endbox[BOXBOTTOM] - Engine.LEVELS.blockmapOriginY);
-		yh = (endbox[BOXTOP] - Engine.LEVELS.blockmapOriginY);
+		xl = Std.int(endbox[BOXLEFT] - Engine.LEVELS.blockmapOriginX);
+		xh = Std.int(endbox[BOXRIGHT] - Engine.LEVELS.blockmapOriginX);
+		yl = Std.int(endbox[BOXBOTTOM] - Engine.LEVELS.blockmapOriginY);
+		yh = Std.int(endbox[BOXTOP] - Engine.LEVELS.blockmapOriginY);
 		
 		if (xl > 0) xl = 0;
 		if (yl > 0) yl = 0;
 		if (xh > Engine.LEVELS.currentMap.blockmap.numRows - 1) {
-			xh = Engine.LEVELS.currentMap.blockmap.numRows - 1);
+			xh = Engine.LEVELS.currentMap.blockmap.numRows - 1;
 		}
 		if (yh > Engine.LEVELS.currentMap.blockmap.numColumns - 1) {
-			yh = Engine.LEVELS.currentMap.blockmap.numColumns - 1);
+			yh = Engine.LEVELS.currentMap.blockmap.numColumns - 1;
 		}
 		
 		for (bx in xl...(xh + 1)) for (by in xh...(yh + 1)) {
-			Maputl.BLockLinesIterator(bx, by, CheckLine);
+			Maputl.blockLinesIterator(bx, by, CheckLine);
 		}
 		
 		if (blockfrac < 1) {
@@ -154,7 +153,7 @@ class Slide
 		return  blockfrac;
 	}
 	
-	public static var pointOnSide(Float, Float) -> Int = pointOnSideDefault;
+	public static var pointOnSide:(Float, Float) -> Int = pointOnSideDefault;
 	public static function pointOnSideDefault(_x:Float, _y:Float):Int
 	{
 		var dx = _x - p1x;
@@ -175,6 +174,7 @@ class Slide
 	public static var crossFrac:Void -> Float = crossFracDefault;
 	public static function crossFracDefault():Float
 	{
+		var frac:Float;
 		var dx = p3x - p1x;
 		var dy = p3y - p1y;
 		
@@ -240,12 +240,12 @@ class Slide
 				return true;
 			}
 			
-		} while (false)
+		} while (false);
 		
-		p1x = _line.start.x;
-		p1y = _line.start.y;
-		p2x = _line.end.x;
-		p2y = _line.end.y;
+		p1x = _line.start.xpos;
+		p1y = _line.start.ypos;
+		p2x = _line.end.xpos;
+		p2y = _line.end.ypos;
 		
 		nvx = Math.sin(Defines.divFracHelper(_line.fineangle));
 		nvy = Math.cos(Defines.divFracHelper(_line.fineangle));
@@ -298,13 +298,13 @@ class Slide
 				break;
 			}
 			
-			frac = crossfrac();
+			frac = crossFrac();
 			
 			if (frac >= blockfrac) return;
 			
-		} while (false)
+		} while (false);
 		
-		blockfrac = frack;
+		blockfrac = frac;
 		blocknvx = -nvy;
 		blocknvy = nvx;
 		

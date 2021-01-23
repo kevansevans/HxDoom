@@ -26,7 +26,7 @@ class Actor
 	public var zpos(get, default):Float = 0.0;
 	public var zpos_flight:Float;
 	public var zpos_eyeheight:Float;
-	public var zpos_view(get, null):Float;
+	public var zpos_view(get, default):Float;
 	public var deltaviewheight:Float;
 	
 	public var movedir:MoveDirection = NO_DIRECTION;
@@ -38,7 +38,12 @@ class Actor
 	public var slidex:Float;
 	public var slidey:Float;
 	
-	public var floorz:Float;
+	public var turnheld:Int = 0;
+	public var forwardmove:Float = 0;
+	public var sidemove:Float = 0;
+	public var angleturn:Float = 0;
+	
+	public var floorz(get, null):Float;
 	public var ceilingz:Float;
 	
 	public var subsector(get, null):SubSector;
@@ -75,6 +80,8 @@ class Actor
 	public function new() 
 	{
 		//Actor.hx to assume unknown class
+		
+		info.reactionTime = 0;
 	}
 	
 	public function angleToVertex(_vertex:Vertex):Angle {
@@ -106,7 +113,7 @@ class Actor
 	
 	public function get_zpos():Float
 	{
-		return Engine.LEVELS.currentMap.getActorSubsector(this).sector.floorHeight;
+		return zpos;
 	}
 	
 	public function get_subsector():SubSector 
@@ -122,6 +129,11 @@ class Actor
 	public function get_yaw():Angle 
 	{
 		return yaw;
+	}
+	
+	function get_floorz():Float 
+	{
+		return get_subsector().sector.floorHeight;
 	}
 	
 	public function get_roll():Angle 

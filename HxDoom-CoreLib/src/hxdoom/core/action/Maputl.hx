@@ -24,8 +24,8 @@ class Maputl
 		return dx;
 	}
 	
-	public static var BlockLinesIterator:(Int, Int, (LineDef -> Bool)) -> Bool = BlockLinesIteratorDefault;
-	public static function BlockLinesIteratorDefault(_x:Int, _y:Int, _checkLine:LineDef -> Bool):Bool
+	public static var blockLinesIterator:(Int, Int, (LineDef -> Bool)) -> Bool = blockLinesIteratorDefault;
+	public static function blockLinesIteratorDefault(_x:Int, _y:Int, _checkLine:LineDef -> Bool):Bool
 	{
 		
 		

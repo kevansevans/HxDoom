@@ -1,9 +1,11 @@
 package hxdoom.core.action;
 
-import h2d.Slider;
 import hxdoom.Engine;
 import hxdoom.component.Actor;
 import hxdoom.core.Defines;
+import hxdoom.core.GameCore;
+import hxdoom.enums.data.Defaults;
+import hxdoom.utils.geom.Angle;
 
 /**
  * ...
@@ -13,8 +15,14 @@ import hxdoom.core.Defines;
  */
 class User 
 {
-
-	public static var playerMove:Actor -> Void = PlayerMoveDefault;
+	public static inline var SLOWTURNTICS:Int = 10;
+	
+	public static var angleturn:Array<Int> = 		[600, 600, 1000, 1000, 1200, 1400, 1600, 1800, 1800, 2000];
+	public static var fastangleturn:Array<Float> = 	[400, 400, 450, 500, 500, 600, 600, 650, 650, 700];
+	public static var forwardMove:Array<Float> = [Defines.divFracHelper(0x38000 / 4), Defines.divFracHelper(0x60000 / 4)];
+	public static var sideMove:Array<Float> = [Defines.divFracHelper(0x38000 / 4), Defines.divFracHelper(0x58000 / 4)];
+	
+	public static var playerMove:Actor -> Void = playerMoveDefault;
 	public static function playerMoveDefault(_actor:Actor):Void
 	{
 		var momx:Float;
@@ -55,10 +63,10 @@ class User
 				_actor.momx = momx;
 				_actor.momy = 0;
 			} else {
-				_actor.momx = _actor.momy = 0;
+				//_actor.momx = _actor.momy = 0;
 			}
 			
-		} while (false)
+		} while (false);
 		
 		//cross special line
 		Engine.log(['Unfinished function here']);
@@ -73,7 +81,7 @@ class User
 		playerMove(_actor);
 		
 		if (_actor.zpos <= _actor.floorz) {
-			if (_actor.flags.corpse) {
+			if (_actor.flags.corpse == true) {
 				if (_actor.floorz != _actor.subsector.sector.floorHeight) return;
 			}
 			
@@ -97,7 +105,7 @@ class User
 		_actor.zpos += _actor.momz;
 		
 		if (_actor.zpos <= _actor.floorz) {
-			if (_actor.momz < 0) {
+			if (_actor.momz != 0) {
 				if (_actor.momz < -Defines.GRAVITY * 4) {
 					_actor.deltaviewheight = _actor.momz / 8;
 					//grunt sound!
@@ -120,6 +128,152 @@ class User
 		}
 	}
 	
-	public static function buildMove:Actor -> 
+	public static var playerMobjThink:Actor -> Void = playerMobjThinkDefault;
+	public static function playerMobjThinkDefault(_actor:Actor):Void
+	{
+		
+		Map.checkPosition(_actor, _actor.xpos, _actor.ypos);
+		//REMOVE ME LATER!
+		
+		if (_actor.momx != 0 || _actor.momy != 0) {
+			playerXYMovement(_actor);
+		}
+		
+		if (_actor.zpos != _actor.floorz || _actor.momz != 0) {
+			playerZMovement(_actor);
+		}
+		
+		//cycle states
+		Engine.log(['Unsinished function here']);
+		
+	}
+	
+	public static var playerThink:Actor -> Void = playerThinkDefault;
+	public static function playerThinkDefault(_actor:Actor):Void
+	{
+		playerMobjThink(_actor);
+		buildMove(_actor);
+		
+		//if player just attacked
+		
+		//if player is dead
+		
+		var i = _actor.info.reactionTime;
+		if (i == 0) {
+			moveThePlayer(_actor);
+		} else {
+			if (Engine.GAME.elapsedTime < i) {
+				i -= Engine.GAME.elapsedTime;
+			} else {
+				i = 0;
+			}
+			_actor.info.reactionTime = i;
+		}
+		
+		//use button here
+		
+		//weapon attacks
+		
+		//power up timers
+	}
+	
+	public static var moveThePlayer:Actor -> Void = moveThePlayerDefault;
+	public static function moveThePlayerDefault(_actor:Actor):Void
+	{
+		_actor.yaw += Defines.divFracHelper(_actor.angleturn);
+		
+		var onground = (_actor.zpos <= _actor.floorz);
+		
+		if (onground) {
+			playerThrust(_actor, _actor.yaw, _actor.forwardmove);
+			playerThrust(_actor, _actor.yaw - 90, _actor.sidemove);
+		}
+		
+		if (_actor.forwardmove != 0 && _actor.sidemove != 0) {
+			
+		}
+	}
+	
+	public static var buildMove:Actor -> Void = buildMoveDefault;
+	public static function buildMoveDefault(_actor:Actor):Void
+	{
+		var motion:Float = 0;
+		var turnindex:Int = 0;
+		var speedindex:Int = 0;
+		
+		var running:Bool = CVarCore.getCvar(Defaults.PLAYER_HOLDING_RUN);
+		var turnLeft:Bool = CVarCore.getCvar(Defaults.PLAYER_TURNING_LEFT);
+		var turnRight:Bool = CVarCore.getCvar(Defaults.PLAYER_TURNING_RIGHT);
+		var strafeLeft:Bool = CVarCore.getCvar(Defaults.PLAYER_STRAFING_LEFT);
+		var strafeRight:Bool = CVarCore.getCvar(Defaults.PLAYER_STRAFING_RIGHT);
+		var moveForward:Bool = CVarCore.getCvar(Defaults.PLAYER_MOVING_FORWARD);
+		var moveBackward:Bool = CVarCore.getCvar(Defaults.PLAYER_MOVING_BACKWARD);
+		
+		turnindex = _actor.turnheld + Engine.GAME.elapsedTime;
+		speedindex = running ? 1 : 0;
+		
+		if (!turnLeft || !turnRight) {
+			turnindex = 0;
+		}
+		if (turnindex >= SLOWTURNTICS) {
+			turnindex - SLOWTURNTICS - 1;
+		}
+		_actor.turnheld = turnindex;
+		
+		motion = 0;
+		if (strafeLeft || strafeRight) {
+			motion = sideMove[speedindex];
+			if (strafeLeft) {
+				motion = -motion;
+			}
+		}
+		_actor.sidemove = motion;
+		
+		motion = 0;
+		if (turnLeft || turnRight) {
+			
+			if (running) {
+				motion = (fastangleturn[turnindex] / 0xFFFF) * 360;
+			} else {
+				motion = (angleturn[turnindex] / 0xFFFF) * 360;
+				if (Engine.GAME.elapsedTime < 4) {
+					motion /= 2;
+					if (Engine.GAME.elapsedTime < 2) {
+						motion /= 2;
+					}
+				}
+			}
+			if (turnRight) {
+				motion = -motion;
+			}
+		}
+		_actor.angleturn = motion;
+		
+		motion = 0;
+		if (moveForward || moveBackward) {
+			motion = forwardMove[speedindex];
+			if (moveBackward) {
+				motion = -motion;
+			}
+		}
+		_actor.forwardmove = motion;
+	}
+	
+	public static var playerThrust:(Actor, Angle, Float) -> Void = playerThrustDefault;
+	public static function playerThrustDefault(_actor:Actor, _angle:Angle, _move:Float):Void
+	{
+		
+		_actor.yaw += _actor.angleturn;
+		
+		if (_move != 0) {
+			_actor.momx += (_move * Math.cos(_angle.toRadians()));
+			_actor.momy += (_move * Math.sin(_angle.toRadians()));
+		}
+		
+		//NOT SUPPOSED TO BE HERE
+		_actor.xpos += _actor.momx;
+		_actor.ypos += _actor.momy;
+		
+	}
 	
 }

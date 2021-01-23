@@ -41,15 +41,19 @@ class IOCore
 						CVarCore.setCVar(Defaults.PLAYER_MOVING_BACKWARD, true);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
-						CVarCore.setCVar(Defaults.PLAYER_TURNING_LEFT, true);
+						CVarCore.setCVar(Defaults.PLAYER_STRAFING_LEFT, true);
 						
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
-						CVarCore.setCVar(Defaults.PLAYER_TURNING_RIGHT, true);
+						CVarCore.setCVar(Defaults.PLAYER_STRAFING_RIGHT, true);
 						
-					case HXDKeyCode.UP_ARROW :
-						Engine.LEVELS.exitMapNormal();
-					case HXDKeyCode.DOWN_ARROW :
-						Engine.LEVELS.exitMapSecret();
+					case HXDKeyCode.SHIFT :
+						CVarCore.setCVar(Defaults.PLAYER_HOLDING_RUN, true);
+						
+					case HXDKeyCode.LEFT_ARROW :
+						CVarCore.setCVar(Defaults.PLAYER_TURNING_LEFT, true);
+						
+					case HXDKeyCode.RIGHT_ARROW :
+						CVarCore.setCVar(Defaults.PLAYER_TURNING_RIGHT, true);
 						
 					default :
 						trace(_keyCode);
@@ -73,10 +77,20 @@ class IOCore
 						CVarCore.setCVar(Defaults.PLAYER_MOVING_BACKWARD, false);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
-						CVarCore.setCVar(Defaults.PLAYER_TURNING_LEFT, false);
+						CVarCore.setCVar(Defaults.PLAYER_STRAFING_LEFT, false);
 						
 					case HXDKeyCode.D_UPPER | HXDKeyCode.D_LOWER :
+						CVarCore.setCVar(Defaults.PLAYER_STRAFING_RIGHT, false);
+						
+					case HXDKeyCode.SHIFT :
+						CVarCore.setCVar(Defaults.PLAYER_HOLDING_RUN, false);
+						
+					case HXDKeyCode.LEFT_ARROW :
+						CVarCore.setCVar(Defaults.PLAYER_TURNING_LEFT, false);
+						
+					case HXDKeyCode.RIGHT_ARROW :
 						CVarCore.setCVar(Defaults.PLAYER_TURNING_RIGHT, false);
+						
 				}
 				
 			default :

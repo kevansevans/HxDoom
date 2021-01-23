@@ -21,7 +21,7 @@ class Defines
 	public static var trymove2:Bool;
 	public static var floatok:Bool;
 	
-	public static inline function divFracHelper(_value:Int, ?_pos:PosInfos):Float {
+	public static inline function divFracHelper(_value:Float, ?_pos:PosInfos):Float {
 		#if debug
 		trace("Repalce me!", _value, _value / FRACDIVIDE, _pos);
 		#end

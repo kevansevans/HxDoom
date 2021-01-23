@@ -31,7 +31,7 @@ class Move
 		oldx = Map.tmthing.xpos;
 		oldy = Map.tmthing.ypos;
 		
-		checkPosition();
+		//Map.checkPosition();
 		
 		if (Map.checkposonly) {
 			Map.checkposonly = false;
@@ -60,20 +60,14 @@ class Move
 		//remove from blockmap or whatever
 		Engine.log(["unfinished here"]);
 		
-		Map.tmthing.floorz = tmfloorz;
-		Map.tmthing.ceilingz = tmceilingz;
+		//Map.tmthing.floorz = tmfloorz;
+		//Map.tmthing.ceilingz = tmceilingz;
 		//Map.tmthing.x = tmx;
 		//Map.tmthing.y = tmy;
 		
 		//put back in blockmap
 		
 		Defines.trymove2 = true;
-	}
-	
-	public static var checkPosition:Void -> Void = checkPositionDefault;
-	public static function checkPositionDefault():Void
-	{
-		
 	}
 	
 }

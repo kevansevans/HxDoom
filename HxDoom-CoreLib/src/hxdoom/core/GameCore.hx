@@ -6,6 +6,7 @@ import hxdoom.utils.math.TableRNG;
 
 import hxdoom.Engine;
 import hxdoom.enums.data.Defaults;
+import hxdoom.core.action.User;
 
 /**
  * ...
@@ -19,14 +20,14 @@ enum EngineState {
 }
 class GameCore
 {
-	public static var elapsedTime:Int;
-	public static var totalGameTicks:Int;
+	public var elapsedTime:Int;
+	public var totalGameTicks:Int;
 	
 	public static var STATE:EngineState;
 	
 	public var ticrate:Int = 35;
 	
-	public  var random:TableRNG;
+	public var random:TableRNG;
 	
 	public function new() 
 	{
@@ -57,18 +58,7 @@ class GameCore
 			
 			case IN_GAME:
 				
-				if (CVarCore.getCvar(Defaults.PLAYER_MOVING_FORWARD)) {
-					Engine.LEVELS.currentMap.actors_players[0].move(8);
-				}
-				if (CVarCore.getCvar(Defaults.PLAYER_MOVING_BACKWARD)) {
-					Engine.LEVELS.currentMap.actors_players[0].move(-8);
-				}
-				if (CVarCore.getCvar(Defaults.PLAYER_TURNING_LEFT)) {
-					Engine.LEVELS.currentMap.actors_players[0].yaw += 2;
-				}
-				if (CVarCore.getCvar(Defaults.PLAYER_TURNING_RIGHT)) {
-					Engine.LEVELS.currentMap.actors_players[0].yaw -= 2;
-				}
+				User.playerThink(Engine.LEVELS.currentMap.actors_players[0]);
 				
 				focus.x = camera.xpos + 5 * Math.cos(camera.actorToFollow.yaw.toRadians());
 				focus.y = camera.ypos + 5 * Math.sin(camera.actorToFollow.yaw.toRadians());

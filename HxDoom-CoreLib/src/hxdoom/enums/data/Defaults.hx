@@ -82,6 +82,10 @@ enum abstract Defaults(String) from String {
 	 */
 	var PLAYER_FOV:String;
 	/**
+	 * Bool, default false.
+	 */
+	var PLAYER_HOLDING_RUN:String;
+	/**
 	 * Int, default 41.
 	 */
 	var PLAYER_VIEW_HEIGHT:String;

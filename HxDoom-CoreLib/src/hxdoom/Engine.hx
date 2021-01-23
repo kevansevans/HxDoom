@@ -205,6 +205,7 @@ class Engine
 		CVarCore.setNewCVar(Defaults.OVERRIDE_LEVELS,				CVarType.CBool, 	false);
 		
 		CVarCore.setNewCVar(Defaults.PLAYER_FOV, 					CVarType.CInt, 		90);
+		CVarCore.setNewCVar(Defaults.PLAYER_HOLDING_RUN,			CVarType.CBool,		false);
 		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_FORWARD, 		CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.PLAYER_MOVING_BACKWARD, 		CVarType.CBool, 	false);
 		CVarCore.setNewCVar(Defaults.PLAYER_STRAFING_LEFT, 			CVarType.CBool, 	false);

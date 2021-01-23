@@ -13,6 +13,8 @@ import hxdoom.enums.eng.MoveDirection;
 class Map 
 {
 	public static var tmthing:Actor;
+	public static var tmx:Float;
+	public static var tmy:Float;
 	public static var checkposonly:Bool;
 	
 	public static var diagSpeed = Defines.divFracHelper(47000);
@@ -41,6 +43,17 @@ class Map
 			}
 		}
 		
+		return Defines.trymove2;
+	}
+	
+	public static var checkPosition:(Actor, Float, Float) -> Bool = checkPositionDefault;
+	public static function checkPositionDefault(_actor:Actor, _x:Float, _y:Float):Bool
+	{
+		tmthing = _actor;
+		tmx = _x;
+		tmy = _y;
+		checkposonly = true;
+		Move.tryMove2();
 		return Defines.trymove2;
 	}
 	
