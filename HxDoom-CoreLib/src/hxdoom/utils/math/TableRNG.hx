@@ -23,7 +23,9 @@ class TableRNG
 		
 		limit = _range - 1;
 		
-		for (s in 0..._size) for (r in 0..._range) {
+		var size:Int = Std.int(Math.max(1, _size));
+		
+		for (s in 0...size) for (r in 0..._range) {
 			values.push(r);
 		}
 	}
@@ -127,7 +129,7 @@ class TableRNG
 		rng.values = _array;
 		var high:Int = 0;
 		for (v in rng.values) {
-			if (v >= high) v = high;
+			if (v >= high) high = v;
 		}
 		rng.limit = high;
 		return rng;
