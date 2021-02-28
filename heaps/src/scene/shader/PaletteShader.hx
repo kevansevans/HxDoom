@@ -36,13 +36,15 @@ class PaletteShader extends Shader
 		@param var brightness:Int = 255;
 		@param var fullbright:Int = 1;
 		
-		@param var width:Int;
-		@param var height:Int;
-		@param var scrollX:Int = 8;
+		@param var widthRatio:Float = 1;
+		@param var heightRatio:Float = 1;
+		@param var scrollX:Int = 0;
 		@param var scrollY:Int = 0;
 		
 		function vertex() {
 			calculatedUV = input.uv;
+			calculatedUV.x += ((scrollX * widthRatio) * global.time);
+			calculatedUV.y += ((scrollY * heightRatio) * global.time);
 		}
 		
 		function fragment() {
@@ -86,6 +88,11 @@ class PaletteShader extends Shader
 	}
 	
 	public var sheets:Array<Array<Vec>>;
+	
+	public function scroll(_x:Int = 0, _y:Int = 0) {
+		this.scrollX = _x;
+		this.scrollY = _y;
+	}
 	
 	public function setPalette(_playpal:Playpal) {
 		
@@ -137,8 +144,6 @@ class PaletteShader extends Shader
 		work_text.wrap = Wrap.Repeat;
 		
 		this.texture = work_text;
-		this.height = work_text.height;
-		this.width = work_text.width;
 	}
 	
 }
