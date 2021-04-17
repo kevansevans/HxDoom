@@ -1,5 +1,6 @@
 package hxdoom.core.action;
 
+import hxdoom.Engine;
 import hxdoom.lumps.map.LineDef;
 
 /**
@@ -27,7 +28,19 @@ class Maputl
 	public static var blockLinesIterator:(Int, Int, (LineDef -> Bool)) -> Bool = blockLinesIteratorDefault;
 	public static function blockLinesIteratorDefault(_x:Int, _y:Int, _checkLine:LineDef -> Bool):Bool
 	{
-		
+		if (_x < Engine.LEVELS.blockmap.width && _y < Engine.LEVELS.blockmap.height) {
+			
+			var y = _y * Engine.LEVELS.blockmap.width;
+			y += _x;
+			
+			var lines = Engine.LEVELS.blockmap.blocks[y];
+			for (line in lines) {
+				if (!_checkLine(line)) {
+					return false;
+				}
+			}
+			
+		}
 		
 		return true;
 	}

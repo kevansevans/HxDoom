@@ -28,7 +28,7 @@ class Move
 		Defines.trymove2 = false;
 		Defines.floatok = false;
 		
-		oldx = Map.tmthing.xpos;
+		oldx = Map.tmthing.xpos * -1;
 		oldy = Map.tmthing.ypos;
 		
 		//Map.checkPosition();

@@ -50,7 +50,7 @@ class Map
 	public static function checkPositionDefault(_actor:Actor, _x:Float, _y:Float):Bool
 	{
 		tmthing = _actor;
-		tmx = _x;
+		tmx = _x * -1;
 		tmy = _y;
 		checkposonly = true;
 		Move.tryMove2();

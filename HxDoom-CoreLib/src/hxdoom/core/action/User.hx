@@ -81,6 +81,9 @@ class User
 		playerMove(_actor);
 		
 		if (_actor.zpos <= _actor.floorz) {
+			
+			_actor.zpos = _actor.floorz;
+			
 			if (_actor.flags.corpse == true) {
 				if (_actor.floorz != _actor.subsector.sector.floorHeight) return;
 			}
@@ -233,9 +236,9 @@ class User
 		if (turnLeft || turnRight) {
 			
 			if (running) {
-				motion = (fastangleturn[turnindex] / 0xFFFF) * 360;
+				motion = (fastangleturn[turnindex] / 65536) * 360;
 			} else {
-				motion = (angleturn[turnindex] / 0xFFFF) * 360;
+				motion = (angleturn[turnindex] / 65536) * 360;
 				if (Engine.GAME.elapsedTime < 4) {
 					motion /= 2;
 					if (Engine.GAME.elapsedTime < 2) {

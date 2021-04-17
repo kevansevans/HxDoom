@@ -58,7 +58,7 @@ class Slide
 		
 		slidething = _actor;
 		
-		for (i in 0...3) {
+		for (a in 0...3) {
 			frac = completableFrac(dx, dy);
 			
 			if (frac != 1) frac -= 0.125;
@@ -103,7 +103,7 @@ class Slide
 		var yl:Int;
 		var yh:Int;
 		
-		blockfrac = 1;
+		blockfrac = Defines.divFracHelper(0x10000);
 		
 		slidedx = _dx;
 		slidedy = _dy;
@@ -126,10 +126,10 @@ class Slide
 		
 		//++validcound;
 		
-		xl = Std.int(endbox[BOXLEFT] - Engine.LEVELS.blockmapOriginX);
-		xh = Std.int(endbox[BOXRIGHT] - Engine.LEVELS.blockmapOriginX);
-		yl = Std.int(endbox[BOXBOTTOM] - Engine.LEVELS.blockmapOriginY);
-		yh = Std.int(endbox[BOXTOP] - Engine.LEVELS.blockmapOriginY);
+		xl = Std.int(endbox[BOXLEFT] - Engine.LEVELS.blockmap.originX) >> 7;
+		xh = Std.int(endbox[BOXRIGHT] - Engine.LEVELS.blockmap.originX) >> 7;
+		yl = Std.int(endbox[BOXBOTTOM] - Engine.LEVELS.blockmap.originY) >> 7;
+		yh = Std.int(endbox[BOXTOP] - Engine.LEVELS.blockmap.originY) >> 7;
 		
 		if (xl > 0) xl = 0;
 		if (yl > 0) yl = 0;
@@ -141,10 +141,10 @@ class Slide
 		}
 		
 		for (bx in xl...(xh + 1)) for (by in xh...(yh + 1)) {
-			Maputl.blockLinesIterator(bx, by, CheckLine);
+			Maputl.blockLinesIterator(bx, by, checkLine);
 		}
 		
-		if (blockfrac < 1) {
+		if (blockfrac < Defines.divFracHelper(0x1000)) {
 			blockfrac = 0;
 			specialline = null;
 			return 0;
@@ -194,19 +194,20 @@ class Slide
 		return frac;
 	}
 	
-	public static var CheckLine:LineDef -> Bool = CheckLineDefault;
-	public static function CheckLineDefault(_line:LineDef):Bool 
+	public static var checkLine:LineDef -> Bool = checkLineDefault;
+	public static function checkLineDefault(_line:LineDef):Bool 
 	{
+		
 		var opentop:Float;
 		var openbottom:Float;
 		var sector:Sector;
 		
-		if (
+		/*if (
 			endbox[BOXRIGHT] < _line.bbox[BOXLEFT] ||
 			endbox[BOXLEFT] > _line.bbox[BOXRIGHT] ||
 			endbox[BOXTOP] < _line.bbox[BOXBOTTOM] ||
 			endbox[BOXBOTTOM] > _line.bbox[BOXTOP]
-		) return true;
+		) return true;*/
 		
 		do {
 			
@@ -250,6 +251,8 @@ class Slide
 		nvx = Math.sin(Defines.divFracHelper(_line.fineangle));
 		nvy = Math.cos(Defines.divFracHelper(_line.fineangle));
 		
+		//trace("derp");
+		
 		var side = pointOnSide(slidex, slidey);
 		
 		if (side == SIDE_ON) return true;
@@ -274,6 +277,7 @@ class Slide
 	static public var clipToLine:Void -> Void = clipToLineDefault;
 	static public function clipToLineDefault():Void 
 	{
+		//trace("beep");
 		var frac:Float;
 		var sideA:Int;
 		var sideB:Int;

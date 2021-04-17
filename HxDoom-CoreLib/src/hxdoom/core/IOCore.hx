@@ -34,10 +34,10 @@ class IOCore
 					case HXDKeyCode.TAB : 
 						CVarCore.setCVar(Defaults.AUTOMAP_MODE, !CVarCore.getCvar(Defaults.AUTOMAP_MODE));
 						
-					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
+					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER | HXDKeyCode.UP_ARROW :
 						CVarCore.setCVar(Defaults.PLAYER_MOVING_FORWARD, true);
 						
-					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
+					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER | HXDKeyCode.DOWN_ARROW :
 						CVarCore.setCVar(Defaults.PLAYER_MOVING_BACKWARD, true);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
@@ -70,10 +70,10 @@ class IOCore
 			case IN_GAME :
 				
 				switch(_keyCode) {
-					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER:
+					case HXDKeyCode.W_UPPER | HXDKeyCode.W_LOWER | HXDKeyCode.UP_ARROW :
 						CVarCore.setCVar(Defaults.PLAYER_MOVING_FORWARD, false);
 						
-					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER:
+					case HXDKeyCode.S_UPPER | HXDKeyCode.S_LOWER | HXDKeyCode.DOWN_ARROW :
 						CVarCore.setCVar(Defaults.PLAYER_MOVING_BACKWARD, false);
 						
 					case HXDKeyCode.A_UPPER | HXDKeyCode.A_LOWER :
