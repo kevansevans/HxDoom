@@ -1,8 +1,6 @@
 package hxdoom.core;
 
-import h2d.col.Point;
 import haxe.ds.Map;
-import hxd.Math;
 import hxdoom.component.LevelMap;
 import hxdoom.lumps.map.Vertex;
 
@@ -336,8 +334,8 @@ class RenderCore
 		
 		_points.sort(function(_a:Vertex, _b:Vertex) {
 			
-			var a1:Float = (Math.radToDeg(Math.atan2(_a.xpos - centroid.xpos, _a.ypos - centroid.ypos)) + 360) % 360;
-			var a2:Float = (Math.radToDeg(Math.atan2(_b.xpos - centroid.xpos, _b.ypos - centroid.ypos)) + 360) % 360;
+			var a1:Float = (radToDeg(Math.atan2(_a.xpos - centroid.xpos, _a.ypos - centroid.ypos)) + 360) % 360;
+			var a2:Float = (radToDeg(Math.atan2(_b.xpos - centroid.xpos, _b.ypos - centroid.ypos)) + 360) % 360;
 			
 			if (a1 - a2 > 0) return 1;
 			else if (a1 - a2 < 0) return - 1;
@@ -346,4 +344,9 @@ class RenderCore
 		
 		return _points;
 	}
+
+    inline function radToDeg(_radians:Float):Float
+    {
+        return _radians * 180 / Math.PI;
+    }
 }
